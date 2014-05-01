@@ -10,6 +10,7 @@ public class NGUniplayObject extends NGObject implements NGInitializable{
     protected void BeforeInitialize() {
 
     }
+
     protected void AfterInitialize() {
 
     }
@@ -62,4 +63,5 @@ public class NGUniplayObject extends NGObject implements NGInitializable{
             FInitialized = false;
         }
     }
+
 }
