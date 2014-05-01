@@ -8,6 +8,7 @@ import Uniwork.Base.NGTickGenerator;
 public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
 
     protected NGGameEngineModuleManager FModuleManager;
+    protected NGGameEngineMemoryManager FMemoryManager;
     protected NGLogManager FLogManager;
     protected NGTickGenerator FTickGenerator;
     protected Object FOnwer;
@@ -32,6 +33,7 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
         super.BeforeInitialize();
         FLogManager.addEventListener(this);
         writeLog("Welcome to Uniplay engine...");
+        FMemoryManager.setLogManager(FLogManager);
         FModuleManager.setLogManager(FLogManager);
         FTickGenerator.setLogManager(FLogManager);
     }
@@ -40,6 +42,7 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
     protected void DoInitialize() {
         writeLog("Start Uniplay engine initialization...");
         super.DoInitialize();
+        FMemoryManager.Initialize();
         FModuleManager.Initialize();
         FTickGenerator.Initialize();
     }
@@ -54,6 +57,7 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
         writeLog("Start Uniplay engine shutdown...");
         FTickGenerator.Finalize();
         FModuleManager.Finalize();
+        FMemoryManager.Finalize();
         super.DoFinalize();
     }
 
@@ -68,9 +72,10 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
         super();
         FOnwer = aOwner;
         FRunning = false;
+        FMemoryManager = new NGGameEngineMemoryManager(this);
         FModuleManager = new NGGameEngineModuleManager(this);
-        FLogManager = new NGLogManager();
         FTickGenerator = new NGTickGenerator(10);
+        FLogManager = new NGLogManager();
     }
 
     @Override
