@@ -1,7 +1,11 @@
 package Uniplay.Base;
 
-import Uniwork.Base.NGObject;
+import Uniplay.NGUniplayObject;
 
-public class NGGameEngine extends NGObject {
+public class NGGameEngine extends NGUniplayObject {
+
+    public NGGameEngine() {
+        super();
+    }
 
 }
