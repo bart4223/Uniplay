@@ -22,6 +22,18 @@ public class NGGameEngineModule extends NGUniplayObject {
         writeLog(String.format("Module %s initialized!", FName));
     }
 
+    @Override
+    protected void BeforeFinalize() {
+        writeLog(String.format("Start module %s finalization...", FName));
+        super.BeforeFinalize();
+    }
+
+    @Override
+    protected void AfterFinalize() {
+        super.AfterFinalize();
+        writeLog(String.format("Module %s finalized!", FName));
+    }
+
     protected void writeLog(String aText) {
         if (FLogManager != null) {
             FLogManager.writeLog(aText);

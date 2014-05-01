@@ -10,6 +10,7 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
 
     protected ArrayList<NGGameEngineModule> FModules;
     protected NGLogManager FLogManager;
+    protected NGUniplayObject FOwner;
 
     protected void addModule(NGGameEngineModule aModule) {
         FModules.add(aModule);
@@ -40,6 +41,18 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
     }
 
     @Override
+    protected void BeforeFinalize() {
+        writeLog("Start all modules finalization...");
+        super.BeforeFinalize();
+    }
+
+    @Override
+    protected void AfterFinalize() {
+        super.AfterFinalize();
+        writeLog("All modules finalized!");
+    }
+
+    @Override
     protected void DoFinalize() {
         super.DoFinalize();
         for (NGGameEngineModule module : FModules) {
@@ -53,8 +66,9 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
         }
     }
 
-    public NGGameEngineModuleManager() {
+    public NGGameEngineModuleManager(NGUniplayObject aOwner) {
         super();
+        FOwner = aOwner;
         FModules = new ArrayList<NGGameEngineModule>();
         FLogManager = null;
     }
