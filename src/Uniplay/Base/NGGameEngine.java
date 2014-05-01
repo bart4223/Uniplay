@@ -32,6 +32,7 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
     protected void BeforeInitialize() {
         super.BeforeInitialize();
         FLogManager.addEventListener(this);
+        writeLog("Welcome to Uniplay engine...");
         FModuleManager.setLogManager(FLogManager);
         FTickGenerator.setLogManager(FLogManager);
     }
@@ -61,6 +62,7 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
     protected void AfterFinalize() {
         super.AfterFinalize();
         writeLog("Uniplay engine stopped!");
+        writeLog("Bye Bye...");
     }
 
     public NGGameEngine(Object aOwner) {
