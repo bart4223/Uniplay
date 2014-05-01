@@ -4,20 +4,24 @@ import Uniplay.NGUniplayObject;
 import Uniwork.Base.NGLogEvent;
 import Uniwork.Base.NGLogEventListener;
 import Uniwork.Base.NGLogManager;
+import Uniwork.Base.NGTickGenerator;
 
 public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
 
     protected NGGameEngineModuleManager FModuleManager;
     protected NGLogManager FLogManager;
+    protected NGTickGenerator FTickGenerator;
     protected Object FOnwer;
     protected Boolean FRunning;
 
     protected void DoRun() {
-        writeLog("Uniplay engine running...");
+        FTickGenerator.SetAllEnabled(true);
+        writeLog("Uniplay engine is running...");
     }
 
     protected void DoStop() {
-        writeLog("Uniplay engine stopping...");
+        FTickGenerator.SetAllEnabled(false);
+        writeLog("Uniplay engine is on hold...");
     }
 
     protected void writeLog(String aText) {
@@ -29,6 +33,7 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
         super.BeforeInitialize();
         FLogManager.addEventListener(this);
         FModuleManager.setLogManager(FLogManager);
+        FTickGenerator.setLogManager(FLogManager);
     }
 
     @Override
@@ -36,6 +41,7 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
         writeLog("Start Uniplay engine initialization...");
         super.DoInitialize();
         FModuleManager.Initialize();
+        FTickGenerator.Initialize();
     }
     @Override
     protected void AfterInitialize() {
@@ -46,6 +52,7 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
     @Override
     protected void DoFinalize() {
         writeLog("Start Uniplay engine shutdown...");
+        FTickGenerator.Finalize();
         FModuleManager.Finalize();
         super.DoFinalize();
     }
@@ -58,10 +65,11 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
 
     public NGGameEngine(Object aOwner) {
         super();
-        FModuleManager = new NGGameEngineModuleManager(this);
-        FLogManager = new NGLogManager();
         FOnwer = aOwner;
         FRunning = false;
+        FModuleManager = new NGGameEngineModuleManager(this);
+        FLogManager = new NGLogManager();
+        FTickGenerator = new NGTickGenerator(10);
     }
 
     @Override
