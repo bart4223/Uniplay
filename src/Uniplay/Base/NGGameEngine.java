@@ -66,7 +66,7 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
 
     @Override
     public void handleAddLog(NGLogEvent e) {
-        System.out.println(e.LogEntry.GetFullAsString());
+        System.out.println(e.LogEntry.GetFullAsString("dd.MM.YYYY HH:mm:ss"));
     }
 
     @Override
