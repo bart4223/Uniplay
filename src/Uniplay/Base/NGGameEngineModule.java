@@ -1,6 +1,5 @@
 package Uniplay.Base;
 
-import Uniplay.NGUniplayObject;
 import Uniwork.Base.NGLogManager;
 
 public class NGGameEngineModule extends NGUniplayObject {

@@ -1,6 +1,5 @@
 package Uniplay.Base;
 
-import Uniplay.NGUniplayObject;
 import Uniwork.Base.NGLogEvent;
 import Uniwork.Base.NGLogEventListener;
 import Uniwork.Base.NGLogManager;
