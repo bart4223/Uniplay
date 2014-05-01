@@ -13,6 +13,7 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
     protected NGTickGenerator FTickGenerator;
     protected Object FOnwer;
     protected Boolean FRunning;
+    protected int FDebugLevel;
 
     protected void DoRun() {
         FTickGenerator.SetAllEnabled(true);
@@ -25,7 +26,7 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
     }
 
     protected void writeLog(String aText) {
-        FLogManager.writeLog(aText);
+        FLogManager.writeLog(aText, getClass().getSimpleName());
     }
 
     @Override
@@ -76,11 +77,12 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
         FModuleManager = new NGGameEngineModuleManager(this);
         FTickGenerator = new NGTickGenerator(10);
         FLogManager = new NGLogManager();
+        FDebugLevel = 0;
     }
 
     @Override
     public void handleAddLog(NGLogEvent e) {
-        System.out.println(e.LogEntry.GetFullAsString("dd.MM.YYYY HH:mm:ss"));
+        System.out.println(e.LogEntry.GetFullAsString("YYYY/MM/dd HH:mm:ss", FDebugLevel > 0));
     }
 
     @Override
@@ -90,6 +92,14 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
 
     public Boolean getRunning() {
         return FRunning;
+    }
+
+    public void setDebugLevel(int aDebugLevel) {
+        FDebugLevel = aDebugLevel;
+    }
+
+    public int getDebugLevel() {
+        return FDebugLevel;
     }
 
     public void Run() {

@@ -60,7 +60,7 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
 
     protected void writeLog(String aText) {
         if (FLogManager != null) {
-            FLogManager.writeLog(aText);
+            FLogManager.writeLog(aText, getClass().getSimpleName());
         }
     }
 
