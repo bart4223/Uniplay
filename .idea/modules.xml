@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Uniplay.iml" filepath="$PROJECT_DIR$/Uniplay.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Uniwork/Uniwork.iml" filepath="$PROJECT_DIR$/../Uniwork/Uniwork.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Uniwork/Uniwork.iml" filepath="$PROJECT_DIR$/../Uniwork/Uniwork.iml" />
     </modules>
   </component>
 </project>
