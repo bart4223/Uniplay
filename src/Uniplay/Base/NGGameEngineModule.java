@@ -24,14 +24,14 @@ public class NGGameEngineModule extends NGUniplayObject {
 
     @Override
     protected void BeforeFinalize() {
-        writeLog(String.format("Start module %s finalization...", FName));
+        writeLog(String.format("Start module %s shutdown...", FName));
         super.BeforeFinalize();
     }
 
     @Override
     protected void AfterFinalize() {
         super.AfterFinalize();
-        writeLog(String.format("Module %s finalized!", FName));
+        writeLog(String.format("Module %s stopped!", FName));
     }
 
     protected void writeLog(String aText) {

@@ -42,14 +42,14 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
 
     @Override
     protected void BeforeFinalize() {
-        writeLog("Start all modules finalization...");
+        writeLog("Start all modules shutdown...");
         super.BeforeFinalize();
     }
 
     @Override
     protected void AfterFinalize() {
         super.AfterFinalize();
-        writeLog("All modules finalized!");
+        writeLog("All modules stopped!");
     }
 
     @Override

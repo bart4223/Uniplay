@@ -9,24 +9,59 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
 
     protected NGGameEngineModuleManager FModuleManager;
     protected NGLogManager FLogManager;
+    protected Object FOnwer;
+    protected Boolean FRunning;
+
+    protected void DoRun() {
+        writeLog("Uniplay engine running...");
+    }
+
+    protected void DoStop() {
+        writeLog("Uniplay engine stopping...");
+    }
+
+    protected void writeLog(String aText) {
+        FLogManager.writeLog(aText);
+    }
+
+    @Override
+    protected void BeforeInitialize() {
+        super.BeforeInitialize();
+        FLogManager.addEventListener(this);
+        FModuleManager.setLogManager(FLogManager);
+    }
 
     @Override
     protected void DoInitialize() {
+        writeLog("Start Uniplay engine initialization...");
         super.DoInitialize();
-        FLogManager.addEventListener(this);
         FModuleManager.Initialize();
+    }
+    @Override
+    protected void AfterInitialize() {
+        super.AfterInitialize();
+        writeLog("Uniplay engine initialized!");
     }
 
     @Override
     protected void DoFinalize() {
+        writeLog("Start Uniplay engine shutdown...");
         FModuleManager.Finalize();
         super.DoFinalize();
     }
 
-    public NGGameEngine() {
+    @Override
+    protected void AfterFinalize() {
+        super.AfterFinalize();
+        writeLog("Uniplay engine stopped!");
+    }
+
+    public NGGameEngine(Object aOwner) {
         super();
         FModuleManager = new NGGameEngineModuleManager(this);
         FLogManager = new NGLogManager();
+        FOnwer = aOwner;
+        FRunning = false;
     }
 
     @Override
@@ -38,4 +73,23 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
     public void handleClearLog() {
 
     }
+
+    public Boolean getRunning() {
+        return FRunning;
+    }
+
+    public void Run() {
+        if (!FRunning) {
+            DoRun();
+            FRunning = true;
+        }
+    }
+
+    public void Stop() {
+        if (FRunning) {
+            DoStop();
+            FRunning = false;
+        }
+    }
+
 }
