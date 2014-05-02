@@ -25,7 +25,7 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
     protected void DoInitialize() {
         super.DoInitialize();
         FMemory.Allocate(FChunkSize);
-        writeLog(String.format("%d memory cells allocated", FMemory.getAllocated()));
+        writeLog(String.format("%d memory cells allocated.", FMemory.getAllocated()));
     }
 
     @Override
