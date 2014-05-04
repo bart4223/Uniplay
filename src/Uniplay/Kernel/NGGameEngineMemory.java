@@ -1,4 +1,6 @@
-package Uniplay.Base;
+package Uniplay.Kernel;
+
+import Uniplay.NGUniplayObject;
 
 import java.util.ArrayList;
 

@@ -1,11 +1,12 @@
-package Uniplay.Base;
+package Uniplay.Kernel;
 
+import Uniplay.NGUniplayObject;
 import Uniwork.Base.NGLogEvent;
 import Uniwork.Base.NGLogEventListener;
 import Uniwork.Base.NGLogManager;
 import Uniwork.Base.NGTickGenerator;
 
-public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
+public abstract class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
 
     protected NGGameEngineModuleManager FModuleManager;
     protected NGGameEngineMemoryManager FMemoryManager;
@@ -27,6 +28,10 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
 
     protected void writeLog(String aText) {
         FLogManager.writeLog(aText, getClass().getSimpleName());
+    }
+
+    protected void CreateModules() {
+
     }
 
     @Override
@@ -78,6 +83,7 @@ public class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
         FTickGenerator = new NGTickGenerator(10);
         FLogManager = new NGLogManager();
         FDebugLevel = 0;
+        CreateModules();
     }
 
     @Override

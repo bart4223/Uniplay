@@ -1,12 +1,12 @@
-package Uniplay.Base;
+package Uniplay.Kernel;
 
+import Uniplay.NGUniplayObject;
 import Uniwork.Base.NGLogManager;
 
-public class NGGameEngineModule extends NGUniplayObject {
+public abstract class NGGameEngineModule extends NGUniplayObject {
 
     protected NGGameEngineModuleManager FManager;
     protected String FName;
-    protected NGUniplayObject FModule;
     protected NGLogManager FLogManager;
 
     @Override
@@ -39,11 +39,10 @@ public class NGGameEngineModule extends NGUniplayObject {
         }
     }
 
-    public NGGameEngineModule(NGGameEngineModuleManager aManager, String aName, NGUniplayObject aModule) {
+    public NGGameEngineModule(NGGameEngineModuleManager aManager, String aName) {
         super();
         FManager = aManager;
         FName = aName;
-        FModule = aModule;
         FLogManager = null;
     }
 
@@ -53,10 +52,6 @@ public class NGGameEngineModule extends NGUniplayObject {
 
     public String getName() {
         return FName;
-    }
-
-    public NGUniplayObject getModule() {
-        return FModule;
     }
 
     public void setLogManager(NGLogManager aLogManager) {

@@ -1,5 +1,6 @@
-package Uniplay.Base;
+package Uniplay.Kernel;
 
+import Uniplay.NGUniplayObject;
 import Uniwork.Base.NGLogManager;
 
 import java.util.ArrayList;
@@ -9,14 +10,6 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
     protected ArrayList<NGGameEngineModule> FModules;
     protected NGLogManager FLogManager;
     protected NGUniplayObject FOwner;
-
-    protected void addModule(NGGameEngineModule aModule) {
-        FModules.add(aModule);
-    }
-
-    protected void removeModule(NGGameEngineModule aModule) {
-        FModules.remove(aModule);
-    }
 
     @Override
     protected void BeforeInitialize() {
@@ -71,11 +64,13 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
         FLogManager = null;
     }
 
-    public NGGameEngineModule addModule(String aName, NGUniplayObject aModule) {
-        NGGameEngineModule module = new NGGameEngineModule(this, aName, aModule);
-        module.setLogManager(FLogManager);
-        addModule(module);
-        return module;
+    public void addModule(NGGameEngineModule aModule) {
+        aModule.setLogManager(FLogManager);
+        FModules.add(aModule);
+    }
+
+    public void removeModule(NGGameEngineModule aModule) {
+        FModules.remove(aModule);
     }
 
     public void removeModule(String aName) {

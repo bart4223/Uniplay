@@ -1,4 +1,4 @@
-package Uniplay.Base;
+package Uniplay;
 
 import Uniwork.Base.NGInitializable;
 import Uniwork.Base.NGObject;
