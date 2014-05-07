@@ -5,18 +5,18 @@ import Uniwork.Base.NGPropertyList;
 
 public class NGGameEngineMemoryCell extends NGObject {
 
-    protected int FAddress;
+    protected NGGameEngineMemoryAddress FAddress;
     protected Object FValue;
     protected NGPropertyList FProps;
 
-    public NGGameEngineMemoryCell(int aAddress) {
+    public NGGameEngineMemoryCell(int aPage, int aBase, int aOffset) {
         super();
-        FAddress = aAddress;
+        FAddress = new NGGameEngineMemoryAddress(aPage, aBase, aOffset);
         FProps = new NGPropertyList();
         FValue = null;
     }
 
-    public int getAddress() {
+    public NGGameEngineMemoryAddress getAddress() {
         return FAddress;
     }
 

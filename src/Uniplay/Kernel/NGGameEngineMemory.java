@@ -6,63 +6,69 @@ import java.util.ArrayList;
 
 public class NGGameEngineMemory extends NGUniplayObject {
 
-    protected int FSize;
+    protected int FPageSize;
+    protected int FBaseSize;
+    protected int FOffsetSize;
     protected NGGameEngineMemoryManager FManager;
     protected ArrayList<NGGameEngineMemoryCell> FCells;
 
-    protected NGGameEngineMemoryCell allocateCell(int aAddress) {
-        NGGameEngineMemoryCell cell = new NGGameEngineMemoryCell(aAddress);
+    protected NGGameEngineMemoryCell allocateCell(int aPage, int aBase, int aOffset) {
+        NGGameEngineMemoryCell cell = new NGGameEngineMemoryCell(aPage, aBase, aOffset);
         FCells.add(cell);
         return cell;
     }
 
-    protected void DoReallocate(int aSize) {
-        // ToDo
+    protected void DoReallocate() {
+        clear();
+        DoAllocate();
     }
 
-    protected void DoAllocate(int aSize) {
-        double size;
-        size = Math.pow(aSize, 3);
-        for (int i = 0; i < size; i++) {
-            allocateCell(i);
+    protected void DoAllocate() {
+        for (int page = 0; page < FPageSize; page++) {
+            for (int base = 0; base < FBaseSize; base++) {
+                for (int offset = 0; offset < FOffsetSize; offset++) {
+                    allocateCell(page, base, offset);
+                }
+            }
         }
-        FSize = aSize;
     }
 
     @Override
     protected void DoInitialize() {
         super.DoInitialize();
-        DoAllocate(FSize);
+        DoAllocate();
     }
 
     public NGGameEngineMemory(NGGameEngineMemoryManager aManager) {
-        this(aManager, 0);
-    }
-
-    public NGGameEngineMemory(NGGameEngineMemoryManager aManager, int aSize) {
         super();
         FManager = aManager;
         FCells = new ArrayList<NGGameEngineMemoryCell>();
-        FSize = aSize;
-    }
-
-    public int getSize() {
-        return FSize;
+        FPageSize = 0;
+        FBaseSize = 0;
+        FOffsetSize = 0;
     }
 
     public int getAllocated() {
         return FCells.size();
     }
 
-    public void Allocate(int aSize) {
-        if (FSize != aSize) {
-            if (FSize == 0) {
-                DoAllocate(aSize);
-            }
-            else {
-                DoReallocate(aSize);
-            }
+    public void Reallocate(int aPageSize, int aBaseSize, int aOffsetSize) {
+        if (FPageSize != aPageSize || FBaseSize != aBaseSize || FOffsetSize != aOffsetSize) {
+            FPageSize = aPageSize;
+            FBaseSize = aBaseSize;
+            FOffsetSize = aOffsetSize;
+            DoReallocate();
         }
+    }
+
+    public void clear() {
+        for (NGGameEngineMemoryCell cell : FCells) {
+            cell.clear();
+        }
+    }
+
+    public int getAbsolutAddress(NGGameEngineMemoryAddress aAddress) {
+        return (aAddress.getPage() * FBaseSize * FOffsetSize) + (aAddress.getBase() * FOffsetSize) + aAddress.getOffset();
     }
 
 }

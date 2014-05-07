@@ -25,7 +25,7 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
     @Override
     protected void DoInitialize() {
         super.DoInitialize();
-        FMemory.Allocate(FChunkSize);
+        FMemory.Reallocate(1, FChunkSize, FChunkSize);
         writeLog(String.format("%d memory cells allocated.", FMemory.getAllocated()));
     }
 
@@ -52,7 +52,7 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
         FOwner = aOwner;
         FLogManager = null;
         FMemory = new NGGameEngineMemory(this);
-        FChunkSize = 32;
+        FChunkSize = 16;
     }
 
     public void setLogManager(NGLogManager aLogManager) {
@@ -61,6 +61,10 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
 
     public NGLogManager getLogManager() {
         return FLogManager;
+    }
+
+    public void clearMemory() {
+        FMemory.clear();
     }
 
 }
