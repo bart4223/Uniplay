@@ -27,4 +27,8 @@ public class NGGameEngineMemoryAddress extends NGUniplayObject{
         return FOffset;
     }
 
+    public Boolean equals(NGGameEngineMemoryAddress aAddress) {
+        return aAddress.getPage() == FPage && aAddress.getBase() == FBase && aAddress.getOffset() == FOffset;
+    }
+
 }
