@@ -11,6 +11,7 @@ public class NGGameEngineMemory extends NGUniplayObject {
     protected int FOffsetSize;
     protected NGGameEngineMemoryManager FManager;
     protected ArrayList<NGGameEngineMemoryCell> FCells;
+    protected NGGameEngineMemoryTransaction FTransaction;
 
     protected NGGameEngineMemoryCell allocateCell(int aPage, int aBase, int aOffset) {
         NGGameEngineMemoryCell cell = new NGGameEngineMemoryCell(aPage, aBase, aOffset);
@@ -33,6 +34,20 @@ public class NGGameEngineMemory extends NGUniplayObject {
         }
     }
 
+    protected void raiseCellChangedEvent(NGGameEngineMemoryCell aCell) {
+        //ToDo
+    }
+
+    protected void InternalSetCellValue(NGGameEngineMemoryCell aCell, Object aValue) {
+        aCell.setValue(aValue);
+        if (FTransaction.getInTransaction()) {
+            FTransaction.add(aCell);
+        }
+        else {
+            raiseCellChangedEvent(aCell);
+        }
+    }
+
     @Override
     protected void DoInitialize() {
         super.DoInitialize();
@@ -43,6 +58,7 @@ public class NGGameEngineMemory extends NGUniplayObject {
         super();
         FManager = aManager;
         FCells = new ArrayList<NGGameEngineMemoryCell>();
+        FTransaction = new NGGameEngineMemoryTransaction();
         FPageSize = 0;
         FBaseSize = 0;
         FOffsetSize = 0;
@@ -67,8 +83,53 @@ public class NGGameEngineMemory extends NGUniplayObject {
         }
     }
 
+    public int getAbsolutCellAddress(NGGameEngineMemoryCell aCell) {
+        return getAbsolutAddress(aCell.getAddress());
+    }
+
     public int getAbsolutAddress(NGGameEngineMemoryAddress aAddress) {
         return (aAddress.getPage() * FBaseSize * FOffsetSize) + (aAddress.getBase() * FOffsetSize) + aAddress.getOffset();
+    }
+
+    public NGGameEngineMemoryCell getCell(NGGameEngineMemoryAddress aAddress) {
+        int index = getAbsolutAddress(aAddress);
+        return getCell(index);
+    }
+
+    public NGGameEngineMemoryCell getCell(int aIndex) {
+        return FCells.get(aIndex);
+    }
+
+    public NGGameEngineMemoryCell getCell(int aPage, int aBase, int aOffset) {
+        NGGameEngineMemoryAddress address = new NGGameEngineMemoryAddress(aPage, aBase, aOffset);
+        return getCell(address);
+    }
+
+    public void setCellValue(int aPage, int aBase, int aOffset, Object aValue) {
+        NGGameEngineMemoryAddress address = new NGGameEngineMemoryAddress(aPage, aBase, aOffset);
+        setCellValue(address, aValue);
+    }
+
+    public void setCellValue(NGGameEngineMemoryAddress aAddress, Object aValue) {
+        NGGameEngineMemoryCell cell = getCell(aAddress);
+        setCellValue(cell, aValue);
+    }
+
+    public void setCellValue(int aIndex, Object aValue) {
+        NGGameEngineMemoryCell cell = FCells.get(aIndex);
+        setCellValue(cell, aValue);
+    }
+
+    public void setCellValue(NGGameEngineMemoryCell aCell, Object aValue) {
+        InternalSetCellValue(aCell, aValue);
+    }
+
+    public void BeginTransaction() {
+        FTransaction.Begin();
+    }
+
+    public void EndTransaction() {
+        FTransaction.End();
     }
 
 }

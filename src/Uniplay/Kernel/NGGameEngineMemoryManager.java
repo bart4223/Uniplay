@@ -67,4 +67,12 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
         FMemory.clear();
     }
 
+    public void BeginTransaction() {
+        FMemory.BeginTransaction();
+    }
+
+    public void EndTransaction() {
+        FMemory.EndTransaction();
+    }
+
 }
