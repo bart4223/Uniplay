@@ -10,12 +10,25 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
     protected NGUniplayObject FOwner;
     protected ArrayList<NGGameEngineMemory> FMemoryList;
     protected NGLogManager FLogManager;
-    protected int FChunkSize;
 
-    protected void Reallocate(NGGameEngineMemory aMemory, int aPageSize, int aBaseSize, int aOffsetSize) {
+    protected void ReallocateMemory(NGGameEngineMemory aMemory, int aPageSize, int aBaseSize, int aOffsetSize) {
         aMemory.Reallocate(aPageSize, aBaseSize, aOffsetSize);
         int index = FMemoryList.indexOf(aMemory);
         writeLog(String.format("Memory(%d) %d cells allocated.", index, aMemory.getAllocated()));
+    }
+
+    protected NGGameEngineMemory getMemory(int aMemoryIndex) {
+        return FMemoryList.get(aMemoryIndex);
+    }
+
+    protected NGGameEngineMemory newMemory() {
+        NGGameEngineMemory memory = new NGGameEngineMemory(this);
+        return memory;
+    }
+
+    protected int addMemory(NGGameEngineMemory aMemory) {
+        FMemoryList.add(aMemory);
+        return FMemoryList.indexOf(aMemory);
     }
 
     protected void writeLog(String aText) {
@@ -33,7 +46,6 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
     @Override
     protected void DoInitialize() {
         super.DoInitialize();
-        addMemory(1, FChunkSize, FChunkSize);
     }
 
     @Override
@@ -54,16 +66,11 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
         writeLog("Memory released!");
     }
 
-    protected NGGameEngineMemory getMemory(int aIndex) {
-        return FMemoryList.get(aIndex);
-    }
-
     public NGGameEngineMemoryManager(NGUniplayObject aOwner) {
         super();
         FOwner = aOwner;
         FLogManager = null;
         FMemoryList = new ArrayList<NGGameEngineMemory>();
-        FChunkSize = 16;
     }
 
     public void setLogManager(NGLogManager aLogManager) {
@@ -72,11 +79,6 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
 
     public NGLogManager getLogManager() {
         return FLogManager;
-    }
-
-    public void clearMemory(int aIndex) {
-        NGGameEngineMemory memory = getMemory(aIndex);
-        memory.clear();
     }
 
     public void BeginTransaction(int aIndex) {
@@ -90,10 +92,20 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
     }
 
     public int addMemory(int aPageSize, int aBaseSize, int aOffsetSize) {
-        NGGameEngineMemory memory = new NGGameEngineMemory(this);
-        FMemoryList.add(memory);
-        Reallocate(memory, aPageSize, aBaseSize, aOffsetSize);
-        return FMemoryList.size() - 1;
+        NGGameEngineMemory memory = newMemory();
+        int index = addMemory(memory);
+        ReallocateMemory(memory, aPageSize, aBaseSize, aOffsetSize);
+        return index;
+    }
+
+    public void reallocateMemory(int aMemoryIndex, int aPageSize, int aBaseSize, int aOffsetSize) {
+        NGGameEngineMemory memory = getMemory(aMemoryIndex);
+        ReallocateMemory(memory, aPageSize, aBaseSize, aOffsetSize);
+    }
+
+    public void clearMemory(int aMemoryIndex) {
+        NGGameEngineMemory memory = getMemory(aMemoryIndex);
+        memory.clear();
     }
 
 }

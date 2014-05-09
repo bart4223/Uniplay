@@ -9,6 +9,12 @@ public class NG2DGameEngine extends NGGameEngine{
         super.CreateModules();
     }
 
+    @Override
+    protected void DoInitialize() {
+        super.DoInitialize();
+        FMemoryManager.addMemory(1, 16, 16);
+    }
+
     public NG2DGameEngine(Object aOwner) {
         super(aOwner);
     }

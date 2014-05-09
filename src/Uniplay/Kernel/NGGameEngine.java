@@ -51,6 +51,7 @@ public abstract class NGGameEngine extends NGUniplayObject implements NGLogEvent
         FModuleManager.Initialize();
         FTickGenerator.Initialize();
     }
+
     @Override
     protected void AfterInitialize() {
         super.AfterInitialize();
