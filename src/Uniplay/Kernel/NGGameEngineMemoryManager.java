@@ -13,22 +13,30 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
 
     protected void ReallocateMemory(NGGameEngineMemory aMemory, int aPageSize, int aBaseSize, int aOffsetSize) {
         aMemory.Reallocate(aPageSize, aBaseSize, aOffsetSize);
-        int index = FMemoryList.indexOf(aMemory);
-        writeLog(String.format("Memory(%d) %d cells allocated.", index, aMemory.getAllocated()));
+        writeLog(String.format("Memory '%s' %d cells allocated.", aMemory.getName(), aMemory.getAllocated()));
     }
 
-    protected NGGameEngineMemory getMemory(int aMemoryIndex) {
-        return FMemoryList.get(aMemoryIndex);
+    protected NGGameEngineMemory getMemory(String aName) {
+        for (NGGameEngineMemory memory : FMemoryList) {
+            if (memory.getName().equals(aName)) {
+                return memory;
+            }
+        }
+        return null;
     }
 
-    protected NGGameEngineMemory newMemory() {
-        NGGameEngineMemory memory = new NGGameEngineMemory(this);
+    protected NGGameEngineMemory newMemory(String aName) {
+        NGGameEngineMemory memory = new NGGameEngineMemory(this, aName);
         return memory;
     }
 
-    protected int addMemory(NGGameEngineMemory aMemory) {
+    protected void addMemory(NGGameEngineMemory aMemory, int aPageSize, int aBaseSize, int aOffsetSize) {
         FMemoryList.add(aMemory);
-        return FMemoryList.indexOf(aMemory);
+        ReallocateMemory(aMemory, aPageSize, aBaseSize, aOffsetSize);
+    }
+
+    protected void clearMemory(NGGameEngineMemory aMemory) {
+        aMemory.clear();
     }
 
     protected void writeLog(String aText) {
@@ -81,31 +89,29 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
         return FLogManager;
     }
 
-    public void BeginTransaction(int aIndex) {
-        NGGameEngineMemory memory = getMemory(aIndex);
+    public void BeginTransaction(String aName) {
+        NGGameEngineMemory memory = getMemory(aName);
         memory.BeginTransaction();
     }
 
-    public void EndTransaction(int aIndex) {
-        NGGameEngineMemory memory = getMemory(aIndex);
+    public void EndTransaction(String aName) {
+        NGGameEngineMemory memory = getMemory(aName);
         memory.EndTransaction();
     }
 
-    public int addMemory(int aPageSize, int aBaseSize, int aOffsetSize) {
-        NGGameEngineMemory memory = newMemory();
-        int index = addMemory(memory);
-        ReallocateMemory(memory, aPageSize, aBaseSize, aOffsetSize);
-        return index;
+    public void addMemory(String aName, int aPageSize, int aBaseSize, int aOffsetSize) {
+        NGGameEngineMemory memory = newMemory(aName);
+        addMemory(memory, aPageSize, aBaseSize, aOffsetSize);
     }
 
-    public void reallocateMemory(int aMemoryIndex, int aPageSize, int aBaseSize, int aOffsetSize) {
-        NGGameEngineMemory memory = getMemory(aMemoryIndex);
+    public void reallocateMemory(String aName, int aPageSize, int aBaseSize, int aOffsetSize) {
+        NGGameEngineMemory memory = getMemory(aName);
         ReallocateMemory(memory, aPageSize, aBaseSize, aOffsetSize);
     }
 
-    public void clearMemory(int aMemoryIndex) {
-        NGGameEngineMemory memory = getMemory(aMemoryIndex);
-        memory.clear();
+    public void clearMemory(String aName) {
+        NGGameEngineMemory memory = getMemory(aName);
+        clearMemory(memory);
     }
 
 }

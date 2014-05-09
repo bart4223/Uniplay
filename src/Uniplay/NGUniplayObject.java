@@ -3,7 +3,7 @@ package Uniplay;
 import Uniwork.Base.NGInitializable;
 import Uniwork.Base.NGObject;
 
-public class NGUniplayObject extends NGObject implements NGInitializable{
+public abstract class NGUniplayObject extends NGObject implements NGInitializable{
 
     protected Boolean FInitialized;
 

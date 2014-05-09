@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class NGGameEngineMemory extends NGUniplayObject {
 
+    protected String FName;
     protected int FPageSize;
     protected int FBaseSize;
     protected int FOffsetSize;
@@ -54,14 +55,19 @@ public class NGGameEngineMemory extends NGUniplayObject {
         DoAllocate();
     }
 
-    public NGGameEngineMemory(NGGameEngineMemoryManager aManager) {
+    public NGGameEngineMemory(NGGameEngineMemoryManager aManager,String aName) {
         super();
+        FName = aName;
         FManager = aManager;
         FCells = new ArrayList<NGGameEngineMemoryCell>();
         FTransaction = new NGGameEngineMemoryTransaction();
         FPageSize = 0;
         FBaseSize = 0;
         FOffsetSize = 0;
+    }
+
+    public String getName() {
+        return FName;
     }
 
     public int getAllocated() {
