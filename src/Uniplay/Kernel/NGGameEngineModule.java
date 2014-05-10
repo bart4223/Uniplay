@@ -11,26 +11,26 @@ public abstract class NGGameEngineModule extends NGUniplayObject {
 
     @Override
     protected void BeforeInitialize() {
-        writeLog(String.format("Start module %s initialization...", FName));
+        writeLog(String.format("Start module [%s] initialization...", FName));
         super.BeforeInitialize();
     }
 
     @Override
     protected void AfterInitialize() {
         super.AfterInitialize();
-        writeLog(String.format("Module %s initialized!", FName));
+        writeLog(String.format("Module [%s] initialized!", FName));
     }
 
     @Override
     protected void BeforeFinalize() {
-        writeLog(String.format("Start module %s shutdown...", FName));
+        writeLog(String.format("Start module [%s] shutdown...", FName));
         super.BeforeFinalize();
     }
 
     @Override
     protected void AfterFinalize() {
         super.AfterFinalize();
-        writeLog(String.format("Module %s stopped!", FName));
+        writeLog(String.format("Module [%s] stopped!", FName));
     }
 
     protected void writeLog(String aText) {
@@ -60,6 +60,14 @@ public abstract class NGGameEngineModule extends NGUniplayObject {
 
     public NGLogManager getLogManager() {
         return FLogManager;
+    }
+
+    public void registerEventHandler(NGGameEngineEventHandler aHandler) {
+        FManager.registerEventHandler(aHandler);
+    }
+
+    public void unregisterEventHandler(NGGameEngineEventHandler aHandler) {
+        FManager.registerEventHandler(aHandler);
     }
 
 }

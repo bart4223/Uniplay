@@ -9,6 +9,7 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
 
     protected ArrayList<NGGameEngineModule> FModules;
     protected NGLogManager FLogManager;
+    protected NGGameEngineEventManager FEventManager;
     protected NGUniplayObject FOwner;
 
     @Override
@@ -62,6 +63,7 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
         FOwner = aOwner;
         FModules = new ArrayList<NGGameEngineModule>();
         FLogManager = null;
+        FEventManager = null;
     }
 
     public void addModule(NGGameEngineModule aModule) {
@@ -93,6 +95,26 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
 
     public NGLogManager getLogManager() {
         return FLogManager;
+    }
+
+    public void setEventManager(NGGameEngineEventManager aEventManager) {
+        FEventManager = aEventManager;
+    }
+
+    public NGGameEngineEventManager getEventManager() {
+        return FEventManager;
+    }
+
+    public void registerEventHandler(NGGameEngineEventHandler aHandler) {
+        if (FEventManager != null) {
+            FEventManager.addHandler(aHandler);
+        }
+    }
+
+    public void unregisterEventHandler(NGGameEngineEventHandler aHandler) {
+        if (FEventManager != null) {
+            FEventManager.removeHandler(aHandler);
+        }
     }
 
 }

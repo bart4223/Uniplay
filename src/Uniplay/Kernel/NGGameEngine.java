@@ -6,7 +6,7 @@ import Uniwork.Base.NGLogEventListener;
 import Uniwork.Base.NGLogManager;
 import Uniwork.Base.NGTickGenerator;
 
-public abstract class NGGameEngine extends NGUniplayObject implements NGLogEventListener, NGGameEngineEventHandlerInterface{
+public abstract class NGGameEngine extends NGUniplayObject implements NGLogEventListener{
 
     protected NGGameEngineModuleManager FModuleManager;
     protected NGGameEngineMemoryManager FMemoryManager;
@@ -30,8 +30,14 @@ public abstract class NGGameEngine extends NGUniplayObject implements NGLogEvent
         FLogManager.writeLog(aText, getClass().getSimpleName());
     }
 
-    protected void CreateModules() {
+    protected void DoCreateModules() {
 
+    }
+
+    protected void CreateModules() {
+        writeLog("Start modules creation...");
+        DoCreateModules();
+        writeLog("All modules created.");
     }
 
     @Override
@@ -43,6 +49,8 @@ public abstract class NGGameEngine extends NGUniplayObject implements NGLogEvent
         FModuleManager.setLogManager(FLogManager);
         FEventManager.setLogManager(FLogManager);
         FTickGenerator.setLogManager(FLogManager);
+        FModuleManager.setEventManager(FEventManager);
+        CreateModules();
     }
 
     @Override
@@ -88,7 +96,6 @@ public abstract class NGGameEngine extends NGUniplayObject implements NGLogEvent
         FEventManager = new NGGameEngineEventManager(this);
         FTickGenerator = new NGTickGenerator(10);
         FLogManager = new NGLogManager();
-        CreateModules();
     }
 
     @Override
@@ -125,16 +132,6 @@ public abstract class NGGameEngine extends NGUniplayObject implements NGLogEvent
             DoStop();
             FRunning = false;
         }
-    }
-
-    @Override
-    public void registerEventHandler(NGGameEngineEventHandler aHandler) {
-        FEventManager.addHandler(aHandler);
-    }
-
-    @Override
-    public void unregisterEventHandler(NGGameEngineEventHandler aHandler) {
-        FEventManager.removeHandler(aHandler);
     }
 
 }

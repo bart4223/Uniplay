@@ -1,12 +1,23 @@
 package Uniplay;
 
+import Uniplay.Graphics.NG2DGraphicEngine;
 import Uniplay.Kernel.NGGameEngine;
 
 public class NG2DGameEngine extends NGGameEngine{
 
+    protected NG2DGraphicEngine FGraphicEngine;
+
     @Override
-    protected void CreateModules() {
-        super.CreateModules();
+    protected void DoCreateModules() {
+        super.DoCreateModules();
+        FGraphicEngine = new NG2DGraphicEngine(FModuleManager, "2D Graphic Engine");
+        writeLog(String.format("Module [%s] created.",FGraphicEngine.getName()));
+    }
+
+    @Override
+    protected void BeforeInitialize() {
+        super.BeforeInitialize();
+        FModuleManager.addModule(FGraphicEngine);
     }
 
     @Override
