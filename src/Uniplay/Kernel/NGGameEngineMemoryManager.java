@@ -13,7 +13,7 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
 
     protected void ReallocateMemory(NGGameEngineMemory aMemory, int aPageSize, int aBaseSize, int aOffsetSize) {
         aMemory.Reallocate(aPageSize, aBaseSize, aOffsetSize);
-        writeLog(String.format("Memory '%s' %d cells allocated.", aMemory.getName(), aMemory.getAllocated()));
+        writeLog(String.format("Memory[%s] %d cells allocated.", aMemory.getName(), aMemory.getAllocated()));
     }
 
     protected NGGameEngineMemory getMemory(String aName) {
@@ -49,11 +49,6 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
     protected void BeforeInitialize() {
         writeLog("Start memory initialization...");
         super.BeforeInitialize();
-    }
-
-    @Override
-    protected void DoInitialize() {
-        super.DoInitialize();
     }
 
     @Override

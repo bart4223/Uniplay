@@ -1,11 +1,15 @@
 package Uniplay;
 
+import Uniplay.Kernel.NGGameEngineEventListener;
 import Uniwork.Base.NGInitializable;
 import Uniwork.Base.NGObject;
+
+import java.util.ArrayList;
 
 public abstract class NGUniplayObject extends NGObject implements NGInitializable{
 
     protected Boolean FInitialized;
+    protected ArrayList<NGGameEngineEventListener> FEventListeners;
 
     protected void BeforeInitialize() {
 
@@ -46,6 +50,7 @@ public abstract class NGUniplayObject extends NGObject implements NGInitializabl
     public NGUniplayObject() {
         super();
         FInitialized = false;
+        FEventListeners = new ArrayList<NGGameEngineEventListener>();
     }
 
     @Override
@@ -62,6 +67,14 @@ public abstract class NGUniplayObject extends NGObject implements NGInitializabl
             InternalFinalize();
             FInitialized = false;
         }
+    }
+
+    public void addEventListener(NGGameEngineEventListener aListener) {
+        FEventListeners.add(aListener);
+    }
+
+    public void removeEventListener(NGGameEngineEventListener aListener) {
+        FEventListeners.remove(aListener);
     }
 
 }
