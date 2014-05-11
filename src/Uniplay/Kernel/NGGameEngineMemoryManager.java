@@ -37,7 +37,13 @@ public class NGGameEngineMemoryManager extends NGUniplayObject implements NGGame
     }
 
     protected void clearMemory(NGGameEngineMemory aMemory) {
-        aMemory.clear();
+        aMemory.BeginTransaction();
+        try{
+            aMemory.clearCells();
+        }
+        finally {
+            aMemory.EndTransaction();
+        }
     }
 
     protected void writeLog(String aText) {

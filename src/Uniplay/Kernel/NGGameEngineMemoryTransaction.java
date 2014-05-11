@@ -40,4 +40,8 @@ public class NGGameEngineMemoryTransaction extends NGObject {
         return FInTransaction;
     }
 
+    public ArrayList<NGGameEngineMemoryCell> getCells() {
+        return FCells;
+    }
+
 }

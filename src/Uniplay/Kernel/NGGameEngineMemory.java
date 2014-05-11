@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 public class NGGameEngineMemory extends NGUniplayObject {
 
+    public static String EVT_MEMORY_ALLOCATED = "Memory.Allocated";
+    public static String EVT_MEMORY_CELLS_CHANGED = "Memory.Cells.Changed";
+
     protected String FName;
     protected int FPageSize;
     protected int FBaseSize;
@@ -14,6 +17,10 @@ public class NGGameEngineMemory extends NGUniplayObject {
     protected ArrayList<NGGameEngineMemoryCell> FCells;
     protected NGGameEngineMemoryTransaction FTransaction;
 
+    protected void addCellTransaction(NGGameEngineMemoryCell aCell) {
+        FTransaction.add(aCell);
+    }
+
     protected NGGameEngineMemoryCell allocateCell(int aPage, int aBase, int aOffset) {
         NGGameEngineMemoryCell cell = new NGGameEngineMemoryCell(aPage, aBase, aOffset);
         FCells.add(cell);
@@ -21,7 +28,7 @@ public class NGGameEngineMemory extends NGUniplayObject {
     }
 
     protected void DoReallocate() {
-        clear();
+        clearCells();
         DoAllocate();
     }
 
@@ -38,21 +45,36 @@ public class NGGameEngineMemory extends NGUniplayObject {
 
     protected void InternalSetCellValue(NGGameEngineMemoryCell aCell, Object aValue) {
         aCell.setValue(aValue);
-        if (FTransaction.getInTransaction()) {
+        if (getInTransaction()) {
+            addCellTransaction(aCell);
+        }
+        else {
+            ArrayList<NGGameEngineMemoryCell> cells = new ArrayList<NGGameEngineMemoryCell>();
+            cells.add(aCell);
+            raiseCellsChangedEvent(cells);
+        }
+    }
+
+    protected void clearCell(NGGameEngineMemoryCell aCell) {
+        aCell.clear();
+        if (getInTransaction()) {
             FTransaction.add(aCell);
         }
         else {
-            raiseCellChangedEvent(aCell);
+            ArrayList<NGGameEngineMemoryCell> cells = new ArrayList<NGGameEngineMemoryCell>();
+            cells.add(aCell);
+            raiseCellsChangedEvent(cells);
         }
     }
 
     protected void raiseAllocatedEvent() {
         NGGameEngineEventMemoryAllocated event = new NGGameEngineEventMemoryAllocated(this, this);
-        raiseEvent("Memory.Allocated", event);
+        raiseEvent(EVT_MEMORY_ALLOCATED, event);
     }
 
-    protected void raiseCellChangedEvent(NGGameEngineMemoryCell aCell) {
-        //ToDo
+    protected void raiseCellsChangedEvent(ArrayList<NGGameEngineMemoryCell> aCells) {
+        NGGameEngineEventMemoryCellsChanged event = new NGGameEngineEventMemoryCellsChanged(this, aCells);
+        raiseEvent(EVT_MEMORY_CELLS_CHANGED, event);
     }
 
     @Override
@@ -89,9 +111,9 @@ public class NGGameEngineMemory extends NGUniplayObject {
         }
     }
 
-    public void clear() {
+    public void clearCells() {
         for (NGGameEngineMemoryCell cell : FCells) {
-            cell.clear();
+            clearCell(cell);
         }
     }
 
@@ -141,7 +163,12 @@ public class NGGameEngineMemory extends NGUniplayObject {
     }
 
     public void EndTransaction() {
+        raiseCellsChangedEvent(FTransaction.getCells());
         FTransaction.End();
+    }
+
+    public Boolean getInTransaction() {
+        return FTransaction.getInTransaction();
     }
 
 }

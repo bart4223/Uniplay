@@ -22,7 +22,7 @@ public class NGGameEngineEventManager extends NGUniplayObject implements NGGameE
     }
 
     protected void DoHandleEvent(String aName, NGGameEngineEvent aEvent) {
-        writeLog(10, String.format("DoHandleEvent %s", aName));
+        writeLog(10, String.format("DoHandleEvent->[%s]", aName));
         for (NGGameEngineEventHandler handler : FHandlers) {
             if (handler.getName().equals(aName)) {
                 handler.handleEvent(aEvent);
