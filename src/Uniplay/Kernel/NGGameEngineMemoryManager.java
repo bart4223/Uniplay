@@ -37,13 +37,21 @@ public class NGGameEngineMemoryManager extends NGUniplayObject implements NGGame
     }
 
     protected void clearMemory(NGGameEngineMemory aMemory) {
-        aMemory.BeginTransaction();
+        BeginTransaction(aMemory);
         try{
             aMemory.clearCells();
         }
         finally {
-            aMemory.EndTransaction();
+            EndTransaction(aMemory);
         }
+    }
+
+    protected void BeginTransaction(NGGameEngineMemory aMemory) {
+        aMemory.BeginTransaction();
+    }
+
+    protected void EndTransaction(NGGameEngineMemory aMemory) {
+        aMemory.EndTransaction();
     }
 
     protected void writeLog(String aText) {
@@ -97,12 +105,12 @@ public class NGGameEngineMemoryManager extends NGUniplayObject implements NGGame
 
     public void BeginTransaction(String aName) {
         NGGameEngineMemory memory = getMemory(aName);
-        memory.BeginTransaction();
+        BeginTransaction(memory);
     }
 
     public void EndTransaction(String aName) {
         NGGameEngineMemory memory = getMemory(aName);
-        memory.EndTransaction();
+        EndTransaction(memory);
     }
 
     public void addMemory(String aName, int aPageSize, int aBaseSize, int aOffsetSize) {
