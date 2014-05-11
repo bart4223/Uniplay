@@ -22,8 +22,8 @@ public class NG2DGameEngine extends NGGameEngine{
     }
 
     @Override
-    protected void DoInitialize() {
-        super.DoInitialize();
+    protected void AfterInitialize() {
+        super.AfterInitialize();
         FMemoryManager.addMemory("MAIN", 1, 16, 16);
     }
 

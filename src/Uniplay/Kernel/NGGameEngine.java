@@ -27,7 +27,11 @@ public abstract class NGGameEngine extends NGUniplayObject implements NGLogEvent
     }
 
     protected void writeLog(String aText) {
-        FLogManager.writeLog(aText, getClass().getSimpleName());
+        writeLog(0, aText);
+    }
+
+    protected void writeLog(int aLogLevel, String aText) {
+        FLogManager.writeLog(aLogLevel, aText, getClass().getName());
     }
 
     protected void DoCreateModules() {
@@ -45,9 +49,10 @@ public abstract class NGGameEngine extends NGUniplayObject implements NGLogEvent
         super.BeforeInitialize();
         FLogManager.addEventListener(this);
         writeLog("Welcome to Uniplay engine...");
-        FMemoryManager.setLogManager(FLogManager);
-        FModuleManager.setLogManager(FLogManager);
         FEventManager.setLogManager(FLogManager);
+        FMemoryManager.setLogManager(FLogManager);
+        FMemoryManager.addEventListener(FEventManager);
+        FModuleManager.setLogManager(FLogManager);
         FTickGenerator.setLogManager(FLogManager);
         CreateModules();
     }
@@ -56,10 +61,9 @@ public abstract class NGGameEngine extends NGUniplayObject implements NGLogEvent
     protected void DoInitialize() {
         writeLog("Start Uniplay engine initialization...");
         super.DoInitialize();
+        FEventManager.Initialize();
         FMemoryManager.Initialize();
         FModuleManager.Initialize();
-        FEventManager.Initialize();
-        FMemoryManager.addEventListener(FEventManager);
         FTickGenerator.Initialize();
     }
 
@@ -73,9 +77,9 @@ public abstract class NGGameEngine extends NGUniplayObject implements NGLogEvent
     protected void DoFinalize() {
         writeLog("Start Uniplay engine shutdown...");
         FTickGenerator.Finalize();
-        FEventManager.Finalize();
         FModuleManager.Finalize();
         FMemoryManager.Finalize();
+        FEventManager.Finalize();
         super.DoFinalize();
     }
 
@@ -84,14 +88,6 @@ public abstract class NGGameEngine extends NGUniplayObject implements NGLogEvent
         super.AfterFinalize();
         writeLog("Uniplay engine stopped!");
         writeLog("Bye Bye...");
-    }
-
-    @Override
-    protected Object DoResolveObject(String aName, Class aClass) {
-        if (aName.equals("EventManager") && aClass == FEventManager.getClass()) {
-            return FEventManager;
-        }
-        return null;
     }
 
     public NGGameEngine(Object aOwner) {

@@ -44,7 +44,7 @@ public abstract class NGGameEngineModule extends NGUniplayObject {
 
     protected void writeLog(String aText) {
         if (FLogManager != null) {
-            FLogManager.writeLog(aText);
+            FLogManager.writeLog(aText, this.getClass().getName());
         }
     }
 

@@ -33,10 +33,7 @@ public class NGGameEngineMemory extends NGUniplayObject {
                 }
             }
         }
-    }
-
-    protected void raiseCellChangedEvent(NGGameEngineMemoryCell aCell) {
-        //ToDo
+        raiseAllocatedEvent();
     }
 
     protected void InternalSetCellValue(NGGameEngineMemoryCell aCell, Object aValue) {
@@ -47,6 +44,15 @@ public class NGGameEngineMemory extends NGUniplayObject {
         else {
             raiseCellChangedEvent(aCell);
         }
+    }
+
+    protected void raiseAllocatedEvent() {
+        NGGameEngineEventMemoryAllocated event = new NGGameEngineEventMemoryAllocated(this, this);
+        raiseEvent("Memory.Allocated", event);
+    }
+
+    protected void raiseCellChangedEvent(NGGameEngineMemoryCell aCell) {
+        //ToDo
     }
 
     @Override

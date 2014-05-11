@@ -12,13 +12,17 @@ public class NGGameEngineEventManager extends NGUniplayObject implements NGGameE
     protected ArrayList<NGGameEngineEventHandler> FHandlers;
 
     protected void writeLog(String aText) {
+        writeLog(0, aText);
+    }
+
+    protected void writeLog(int aLogLevel, String aText) {
         if (FLogManager != null) {
-            FLogManager.writeLog(aText, getClass().getSimpleName());
+            FLogManager.writeLog(aLogLevel, aText, getClass().getName());
         }
     }
 
     protected void DoHandleEvent(String aName, NGGameEngineEvent aEvent) {
-        writeLog(String.format("DoHandleEvent %s", aName, 5));
+        writeLog(10, String.format("DoHandleEvent %s", aName));
         for (NGGameEngineEventHandler handler : FHandlers) {
             if (handler.getName().equals(aName)) {
                 handler.handleEvent(aEvent);

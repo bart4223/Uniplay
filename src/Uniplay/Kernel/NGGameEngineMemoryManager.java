@@ -5,7 +5,7 @@ import Uniwork.Base.NGLogManager;
 
 import java.util.ArrayList;
 
-public class NGGameEngineMemoryManager extends NGUniplayObject {
+public class NGGameEngineMemoryManager extends NGUniplayObject implements NGGameEngineEventListener {
 
     protected NGUniplayObject FOwner;
     protected ArrayList<NGGameEngineMemory> FMemoryList;
@@ -27,6 +27,7 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
 
     protected NGGameEngineMemory newMemory(String aName) {
         NGGameEngineMemory memory = new NGGameEngineMemory(this, aName);
+        memory.addEventListener(this);
         return memory;
     }
 
@@ -40,8 +41,12 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
     }
 
     protected void writeLog(String aText) {
+        writeLog(0, aText);
+    }
+
+    protected void writeLog(int aLogLevel, String aText) {
         if (FLogManager != null) {
-            FLogManager.writeLog(aText, getClass().getSimpleName());
+            FLogManager.writeLog(aLogLevel, aText, getClass().getName());
         }
     }
 
@@ -107,6 +112,13 @@ public class NGGameEngineMemoryManager extends NGUniplayObject {
     public void clearMemory(String aName) {
         NGGameEngineMemory memory = getMemory(aName);
         clearMemory(memory);
+    }
+
+    @Override
+    public void handleEvent(String name, NGGameEngineEvent e) {
+        for (NGGameEngineEventListener listener : FEventListeners) {
+            listener.handleEvent(name, e);
+        }
     }
 
 }
