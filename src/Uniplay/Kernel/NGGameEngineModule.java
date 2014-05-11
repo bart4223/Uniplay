@@ -33,6 +33,15 @@ public abstract class NGGameEngineModule extends NGUniplayObject {
         writeLog(String.format("Module [%s] stopped!", FName));
     }
 
+    @Override
+    protected Object DoResolveObject(String aName, Class aClass) {
+        Object result = super.DoResolveObject(aName, aClass);
+        if (result == null) {
+            return FManager.ResolveObject(aName, aClass);
+        }
+        return result;
+    }
+
     protected void writeLog(String aText) {
         if (FLogManager != null) {
             FLogManager.writeLog(aText);
@@ -63,11 +72,13 @@ public abstract class NGGameEngineModule extends NGUniplayObject {
     }
 
     public void registerEventHandler(NGGameEngineEventHandler aHandler) {
-        FManager.registerEventHandler(aHandler);
+        NGGameEngineEventHandlerRegistration reg = (NGGameEngineEventHandlerRegistration)ResolveObject(NGGameEngineEventHandlerRegistration.class);
+        reg.registerEventHandler(aHandler);
     }
 
     public void unregisterEventHandler(NGGameEngineEventHandler aHandler) {
-        FManager.registerEventHandler(aHandler);
+        NGGameEngineEventHandlerRegistration reg = (NGGameEngineEventHandlerRegistration)ResolveObject(NGGameEngineEventHandlerRegistration.class);
+        reg.unregisterEventHandler(aHandler);
     }
 
 }

@@ -9,7 +9,6 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
 
     protected ArrayList<NGGameEngineModule> FModules;
     protected NGLogManager FLogManager;
-    protected NGGameEngineEventManager FEventManager;
     protected NGUniplayObject FOwner;
 
     @Override
@@ -52,6 +51,15 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
         }
     }
 
+    @Override
+    protected Object DoResolveObject(String aName, Class aClass) {
+        Object result = super.DoResolveObject(aName, aClass);
+        if (result == null) {
+            return FOwner.ResolveObject(aName, aClass);
+        }
+        return result;
+    }
+
     protected void writeLog(String aText) {
         if (FLogManager != null) {
             FLogManager.writeLog(aText, getClass().getSimpleName());
@@ -63,7 +71,6 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
         FOwner = aOwner;
         FModules = new ArrayList<NGGameEngineModule>();
         FLogManager = null;
-        FEventManager = null;
     }
 
     public void addModule(NGGameEngineModule aModule) {
@@ -95,26 +102,6 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
 
     public NGLogManager getLogManager() {
         return FLogManager;
-    }
-
-    public void setEventManager(NGGameEngineEventManager aEventManager) {
-        FEventManager = aEventManager;
-    }
-
-    public NGGameEngineEventManager getEventManager() {
-        return FEventManager;
-    }
-
-    public void registerEventHandler(NGGameEngineEventHandler aHandler) {
-        if (FEventManager != null) {
-            FEventManager.addHandler(aHandler);
-        }
-    }
-
-    public void unregisterEventHandler(NGGameEngineEventHandler aHandler) {
-        if (FEventManager != null) {
-            FEventManager.removeHandler(aHandler);
-        }
     }
 
 }

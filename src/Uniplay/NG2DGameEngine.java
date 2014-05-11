@@ -18,6 +18,7 @@ public class NG2DGameEngine extends NGGameEngine{
     protected void BeforeInitialize() {
         super.BeforeInitialize();
         FModuleManager.addModule(FGraphicEngine);
+        writeLog(String.format("Module [%s] added.",FGraphicEngine.getName()));
     }
 
     @Override
