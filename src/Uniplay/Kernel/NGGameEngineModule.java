@@ -48,6 +48,10 @@ public abstract class NGGameEngineModule extends NGUniplayObject {
         }
     }
 
+    protected void DoLoad() {
+
+    }
+
     public NGGameEngineModule(NGGameEngineModuleManager aManager, String aName) {
         super();
         FManager = aManager;
@@ -79,6 +83,11 @@ public abstract class NGGameEngineModule extends NGUniplayObject {
     public void unregisterEventHandler(NGGameEngineEventHandler aHandler) {
         NGGameEngineEventHandlerRegistration reg = (NGGameEngineEventHandlerRegistration)ResolveObject(NGGameEngineEventHandlerRegistration.class);
         reg.unregisterEventHandler(aHandler);
+    }
+
+    public void Load() {
+        DoLoad();
+        writeLog(String.format("Module [%s] loaded.", FName));
     }
 
 }

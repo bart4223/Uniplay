@@ -12,11 +12,6 @@ public class NG2DGameEngine extends NGGameEngine{
         super.DoCreateModules();
         FGraphicEngine = new NG2DGraphicEngine(FModuleManager, "2D Graphic Engine");
         writeLog(String.format("Module [%s] created.",FGraphicEngine.getName()));
-    }
-
-    @Override
-    protected void BeforeInitialize() {
-        super.BeforeInitialize();
         FModuleManager.addModule(FGraphicEngine);
         writeLog(String.format("Module [%s] added.",FGraphicEngine.getName()));
     }

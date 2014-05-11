@@ -108,4 +108,10 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
         return FLogManager;
     }
 
+    public void LoadModules() {
+        for (NGGameEngineModule module : FModules) {
+            module.Load();
+        }
+    }
+
 }

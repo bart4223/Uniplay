@@ -41,7 +41,17 @@ public abstract class NGGameEngine extends NGUniplayObject implements NGLogEvent
     protected void CreateModules() {
         writeLog("Start modules creation...");
         DoCreateModules();
-        writeLog("All modules created.");
+        writeLog("All modules created!");
+    }
+
+    protected void DoLoadModules() {
+        FModuleManager.LoadModules();
+    }
+
+    protected void LoadModules() {
+        writeLog("Start all modules loading...");
+        DoLoadModules();
+        writeLog("All modules loaded!");
     }
 
     @Override
@@ -55,6 +65,7 @@ public abstract class NGGameEngine extends NGUniplayObject implements NGLogEvent
         FModuleManager.setLogManager(FLogManager);
         FTickGenerator.setLogManager(FLogManager);
         CreateModules();
+        LoadModules();
     }
 
     @Override
