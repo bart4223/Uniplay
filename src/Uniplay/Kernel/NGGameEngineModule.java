@@ -1,13 +1,10 @@
 package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayComponent;
-import Uniwork.Base.NGLogManager;
 
 public abstract class NGGameEngineModule extends NGUniplayComponent {
 
     protected NGGameEngineModuleManager FManager;
-    protected String FName;
-    protected NGLogManager FLogManager;
 
     @Override
     protected void BeforeInitialize() {
@@ -42,12 +39,6 @@ public abstract class NGGameEngineModule extends NGUniplayComponent {
         return result;
     }
 
-    protected void writeLog(String aText) {
-        if (FLogManager != null) {
-            FLogManager.writeLog(aText, this.getClass().getName());
-        }
-    }
-
     protected void DoLoad() {
 
     }
@@ -55,24 +46,10 @@ public abstract class NGGameEngineModule extends NGUniplayComponent {
     public NGGameEngineModule(NGGameEngineModuleManager aManager, String aName) {
         super(aManager, aName);
         FManager = aManager;
-        FName = aName;
-        FLogManager = null;
     }
 
     public NGGameEngineModuleManager getManager() {
         return FManager;
-    }
-
-    public String getName() {
-        return FName;
-    }
-
-    public void setLogManager(NGLogManager aLogManager) {
-        FLogManager = aLogManager;
-    }
-
-    public NGLogManager getLogManager() {
-        return FLogManager;
     }
 
     public void registerEventHandler(NGGameEngineEventHandler aHandler) {

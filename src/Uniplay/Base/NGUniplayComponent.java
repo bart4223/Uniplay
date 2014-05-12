@@ -3,6 +3,7 @@ package Uniplay.Base;
 import Uniplay.Kernel.NGGameEngineEvent;
 import Uniplay.Kernel.NGGameEngineEventListener;
 import Uniwork.Base.NGInitializable;
+import Uniwork.Base.NGLogManager;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,18 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     protected Boolean FInitialized;
     protected String FName;
     protected NGUniplayObject FOwner;
+    protected NGLogManager FLogManager;
     protected ArrayList<NGGameEngineEventListener> FEventListeners;
+
+    protected void writeLog(String aText) {
+        writeLog(0, aText);
+    }
+
+    protected void writeLog(int aLogLevel, String aText) {
+        if (FLogManager != null) {
+            FLogManager.writeLog(aLogLevel, aText, getClass().getName());
+        }
+    }
 
     protected void BeforeInitialize() {
 
@@ -61,6 +73,7 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         FOwner = aOwner;
         FInitialized = false;
         FEventListeners = new ArrayList<NGGameEngineEventListener>();
+        FLogManager = null;
     }
 
     public String getName() {
@@ -85,6 +98,14 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
             InternalFinalize();
             FInitialized = false;
         }
+    }
+
+    public void setLogManager(NGLogManager aLogManager) {
+        FLogManager = aLogManager;
+    }
+
+    public NGLogManager getLogManager() {
+        return FLogManager;
     }
 
     public void addEventListener(NGGameEngineEventListener aListener) {

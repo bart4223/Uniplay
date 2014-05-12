@@ -2,14 +2,12 @@ package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
-import Uniwork.Base.NGLogManager;
 
 import java.util.ArrayList;
 
 public class NGGameEngineMemoryManager extends NGUniplayComponent implements NGGameEngineEventListener {
 
     protected ArrayList<NGGameEngineMemory> FMemoryList;
-    protected NGLogManager FLogManager;
 
     protected void ReallocateMemory(NGGameEngineMemory aMemory, int aPageSize, int aBaseSize, int aOffsetSize) {
         aMemory.Reallocate(aPageSize, aBaseSize, aOffsetSize);
@@ -54,16 +52,6 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent implements NGG
         aMemory.EndTransaction();
     }
 
-    protected void writeLog(String aText) {
-        writeLog(0, aText);
-    }
-
-    protected void writeLog(int aLogLevel, String aText) {
-        if (FLogManager != null) {
-            FLogManager.writeLog(aLogLevel, aText, getClass().getName());
-        }
-    }
-
     @Override
     protected void BeforeInitialize() {
         writeLog("Start memory initialization...");
@@ -90,16 +78,7 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent implements NGG
 
     public NGGameEngineMemoryManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
-        FLogManager = null;
         FMemoryList = new ArrayList<NGGameEngineMemory>();
-    }
-
-    public void setLogManager(NGLogManager aLogManager) {
-        FLogManager = aLogManager;
-    }
-
-    public NGLogManager getLogManager() {
-        return FLogManager;
     }
 
     public void BeginTransaction(String aName) {

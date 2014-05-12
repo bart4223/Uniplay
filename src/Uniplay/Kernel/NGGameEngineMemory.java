@@ -165,4 +165,8 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         return FTransaction.getInTransaction();
     }
 
+    public NGGameEngineMemoryManager getManager() {
+        return FManager;
+    }
+
 }

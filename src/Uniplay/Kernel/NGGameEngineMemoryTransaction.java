@@ -20,7 +20,9 @@ public class NGGameEngineMemoryTransaction extends NGUniplayObject {
     }
 
     public void add(NGGameEngineMemoryCell aCell) {
-        FCells.add(aCell);
+        if (FCells.indexOf(aCell) < 0) {
+            FCells.add(aCell);
+        }
     }
 
     public void Begin() {

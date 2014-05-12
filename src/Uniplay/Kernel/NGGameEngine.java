@@ -17,9 +17,7 @@ public abstract class NGGameEngine extends NGUniplayComponent implements NGLogEv
     protected NGGameEngineModuleManager FModuleManager;
     protected NGGameEngineMemoryManager FMemoryManager;
     protected NGGameEngineEventManager FEventManager;
-    protected NGLogManager FLogManager;
     protected NGTickGenerator FTickGenerator;
-    protected Object FOnwer;
     protected Boolean FRunning;
 
     protected void DoRun() {
@@ -30,14 +28,6 @@ public abstract class NGGameEngine extends NGUniplayComponent implements NGLogEv
     protected void DoStop() {
         FTickGenerator.SetAllEnabled(false);
         writeLog("Uniplay engine is on hold...");
-    }
-
-    protected void writeLog(String aText) {
-        writeLog(0, aText);
-    }
-
-    protected void writeLog(int aLogLevel, String aText) {
-        FLogManager.writeLog(aLogLevel, aText, getClass().getName());
     }
 
     protected void DoCreateModules() {
