@@ -7,7 +7,7 @@ import Uniwork.Base.NGLogManager;
 
 import java.util.ArrayList;
 
-public abstract class NGUniplayComponent extends NGUniplayObject implements NGInitializable{
+public abstract class NGUniplayComponent extends NGUniplayObject implements NGInitializable, NGGameEngineEventListener{
 
     protected Boolean FInitialized;
     protected String FName;

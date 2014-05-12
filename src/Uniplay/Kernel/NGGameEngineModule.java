@@ -5,6 +5,7 @@ import Uniplay.Base.NGUniplayComponent;
 public abstract class NGGameEngineModule extends NGUniplayComponent {
 
     protected NGGameEngineModuleManager FManager;
+    protected String FCaption;
 
     @Override
     protected void BeforeInitialize() {
@@ -46,10 +47,19 @@ public abstract class NGGameEngineModule extends NGUniplayComponent {
     public NGGameEngineModule(NGGameEngineModuleManager aManager, String aName) {
         super(aManager, aName);
         FManager = aManager;
+        FCaption = "";
     }
 
     public NGGameEngineModuleManager getManager() {
         return FManager;
+    }
+
+    public void setCaption(String aCaption) {
+        FCaption = aCaption;
+    }
+
+    public String getCaption() {
+        return FCaption;
     }
 
     public void registerEventHandler(NGGameEngineEventHandler aHandler) {
@@ -65,6 +75,11 @@ public abstract class NGGameEngineModule extends NGUniplayComponent {
     public void Load() {
         DoLoad();
         writeLog(String.format("Module [%s] loaded.", FName));
+    }
+
+    @Override
+    public void handleEvent(String name, NGGameEngineEvent e) {
+
     }
 
 }

@@ -91,4 +91,11 @@ public class NGGameEngineModuleManager extends NGUniplayComponent {
         }
     }
 
+    @Override
+    public void handleEvent(String name, NGGameEngineEvent e) {
+        for (NGGameEngineEventListener listener : FEventListeners) {
+            listener.handleEvent(name, e);
+        }
+    }
+
 }

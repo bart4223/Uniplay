@@ -169,4 +169,9 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         return FManager;
     }
 
+    @Override
+    public void handleEvent(String name, NGGameEngineEvent e) {
+
+    }
+
 }

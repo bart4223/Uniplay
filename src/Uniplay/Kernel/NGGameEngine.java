@@ -156,6 +156,11 @@ public abstract class NGGameEngine extends NGUniplayComponent implements NGLogEv
     }
 
     @Override
+    public void handleEvent(String name, NGGameEngineEvent e) {
+
+    }
+
+    @Override
     public void registerEventHandler(NGGameEngineEventHandler aHandler) {
         FEventManager.addHandler(aHandler);
     }
