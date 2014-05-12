@@ -1,5 +1,6 @@
 package Uniplay;
 
+import Uniplay.Base.NGUniplayObject;
 import Uniplay.Graphics.NG2DGraphicEngine;
 import Uniplay.Kernel.NGGameEngine;
 
@@ -11,9 +12,9 @@ public class NG2DGameEngine extends NGGameEngine{
     protected void DoCreateModules() {
         super.DoCreateModules();
         FGraphicEngine = new NG2DGraphicEngine(FModuleManager, "2D Graphic Engine");
-        writeLog(String.format("Module [%s] created.",FGraphicEngine.getName()));
+        writeLog(String.format("Module [%s] created.", FGraphicEngine.getName()));
         FModuleManager.addModule(FGraphicEngine);
-        writeLog(String.format("Module [%s] added.",FGraphicEngine.getName()));
+        writeLog(String.format("Module [%s] added.", FGraphicEngine.getName()));
     }
 
     @Override
@@ -23,8 +24,20 @@ public class NG2DGameEngine extends NGGameEngine{
         FMemoryManager.clearMemory("MAIN");
     }
 
-    public NG2DGameEngine(Object aOwner) {
-        super(aOwner);
+    public NG2DGameEngine() {
+        this("");
+    }
+
+    public NG2DGameEngine(NGUniplayObject aOwner) {
+        this(aOwner, "");
+    }
+
+    public NG2DGameEngine(String aName) {
+        this(null, aName);
+    }
+
+    public NG2DGameEngine(NGUniplayObject aOwner, String aName) {
+        super(aOwner, aName);
     }
 
 }

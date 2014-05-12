@@ -2,7 +2,7 @@ package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayObject;
 
-public class NGGameEngineMemoryAddress extends NGUniplayObject{
+public class NGGameEngineMemoryAddress extends NGUniplayObject {
 
     protected int FPage;
     protected int FBase;

@@ -1,13 +1,13 @@
 package Uniplay.Kernel;
 
+import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniwork.Base.NGLogManager;
 
 import java.util.ArrayList;
 
-public class NGGameEngineEventManager extends NGUniplayObject implements NGGameEngineEventListener {
+public class NGGameEngineEventManager extends NGUniplayComponent implements NGGameEngineEventListener {
 
-    protected NGUniplayObject FOwner;
     protected NGLogManager FLogManager;
     protected ArrayList<NGGameEngineEventHandler> FHandlers;
 
@@ -55,15 +55,10 @@ public class NGGameEngineEventManager extends NGUniplayObject implements NGGameE
     }
 
 
-    public NGGameEngineEventManager(NGUniplayObject aOwner) {
-        super();
-        FOwner = aOwner;
+    public NGGameEngineEventManager(NGUniplayObject aOwner, String aName) {
+        super(aOwner, aName);
         FLogManager = null;
         FHandlers = new ArrayList<NGGameEngineEventHandler>();
-    }
-
-    public NGUniplayObject getOwner() {
-        return FOwner;
     }
 
     @Override

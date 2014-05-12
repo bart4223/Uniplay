@@ -1,9 +1,9 @@
 package Uniplay.Kernel;
 
-import Uniwork.Base.NGObject;
+import Uniplay.Base.NGUniplayObject;
 import Uniwork.Base.NGPropertyList;
 
-public class NGGameEngineMemoryCell extends NGObject {
+public class NGGameEngineMemoryCell extends NGUniplayObject {
 
     protected NGGameEngineMemoryAddress FAddress;
     protected Object FValue;

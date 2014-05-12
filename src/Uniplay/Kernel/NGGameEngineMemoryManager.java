@@ -1,13 +1,13 @@
 package Uniplay.Kernel;
 
+import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniwork.Base.NGLogManager;
 
 import java.util.ArrayList;
 
-public class NGGameEngineMemoryManager extends NGUniplayObject implements NGGameEngineEventListener {
+public class NGGameEngineMemoryManager extends NGUniplayComponent implements NGGameEngineEventListener {
 
-    protected NGUniplayObject FOwner;
     protected ArrayList<NGGameEngineMemory> FMemoryList;
     protected NGLogManager FLogManager;
 
@@ -88,9 +88,8 @@ public class NGGameEngineMemoryManager extends NGUniplayObject implements NGGame
         writeLog("Memory released!");
     }
 
-    public NGGameEngineMemoryManager(NGUniplayObject aOwner) {
-        super();
-        FOwner = aOwner;
+    public NGGameEngineMemoryManager(NGUniplayObject aOwner, String aName) {
+        super(aOwner, aName);
         FLogManager = null;
         FMemoryList = new ArrayList<NGGameEngineMemory>();
     }

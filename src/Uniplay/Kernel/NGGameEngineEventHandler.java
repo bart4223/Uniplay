@@ -1,8 +1,8 @@
 package Uniplay.Kernel;
 
-import Uniwork.Base.NGObject;
+import Uniplay.Base.NGUniplayObject;
 
-public class NGGameEngineEventHandler extends NGObject {
+public class NGGameEngineEventHandler extends NGUniplayObject {
 
     protected String FName;
     protected NGGameEngineEvent FEvent;

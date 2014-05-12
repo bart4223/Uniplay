@@ -1,6 +1,8 @@
 package Uniplay.Kernel;
 
-public abstract class NGGameEngineEvent extends java.util.EventObject {
+import java.util.EventObject;
+
+public abstract class NGGameEngineEvent extends EventObject {
 
     public NGGameEngineEvent(Object source) {
         super(source);

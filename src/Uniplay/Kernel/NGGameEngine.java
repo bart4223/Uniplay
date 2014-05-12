@@ -1,12 +1,18 @@
 package Uniplay.Kernel;
 
+import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniwork.Base.NGLogEvent;
 import Uniwork.Base.NGLogEventListener;
 import Uniwork.Base.NGLogManager;
 import Uniwork.Base.NGTickGenerator;
 
-public abstract class NGGameEngine extends NGUniplayObject implements NGLogEventListener, NGGameEngineEventHandlerRegistration{
+public abstract class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGGameEngineEventHandlerRegistration{
+
+    public final static String CMP_MEMORY_MANAGER = "MemoryManager";
+    public final static String CMP_EVENT_MANAGER  = "EventManager";
+    public final static String CMP_MODULE_MANAGER = "ModuleManager";
+
 
     protected NGGameEngineModuleManager FModuleManager;
     protected NGGameEngineMemoryManager FMemoryManager;
@@ -101,13 +107,24 @@ public abstract class NGGameEngine extends NGUniplayObject implements NGLogEvent
         writeLog("Bye Bye...");
     }
 
-    public NGGameEngine(Object aOwner) {
-        super();
-        FOnwer = aOwner;
+    public NGGameEngine() {
+        this("");
+    }
+
+    public NGGameEngine(NGUniplayObject aOwner) {
+        this(aOwner, "");
+    }
+
+    public NGGameEngine(String aName) {
+        this(null, aName);
+    }
+
+    public NGGameEngine(NGUniplayObject aOwner, String aName) {
+        super(aOwner, aName);
         FRunning = false;
-        FMemoryManager = new NGGameEngineMemoryManager(this);
-        FModuleManager = new NGGameEngineModuleManager(this);
-        FEventManager = new NGGameEngineEventManager(this);
+        FMemoryManager = new NGGameEngineMemoryManager(this, CMP_MEMORY_MANAGER);
+        FModuleManager = new NGGameEngineModuleManager(this, CMP_MODULE_MANAGER);
+        FEventManager = new NGGameEngineEventManager(this, CMP_EVENT_MANAGER);
         FTickGenerator = new NGTickGenerator(10);
         FLogManager = new NGLogManager();
     }

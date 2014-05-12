@@ -1,15 +1,14 @@
 package Uniplay.Kernel;
 
-import Uniplay.Base.NGUniplayObject;
+import Uniplay.Base.NGUniplayComponent;
 
 import java.util.ArrayList;
 
-public class NGGameEngineMemory extends NGUniplayObject {
+public class NGGameEngineMemory extends NGUniplayComponent {
 
-    public static String EVT_MEMORY_ALLOCATED = "Memory.Allocated";
-    public static String EVT_MEMORY_CELLS_CHANGED = "Memory.Cells.Changed";
+    public final static String EVT_MEMORY_ALLOCATED = "Memory.Allocated";
+    public final static String EVT_MEMORY_CELLS_CHANGED = "Memory.Cells.Changed";
 
-    protected String FName;
     protected int FPageSize;
     protected int FBaseSize;
     protected int FOffsetSize;
@@ -83,19 +82,14 @@ public class NGGameEngineMemory extends NGUniplayObject {
         DoAllocate();
     }
 
-    public NGGameEngineMemory(NGGameEngineMemoryManager aManager,String aName) {
-        super();
-        FName = aName;
+    public NGGameEngineMemory(NGGameEngineMemoryManager aManager, String aName) {
+        super(aManager, aName);
         FManager = aManager;
         FCells = new ArrayList<NGGameEngineMemoryCell>();
         FTransaction = new NGGameEngineMemoryTransaction();
         FPageSize = 0;
         FBaseSize = 0;
         FOffsetSize = 0;
-    }
-
-    public String getName() {
-        return FName;
     }
 
     public int getAllocated() {

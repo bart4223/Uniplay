@@ -1,9 +1,9 @@
 package Uniplay.Kernel;
 
-import Uniplay.Base.NGUniplayObject;
+import Uniplay.Base.NGUniplayComponent;
 import Uniwork.Base.NGLogManager;
 
-public abstract class NGGameEngineModule extends NGUniplayObject {
+public abstract class NGGameEngineModule extends NGUniplayComponent {
 
     protected NGGameEngineModuleManager FManager;
     protected String FName;
@@ -53,7 +53,7 @@ public abstract class NGGameEngineModule extends NGUniplayObject {
     }
 
     public NGGameEngineModule(NGGameEngineModuleManager aManager, String aName) {
-        super();
+        super(aManager, aName);
         FManager = aManager;
         FName = aName;
         FLogManager = null;

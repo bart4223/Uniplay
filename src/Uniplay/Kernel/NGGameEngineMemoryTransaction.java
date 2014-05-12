@@ -1,10 +1,10 @@
 package Uniplay.Kernel;
 
-import Uniwork.Base.NGObject;
+import Uniplay.Base.NGUniplayObject;
 
 import java.util.ArrayList;
 
-public class NGGameEngineMemoryTransaction extends NGObject {
+public class NGGameEngineMemoryTransaction extends NGUniplayObject {
 
     protected Boolean FInTransaction;
     protected ArrayList<NGGameEngineMemoryCell> FCells;

@@ -1,15 +1,14 @@
 package Uniplay.Kernel;
 
-import Uniplay.Base.NGUniplayObject;
+import Uniplay.Base.NGUniplayComponent;
 import Uniwork.Base.NGLogManager;
 
 import java.util.ArrayList;
 
-public class NGGameEngineModuleManager extends NGUniplayObject {
+public class NGGameEngineModuleManager extends NGUniplayComponent {
 
     protected ArrayList<NGGameEngineModule> FModules;
     protected NGLogManager FLogManager;
-    protected NGUniplayObject FOwner;
 
     @Override
     protected void BeforeInitialize() {
@@ -70,9 +69,8 @@ public class NGGameEngineModuleManager extends NGUniplayObject {
         }
     }
 
-    public NGGameEngineModuleManager(NGUniplayObject aOwner) {
-        super();
-        FOwner = aOwner;
+    public NGGameEngineModuleManager(NGUniplayComponent aOwner, String aName) {
+        super(aOwner, aName);
         FModules = new ArrayList<NGGameEngineModule>();
         FLogManager = null;
     }
