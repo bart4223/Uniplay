@@ -1,6 +1,6 @@
 package Uniplay.Kernel;
 
-import Uniplay.NGUniplayObject;
+import Uniplay.Base.NGUniplayObject;
 import Uniwork.Base.NGLogManager;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package Uniplay.Kernel;
 
-import Uniplay.NGUniplayObject;
+import Uniplay.Base.NGUniplayObject;
 
 public class NGGameEngineMemoryAddress extends NGUniplayObject{
 
