@@ -1,6 +1,5 @@
 package Uniplay;
 
-import Uniplay.Base.NGUniplayObject;
 import Uniplay.Graphics.NG2DGraphicEngine;
 import Uniplay.Kernel.NGGameEngine;
 
@@ -25,19 +24,7 @@ public class NG2DGameEngine extends NGGameEngine{
     }
 
     public NG2DGameEngine() {
-        this("");
-    }
-
-    public NG2DGameEngine(NGUniplayObject aOwner) {
-        this(aOwner, "");
-    }
-
-    public NG2DGameEngine(String aName) {
-        this(null, aName);
-    }
-
-    public NG2DGameEngine(NGUniplayObject aOwner, String aName) {
-        super(aOwner, aName);
+        super();
     }
 
 }

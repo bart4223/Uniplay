@@ -34,7 +34,7 @@ public abstract class NGGameEngineModule extends NGUniplayComponent {
     @Override
     protected Object DoResolveObject(String aName, Class aClass) {
         Object result = super.DoResolveObject(aName, aClass);
-        if (result == null) {
+        if (result == null && FManager != null) {
             return FManager.ResolveObject(aName, aClass);
         }
         return result;

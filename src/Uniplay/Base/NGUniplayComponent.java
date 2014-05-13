@@ -25,6 +25,14 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         }
     }
 
+    @Override
+    protected Object DoResolveObject(String aName, Class aClass) {
+        if (FName.equals(aName) && aClass.isAssignableFrom(getClass())) {
+            return this;
+        }
+        return super.DoResolveObject(aName, aClass);
+    }
+
     protected void BeforeInitialize() {
 
     }
