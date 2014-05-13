@@ -10,7 +10,7 @@ public class NGGameEngineEventHandlerManager extends NGUniplayComponent implemen
     protected ArrayList<NGGameEngineEventHandler> FHandlers;
 
     protected void DoHandleEvent(String aName, NGGameEngineEvent aEvent) {
-        writeLog(10, String.format("%s.DoHandleEvent->[%s]", getName(), aName));
+        writeLog(10, String.format("Event handler [%s].DoHandleEvent->[%s]", getName(), aName));
         for (NGGameEngineEventHandler handler : FHandlers) {
             if (handler.getName().equals(aName)) {
                 handler.handleEvent(aEvent);
@@ -20,26 +20,26 @@ public class NGGameEngineEventHandlerManager extends NGUniplayComponent implemen
 
     @Override
     protected void BeforeInitialize() {
-        writeLog("Start event handler initialization...");
+        writeLog(String.format("Start event handler [%s] initialization...", FName));
         super.BeforeInitialize();
     }
 
     @Override
     protected void AfterInitialize() {
         super.AfterInitialize();
-        writeLog("Event handler initialized!");
+        writeLog(String.format("Event handler [%s] initialized!", FName));
     }
 
     @Override
     protected void BeforeFinalize() {
-        writeLog("Start event handler release...");
+        writeLog(String.format("Start event handler [%s] release...", FName));
         super.BeforeFinalize();
     }
 
     @Override
     protected void AfterFinalize() {
         super.AfterFinalize();
-        writeLog("Event handler released!");
+        writeLog(String.format("Event handler [%s] released!", FName));
     }
 
 
