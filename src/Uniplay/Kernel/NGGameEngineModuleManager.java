@@ -72,6 +72,9 @@ public class NGGameEngineModuleManager extends NGUniplayComponent {
 
     public NGGameEngineModuleManager(NGUniplayComponent aOwner, String aName) {
         super(aOwner, aName);
+        if (aOwner != null) {
+            aOwner.addEventListener(this);
+        }
         FModules = new ArrayList<NGGameEngineModule>();
     }
 

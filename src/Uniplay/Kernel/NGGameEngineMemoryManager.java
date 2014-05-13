@@ -1,7 +1,6 @@
 package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayComponent;
-import Uniplay.Base.NGUniplayObject;
 
 import java.util.ArrayList;
 
@@ -72,8 +71,11 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         writeLog("Memory released!");
     }
 
-    public NGGameEngineMemoryManager(NGUniplayObject aOwner, String aName) {
+    public NGGameEngineMemoryManager(NGUniplayComponent aOwner, String aName) {
         super(aOwner, aName);
+        if (aOwner != null) {
+            aOwner.addEventListener(this);
+        }
         FMemoryList = new ArrayList<NGGameEngineMemory>();
     }
 

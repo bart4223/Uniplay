@@ -5,12 +5,12 @@ import Uniplay.Base.NGUniplayObject;
 
 import java.util.ArrayList;
 
-public class NGGameEngineEventManager extends NGUniplayComponent implements NGGameEngineEventListener {
+public class NGGameEngineEventHandlerManager extends NGUniplayComponent implements NGGameEngineEventListener {
 
     protected ArrayList<NGGameEngineEventHandler> FHandlers;
 
     protected void DoHandleEvent(String aName, NGGameEngineEvent aEvent) {
-        writeLog(10, String.format("DoHandleEvent->[%s]", aName));
+        writeLog(10, String.format("%s.DoHandleEvent->[%s]", getName(), aName));
         for (NGGameEngineEventHandler handler : FHandlers) {
             if (handler.getName().equals(aName)) {
                 handler.handleEvent(aEvent);
@@ -43,7 +43,7 @@ public class NGGameEngineEventManager extends NGUniplayComponent implements NGGa
     }
 
 
-    public NGGameEngineEventManager(NGUniplayObject aOwner, String aName) {
+    public NGGameEngineEventHandlerManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
         FHandlers = new ArrayList<NGGameEngineEventHandler>();
     }

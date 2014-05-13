@@ -1,16 +1,24 @@
 package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayComponent;
+import Uniwork.Base.NGLogManager;
 
-public abstract class NGGameEngineModule extends NGUniplayComponent {
+public abstract class NGGameEngineModule extends NGUniplayComponent implements NGGameEngineEventHandlerRegistration {
 
     protected NGGameEngineModuleManager FManager;
+    protected NGGameEngineEventHandlerManager FEventHandlerManager;
     protected String FCaption;
 
     @Override
     protected void BeforeInitialize() {
         writeLog(String.format("Start module [%s] initialization...", FName));
         super.BeforeInitialize();
+    }
+
+    @Override
+    protected void DoInitialize() {
+        super.DoInitialize();
+        FEventHandlerManager.Initialize();
     }
 
     @Override
@@ -23,6 +31,12 @@ public abstract class NGGameEngineModule extends NGUniplayComponent {
     protected void BeforeFinalize() {
         writeLog(String.format("Start module [%s] shutdown...", FName));
         super.BeforeFinalize();
+    }
+
+    @Override
+    protected void DoFinalize() {
+        super.DoFinalize();
+        FEventHandlerManager.Finalize();
     }
 
     @Override
@@ -43,7 +57,9 @@ public abstract class NGGameEngineModule extends NGUniplayComponent {
     @Override
     protected void DoHandleEvent(String name, NGGameEngineEvent e) {
         super.DoHandleEvent(name, e);
-        // ToDo
+        if (FCurrentEvent == null) {
+            FEventHandlerManager.handleEvent(name, e);
+        }
     }
 
     protected void DoLoad() {
@@ -56,6 +72,8 @@ public abstract class NGGameEngineModule extends NGUniplayComponent {
         if (FManager != null) {
             FManager.addEventListener(this);
         }
+        FEventHandlerManager = new NGGameEngineEventHandlerManager(this, String.format("%s", aName));
+        addEventListener(FEventHandlerManager);
         FCaption = "";
     }
 
@@ -71,19 +89,24 @@ public abstract class NGGameEngineModule extends NGUniplayComponent {
         return FCaption;
     }
 
-    public void registerEventHandler(NGGameEngineEventHandler aHandler) {
-        NGGameEngineEventHandlerRegistration reg = (NGGameEngineEventHandlerRegistration)ResolveObject(NGGameEngineEventHandlerRegistration.class);
-        reg.registerEventHandler(aHandler);
-    }
-
-    public void unregisterEventHandler(NGGameEngineEventHandler aHandler) {
-        NGGameEngineEventHandlerRegistration reg = (NGGameEngineEventHandlerRegistration)ResolveObject(NGGameEngineEventHandlerRegistration.class);
-        reg.unregisterEventHandler(aHandler);
-    }
-
     public void Load() {
         DoLoad();
         writeLog(String.format("Module [%s] loaded.", FName));
+    }
+
+    public void setLogManager(NGLogManager aLogManager) {
+        super.setLogManager(aLogManager);
+        FEventHandlerManager.setLogManager(aLogManager);
+    }
+
+    @Override
+    public void registerEventHandler(NGGameEngineEventHandler aHandler) {
+        FEventHandlerManager.addHandler(aHandler);
+    }
+
+    @Override
+    public void unregisterEventHandler(NGGameEngineEventHandler aHandler) {
+        FEventHandlerManager.removeHandler(aHandler);
     }
 
 }

@@ -14,6 +14,7 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     protected NGUniplayObject FOwner;
     protected NGLogManager FLogManager;
     protected ArrayList<NGGameEngineEventListener> FEventListeners;
+    protected NGGameEngineEvent FCurrentEvent;
 
     protected void writeLog(String aText) {
         writeLog(0, aText);
@@ -133,7 +134,15 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
 
     @Override
     public void handleEvent(String name, NGGameEngineEvent e) {
-        DoHandleEvent(name, e);
+        if (FCurrentEvent == null) {
+            FCurrentEvent = e;
+            try {
+                DoHandleEvent(name, e);
+            }
+            finally {
+                FCurrentEvent = null;
+            }
+        }
     }
 
 }

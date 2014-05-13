@@ -5,17 +5,14 @@ import Uniwork.Base.NGLogEventListener;
 import Uniwork.Base.NGLogManager;
 import Uniwork.Base.NGTickGenerator;
 
-public abstract class NGGameEngine extends NGGameEngineModule implements NGLogEventListener, NGGameEngineEventHandlerRegistration{
+public abstract class NGGameEngine extends NGGameEngineModule implements NGLogEventListener {
 
-    private final static String MODULE_NAME_KERNEL = "Kernel";
-
+    public final static String MODULE_NAME_KERNEL = "Kernel";
     public final static String CMP_MEMORY_MANAGER = "MemoryManager";
-    public final static String CMP_EVENT_MANAGER  = "EventManager";
     public final static String CMP_MODULE_MANAGER = "ModuleManager";
 
     protected NGGameEngineModuleManager FModuleManager;
     protected NGGameEngineMemoryManager FMemoryManager;
-    protected NGGameEngineEventManager FEventManager;
     protected NGTickGenerator FTickGenerator;
     protected Boolean FRunning;
 
@@ -54,9 +51,9 @@ public abstract class NGGameEngine extends NGGameEngineModule implements NGLogEv
         super.BeforeInitialize();
         FLogManager.addEventListener(this);
         writeLog("Welcome to Uniplay engine...");
-        FEventManager.setLogManager(FLogManager);
+        FMemoryManager.addEventListener(this);
         FMemoryManager.setLogManager(FLogManager);
-        FMemoryManager.addEventListener(FEventManager);
+        FModuleManager.addEventListener(this);
         FModuleManager.setLogManager(FLogManager);
         FTickGenerator.setLogManager(FLogManager);
         CreateModules();
@@ -67,7 +64,6 @@ public abstract class NGGameEngine extends NGGameEngineModule implements NGLogEv
     protected void DoInitialize() {
         writeLog("Start Uniplay engine initialization...");
         super.DoInitialize();
-        FEventManager.Initialize();
         FMemoryManager.Initialize();
         FModuleManager.Initialize();
         FTickGenerator.Initialize();
@@ -85,7 +81,6 @@ public abstract class NGGameEngine extends NGGameEngineModule implements NGLogEv
         FTickGenerator.Finalize();
         FModuleManager.Finalize();
         FMemoryManager.Finalize();
-        FEventManager.Finalize();
         super.DoFinalize();
     }
 
@@ -101,7 +96,6 @@ public abstract class NGGameEngine extends NGGameEngineModule implements NGLogEv
         FRunning = false;
         FMemoryManager = new NGGameEngineMemoryManager(this, CMP_MEMORY_MANAGER);
         FModuleManager = new NGGameEngineModuleManager(this, CMP_MODULE_MANAGER);
-        FEventManager = new NGGameEngineEventManager(this, CMP_EVENT_MANAGER);
         FTickGenerator = new NGTickGenerator(10);
         FLogManager = new NGLogManager();
     }
@@ -150,16 +144,6 @@ public abstract class NGGameEngine extends NGGameEngineModule implements NGLogEv
     public void Shutdown() {
         Stop();
         Finalize();
-    }
-
-    @Override
-    public void registerEventHandler(NGGameEngineEventHandler aHandler) {
-        FEventManager.addHandler(aHandler);
-    }
-
-    @Override
-    public void unregisterEventHandler(NGGameEngineEventHandler aHandler) {
-        FEventManager.removeHandler(aHandler);
     }
 
 }
