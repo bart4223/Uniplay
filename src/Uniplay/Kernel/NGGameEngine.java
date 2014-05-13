@@ -91,13 +91,18 @@ public abstract class NGGameEngine extends NGGameEngineModule implements NGLogEv
         writeLog("Bye Bye...");
     }
 
-    public NGGameEngine() {
-        super(null, MODULE_NAME_KERNEL);
-        FRunning = false;
+    @Override
+    protected void CreateComponents() {
+        super.CreateComponents();
         FMemoryManager = new NGGameEngineMemoryManager(this, CMP_MEMORY_MANAGER);
         FModuleManager = new NGGameEngineModuleManager(this, CMP_MODULE_MANAGER);
         FTickGenerator = new NGTickGenerator(10);
         FLogManager = new NGLogManager();
+    }
+
+    public NGGameEngine() {
+        super(null, MODULE_NAME_KERNEL);
+        FRunning = false;
     }
 
     @Override

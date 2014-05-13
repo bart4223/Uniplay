@@ -66,15 +66,19 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
 
     }
 
+    protected void CreateComponents() {
+        FEventHandlerManager = new NGGameEngineEventHandlerManager(this, String.format("%s", FName));
+        addEventListener(FEventHandlerManager);
+    }
+
     public NGGameEngineModule(NGGameEngineModuleManager aManager, String aName) {
         super(aManager, aName);
         FManager = aManager;
         if (FManager != null) {
             FManager.addEventListener(this);
         }
-        FEventHandlerManager = new NGGameEngineEventHandlerManager(this, String.format("%s", aName));
-        addEventListener(FEventHandlerManager);
         FCaption = "";
+        CreateComponents();
     }
 
     public NGGameEngineModuleManager getManager() {
