@@ -10,17 +10,14 @@ public class NG2DGameEngine extends NGGameEngine{
     @Override
     protected void DoCreateModules() {
         super.DoCreateModules();
-        FGraphicEngine = new NG2DGraphicEngine(FModuleManager, "2D Graphic Engine");
-        writeLog(String.format("Module [%s] created.", FGraphicEngine.getName()));
-        FModuleManager.addModule(FGraphicEngine);
-        writeLog(String.format("Module [%s] added.", FGraphicEngine.getName()));
+        FGraphicEngine = (NG2DGraphicEngine)FModuleManager.newModule(NG2DGraphicEngine.class, "2D Graphic Engine");
     }
 
     @Override
     protected void AfterInitialize() {
         super.AfterInitialize();
         FMemoryManager.addMemory("MAIN", 1, 16, 16);
-        FMemoryManager.clearMemory("MAIN");
+        //FMemoryManager.clearMemory("MAIN");
     }
 
     public NG2DGameEngine() {

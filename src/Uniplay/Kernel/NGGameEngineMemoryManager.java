@@ -5,13 +5,13 @@ import Uniplay.Base.NGUniplayObject;
 
 import java.util.ArrayList;
 
-public class NGGameEngineMemoryManager extends NGUniplayComponent implements NGGameEngineEventListener {
+public class NGGameEngineMemoryManager extends NGUniplayComponent {
 
     protected ArrayList<NGGameEngineMemory> FMemoryList;
 
-    protected void ReallocateMemory(NGGameEngineMemory aMemory, int aPageSize, int aBaseSize, int aOffsetSize) {
+    protected void reallocateMemory(NGGameEngineMemory aMemory, int aPageSize, int aBaseSize, int aOffsetSize) {
         aMemory.Reallocate(aPageSize, aBaseSize, aOffsetSize);
-        writeLog(String.format("Memory[%s] %d cells allocated.", aMemory.getName(), aMemory.getAllocated()));
+        writeLog(String.format("Memory [%s] %d cells allocated.", aMemory.getName(), aMemory.getAllocated()));
     }
 
     protected NGGameEngineMemory getMemory(String aName) {
@@ -25,23 +25,19 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent implements NGG
 
     protected NGGameEngineMemory newMemory(String aName) {
         NGGameEngineMemory memory = new NGGameEngineMemory(this, aName);
-        memory.addEventListener(this);
+        writeLog(String.format("Memory [%s] created.", aName));
         return memory;
     }
 
     protected void addMemory(NGGameEngineMemory aMemory, int aPageSize, int aBaseSize, int aOffsetSize) {
+        aMemory.addEventListener(this);
         FMemoryList.add(aMemory);
-        ReallocateMemory(aMemory, aPageSize, aBaseSize, aOffsetSize);
+        writeLog(String.format("Memory [%s] added.", aMemory.getName()));
+        reallocateMemory(aMemory, aPageSize, aBaseSize, aOffsetSize);
     }
 
     protected void clearMemory(NGGameEngineMemory aMemory) {
-        BeginTransaction(aMemory);
-        try{
-            aMemory.clearCells();
-        }
-        finally {
-            EndTransaction(aMemory);
-        }
+        aMemory.clearCells();
     }
 
     protected void BeginTransaction(NGGameEngineMemory aMemory) {
@@ -93,23 +89,34 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent implements NGG
 
     public void addMemory(String aName, int aPageSize, int aBaseSize, int aOffsetSize) {
         NGGameEngineMemory memory = newMemory(aName);
-        addMemory(memory, aPageSize, aBaseSize, aOffsetSize);
+        BeginTransaction(memory);
+        try{
+            addMemory(memory, aPageSize, aBaseSize, aOffsetSize);
+        }
+        finally {
+            //EndTransaction(memory);
+        }
     }
 
     public void reallocateMemory(String aName, int aPageSize, int aBaseSize, int aOffsetSize) {
         NGGameEngineMemory memory = getMemory(aName);
-        ReallocateMemory(memory, aPageSize, aBaseSize, aOffsetSize);
+        BeginTransaction(memory);
+        try{
+            reallocateMemory(memory, aPageSize, aBaseSize, aOffsetSize);
+        }
+        finally {
+            EndTransaction(memory);
+        }
     }
 
     public void clearMemory(String aName) {
         NGGameEngineMemory memory = getMemory(aName);
-        clearMemory(memory);
-    }
-
-    @Override
-    public void handleEvent(String name, NGGameEngineEvent e) {
-        for (NGGameEngineEventListener listener : FEventListeners) {
-            listener.handleEvent(name, e);
+        BeginTransaction(memory);
+        try{
+            clearMemory(memory);
+        }
+        finally {
+            EndTransaction(memory);
         }
     }
 

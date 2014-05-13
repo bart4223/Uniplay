@@ -8,6 +8,19 @@ public class NGGameEngineModuleManager extends NGUniplayComponent {
 
     protected ArrayList<NGGameEngineModule> FModules;
 
+    protected void removeModule(NGGameEngineModule aModule) {
+        aModule.removeEventListener(this);
+        FModules.remove(aModule);
+        writeLog(String.format("Module [%s] removed.", aModule.getName()));
+    }
+
+    protected void addModule(NGGameEngineModule aModule) {
+        aModule.addEventListener(this);
+        aModule.setLogManager(FLogManager);
+        FModules.add(aModule);
+        writeLog(String.format("Module [%s] added.", aModule.getName()));
+    }
+
     @Override
     protected void BeforeInitialize() {
         writeLog("Start all modules initialization...");
@@ -62,13 +75,18 @@ public class NGGameEngineModuleManager extends NGUniplayComponent {
         FModules = new ArrayList<NGGameEngineModule>();
     }
 
-    public void addModule(NGGameEngineModule aModule) {
-        aModule.setLogManager(FLogManager);
-        FModules.add(aModule);
-    }
+    public NGGameEngineModule newModule(Class aClass, String aName) {
+        NGGameEngineModule module = null;
+        try
+        {
+            module = (NGGameEngineModule)aClass.getConstructor(NGGameEngineModuleManager.class, String.class).newInstance(this, aName);
+            writeLog(String.format("Module [%s] created.", aName));
+            addModule(module);
+        }
+        catch (Exception e) {
 
-    public void removeModule(NGGameEngineModule aModule) {
-        FModules.remove(aModule);
+        }
+        return module;
     }
 
     public void removeModule(String aName) {
@@ -88,13 +106,6 @@ public class NGGameEngineModuleManager extends NGUniplayComponent {
     public void LoadModules() {
         for (NGGameEngineModule module : FModules) {
             module.Load();
-        }
-    }
-
-    @Override
-    public void handleEvent(String name, NGGameEngineEvent e) {
-        for (NGGameEngineEventListener listener : FEventListeners) {
-            listener.handleEvent(name, e);
         }
     }
 

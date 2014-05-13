@@ -33,6 +33,13 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         return super.DoResolveObject(aName, aClass);
     }
 
+    protected void DoHandleEvent(String name, NGGameEngineEvent e) {
+        for (NGGameEngineEventListener listener : FEventListeners) {
+            if (!e.getSource().equals(this))
+                listener.handleEvent(name, e);
+        }
+    }
+
     protected void BeforeInitialize() {
 
     }
@@ -122,6 +129,11 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
 
     public void removeEventListener(NGGameEngineEventListener aListener) {
         FEventListeners.remove(aListener);
+    }
+
+    @Override
+    public void handleEvent(String name, NGGameEngineEvent e) {
+        DoHandleEvent(name, e);
     }
 
 }

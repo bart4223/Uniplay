@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class NGGameEngineMemory extends NGUniplayComponent {
 
-    public final static String EVT_MEMORY_ALLOCATED = "Memory.Allocated";
+    public final static String EVT_MEMORY_ALLOCATED     = "Memory.Allocated";
     public final static String EVT_MEMORY_CELLS_CHANGED = "Memory.Cells.Changed";
 
     protected int FPageSize;
@@ -85,6 +85,9 @@ public class NGGameEngineMemory extends NGUniplayComponent {
     public NGGameEngineMemory(NGGameEngineMemoryManager aManager, String aName) {
         super(aManager, aName);
         FManager = aManager;
+        if (FManager != null) {
+            FManager.addEventListener(this);
+        }
         FCells = new ArrayList<NGGameEngineMemoryCell>();
         FTransaction = new NGGameEngineMemoryTransaction();
         FPageSize = 0;
@@ -167,11 +170,6 @@ public class NGGameEngineMemory extends NGUniplayComponent {
 
     public NGGameEngineMemoryManager getManager() {
         return FManager;
-    }
-
-    @Override
-    public void handleEvent(String name, NGGameEngineEvent e) {
-
     }
 
 }

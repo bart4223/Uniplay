@@ -153,11 +153,6 @@ public abstract class NGGameEngine extends NGGameEngineModule implements NGLogEv
     }
 
     @Override
-    public void handleEvent(String name, NGGameEngineEvent e) {
-
-    }
-
-    @Override
     public void registerEventHandler(NGGameEngineEventHandler aHandler) {
         FEventManager.addHandler(aHandler);
     }
