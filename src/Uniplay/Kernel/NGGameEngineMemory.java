@@ -85,9 +85,6 @@ public class NGGameEngineMemory extends NGUniplayComponent {
     public NGGameEngineMemory(NGGameEngineMemoryManager aManager, String aName) {
         super(aManager, aName);
         FManager = aManager;
-        if (FManager != null) {
-            FManager.addEventListener(this);
-        }
         FCells = new ArrayList<NGGameEngineMemoryCell>();
         FTransaction = new NGGameEngineMemoryTransaction();
         FPageSize = 0;

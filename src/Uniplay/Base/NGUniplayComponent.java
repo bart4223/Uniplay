@@ -14,7 +14,6 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     protected NGUniplayObject FOwner;
     protected NGLogManager FLogManager;
     protected ArrayList<NGGameEngineEventListener> FEventListeners;
-    protected NGGameEngineEvent FCurrentEvent;
 
     protected void writeLog(String aText) {
         writeLog(0, aText);
@@ -37,7 +36,7 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     protected void DoHandleEvent(String name, NGGameEngineEvent e) {
         for (NGGameEngineEventListener listener : FEventListeners) {
             if (!e.getSource().equals(this))
-                listener.handleEvent(name, e);
+                listener.handleEvent(this, name, e);
         }
     }
 
@@ -77,9 +76,13 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
 
     }
 
+    protected void CreateComponents() {
+
+    }
+
     protected void raiseEvent(String aName, NGGameEngineEvent event) {
         for (NGGameEngineEventListener listener : FEventListeners) {
-            listener.handleEvent(aName, event);
+            listener.handleEvent(this, aName, event);
         }
     }
 
@@ -87,9 +90,10 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         super();
         FName = aName;
         FOwner = aOwner;
-        FInitialized = false;
         FEventListeners = new ArrayList<NGGameEngineEventListener>();
+        FInitialized = false;
         FLogManager = null;
+        CreateComponents();
     }
 
     public String getName() {
@@ -133,15 +137,9 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     }
 
     @Override
-    public void handleEvent(String name, NGGameEngineEvent e) {
-        if (FCurrentEvent == null) {
-            FCurrentEvent = e;
-            try {
-                DoHandleEvent(name, e);
-            }
-            finally {
-                FCurrentEvent = null;
-            }
+    public void handleEvent(NGUniplayObject caller, String name, NGGameEngineEvent e) {
+        if (caller != this) {
+            DoHandleEvent(name, e);
         }
     }
 

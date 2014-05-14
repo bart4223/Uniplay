@@ -1,13 +1,15 @@
 package Uniplay.Kernel;
 
+import Uniplay.Base.NGUniplayComponent;
+import Uniplay.Base.NGUniplayObject;
 import Uniwork.Base.NGLogEvent;
 import Uniwork.Base.NGLogEventListener;
 import Uniwork.Base.NGLogManager;
 import Uniwork.Base.NGTickGenerator;
 
-public abstract class NGGameEngine extends NGGameEngineModule implements NGLogEventListener {
+public abstract class NGGameEngine extends NGUniplayComponent implements NGLogEventListener {
 
-    public final static String MODULE_NAME_KERNEL = "Kernel";
+    public final static String CMP_KERNEL         = "Kernel";
     public final static String CMP_MEMORY_MANAGER = "MemoryManager";
     public final static String CMP_MODULE_MANAGER = "ModuleManager";
 
@@ -49,11 +51,8 @@ public abstract class NGGameEngine extends NGGameEngineModule implements NGLogEv
     @Override
     protected void BeforeInitialize() {
         super.BeforeInitialize();
-        FLogManager.addEventListener(this);
-        writeLog("Welcome to Uniplay engine...");
         FMemoryManager.addEventListener(this);
         FMemoryManager.setLogManager(FLogManager);
-        FModuleManager.addEventListener(this);
         FModuleManager.setLogManager(FLogManager);
         FTickGenerator.setLogManager(FLogManager);
         CreateModules();
@@ -94,14 +93,20 @@ public abstract class NGGameEngine extends NGGameEngineModule implements NGLogEv
     @Override
     protected void CreateComponents() {
         super.CreateComponents();
-        FMemoryManager = new NGGameEngineMemoryManager(this, CMP_MEMORY_MANAGER);
-        FModuleManager = new NGGameEngineModuleManager(this, CMP_MODULE_MANAGER);
-        FTickGenerator = new NGTickGenerator(10);
         FLogManager = new NGLogManager();
+        FLogManager.addEventListener(this);
+        writeLog("Welcome to Uniplay engine...");
+        writeLog(String.format("Start creation of %s components...",CMP_KERNEL));
+        FModuleManager = new NGGameEngineModuleManager(this, CMP_MODULE_MANAGER);
+        writeLog(String.format("%s created.", CMP_MODULE_MANAGER));
+        FMemoryManager = new NGGameEngineMemoryManager(this, CMP_MEMORY_MANAGER);
+        writeLog(String.format("%s created.", CMP_MEMORY_MANAGER));
+        FTickGenerator = new NGTickGenerator(10);
+        writeLog(String.format("All %s components created.",CMP_KERNEL));
     }
 
-    public NGGameEngine() {
-        super(null, MODULE_NAME_KERNEL);
+    public NGGameEngine(NGUniplayObject aOwner) {
+        super(aOwner, CMP_KERNEL);
         FRunning = false;
     }
 

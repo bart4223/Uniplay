@@ -1,5 +1,6 @@
 package Uniplay;
 
+import Uniplay.Base.NGUniplayObject;
 import Uniplay.Graphics.NG2DGraphicEngine;
 import Uniplay.Kernel.NGGameEngine;
 
@@ -20,8 +21,8 @@ public class NG2DGameEngine extends NGGameEngine{
         FMemoryManager.clearMemory("MAIN");
     }
 
-    public NG2DGameEngine() {
-        super();
+    public NG2DGameEngine(NGUniplayObject aOwner) {
+        super(aOwner);
     }
 
 }

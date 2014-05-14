@@ -15,7 +15,6 @@ public class NGGameEngineModuleManager extends NGUniplayComponent {
     }
 
     protected void addModule(NGGameEngineModule aModule) {
-        aModule.addEventListener(this);
         aModule.setLogManager(FLogManager);
         FModules.add(aModule);
         writeLog(String.format("Module [%s] added.", aModule.getName()));

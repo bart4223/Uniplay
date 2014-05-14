@@ -73,9 +73,6 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
 
     public NGGameEngineMemoryManager(NGUniplayComponent aOwner, String aName) {
         super(aOwner, aName);
-        if (aOwner != null) {
-            aOwner.addEventListener(this);
-        }
         FMemoryList = new ArrayList<NGGameEngineMemory>();
     }
 

@@ -55,20 +55,13 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
     }
 
     @Override
-    protected void DoHandleEvent(String name, NGGameEngineEvent e) {
-        super.DoHandleEvent(name, e);
-        if (FCurrentEvent == null) {
-            FEventHandlerManager.handleEvent(name, e);
-        }
+    protected void CreateComponents() {
+        super.CreateComponents();
+        FEventHandlerManager = new NGGameEngineEventHandlerManager(this, String.format("%s", FName));
     }
 
     protected void DoLoad() {
 
-    }
-
-    protected void CreateComponents() {
-        FEventHandlerManager = new NGGameEngineEventHandlerManager(this, String.format("%s", FName));
-        addEventListener(FEventHandlerManager);
     }
 
     public NGGameEngineModule(NGGameEngineModuleManager aManager, String aName) {
@@ -78,7 +71,6 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
             FManager.addEventListener(this);
         }
         FCaption = "";
-        CreateComponents();
     }
 
     public NGGameEngineModuleManager getManager() {

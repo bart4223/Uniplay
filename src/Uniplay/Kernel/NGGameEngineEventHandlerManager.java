@@ -43,13 +43,16 @@ public class NGGameEngineEventHandlerManager extends NGUniplayComponent implemen
     }
 
 
-    public NGGameEngineEventHandlerManager(NGUniplayObject aOwner, String aName) {
+    public NGGameEngineEventHandlerManager(NGUniplayComponent aOwner, String aName) {
         super(aOwner, aName);
+        if (aOwner != null) {
+            aOwner.addEventListener(this);
+        }
         FHandlers = new ArrayList<NGGameEngineEventHandler>();
     }
 
     @Override
-    public void handleEvent(String name, NGGameEngineEvent e) {
+    public void handleEvent(NGUniplayObject caller, String name, NGGameEngineEvent e) {
         DoHandleEvent(name, e);
     }
 

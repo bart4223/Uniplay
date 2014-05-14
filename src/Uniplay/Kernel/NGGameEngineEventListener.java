@@ -1,7 +1,9 @@
 package Uniplay.Kernel;
 
+import Uniplay.Base.NGUniplayObject;
+
 public interface NGGameEngineEventListener {
 
-    public void handleEvent(String name, NGGameEngineEvent e);
+    public void handleEvent(NGUniplayObject caller, String name, NGGameEngineEvent e);
 
 }
