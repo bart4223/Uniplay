@@ -3,7 +3,7 @@ package Uniplay.Base;
 import Uniplay.Kernel.NGGameEngineEvent;
 import Uniplay.Kernel.NGGameEngineEventListener;
 import Uniwork.Base.NGInitializable;
-import Uniwork.Base.NGLogManager;
+import Uniwork.Misc.NGLogManager;
 
 import java.util.ArrayList;
 

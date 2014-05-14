@@ -4,10 +4,10 @@ import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineMemoryManager;
 import Uniplay.Kernel.NGGameEngineModuleManager;
-import Uniwork.Base.NGLogEvent;
-import Uniwork.Base.NGLogEventListener;
-import Uniwork.Base.NGLogManager;
-import Uniwork.Base.NGTickGenerator;
+import Uniwork.Misc.NGLogEvent;
+import Uniwork.Misc.NGLogEventListener;
+import Uniwork.Misc.NGLogManager;
+import Uniwork.Misc.NGTickGenerator;
 
 public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener {
 

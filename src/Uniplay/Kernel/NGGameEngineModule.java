@@ -1,7 +1,7 @@
 package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayComponent;
-import Uniwork.Base.NGLogManager;
+import Uniwork.Misc.NGLogManager;
 
 public abstract class NGGameEngineModule extends NGUniplayComponent implements NGGameEngineEventHandlerRegistration {
 
