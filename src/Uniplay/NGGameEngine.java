@@ -15,8 +15,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     public final static String CMP_MEMORY_MANAGER = "MemoryManager";
     public final static String CMP_MODULE_MANAGER = "ModuleManager";
 
-    protected NGGameEngineModuleManager FModuleManager;
-    protected NGGameEngineMemoryManager FMemoryManager;
     protected NGTickGenerator FTickGenerator;
     protected Boolean FRunning;
 
@@ -41,7 +39,8 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     }
 
     protected void DoLoadModules() {
-        FModuleManager.LoadModules();
+        NGGameEngineModuleManager component = (NGGameEngineModuleManager)getSubComponent(CMP_MODULE_MANAGER);
+        component.LoadModules();
     }
 
     protected void LoadModules() {
@@ -53,11 +52,9 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     @Override
     protected void BeforeInitialize() {
         super.BeforeInitialize();
-        FMemoryManager.addEventListener(this);
-        FMemoryManager.setLogManager(FLogManager);
-        FModuleManager.setLogManager(FLogManager);
+        NGUniplayComponent component = getSubComponent(CMP_MEMORY_MANAGER);
+        component.addEventListener(this);
         FTickGenerator.setLogManager(FLogManager);
-        CreateModules();
         LoadModules();
     }
 
@@ -65,8 +62,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected void DoInitialize() {
         writeLog("Start Uniplay engine initialization...");
         super.DoInitialize();
-        FMemoryManager.Initialize();
-        FModuleManager.Initialize();
         FTickGenerator.Initialize();
     }
 
@@ -80,8 +75,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected void DoFinalize() {
         writeLog("Start Uniplay engine shutdown...");
         FTickGenerator.Finalize();
-        FModuleManager.Finalize();
-        FMemoryManager.Finalize();
         super.DoFinalize();
     }
 
@@ -93,18 +86,19 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     }
 
     @Override
-    protected void CreateComponents() {
-        super.CreateComponents();
+    protected void CreateSubComponents() {
+        super.CreateSubComponents();
         FLogManager = new NGLogManager();
         FLogManager.addEventListener(this);
         writeLog("Welcome to Uniplay engine...");
         writeLog(String.format("Start creation of %s components...", CMP_KERNEL));
-        FModuleManager = new NGGameEngineModuleManager(this, CMP_MODULE_MANAGER);
+        registerComponent(new NGGameEngineModuleManager(this, CMP_MODULE_MANAGER));
         writeLog(String.format("%s created.", CMP_MODULE_MANAGER));
-        FMemoryManager = new NGGameEngineMemoryManager(this, CMP_MEMORY_MANAGER);
+        registerComponent(new NGGameEngineMemoryManager(this, CMP_MEMORY_MANAGER));
         writeLog(String.format("%s created.", CMP_MEMORY_MANAGER));
         FTickGenerator = new NGTickGenerator(10);
         writeLog(String.format("All %s components created.",CMP_KERNEL));
+        CreateModules();
     }
 
     public NGGameEngine(NGUniplayObject aOwner) {
@@ -114,6 +108,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
 
     @Override
     public void handleAddLog(NGLogEvent e) {
+        // ToDo
         System.out.println(e.LogEntry.GetFullAsString("YYYY/MM/dd HH:mm:ss", FLogManager.getLogLevel() > 0));
     }
 

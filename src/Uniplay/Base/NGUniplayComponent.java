@@ -7,13 +7,14 @@ import Uniwork.Misc.NGLogManager;
 
 import java.util.ArrayList;
 
-public abstract class NGUniplayComponent extends NGUniplayObject implements NGInitializable, NGGameEngineEventListener{
+public abstract class NGUniplayComponent extends NGUniplayObject implements NGInitializable, NGGameEngineEventListener, NGUniplayComponentRegistration {
 
     protected Boolean FInitialized;
     protected String FName;
     protected NGUniplayObject FOwner;
     protected NGLogManager FLogManager;
     protected ArrayList<NGGameEngineEventListener> FEventListeners;
+    protected ArrayList<NGUniplayComponent> FSubComponents;
 
     protected void writeLog(String aText) {
         writeLog(0, aText);
@@ -30,6 +31,11 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         if (FName.equals(aName) && aClass.isAssignableFrom(getClass())) {
             return this;
         }
+        for (NGUniplayComponent component : FSubComponents) {
+            if (component.getName().equals(aName) && aClass.isAssignableFrom(component.getClass())) {
+                return component;
+            }
+        }
         return super.DoResolveObject(aName, aClass);
     }
 
@@ -41,7 +47,9 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     }
 
     protected void BeforeInitialize() {
-
+        for (NGUniplayComponent component : FSubComponents) {
+            component.setLogManager(FLogManager);
+        }
     }
 
     protected void AfterInitialize() {
@@ -49,7 +57,10 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     }
 
     protected void DoInitialize() {
-
+        for (NGUniplayComponent component : FSubComponents) {
+            component.Initialize();
+            writeLog(String.format("Component [%s] initialized.", component.getName()));
+        }
     }
 
     protected void InternalInitialize() {
@@ -73,10 +84,22 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     }
 
     protected void DoFinalize() {
-
+        for (NGUniplayComponent component : FSubComponents) {
+            component.Finalize();
+            writeLog(String.format("Component [%s] finalized.", component.getName()));
+        }
     }
 
-    protected void CreateComponents() {
+    protected NGUniplayComponent getSubComponent(String aName) {
+        for (NGUniplayComponent component : FSubComponents) {
+            if (component.getName().equals(aName)) {
+                return component;
+            }
+        }
+        return null;
+    }
+
+    protected void CreateSubComponents() {
 
     }
 
@@ -91,9 +114,10 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         FName = aName;
         FOwner = aOwner;
         FEventListeners = new ArrayList<NGGameEngineEventListener>();
+        FSubComponents = new ArrayList<NGUniplayComponent>();
         FInitialized = false;
         FLogManager = null;
-        CreateComponents();
+        CreateSubComponents();
     }
 
     public String getName() {
@@ -141,6 +165,16 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         if (caller != this) {
             DoHandleEvent(name, e);
         }
+    }
+
+    @Override
+    public void registerComponent(NGUniplayComponent aComponent) {
+        FSubComponents.add(aComponent);
+    }
+
+    @Override
+    public void unregisterComponent(NGUniplayComponent aComponent) {
+        FSubComponents.remove(aComponent);
     }
 
 }

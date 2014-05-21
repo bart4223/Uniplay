@@ -6,19 +6,12 @@ import Uniwork.Misc.NGLogManager;
 public abstract class NGGameEngineModule extends NGUniplayComponent implements NGGameEngineEventHandlerRegistration {
 
     protected NGGameEngineModuleManager FManager;
-    protected NGGameEngineEventHandlerManager FEventHandlerManager;
     protected String FCaption;
 
     @Override
     protected void BeforeInitialize() {
         writeLog(String.format("Start module [%s] initialization...", FName));
         super.BeforeInitialize();
-    }
-
-    @Override
-    protected void DoInitialize() {
-        super.DoInitialize();
-        FEventHandlerManager.Initialize();
     }
 
     @Override
@@ -31,12 +24,6 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
     protected void BeforeFinalize() {
         writeLog(String.format("Start module [%s] shutdown...", FName));
         super.BeforeFinalize();
-    }
-
-    @Override
-    protected void DoFinalize() {
-        super.DoFinalize();
-        FEventHandlerManager.Finalize();
     }
 
     @Override
@@ -55,9 +42,13 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
     }
 
     @Override
-    protected void CreateComponents() {
-        super.CreateComponents();
-        FEventHandlerManager = new NGGameEngineEventHandlerManager(this, String.format("%s", FName));
+    protected void CreateSubComponents() {
+        super.CreateSubComponents();
+        registerComponent(new NGGameEngineEventHandlerManager(this, getEventHandlerManagerName()));
+    }
+
+    protected String getEventHandlerManagerName() {
+        return String.format("EventHandler%s", FName);
     }
 
     protected void DoLoad() {
@@ -92,17 +83,20 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
 
     public void setLogManager(NGLogManager aLogManager) {
         super.setLogManager(aLogManager);
-        FEventHandlerManager.setLogManager(aLogManager);
+        NGUniplayComponent component = getSubComponent(getEventHandlerManagerName());
+        component.setLogManager(aLogManager);
     }
 
     @Override
     public void registerEventHandler(NGGameEngineEventHandler aHandler) {
-        FEventHandlerManager.addHandler(aHandler);
+        NGGameEngineEventHandlerManager component = (NGGameEngineEventHandlerManager)getSubComponent(getEventHandlerManagerName());
+        component.addHandler(aHandler);
     }
 
     @Override
     public void unregisterEventHandler(NGGameEngineEventHandler aHandler) {
-        FEventHandlerManager.removeHandler(aHandler);
+        NGGameEngineEventHandlerManager component = (NGGameEngineEventHandlerManager)getSubComponent(getEventHandlerManagerName());
+        component.removeHandler(aHandler);
     }
 
 }
