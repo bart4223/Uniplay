@@ -1,7 +1,9 @@
 package Uniplay;
 
 import Uniplay.Base.NGUniplayComponent;
+import Uniplay.Base.NGUniplayComponentRegistration;
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.Base.NGUniplayRegisteredComponentItem;
 import Uniplay.Kernel.NGGameEngineMemoryManager;
 import Uniplay.Kernel.NGGameEngineModuleManager;
 import Uniwork.Misc.NGLogEvent;
@@ -9,13 +11,16 @@ import Uniwork.Misc.NGLogEventListener;
 import Uniwork.Misc.NGLogManager;
 import Uniwork.Misc.NGTickGenerator;
 
-public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener {
+import java.util.ArrayList;
+
+public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayComponentRegistration {
 
     public final static String CMP_KERNEL         = "Kernel";
     public final static String CMP_MEMORY_MANAGER = "MemoryManager";
     public final static String CMP_MODULE_MANAGER = "ModuleManager";
 
     protected NGTickGenerator FTickGenerator;
+    protected ArrayList<NGUniplayRegisteredComponentItem> FRegisteredComponents;
     protected Boolean FRunning;
 
     protected void DoRun() {
@@ -91,18 +96,47 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         FLogManager = new NGLogManager();
         FLogManager.addEventListener(this);
         writeLog("Welcome to Uniplay engine...");
-        writeLog(String.format("Start creation of %s components...", CMP_KERNEL));
-        registerComponent(new NGGameEngineModuleManager(this, CMP_MODULE_MANAGER));
+        writeLog(String.format("Start creation of %s sub components...", CMP_KERNEL));
+        NGUniplayComponent component = new NGGameEngineModuleManager(this, CMP_MODULE_MANAGER);
+        addSubComponent(component);
         writeLog(String.format("%s created.", CMP_MODULE_MANAGER));
-        registerComponent(new NGGameEngineMemoryManager(this, CMP_MEMORY_MANAGER));
+        component = new NGGameEngineMemoryManager(this, CMP_MEMORY_MANAGER);
+        addSubComponent(component);
         writeLog(String.format("%s created.", CMP_MEMORY_MANAGER));
-        FTickGenerator = new NGTickGenerator(10);
-        writeLog(String.format("All %s components created.",CMP_KERNEL));
+        writeLog(String.format("All %s sub components created.",CMP_KERNEL));
         CreateModules();
+    }
+
+    @Override
+    protected Object DoResolveObject(String aName, Class aClass) {
+        NGUniplayComponent component = getRegisteredComponent(aName);
+        if (aClass.isAssignableFrom(component.getClass())) {
+            return component;
+        }
+        return super.DoResolveObject(aName, aClass);
+    }
+
+    protected NGUniplayComponent getRegisteredComponent(String aName) {
+        NGUniplayRegisteredComponentItem item = getRegisteredComponentItem(aName);
+        if (item != null) {
+            return item.getComponent();
+        }
+        return null;
+    }
+
+    protected NGUniplayRegisteredComponentItem getRegisteredComponentItem(String aName) {
+        for (NGUniplayRegisteredComponentItem item : FRegisteredComponents) {
+            if (item.getName().equals(aName)) {
+                return item;
+            }
+        }
+        return null;
     }
 
     public NGGameEngine(NGUniplayObject aOwner) {
         super(aOwner, CMP_KERNEL);
+        FRegisteredComponents = new ArrayList<NGUniplayRegisteredComponentItem>();
+        FTickGenerator = new NGTickGenerator(10);
         FRunning = false;
     }
 
@@ -151,6 +185,20 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     public void Shutdown() {
         Stop();
         Finalize();
+    }
+
+    @Override
+    public void registerComponent(String aName, NGUniplayComponent aComponent) {
+        NGUniplayRegisteredComponentItem item = new NGUniplayRegisteredComponentItem(aName, aComponent);
+        FRegisteredComponents.add(item);
+    }
+
+    @Override
+    public void unregisterComponent(String aName, NGUniplayComponent aComponent) {
+        NGUniplayRegisteredComponentItem item = getRegisteredComponentItem(aName);
+        if (item != null && item.getComponent().equals(aComponent)) {
+            FRegisteredComponents.remove(item);
+        }
     }
 
 }

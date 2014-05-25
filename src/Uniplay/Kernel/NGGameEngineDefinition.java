@@ -1,8 +1,8 @@
 package Uniplay.Kernel;
 
-import Uniplay.Base.NGUniplayObjectDefinition;
+import Uniplay.Base.NGUniplayComponentDefinition;
 
-public class NGGameEngineDefinition extends NGUniplayObjectDefinition {
+public class NGGameEngineDefinition extends NGUniplayComponentDefinition {
 
     public NGGameEngineDefinition() {
         super();

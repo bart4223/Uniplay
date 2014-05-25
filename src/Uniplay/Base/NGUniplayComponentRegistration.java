@@ -2,7 +2,7 @@ package Uniplay.Base;
 
 public interface NGUniplayComponentRegistration {
 
-    public void registerComponent(NGUniplayComponent aComponent);
-    public void unregisterComponent(NGUniplayComponent aComponent);
+    public void registerComponent(String aName, NGUniplayComponent aComponent);
+    public void unregisterComponent(String aName, NGUniplayComponent aComponent);
 
 }

@@ -44,7 +44,8 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
     @Override
     protected void CreateSubComponents() {
         super.CreateSubComponents();
-        registerComponent(new NGGameEngineEventHandlerManager(this, getEventHandlerManagerName()));
+        NGUniplayComponent component = new NGGameEngineEventHandlerManager(this, getEventHandlerManagerName());
+        addSubComponent(component);
     }
 
     protected String getEventHandlerManagerName() {

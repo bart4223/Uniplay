@@ -7,7 +7,7 @@ import Uniwork.Misc.NGLogManager;
 
 import java.util.ArrayList;
 
-public abstract class NGUniplayComponent extends NGUniplayObject implements NGInitializable, NGGameEngineEventListener, NGUniplayComponentRegistration {
+public abstract class NGUniplayComponent extends NGUniplayObject implements NGInitializable, NGGameEngineEventListener {
 
     protected Boolean FInitialized;
     protected String FName;
@@ -103,6 +103,14 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
 
     }
 
+    protected void addSubComponent(NGUniplayComponent aComponent) {
+        FSubComponents.add(aComponent);
+    }
+
+    protected void removeSubComponent(NGUniplayComponent aComponent) {
+        FSubComponents.remove(aComponent);
+    }
+
     protected void raiseEvent(String aName, NGGameEngineEvent event) {
         for (NGGameEngineEventListener listener : FEventListeners) {
             listener.handleEvent(this, aName, event);
@@ -165,16 +173,6 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         if (caller != this) {
             DoHandleEvent(name, e);
         }
-    }
-
-    @Override
-    public void registerComponent(NGUniplayComponent aComponent) {
-        FSubComponents.add(aComponent);
-    }
-
-    @Override
-    public void unregisterComponent(NGUniplayComponent aComponent) {
-        FSubComponents.remove(aComponent);
     }
 
 }
