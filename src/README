@@ -1,1 +1,6 @@
 The Uniplay project represents a game engine to realize some java games...
+
+Files:
+    .udf    Uniplay Definition File (xml)
+    .ucf    Uniplay Configuration File (properties)
+    .ulf    Uniplay Level File

@@ -11,7 +11,10 @@ import Uniwork.Misc.NGLogEventListener;
 import Uniwork.Misc.NGLogManager;
 import Uniwork.Misc.NGTickGenerator;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayComponentRegistration {
 
@@ -21,6 +24,8 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
 
     protected NGTickGenerator FTickGenerator;
     protected ArrayList<NGUniplayRegisteredComponentItem> FRegisteredComponents;
+    protected Properties FConfiguration;
+    protected String FConfigurationFilename;
     protected Boolean FRunning;
 
     protected void DoRun() {
@@ -54,12 +59,32 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         writeLog("All modules loaded!");
     }
 
+    protected void LoadConfiguration() {
+        if (FConfigurationFilename.length() > 0) {
+            try {
+                InputStream is = new FileInputStream(FConfigurationFilename);
+                FConfiguration.load(is);
+                ReadConfiguration();
+                writeLog(String.format("Configuration from [%s] loaded.", FConfigurationFilename));
+            }
+            catch ( Exception e) {
+                writeLog(e.getMessage());
+            }
+        }
+    }
+
+    protected void ReadConfiguration() {
+        int value = Integer.parseInt(FConfiguration.getProperty("Debuglevel"));
+        setDebugLevel(value);
+    }
+
     @Override
     protected void BeforeInitialize() {
         super.BeforeInitialize();
         NGUniplayComponent component = getSubComponent(CMP_MEMORY_MANAGER);
         component.addEventListener(this);
         FTickGenerator.setLogManager(FLogManager);
+        LoadConfiguration();
         LoadModules();
     }
 
@@ -136,8 +161,10 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     public NGGameEngine(NGUniplayObject aOwner) {
         super(aOwner, CMP_KERNEL);
         FRegisteredComponents = new ArrayList<NGUniplayRegisteredComponentItem>();
+        FConfiguration = new Properties();
         FTickGenerator = new NGTickGenerator(10);
         FRunning = false;
+        FConfigurationFilename = "";
     }
 
     @Override
@@ -199,6 +226,14 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         if (item != null && item.getComponent().equals(aComponent)) {
             FRegisteredComponents.remove(item);
         }
+    }
+
+    public void setConfigurationFilename(String aFilename) {
+        FConfigurationFilename = aFilename;
+    }
+
+    public String getConfigurationFilename() {
+        return FConfigurationFilename;
     }
 
 }
