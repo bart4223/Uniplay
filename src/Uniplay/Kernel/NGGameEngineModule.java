@@ -80,8 +80,9 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
         if (result) {
             NGObjectXMLDeserializerFile loader = new NGObjectXMLDeserializerFile(null, FDefinitionFilename);
             loader.deserializeObject();
+            FDefinition = (NGGameEngineModuleDefinition)loader.getTarget();
             setProperty(this, "Definition", loader.getTarget());
-            result = loader.getTarget() != null;
+            result = FDefinition != null;
         }
         return result;
     }

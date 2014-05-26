@@ -8,13 +8,13 @@ public class NG2DGraphicEngine extends NGGraphicEngine {
     protected void DoInitialize() {
         super.DoInitialize();
         // ToDo
-        //System.out.println(Definition != null);
     }
 
-    public NG2DGraphicEngineDefinition Definition;
 
     public NG2DGraphicEngine(NGGameEngineModuleManager aManager, String aName) {
         super(aManager, aName);
     }
+
+    public NG2DGraphicEngineDefinition Definition;
 
 }

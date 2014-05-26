@@ -15,6 +15,7 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     protected NGLogManager FLogManager;
     protected ArrayList<NGGameEngineEventListener> FEventListeners;
     protected ArrayList<NGUniplayComponent> FSubComponents;
+    protected NGUniplayObjectDefinition FDefinition;
 
     protected void writeLog(String aText) {
         writeLog(0, aText);
