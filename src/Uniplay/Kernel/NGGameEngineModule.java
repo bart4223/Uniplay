@@ -1,10 +1,7 @@
 package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayComponent;
-import Uniplay.Graphics.NG2DGraphicEngineDefinition;
 import Uniwork.Base.NGObjectXMLDeserializerFile;
-import Uniwork.Base.NGObjectXMLSerializer;
-import Uniwork.Base.NGObjectXMLSerializerFile;
 import Uniwork.Misc.NGLogManager;
 
 import java.io.FileInputStream;
