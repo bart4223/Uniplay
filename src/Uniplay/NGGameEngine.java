@@ -25,8 +25,11 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected NGTickGenerator FTickGenerator;
     protected ArrayList<NGUniplayRegisteredComponentItem> FRegisteredComponents;
     protected Properties FConfiguration;
-    protected String FConfigurationFilename;
-    protected Boolean FRunning;
+    protected String FConfigurationFilename = "";
+    protected String FDefinitionFilename = "";
+    protected Boolean FRunning = false;
+    protected Boolean FConsoleShowLogEntrySource = false;
+    protected Boolean FConsoleShowLog = true;
 
     protected void DoRun() {
         FTickGenerator.SetAllEnabled(true);
@@ -59,23 +62,21 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         writeLog("All modules loaded!");
     }
 
+    @Override
     protected void LoadConfiguration() {
+        super.LoadConfiguration();
         if (FConfigurationFilename.length() > 0) {
             try {
                 InputStream is = new FileInputStream(FConfigurationFilename);
                 FConfiguration.load(is);
-                ReadConfiguration();
-                writeLog(String.format("Configuration from [%s] loaded.", FConfigurationFilename));
+                FDefinitionFilename = FConfiguration.getProperty("DefinitionFilename");
+                FConsoleShowLogEntrySource = Boolean.valueOf(FConfiguration.getProperty("ConsoleShowLogEntrySource"));
+                FConsoleShowLog = Boolean.valueOf(FConfiguration.getProperty("ConsoleShowLog"));
             }
             catch ( Exception e) {
                 writeLog(e.getMessage());
             }
         }
-    }
-
-    protected void ReadConfiguration() {
-        int value = Integer.parseInt(FConfiguration.getProperty("Debuglevel"));
-        setDebugLevel(value);
     }
 
     @Override
@@ -84,7 +85,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         NGUniplayComponent component = getSubComponent(CMP_MEMORY_MANAGER);
         component.addEventListener(this);
         FTickGenerator.setLogManager(FLogManager);
-        LoadConfiguration();
         LoadModules();
     }
 
@@ -119,6 +119,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected void CreateSubComponents() {
         super.CreateSubComponents();
         FLogManager = new NGLogManager();
+        FLogManager.setLogLevel(Integer.parseInt(FConfiguration.getProperty("Debuglevel")));
         FLogManager.addEventListener(this);
         writeLog("Welcome to Uniplay engine...");
         writeLog(String.format("Start creation of %s sub components...", CMP_KERNEL));
@@ -163,14 +164,13 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         FRegisteredComponents = new ArrayList<NGUniplayRegisteredComponentItem>();
         FConfiguration = new Properties();
         FTickGenerator = new NGTickGenerator(10);
-        FRunning = false;
-        FConfigurationFilename = "";
     }
 
     @Override
     public void handleAddLog(NGLogEvent e) {
-        // ToDo
-        System.out.println(e.LogEntry.GetFullAsString("YYYY/MM/dd HH:mm:ss", FLogManager.getLogLevel() > 0));
+        if (FConsoleShowLog) {
+            System.out.println(e.LogEntry.GetFullAsString("YYYY/MM/dd HH:mm:ss", FConsoleShowLogEntrySource));
+        }
     }
 
     @Override
@@ -180,14 +180,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
 
     public Boolean getRunning() {
         return FRunning;
-    }
-
-    public void setDebugLevel(int aDebugLevel) {
-        FLogManager.setLogLevel(aDebugLevel);
-    }
-
-    public int getDebugLevel() {
-        return FLogManager.getLogLevel();
     }
 
     public void Run() {

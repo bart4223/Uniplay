@@ -47,6 +47,8 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     }
 
     protected void BeforeInitialize() {
+        LoadConfiguration();
+        CreateSubComponents();
         for (NGUniplayComponent component : FSubComponents) {
             component.setLogManager(FLogManager);
         }
@@ -99,6 +101,10 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         return null;
     }
 
+    protected void LoadConfiguration() {
+
+    }
+
     protected void CreateSubComponents() {
 
     }
@@ -125,7 +131,6 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         FSubComponents = new ArrayList<NGUniplayComponent>();
         FInitialized = false;
         FLogManager = null;
-        CreateSubComponents();
     }
 
     public String getName() {
