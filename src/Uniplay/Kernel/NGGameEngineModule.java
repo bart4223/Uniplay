@@ -1,12 +1,23 @@
 package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayComponent;
+import Uniplay.Graphics.NG2DGraphicEngineDefinition;
+import Uniwork.Base.NGObjectXMLDeserializerFile;
+import Uniwork.Base.NGObjectXMLSerializer;
+import Uniwork.Base.NGObjectXMLSerializerFile;
 import Uniwork.Misc.NGLogManager;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Properties;
 
 public abstract class NGGameEngineModule extends NGUniplayComponent implements NGGameEngineEventHandlerRegistration {
 
     protected NGGameEngineModuleManager FManager;
     protected String FCaption;
+    protected Properties FConfiguration;
+    protected String FConfigurationFilename = "";
+    protected String FDefinitionFilename = "";
 
     @Override
     protected void BeforeInitialize() {
@@ -48,6 +59,36 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
         addSubComponent(component);
     }
 
+    @Override
+    protected Boolean LoadConfiguration() {
+        super.LoadConfiguration();
+        Boolean result = FConfigurationFilename.length() > 0;
+        if (result) {
+            try {
+                InputStream is = new FileInputStream(FConfigurationFilename);
+                FConfiguration.load(is);
+                FDefinitionFilename = FConfiguration.getProperty("DefinitionFilename");
+            }
+            catch ( Exception e) {
+                result = false;
+                writeLog(e.getMessage());
+            }
+        }
+        return result;
+    }
+
+    @Override
+    protected Boolean LoadDefinition() {
+        Boolean result = FDefinitionFilename.length() > 0;
+        if (result) {
+            NGObjectXMLDeserializerFile loader = new NGObjectXMLDeserializerFile(null, FDefinitionFilename);
+            loader.deserializeObject();
+            setProperty(this, "Definition", loader.getTarget());
+            result = loader.getTarget() != null;
+        }
+        return result;
+    }
+
     protected String getEventHandlerManagerName() {
         return String.format("EventHandler%s", FName);
     }
@@ -56,12 +97,9 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
         return (NGGameEngineEventHandlerManager)getSubComponent(getEventHandlerManagerName());
     }
 
-    protected void DoLoad() {
-
-    }
-
     public NGGameEngineModule(NGGameEngineModuleManager aManager, String aName) {
         super(aManager, aName);
+        FConfiguration = new Properties();
         FManager = aManager;
         if (FManager != null) {
             FManager.addEventListener(this);
@@ -81,17 +119,20 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
         return FCaption;
     }
 
-    public void Load() {
-        DoLoad();
-        writeLog(String.format("Module [%s] loaded.", FName));
-    }
-
     public void setLogManager(NGLogManager aLogManager) {
         super.setLogManager(aLogManager);
         NGUniplayComponent component = getEventHandlerManager();
         if (component != null) {
             component.setLogManager(aLogManager);
         }
+    }
+
+    public void setConfigurationFilename(String aFilename) {
+        FConfigurationFilename = aFilename;
+    }
+
+    public String getConfigurationFilename() {
+        return FConfigurationFilename;
     }
 
     @Override

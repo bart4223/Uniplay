@@ -49,7 +49,9 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         for (NGGameEngineDefinitionModuleItem item : FDefinition.getModules()) {
             try {
                 Class cl = NGGameEngineModule.class.getClassLoader().loadClass(item.getClassname());
-                manager.newModule(cl, item.getName());
+                NGGameEngineModule module = manager.newModule(cl, item.getName());
+                module.setCaption(item.getCaption());
+                module.setConfigurationFilename(item.getConfigurationFilename());
             }
             catch (Exception e) {
                 writeLog(e.getMessage());
@@ -63,59 +65,46 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         writeLog("All modules created!");
     }
 
-    protected void DoLoadModules() {
-        NGGameEngineModuleManager component = (NGGameEngineModuleManager)getSubComponent(CMP_MODULE_MANAGER);
-        component.LoadModules();
-    }
-
-    protected void LoadModules() {
-        writeLog("Start all modules loading...");
-        DoLoadModules();
-        writeLog("All modules loaded!");
-    }
-
     @Override
-    protected void LoadConfiguration() {
+    protected Boolean LoadConfiguration() {
         super.LoadConfiguration();
-        if (FConfigurationFilename.length() > 0) {
+        Boolean result = FConfigurationFilename.length() > 0;
+        if (result) {
             try {
                 InputStream is = new FileInputStream(FConfigurationFilename);
                 FConfiguration.load(is);
                 FDefinitionFilename = FConfiguration.getProperty("DefinitionFilename");
                 FConsoleShowLogEntrySource = Boolean.valueOf(FConfiguration.getProperty("ConsoleShowLogEntrySource"));
                 FConsoleShowLog = Boolean.valueOf(FConfiguration.getProperty("ConsoleShowLog"));
+                FLogManager.setLogLevel(Integer.parseInt(FConfiguration.getProperty("Debuglevel")));
             }
             catch ( Exception e) {
+                result = false;
                 writeLog(e.getMessage());
             }
         }
+        writeLog("Welcome to Uniplay engine...");
+        return result;
     }
 
     @Override
-    protected void LoadDefinition() {
-        /*
-        FDefinition = new NGGameEngineDefinition();
-        NGGameEngineDefinitionModuleItem item = new NGGameEngineDefinitionModuleItem();
-        item.setName("2DGraphicEngine");
-        item.setClassname("Uniplay.Graphics.NG2DGraphicEngine");
-        item.setConfigurationFilename("resources/modules/2DGraphicEngine/config.ucf");
-        FDefinition.setModules(new ArrayList<NGGameEngineDefinitionModuleItem>());
-        FDefinition.getModules().add(item);
-        NGObjectXMLSerializer ser = new NGObjectXMLSerializerFile(FDefinition, null, FDefinitionFilename);
-        ser.serializeObject();
-        */
-        NGObjectXMLDeserializerFile loader = new NGObjectXMLDeserializerFile(null, FDefinitionFilename);
-        loader.deserializeObject();
-        FDefinition = (NGGameEngineDefinition)loader.getTarget();
+    protected Boolean LoadDefinition() {
+        Boolean result = FDefinitionFilename.length() > 0;
+        if (result) {
+            NGObjectXMLDeserializerFile loader = new NGObjectXMLDeserializerFile(null, FDefinitionFilename);
+            loader.deserializeObject();
+            FDefinition = (NGGameEngineDefinition)loader.getTarget();
+            result = FDefinition != null;
+        }
+        return result;
     }
 
     @Override
     protected void BeforeInitialize() {
         super.BeforeInitialize();
-        NGUniplayComponent component = getSubComponent(CMP_MEMORY_MANAGER);
-        component.addEventListener(this);
+        NGUniplayComponent manager = getMemoryManager();
+        manager.addEventListener(this);
         FTickGenerator.setLogManager(FLogManager);
-        LoadModules();
     }
 
     @Override
@@ -148,10 +137,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     @Override
     protected void CreateSubComponents() {
         super.CreateSubComponents();
-        FLogManager = new NGLogManager();
-        FLogManager.setLogLevel(Integer.parseInt(FConfiguration.getProperty("Debuglevel")));
-        FLogManager.addEventListener(this);
-        writeLog("Welcome to Uniplay engine...");
         writeLog(String.format("Start creation of %s sub components...", CMP_KERNEL));
         NGUniplayComponent component = new NGGameEngineModuleManager(this, CMP_MODULE_MANAGER);
         addSubComponent(component);
@@ -184,6 +169,10 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         return (NGGameEngineModuleManager)getSubComponent(CMP_MODULE_MANAGER);
     }
 
+    protected NGGameEngineMemoryManager getMemoryManager() {
+        return (NGGameEngineMemoryManager)getSubComponent(CMP_MEMORY_MANAGER);
+    }
+
     protected NGUniplayRegisteredComponentItem getRegisteredComponentItem(String aName) {
         for (NGUniplayRegisteredComponentItem item : FRegisteredComponents) {
             if (item.getName().equals(aName)) {
@@ -196,6 +185,8 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     public NGGameEngine(NGUniplayObject aOwner) {
         super(aOwner, CMP_KERNEL);
         FRegisteredComponents = new ArrayList<NGUniplayRegisteredComponentItem>();
+        FLogManager = new NGLogManager();
+        FLogManager.addEventListener(this);
         FConfiguration = new Properties();
         FTickGenerator = new NGTickGenerator(10);
     }

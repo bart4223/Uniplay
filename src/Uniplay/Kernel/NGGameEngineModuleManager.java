@@ -105,10 +105,4 @@ public class NGGameEngineModuleManager extends NGUniplayComponent {
         return null;
     }
 
-    public void LoadModules() {
-        for (NGGameEngineModule module : FModules) {
-            module.Load();
-        }
-    }
-
 }
