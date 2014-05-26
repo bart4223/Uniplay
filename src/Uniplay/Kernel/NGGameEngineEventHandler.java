@@ -12,7 +12,6 @@ public class NGGameEngineEventHandler extends NGUniplayObject {
     }
 
     protected void DoHandleEvent() {
-
     }
 
     protected void AfterHandleEvent() {

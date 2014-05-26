@@ -6,8 +6,6 @@ import Uniplay.Base.NGUniplayObject;
 import Uniplay.Base.NGUniplayRegisteredComponentItem;
 import Uniplay.Kernel.*;
 import Uniwork.Base.NGObjectXMLDeserializerFile;
-import Uniwork.Base.NGObjectXMLSerializer;
-import Uniwork.Base.NGObjectXMLSerializerFile;
 import Uniwork.Misc.NGLogEvent;
 import Uniwork.Misc.NGLogEventListener;
 import Uniwork.Misc.NGLogManager;
@@ -19,10 +17,6 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayComponentRegistration {
-
-    public final static String CMP_KERNEL         = "Kernel";
-    public final static String CMP_MEMORY_MANAGER = "MemoryManager";
-    public final static String CMP_MODULE_MANAGER = "ModuleManager";
 
     protected NGTickGenerator FTickGenerator;
     protected ArrayList<NGUniplayRegisteredComponentItem> FRegisteredComponents;
@@ -118,6 +112,10 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected void AfterInitialize() {
         super.AfterInitialize();
         writeLog("Uniplay engine initialized!");
+        NGGameEngineMemoryManager manager = getMemoryManager();
+        // ToDo
+        manager.addMemory("MAIN", 1, 16, 16);
+        manager.clearMemory("MAIN");
     }
 
     @Override
@@ -137,14 +135,14 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     @Override
     protected void CreateSubComponents() {
         super.CreateSubComponents();
-        writeLog(String.format("Start creation of %s sub components...", CMP_KERNEL));
-        NGUniplayComponent component = new NGGameEngineModuleManager(this, CMP_MODULE_MANAGER);
+        writeLog(String.format("Start creation of %s sub components...", getName()));
+        NGUniplayComponent component = new NGGameEngineModuleManager(this, NGGameEngineConstants.CMP_MODULE_MANAGER);
         addSubComponent(component);
-        writeLog(String.format("%s created.", CMP_MODULE_MANAGER));
-        component = new NGGameEngineMemoryManager(this, CMP_MEMORY_MANAGER);
+        writeLog(String.format("%s created.", component.getName()));
+        component = new NGGameEngineMemoryManager(this, NGGameEngineConstants.CMP_MEMORY_MANAGER);
         addSubComponent(component);
-        writeLog(String.format("%s created.", CMP_MEMORY_MANAGER));
-        writeLog(String.format("All %s sub components created.",CMP_KERNEL));
+        writeLog(String.format("%s created.", component.getName()));
+        writeLog(String.format("All %s sub components created.", getName()));
         CreateModules();
     }
 
@@ -166,11 +164,11 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     }
 
     protected NGGameEngineModuleManager getModuleManager() {
-        return (NGGameEngineModuleManager)getSubComponent(CMP_MODULE_MANAGER);
+        return (NGGameEngineModuleManager)getSubComponent(NGGameEngineConstants.CMP_MODULE_MANAGER);
     }
 
     protected NGGameEngineMemoryManager getMemoryManager() {
-        return (NGGameEngineMemoryManager)getSubComponent(CMP_MEMORY_MANAGER);
+        return (NGGameEngineMemoryManager)getSubComponent(NGGameEngineConstants.CMP_MEMORY_MANAGER);
     }
 
     protected NGUniplayRegisteredComponentItem getRegisteredComponentItem(String aName) {
@@ -183,7 +181,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     }
 
     public NGGameEngine(NGUniplayObject aOwner) {
-        super(aOwner, CMP_KERNEL);
+        super(aOwner, NGGameEngineConstants.CMP_KERNEL);
         FRegisteredComponents = new ArrayList<NGUniplayRegisteredComponentItem>();
         FLogManager = new NGLogManager();
         FLogManager.addEventListener(this);
