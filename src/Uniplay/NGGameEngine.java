@@ -4,8 +4,10 @@ import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayComponentRegistration;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Base.NGUniplayRegisteredComponentItem;
-import Uniplay.Kernel.NGGameEngineMemoryManager;
-import Uniplay.Kernel.NGGameEngineModuleManager;
+import Uniplay.Kernel.*;
+import Uniwork.Base.NGObjectXMLDeserializerFile;
+import Uniwork.Base.NGObjectXMLSerializer;
+import Uniwork.Base.NGObjectXMLSerializerFile;
 import Uniwork.Misc.NGLogEvent;
 import Uniwork.Misc.NGLogEventListener;
 import Uniwork.Misc.NGLogManager;
@@ -25,6 +27,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected NGTickGenerator FTickGenerator;
     protected ArrayList<NGUniplayRegisteredComponentItem> FRegisteredComponents;
     protected Properties FConfiguration;
+    protected NGGameEngineDefinition FDefinition;
     protected String FConfigurationFilename = "";
     protected String FDefinitionFilename = "";
     protected Boolean FRunning = false;
@@ -42,7 +45,16 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     }
 
     protected void DoCreateModules() {
-
+        NGGameEngineModuleManager manager = getModuleManager();
+        for (NGGameEngineDefinitionModuleItem item : FDefinition.getModules()) {
+            try {
+                Class cl = NGGameEngineModule.class.getClassLoader().loadClass(item.getClassname());
+                manager.newModule(cl, item.getName());
+            }
+            catch (Exception e) {
+                writeLog(e.getMessage());
+            }
+        }
     }
 
     protected void CreateModules() {
@@ -77,6 +89,24 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
                 writeLog(e.getMessage());
             }
         }
+    }
+
+    @Override
+    protected void LoadDefinition() {
+        /*
+        FDefinition = new NGGameEngineDefinition();
+        NGGameEngineDefinitionModuleItem item = new NGGameEngineDefinitionModuleItem();
+        item.setName("2DGraphicEngine");
+        item.setClassname("Uniplay.Graphics.NG2DGraphicEngine");
+        item.setConfigurationFilename("resources/modules/2DGraphicEngine/config.ucf");
+        FDefinition.setModules(new ArrayList<NGGameEngineDefinitionModuleItem>());
+        FDefinition.getModules().add(item);
+        NGObjectXMLSerializer ser = new NGObjectXMLSerializerFile(FDefinition, null, FDefinitionFilename);
+        ser.serializeObject();
+        */
+        NGObjectXMLDeserializerFile loader = new NGObjectXMLDeserializerFile(null, FDefinitionFilename);
+        loader.deserializeObject();
+        FDefinition = (NGGameEngineDefinition)loader.getTarget();
     }
 
     @Override
@@ -148,6 +178,10 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
             return item.getComponent();
         }
         return null;
+    }
+
+    protected NGGameEngineModuleManager getModuleManager() {
+        return (NGGameEngineModuleManager)getSubComponent(CMP_MODULE_MANAGER);
     }
 
     protected NGUniplayRegisteredComponentItem getRegisteredComponentItem(String aName) {

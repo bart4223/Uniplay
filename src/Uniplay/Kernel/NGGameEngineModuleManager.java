@@ -82,11 +82,11 @@ public class NGGameEngineModuleManager extends NGUniplayComponent {
         try
         {
             module = (NGGameEngineModule)aClass.getConstructor(NGGameEngineModuleManager.class, String.class).newInstance(this, aName);
-            writeLog(String.format("Module [%s] created.", aName));
+            writeLog(String.format("Module [%s] created.", module.getName()));
             addModule(module);
         }
         catch (Exception e) {
-
+            writeLog(e.getMessage());
         }
         return module;
     }

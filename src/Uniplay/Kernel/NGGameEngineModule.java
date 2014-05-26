@@ -52,6 +52,10 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
         return String.format("EventHandler%s", FName);
     }
 
+    protected NGGameEngineEventHandlerManager getEventHandlerManager() {
+        return (NGGameEngineEventHandlerManager)getSubComponent(getEventHandlerManagerName());
+    }
+
     protected void DoLoad() {
 
     }
@@ -84,8 +88,10 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
 
     public void setLogManager(NGLogManager aLogManager) {
         super.setLogManager(aLogManager);
-        NGUniplayComponent component = getSubComponent(getEventHandlerManagerName());
-        component.setLogManager(aLogManager);
+        NGUniplayComponent component = getEventHandlerManager();
+        if (component != null) {
+            component.setLogManager(aLogManager);
+        }
     }
 
     @Override
