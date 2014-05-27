@@ -37,7 +37,11 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
                 return component;
             }
         }
-        return super.DoResolveObject(aName, aClass);
+        Object result = super.DoResolveObject(aName, aClass);
+        if (result == null && FOwner != null) {
+            return FOwner.ResolveObject(aName, aClass);
+        }
+        return result;
     }
 
     protected void DoHandleEvent(String name, NGGameEngineEvent e) {

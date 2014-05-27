@@ -148,11 +148,13 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
 
     @Override
     protected Object DoResolveObject(String aName, Class aClass) {
+        Object result;
         NGUniplayComponent component = getRegisteredComponent(aName);
-        if (aClass.isAssignableFrom(component.getClass())) {
+        if (component != null && aClass.isAssignableFrom(component.getClass())) {
             return component;
         }
-        return super.DoResolveObject(aName, aClass);
+        result = super.DoResolveObject(aName, aClass);
+        return result;
     }
 
     protected NGUniplayComponent getRegisteredComponent(String aName) {
