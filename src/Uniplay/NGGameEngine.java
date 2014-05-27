@@ -27,6 +27,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected Boolean FRunning = false;
     protected Boolean FConsoleShowLogEntrySource = false;
     protected Boolean FConsoleShowLog = true;
+    protected ArrayList<NGLogEventListener> FLogListerener;
 
     protected void DoRun() {
         FTickGenerator.SetAllEnabled(true);
@@ -190,6 +191,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     public NGGameEngine(NGUniplayObject aOwner) {
         super(aOwner, NGGameEngineConstants.CMP_KERNEL);
         FRegisteredComponents = new ArrayList<NGUniplayRegisteredComponentItem>();
+        FLogListerener = new ArrayList<NGLogEventListener>();
         FLogManager = new NGLogManager();
         FLogManager.addEventListener(this);
         FConfiguration = new Properties();
@@ -200,6 +202,9 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     public void handleAddLog(NGLogEvent e) {
         if (FConsoleShowLog) {
             System.out.println(e.LogEntry.GetFullAsString("YYYY/MM/dd HH:mm:ss", FConsoleShowLogEntrySource));
+        }
+        for (NGLogEventListener listener : FLogListerener) {
+            listener.handleAddLog(e);
         }
     }
 
@@ -248,6 +253,14 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         if (item != null && item.getComponent().equals(aComponent)) {
             FRegisteredComponents.remove(item);
         }
+    }
+
+    public void addLogListener(NGLogEventListener aLogListener) {
+        FLogListerener.add(aLogListener);
+    }
+
+    public void removeLogListener(NGLogEventListener aLogListener) {
+        FLogListerener.remove(aLogListener);
     }
 
     public void setConfigurationFilename(String aFilename) {
