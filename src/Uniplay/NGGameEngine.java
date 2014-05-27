@@ -143,7 +143,12 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         addSubComponent(component);
         writeLog(String.format("%s created.", component.getName()));
         writeLog(String.format("All %s sub components created.", getName()));
-        CreateModules();
+        if (FDefinition != null) {
+            CreateModules();
+        }
+        else {
+            writeLog(String.format("No definition for module creation!", getName()));
+        }
     }
 
     @Override
