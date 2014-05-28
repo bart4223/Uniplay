@@ -23,4 +23,8 @@ public class NGGameEngineMemoryCellValue extends NGUniplayObject {
         FInteger = 0;
     }
 
+    public void Inc() {
+        FInteger = FInteger + 1;
+    }
+
 }

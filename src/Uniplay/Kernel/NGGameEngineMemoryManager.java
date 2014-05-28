@@ -39,6 +39,10 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         aMemory.clearCells();
     }
 
+    protected void incAllMemoryCellsValue(NGGameEngineMemory aMemory) {
+        aMemory.incAllCellsValue();
+    }
+
     protected void BeginTransaction(NGGameEngineMemory aMemory) {
         aMemory.BeginTransaction();
     }
@@ -93,7 +97,7 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
             addMemory(memory, aPageSize, aBaseSize, aOffsetSize);
         }
         finally {
-            //EndTransaction(memory);
+            EndTransaction(memory);
         }
     }
 
@@ -113,6 +117,17 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         BeginTransaction(memory);
         try{
             clearMemory(memory);
+        }
+        finally {
+            EndTransaction(memory);
+        }
+    }
+
+    public void incAllMemoryCellsValue(String aName) {
+        NGGameEngineMemory memory = getMemory(aName);
+        BeginTransaction(memory);
+        try{
+            incAllMemoryCellsValue(memory);
         }
         finally {
             EndTransaction(memory);

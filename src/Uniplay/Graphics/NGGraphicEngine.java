@@ -24,12 +24,14 @@ public abstract class NGGraphicEngine extends NGGameEngineModule {
                 Class REcl = NGRenderEngine.class.getClassLoader().loadClass(item.getClassname());
                 NGRenderEngine RE = (NGRenderEngine)REcl.getConstructor(String.class).newInstance(item.getName());
                 NGRenderEngineItem REitem = new NGRenderEngineItem(RE, item.getLayerIndex());
+                RE.setValuePropName(item.getValuepropname());
                 manager.addItem(REitem);
                 writeLog(String.format("Render engine [%s] added.", RE.getName()));
                 Canvas canvas = (Canvas)ResolveObject(item.getLayername(), Canvas.class);
                 for (NGGraphicEngineDefintionRenderEngineDisplayControllerItem dcitem : item.getDisplayControllers()) {
                     Class DCcl = NGDisplayController.class.getClassLoader().loadClass(dcitem.getClassname());
                     NGDisplayController dc = (NGDisplayController)DCcl.getConstructor(Canvas.class, String.class).newInstance(canvas, dcitem.getName());
+                    dc.setPixelSize(dcitem.getPixelsize());
                     REitem.getRenderEngine().addController(dc);
                     writeLog(String.format("Display controller [%s] for render engine [%s] added.", dc.getName(), RE.getName()));
                 }

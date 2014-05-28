@@ -1,25 +1,37 @@
 package Uniplay.Graphics;
 
+import Uniplay.Kernel.NGGameEngineMemoryAddress;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
 import Uniwork.Visuals.NGDisplayController;
 import Uniwork.Visuals.NGDisplayManager;
-import javafx.scene.canvas.Canvas;
 
 public class NGRenderEngine extends NGDisplayManager {
+
+    protected String FValuePropName;
 
     @Override
     protected void DoBeforeRender() {
         super.DoBeforeRender();
-        // ToDo Setposition from cell data
         for (NGDisplayController dc : FControllers) {
-            dc.setProperty(dc, "Value", Cell.getValue());
+            NGGameEngineMemoryAddress address = Cell.getAddress();
+            dc.setPosition(address.getOffset() * dc.BaseWidth, address.getBase() * dc.BaseHeight);
+            dc.setProperty(dc, FValuePropName, Cell.getValue());
         }
     }
 
     public NGRenderEngine(String aName) {
         super(null, aName);
+        FValuePropName = "";
     }
 
     public NGGameEngineMemoryCell Cell;
+
+    public void setValuePropName(String aName) {
+        FValuePropName = aName;
+    }
+
+    public String getValuePropName() {
+        return FValuePropName;
+    }
 
 }

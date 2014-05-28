@@ -10,6 +10,7 @@ public class NGGraphicEngineDefintionRenderEngineItem extends NGUniplayObjectDef
     protected String Classname = "";
     protected String Layername = "";
     protected Integer LayerIndex = 0;
+    protected String ValuePropName = "";
     protected ArrayList<NGGraphicEngineDefintionRenderEngineDisplayControllerItem> DisplayControllers;
 
     public NGGraphicEngineDefintionRenderEngineItem() {
@@ -26,5 +27,7 @@ public class NGGraphicEngineDefintionRenderEngineItem extends NGUniplayObjectDef
     public ArrayList<NGGraphicEngineDefintionRenderEngineDisplayControllerItem> getDisplayControllers() { return DisplayControllers; }
     public void setClassname(String value) { Classname = value;}
     public String getClassname() { return Classname; }
+    public void setValuepropname(String value) { ValuePropName = value;}
+    public String getValuepropname() { return ValuePropName; }
 
 }

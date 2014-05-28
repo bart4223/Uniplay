@@ -28,15 +28,19 @@ public class NGRenderEngineManager extends NGUniplayComponent {
     }
 
     public void Render(NGGraphicEngineRenderContext aContext) {
+        int i = 0;
+        writeLog(5, String.format("Render cells [%d] started...", aContext.getCells().size()));
         for (NGRenderEngineItem item : FRenderEngines) {
             for (NGGameEngineMemoryCell cell : aContext.FCells) {
                 if (item.getLayerIndex() == cell.getAddress().getPage()) {
                     NGRenderEngine rednerengine = item.getRenderEngine();
                     rednerengine.Cell = cell;
                     rednerengine.Render();
+                    i++;
                 }
             }
         }
+        writeLog(5, String.format("Render cells [%d] finished.", i));
     }
 
 }

@@ -36,6 +36,10 @@ public class NGGameEngineMemoryCell extends NGUniplayObject {
         return FProps.get(aName);
     }
 
+    public void incValue() {
+        FValue.Inc();
+    }
+
     public void clear() {
         FValue.clear();
         FProps.clear();

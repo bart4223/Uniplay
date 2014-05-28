@@ -113,9 +113,9 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected void AfterInitialize() {
         super.AfterInitialize();
         writeLog("Uniplay engine initialized!");
-        NGGameEngineMemoryManager manager = getMemoryManager();
         // ToDo
-        manager.addMemory(NGGameEngineConstants.CMP_MAIN_MEMORY, 1, 16, 16);
+        NGGameEngineMemoryManager manager = getMemoryManager();
+        manager.addMemory(NGGameEngineConstants.CMP_MAIN_MEMORY, 1, 32, 32);
         manager.clearMemory(NGGameEngineConstants.CMP_MAIN_MEMORY);
     }
 
@@ -269,6 +269,12 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
 
     public String getConfigurationFilename() {
         return FConfigurationFilename;
+    }
+
+    // ToDo
+    public void Test() {
+        NGGameEngineMemoryManager manager = getMemoryManager();
+        manager.incAllMemoryCellsValue(NGGameEngineConstants.CMP_MAIN_MEMORY);
     }
 
 }

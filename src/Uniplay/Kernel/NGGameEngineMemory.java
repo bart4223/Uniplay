@@ -54,6 +54,18 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         }
     }
 
+    protected void InternalIncCellValue(NGGameEngineMemoryCell aCell) {
+        aCell.incValue();
+        if (getInTransaction()) {
+            addCellTransaction(aCell);
+        }
+        else {
+            ArrayList<NGGameEngineMemoryCell> cells = new ArrayList<NGGameEngineMemoryCell>();
+            cells.add(aCell);
+            raiseCellsChangedEvent(cells);
+        }
+    }
+
     protected void clearCell(NGGameEngineMemoryCell aCell) {
         aCell.clear();
         if (getInTransaction()) {
@@ -111,6 +123,12 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         }
     }
 
+    public void incAllCellsValue() {
+        for (NGGameEngineMemoryCell cell : FCells) {
+            incCellValue(cell);
+        }
+    }
+
     public int getAbsolutCellAddress(NGGameEngineMemoryCell aCell) {
         return getAbsolutAddress(aCell.getAddress());
     }
@@ -150,6 +168,10 @@ public class NGGameEngineMemory extends NGUniplayComponent {
 
     public void setCellValue(NGGameEngineMemoryCell aCell, Integer aValue) {
         InternalSetCellValue(aCell, aValue);
+    }
+
+    public void incCellValue(NGGameEngineMemoryCell aCell) {
+        InternalIncCellValue(aCell);
     }
 
     public void BeginTransaction() {
