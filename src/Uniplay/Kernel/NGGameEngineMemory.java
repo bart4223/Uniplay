@@ -42,7 +42,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         raiseAllocatedEvent();
     }
 
-    protected void InternalSetCellValue(NGGameEngineMemoryCell aCell, Object aValue) {
+    protected void InternalSetCellValue(NGGameEngineMemoryCell aCell, Integer aValue) {
         aCell.setValue(aValue);
         if (getInTransaction()) {
             addCellTransaction(aCell);
@@ -133,22 +133,22 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         return getCell(address);
     }
 
-    public void setCellValue(int aPage, int aBase, int aOffset, Object aValue) {
+    public void setCellValue(int aPage, int aBase, int aOffset, Integer aValue) {
         NGGameEngineMemoryAddress address = new NGGameEngineMemoryAddress(aPage, aBase, aOffset);
         setCellValue(address, aValue);
     }
 
-    public void setCellValue(NGGameEngineMemoryAddress aAddress, Object aValue) {
+    public void setCellValue(NGGameEngineMemoryAddress aAddress, Integer aValue) {
         NGGameEngineMemoryCell cell = getCell(aAddress);
         setCellValue(cell, aValue);
     }
 
-    public void setCellValue(int aIndex, Object aValue) {
+    public void setCellValue(int aIndex, Integer aValue) {
         NGGameEngineMemoryCell cell = FCells.get(aIndex);
         setCellValue(cell, aValue);
     }
 
-    public void setCellValue(NGGameEngineMemoryCell aCell, Object aValue) {
+    public void setCellValue(NGGameEngineMemoryCell aCell, Integer aValue) {
         InternalSetCellValue(aCell, aValue);
     }
 

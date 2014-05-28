@@ -6,26 +6,26 @@ import Uniwork.Base.NGPropertyList;
 public class NGGameEngineMemoryCell extends NGUniplayObject {
 
     protected NGGameEngineMemoryAddress FAddress;
-    protected Object FValue;
+    protected NGGameEngineMemoryCellValue FValue;
     protected NGPropertyList FProps;
 
     public NGGameEngineMemoryCell(int aPage, int aBase, int aOffset) {
         super();
+        FValue = new NGGameEngineMemoryCellValue(0);
         FAddress = new NGGameEngineMemoryAddress(aPage, aBase, aOffset);
         FProps = new NGPropertyList();
-        FValue = null;
     }
 
     public NGGameEngineMemoryAddress getAddress() {
         return FAddress;
     }
 
-    public void setValue(Object aValue) {
-        FValue = aValue;
+    public void setValue(Integer aValue) {
+        FValue.setInteger(aValue);
     }
 
-    public Object getValue() {
-        return FValue;
+    public Integer getValue() {
+        return FValue.getInteger();
     }
 
     public void setPropValue(String aName, Object aValue) {
@@ -37,7 +37,7 @@ public class NGGameEngineMemoryCell extends NGUniplayObject {
     }
 
     public void clear() {
-        FValue = null;
+        FValue.clear();
         FProps.clear();
     }
 
