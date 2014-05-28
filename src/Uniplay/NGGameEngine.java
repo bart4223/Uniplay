@@ -115,8 +115,8 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         writeLog("Uniplay engine initialized!");
         NGGameEngineMemoryManager manager = getMemoryManager();
         // ToDo
-        manager.addMemory("MAIN", 1, 16, 16);
-        manager.clearMemory("MAIN");
+        manager.addMemory(NGGameEngineConstants.CMP_MAIN_MEMORY, 1, 16, 16);
+        manager.clearMemory(NGGameEngineConstants.CMP_MAIN_MEMORY);
     }
 
     @Override

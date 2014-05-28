@@ -4,27 +4,21 @@ import Uniplay.Base.NGUniplayObject;
 
 public class NGRenderEngineItem extends NGUniplayObject {
 
-    public String FLayername;
-    public int FMemoryPage;
-    public NGRenderEngine FRenderEngine;
+    protected int FLayerIndex;
+    protected NGRenderEngine FRenderEngine;
 
-    public NGRenderEngineItem(String aLayername, int aMemoryPage, NGRenderEngine aRenderEngine) {
+    public NGRenderEngineItem(NGRenderEngine aRenderEngine, int aLayerIndex) {
         super();
-        FLayername = aLayername;
         FRenderEngine = aRenderEngine;
-        FMemoryPage = aMemoryPage;
+        FLayerIndex = aLayerIndex;
     }
 
-    public String getLayername() {
-        return FLayername;
+    public int getLayerIndex() {
+        return FLayerIndex;
     }
 
     public NGRenderEngine getRenderEngine() {
         return FRenderEngine;
-    }
-
-    public int getMemoryPage() {
-        return FMemoryPage;
     }
 
 }

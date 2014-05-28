@@ -72,7 +72,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
     }
 
     protected void raiseCellsChangedEvent(ArrayList<NGGameEngineMemoryCell> aCells) {
-        NGGameEngineEventMemoryCellsChanged event = new NGGameEngineEventMemoryCellsChanged(this, aCells);
+        NGGameEngineEventMemoryCellsChanged event = new NGGameEngineEventMemoryCellsChanged(this, this, aCells);
         raiseEvent(EVT_MEMORY_CELLS_CHANGED, event);
     }
 

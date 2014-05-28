@@ -27,6 +27,14 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         }
     }
 
+    protected void writeError(String aMethodName, String aErrorText) {
+        writeLog(0, String.format("<<<ERROR>>> at [%s.%s] with exception [%s]!", getClass().getName(), aMethodName, aErrorText));
+    }
+
+    protected void writeWarning(String aMethodName, String aWarningText) {
+        writeLog(0, String.format("<<<WARNING>>> at [%s.%s] with exception [%s]!", getClass().getName(), aMethodName, aWarningText));
+    }
+
     @Override
     protected Object DoResolveObject(String aName, Class aClass) {
         if (FName.equals(aName) && aClass.isAssignableFrom(getClass())) {

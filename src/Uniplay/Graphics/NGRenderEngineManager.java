@@ -30,7 +30,7 @@ public class NGRenderEngineManager extends NGUniplayComponent {
     public void Render(NGGraphicEngineRenderContext aContext) {
         for (NGRenderEngineItem item : FRenderEngines) {
             for (NGGameEngineMemoryCell cell : aContext.FCells) {
-                if (item.getMemoryPage() == cell.getAddress().getPage()) {
+                if (item.getLayerIndex() == cell.getAddress().getPage()) {
                     NGRenderEngine rednerengine = item.getRenderEngine();
                     rednerengine.Cell = cell;
                     rednerengine.Render();

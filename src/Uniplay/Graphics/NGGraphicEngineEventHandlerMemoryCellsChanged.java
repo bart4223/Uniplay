@@ -1,5 +1,6 @@
 package Uniplay.Graphics;
 
+import Uniplay.Kernel.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineEventHandlerMemoryCellsChanged;
 
 public class NGGraphicEngineEventHandlerMemoryCellsChanged extends NGGameEngineEventHandlerMemoryCellsChanged {
@@ -7,8 +8,10 @@ public class NGGraphicEngineEventHandlerMemoryCellsChanged extends NGGameEngineE
     protected NGGraphicEngine FGraphicEngine;
 
     protected void DoHandleEvent() {
-        NGGraphicEngineRenderContext context = new NGGraphicEngineRenderContext(FCells);
-        FGraphicEngine.Render(context);
+        if (FMemory.getName().equals(NGGameEngineConstants.CMP_MAIN_MEMORY)) {
+            NGGraphicEngineRenderContext context = new NGGraphicEngineRenderContext(FMemory, FCells);
+            FGraphicEngine.Render(context);
+        }
     }
 
     public NGGraphicEngineEventHandlerMemoryCellsChanged(NGGraphicEngine aGraphicEngine) {

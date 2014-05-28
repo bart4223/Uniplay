@@ -16,8 +16,8 @@ public class NGRenderEngine extends NGDisplayManager {
         }
     }
 
-    public NGRenderEngine(Canvas aCanvas) {
-        super(aCanvas);
+    public NGRenderEngine(String aName) {
+        super(null, aName);
     }
 
     public NGGameEngineMemoryCell Cell;
