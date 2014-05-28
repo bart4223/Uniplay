@@ -36,7 +36,7 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
     }
 
     protected void clearMemory(NGGameEngineMemory aMemory) {
-        aMemory.clearCells();
+        aMemory.clearAllCells();
     }
 
     protected void incAllMemoryCellsValue(NGGameEngineMemory aMemory) {

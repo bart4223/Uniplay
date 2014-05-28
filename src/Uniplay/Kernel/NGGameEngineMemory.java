@@ -27,7 +27,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
     }
 
     protected void DoReallocate() {
-        clearCells();
+        clearAllCells();
         DoAllocate();
     }
 
@@ -117,7 +117,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         }
     }
 
-    public void clearCells() {
+    public void clearAllCells() {
         for (NGGameEngineMemoryCell cell : FCells) {
             clearCell(cell);
         }
