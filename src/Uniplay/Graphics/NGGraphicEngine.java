@@ -3,7 +3,7 @@ package Uniplay.Graphics;
 import Uniplay.Kernel.NGGameEngineModule;
 import Uniplay.Kernel.NGGameEngineModuleManager;
 
-public class NGGraphicEngine extends NGGameEngineModule {
+public abstract class NGGraphicEngine extends NGGameEngineModule {
 
     protected void DoRender(NGGraphicEngineRenderContext aContext) {
 
