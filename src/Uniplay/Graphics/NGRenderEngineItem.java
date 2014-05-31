@@ -5,9 +5,9 @@ import Uniplay.Base.NGUniplayObject;
 public class NGRenderEngineItem extends NGUniplayObject {
 
     protected int FLayerIndex;
-    protected NGRenderEngine FRenderEngine;
+    protected NG2DRenderEngine FRenderEngine;
 
-    public NGRenderEngineItem(NGRenderEngine aRenderEngine, int aLayerIndex) {
+    public NGRenderEngineItem(NG2DRenderEngine aRenderEngine, int aLayerIndex) {
         super();
         FRenderEngine = aRenderEngine;
         FLayerIndex = aLayerIndex;
@@ -17,7 +17,7 @@ public class NGRenderEngineItem extends NGUniplayObject {
         return FLayerIndex;
     }
 
-    public NGRenderEngine getRenderEngine() {
+    public NG2DRenderEngine getRenderEngine() {
         return FRenderEngine;
     }
 
