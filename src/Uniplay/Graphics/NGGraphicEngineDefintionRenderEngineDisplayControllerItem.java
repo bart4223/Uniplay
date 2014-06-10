@@ -7,6 +7,7 @@ public class NGGraphicEngineDefintionRenderEngineDisplayControllerItem extends N
     protected String Name = "";
     protected String Classname = "";
     protected Integer Pixelsize = 1;
+    protected String Imagename = "";
 
     public NGGraphicEngineDefintionRenderEngineDisplayControllerItem() {
         super();
@@ -18,5 +19,7 @@ public class NGGraphicEngineDefintionRenderEngineDisplayControllerItem extends N
     public String getClassname() { return Classname; }
     public void setPixelsize(Integer value) { Pixelsize = value;}
     public Integer getPixelsize() { return Pixelsize; }
+    public void setImagename(String value) { Imagename = value;}
+    public String getImagename() { return Imagename; }
 
 }

@@ -32,6 +32,7 @@ public abstract class NGGraphicEngine extends NGGameEngineModule {
                     Class DCcl = NGDisplayController.class.getClassLoader().loadClass(dcitem.getClassname());
                     NGDisplayController dc = (NGDisplayController)DCcl.getConstructor(Canvas.class, String.class).newInstance(canvas, dcitem.getName());
                     dc.setPixelSize(dcitem.getPixelsize());
+                    dc.setImageName(dcitem.getImagename());
                     REitem.getRenderEngine().addController(dc);
                     writeLog(String.format("Display controller [%s] for render engine [%s] added.", dc.getName(), RE.getName()));
                 }
