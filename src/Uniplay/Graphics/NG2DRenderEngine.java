@@ -12,7 +12,7 @@ public class NG2DRenderEngine extends NGRenderEngine {
         super.DoBeforeRender();
         for (NGDisplayController dc : FControllers) {
             NGGameEngineMemoryAddress address = Cell.getAddress();
-            dc.setPosition(address.getOffset() * dc.getViewWidth(), address.getBase() * dc.getViewHeight());
+            dc.setPosition(address.getOffset() * dc.getWidth(), address.getBase() * dc.getHeight());
             dc.setProperty(dc, FValuePropName, Cell.getValue());
             // ToDo more Props
         }
