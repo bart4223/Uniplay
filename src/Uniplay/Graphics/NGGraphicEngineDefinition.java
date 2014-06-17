@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 public abstract class NGGraphicEngineDefinition extends NGGameEngineModuleDefinition {
 
-    protected ArrayList<NGGraphicEngineDefintionRenderEngineItem> RenderEngines;
+    protected ArrayList<NGGraphicEngineDefinitionRenderEngineItem> RenderEngines;
 
     public  NGGraphicEngineDefinition() {
         super();
     }
 
-    public void setRenderEngines(ArrayList<NGGraphicEngineDefintionRenderEngineItem> value) { RenderEngines = value;}
-    public ArrayList<NGGraphicEngineDefintionRenderEngineItem> getRenderEngines() { return RenderEngines; }
+    public void setRenderEngines(ArrayList<NGGraphicEngineDefinitionRenderEngineItem> value) { RenderEngines = value;}
+    public ArrayList<NGGraphicEngineDefinitionRenderEngineItem> getRenderEngines() { return RenderEngines; }
 
 }

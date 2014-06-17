@@ -31,11 +31,11 @@ public class NGRenderEngineManager extends NGUniplayComponent {
         int i = 0;
         writeLog(5, String.format("Render cells [%d] started...", aContext.getCells().size()));
         for (NGRenderEngineItem item : FRenderEngines) {
+            NGRenderEngine renderengine = item.getRenderEngine();
             for (NGGameEngineMemoryCell cell : aContext.FCells) {
                 if (item.getLayerIndex() == cell.getAddress().getPage()) {
-                    NGRenderEngine rednerengine = item.getRenderEngine();
-                    rednerengine.Cell = cell;
-                    rednerengine.Render();
+                    renderengine.Cell = cell;
+                    renderengine.Render();
                     i++;
                 }
             }

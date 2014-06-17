@@ -4,6 +4,7 @@ import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Kernel.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineModule;
 import Uniplay.Kernel.NGGameEngineModuleManager;
+import Uniwork.Base.NGSerializePropertyItem;
 import Uniwork.Visuals.NGDisplayController;
 import javafx.scene.canvas.Canvas;
 
@@ -19,22 +20,27 @@ public abstract class NGGraphicEngine extends NGGameEngineModule {
         super.BeforeInitialize();
         registerEventHandler(new NGGraphicEngineEventHandlerMemoryCellsChanged(this));
         NGRenderEngineManager manager = getRenderEngineManager();
-        for (NGGraphicEngineDefintionRenderEngineItem item : Definition.getRenderEngines()) {
+        for (NGGraphicEngineDefinitionRenderEngineItem item : Definition.getRenderEngines()) {
             try {
                 Class REcl = NG2DRenderEngine.class.getClassLoader().loadClass(item.getClassname());
                 NG2DRenderEngine RE = (NG2DRenderEngine)REcl.getConstructor(String.class).newInstance(item.getName());
                 Canvas canvas = (Canvas)ResolveObject(item.getLayername(), Canvas.class);
                 NGRenderEngineItem REitem = new NGRenderEngineItem(RE, item.getLayerIndex(), canvas.getWidth(), canvas.getHeight());
-                RE.setValuePropName(item.getValuepropname());
                 manager.addItem(REitem);
                 writeLog(String.format("Render engine [%s] added.", RE.getName()));
-                for (NGGraphicEngineDefintionRenderEngineDisplayControllerItem dcitem : item.getDisplayControllers()) {
+                for (NGGraphicEngineDefinitionRenderEngineDisplayControllerItem dcitem : item.getDisplayControllers()) {
                     Class DCcl = NGDisplayController.class.getClassLoader().loadClass(dcitem.getClassname());
                     NGDisplayController dc = (NGDisplayController)DCcl.getConstructor(Canvas.class, String.class).newInstance(canvas, dcitem.getName());
                     dc.setPixelSize(dcitem.getPixelsize());
                     dc.setImageName(dcitem.getImagename());
+                    for (NGSerializePropertyItem prop: dcitem.getProps()) {
+                        dc.setProperty(dc, prop.getName(), prop.getValue());
+                    }
                     REitem.getRenderEngine().addController(dc);
                     writeLog(String.format("Display controller [%s] for render engine [%s] added.", dc.getName(), RE.getName()));
+                }
+                for (NGSerializePropertyItem prop: item.getProps()) {
+                    REitem.setProperty(REitem, prop.getName(), prop.getValue());
                 }
             }
             catch (Exception e) {

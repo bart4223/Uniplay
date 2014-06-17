@@ -10,5 +10,7 @@ public class NGRenderEngine extends NGDisplayManager {
     }
 
     public NGGameEngineMemoryCell Cell;
+    public String ValuePropname;
+
 
 }
