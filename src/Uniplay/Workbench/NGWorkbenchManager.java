@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 public class NGWorkbenchManager extends NGUniplayComponent {
 
     protected Stage FControlStage;
-    protected WorkbenchControlController FControlController;
+    protected NGWorkbenchControlController FControlController;
 
     @Override
     protected void DoInitialize() {
@@ -31,11 +31,11 @@ public class NGWorkbenchManager extends NGUniplayComponent {
 
     protected void CreateWorkbenchStage(){
         FControlStage = new Stage();
-        FXMLLoader lXMLLoader = new FXMLLoader(getClass().getResource("../Workbench/WorkbenchControlStage.fxml"));
+        FXMLLoader lXMLLoader = new FXMLLoader(getClass().getResource("NGWorkbenchControlStage.fxml"));
         try {
             lXMLLoader.load();
-            FControlController = (WorkbenchControlController)lXMLLoader.getController();
-            //FGameFieldController.Game = this;
+            FControlController = (NGWorkbenchControlController)lXMLLoader.getController();
+            FControlController.Manager = this;
             Parent lRoot = lXMLLoader.getRoot();
             FControlStage.setTitle("Workbench.Control");
             FControlStage.setScene(new Scene(lRoot, 500, 500, Color.WHITE));
@@ -44,7 +44,7 @@ public class NGWorkbenchManager extends NGUniplayComponent {
             FControlStage.setY(250);
         }
         catch( Exception e) {
-            e.printStackTrace();
+            writeError("CreateWorkbenchStage", e.getMessage());
         }
     }
 

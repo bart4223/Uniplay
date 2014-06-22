@@ -1,3 +1,0 @@
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane fx:controller="Uniplay.Workbench.WorkbenchControlController" xmlns:fx="http://javafx.com/fxml" >
-</AnchorPane>
