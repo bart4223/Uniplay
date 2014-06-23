@@ -1,6 +1,9 @@
 package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayComponent;
+import Uniplay.Base.NGUniplayObjectRegistration;
+import Uniplay.NGGameEngine;
+import Uniwork.Base.NGObject;
 import Uniwork.Base.NGObjectXMLDeserializerFile;
 import Uniwork.Misc.NGLogManager;
 
@@ -8,7 +11,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
-public abstract class NGGameEngineModule extends NGUniplayComponent implements NGGameEngineEventHandlerRegistration {
+public abstract class NGGameEngineModule extends NGUniplayComponent implements NGGameEngineEventHandlerRegistration, NGUniplayObjectRegistration {
 
     protected NGGameEngineModuleManager FManager;
     protected String FCaption;
@@ -143,6 +146,18 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
     public void unregisterEventHandler(NGGameEngineEventHandler aHandler) {
         NGGameEngineEventHandlerManager component = (NGGameEngineEventHandlerManager)getSubComponent(getEventHandlerManagerName());
         component.removeHandler(aHandler);
+    }
+
+    @Override
+    public void registerObject(String aName, NGObject aObject) {
+        NGGameEngine ge = (NGGameEngine)ResolveObject(NGGameEngine.class);
+        ge.registerObject(aName, aObject);
+    }
+
+    @Override
+    public void unregisterObject(String aName, NGObject aObject) {
+        NGGameEngine ge = (NGGameEngine)ResolveObject(NGGameEngine.class);
+        ge.unregisterObject(aName, aObject);
     }
 
 }

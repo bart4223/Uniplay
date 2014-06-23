@@ -6,13 +6,23 @@ import Uniplay.Kernel.NGGameEngineModule;
 import Uniplay.Kernel.NGGameEngineModuleManager;
 import Uniwork.Base.NGSerializePropertyItem;
 import Uniwork.Visuals.NGDisplayController;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 
 public abstract class NGGraphicEngine extends NGGameEngineModule {
 
+    public static void renderThread(final NGRenderEngineManager aManager, final NGGraphicEngineRenderContext aContext) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                aManager.Render(aContext);
+            }
+        });
+    }
+
     protected void DoRender(NGGraphicEngineRenderContext aContext) {
         NGRenderEngineManager manager = getRenderEngineManager();
-        manager.Render(aContext);
+        renderThread(manager, aContext);
     }
 
     @Override

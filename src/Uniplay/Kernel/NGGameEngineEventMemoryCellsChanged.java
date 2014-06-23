@@ -9,7 +9,10 @@ public class NGGameEngineEventMemoryCellsChanged extends NGGameEngineEvent {
 
     public NGGameEngineEventMemoryCellsChanged(Object source, NGGameEngineMemory aMemory, ArrayList<NGGameEngineMemoryCell> aCells) {
         super(source);
-        FCells = aCells;
+        FCells = new ArrayList<NGGameEngineMemoryCell>();
+        for (NGGameEngineMemoryCell cell : aCells) {
+            FCells.add(cell);
+        }
         FMemory = aMemory;
     }
 

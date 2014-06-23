@@ -1,10 +1,11 @@
 package Uniplay;
 
 import Uniplay.Base.NGUniplayComponent;
-import Uniplay.Base.NGUniplayComponentRegistration;
+import Uniplay.Base.NGUniplayObjectRegistration;
 import Uniplay.Base.NGUniplayObject;
-import Uniplay.Base.NGUniplayRegisteredComponentItem;
+import Uniplay.Base.NGUniplayRegisteredObjectItem;
 import Uniplay.Kernel.*;
+import Uniwork.Base.NGObject;
 import Uniwork.Base.NGObjectXMLDeserializerFile;
 import Uniwork.Misc.NGLogEvent;
 import Uniwork.Misc.NGLogEventListener;
@@ -16,10 +17,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayComponentRegistration {
+public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayObjectRegistration {
 
     protected NGTickGenerator FTickGenerator;
-    protected ArrayList<NGUniplayRegisteredComponentItem> FRegisteredComponents;
+    protected ArrayList<NGUniplayRegisteredObjectItem> FRegisteredObjects;
     protected Properties FConfiguration;
     protected NGGameEngineDefinition FDefinition;
     protected String FConfigurationFilename = "";
@@ -113,11 +114,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected void AfterInitialize() {
         super.AfterInitialize();
         writeLog("Uniplay engine initialized!");
-        // ToDo
-        int size = 64;
-        NGGameEngineMemoryManager manager = getMemoryManager();
-        manager.addMemory(NGGameEngineConstants.CMP_MAIN_MEMORY, 1, size, size);
-        manager.clearMemory(NGGameEngineConstants.CMP_MAIN_MEMORY);
     }
 
     @Override
@@ -156,18 +152,18 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     @Override
     protected Object DoResolveObject(String aName, Class aClass) {
         Object result;
-        NGUniplayComponent component = getRegisteredComponent(aName);
-        if (component != null && aClass.isAssignableFrom(component.getClass())) {
-            return component;
+        NGObject object = getRegisteredObject(aName);
+        if (object != null && aClass.isAssignableFrom(object.getClass())) {
+            return object;
         }
         result = super.DoResolveObject(aName, aClass);
         return result;
     }
 
-    protected NGUniplayComponent getRegisteredComponent(String aName) {
-        NGUniplayRegisteredComponentItem item = getRegisteredComponentItem(aName);
+    protected NGObject getRegisteredObject(String aName) {
+        NGUniplayRegisteredObjectItem item = getRegisteredComponentItem(aName);
         if (item != null) {
-            return item.getComponent();
+            return item.getObject();
         }
         return null;
     }
@@ -180,8 +176,8 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         return (NGGameEngineMemoryManager)getSubComponent(NGGameEngineConstants.CMP_MEMORY_MANAGER);
     }
 
-    protected NGUniplayRegisteredComponentItem getRegisteredComponentItem(String aName) {
-        for (NGUniplayRegisteredComponentItem item : FRegisteredComponents) {
+    protected NGUniplayRegisteredObjectItem getRegisteredComponentItem(String aName) {
+        for (NGUniplayRegisteredObjectItem item : FRegisteredObjects) {
             if (item.getName().equals(aName)) {
                 return item;
             }
@@ -191,12 +187,13 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
 
     public NGGameEngine(NGUniplayObject aOwner) {
         super(aOwner, NGGameEngineConstants.CMP_KERNEL);
-        FRegisteredComponents = new ArrayList<NGUniplayRegisteredComponentItem>();
+        FRegisteredObjects = new ArrayList<NGUniplayRegisteredObjectItem>();
         FLogListerener = new ArrayList<NGLogEventListener>();
         FLogManager = new NGLogManager();
         FLogManager.addEventListener(this);
         FConfiguration = new Properties();
         FTickGenerator = new NGTickGenerator(10);
+        registerObject(NGGameEngineConstants.OBJ_TICKGENERATOR, FTickGenerator);
     }
 
     @Override
@@ -242,20 +239,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         Finalize();
     }
 
-    @Override
-    public void registerComponent(String aName, NGUniplayComponent aComponent) {
-        NGUniplayRegisteredComponentItem item = new NGUniplayRegisteredComponentItem(aName, aComponent);
-        FRegisteredComponents.add(item);
-    }
-
-    @Override
-    public void unregisterComponent(String aName, NGUniplayComponent aComponent) {
-        NGUniplayRegisteredComponentItem item = getRegisteredComponentItem(aName);
-        if (item != null && item.getComponent().equals(aComponent)) {
-            FRegisteredComponents.remove(item);
-        }
-    }
-
     public void addLogListener(NGLogEventListener aLogListener) {
         FLogListerener.add(aLogListener);
     }
@@ -276,6 +259,20 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     public void Test() {
         NGGameEngineMemoryManager manager = getMemoryManager();
         manager.incAllMemoryCellsValue(NGGameEngineConstants.CMP_MAIN_MEMORY);
+    }
+
+    @Override
+    public void registerObject(String aName, NGObject aObject) {
+        NGUniplayRegisteredObjectItem item = new NGUniplayRegisteredObjectItem(aName, aObject);
+        FRegisteredObjects.add(item);
+    }
+
+    @Override
+    public void unregisterObject(String aName, NGObject aObject) {
+        NGUniplayRegisteredObjectItem item = getRegisteredComponentItem(aName);
+        if (item != null && item.getObject().equals(aObject)) {
+            FRegisteredObjects.remove(item);
+        }
     }
 
 }

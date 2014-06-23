@@ -9,4 +9,6 @@ public class NGGameEngineConstants {
     public final static String CMP_MAIN_MEMORY          = "MainMemory";
     public final static String CMP_WORKBENCH_MANAGER    = "WorkbenchManager";
 
+    public final static String OBJ_TICKGENERATOR        = "Tickgenerator";
+
 }
