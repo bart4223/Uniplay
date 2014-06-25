@@ -12,7 +12,7 @@ public abstract class NGGameEngineEventHandlerMemoryAllocated extends NGGameEngi
     }
 
     public NGGameEngineEventHandlerMemoryAllocated() {
-        super(NGGameEngineMemory.EVT_MEMORY_ALLOCATED);
+        super(NGGameEngineConstants.EVT_MEMORY_ALLOCATED);
     }
 
 }

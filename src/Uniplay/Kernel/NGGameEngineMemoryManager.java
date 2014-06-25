@@ -2,24 +2,11 @@ package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayComponent;
 
-import java.util.ArrayList;
-
 public class NGGameEngineMemoryManager extends NGUniplayComponent {
 
-    protected ArrayList<NGGameEngineMemory> FMemoryList;
-
-    protected void reallocateMemory(NGGameEngineMemory aMemory, int aPageSize, int aBaseSize, int aOffsetSize) {
-        aMemory.Reallocate(aPageSize, aBaseSize, aOffsetSize);
+    protected void reallocateMemory(NGGameEngineMemory aMemory, NGGameEngineMemoryTransaction aTransaction, int aPageSize, int aBaseSize, int aOffsetSize) {
+        aMemory.Reallocate(aTransaction, aPageSize, aBaseSize, aOffsetSize);
         writeLog(String.format("Memory [%s] %d cells allocated.", aMemory.getName(), aMemory.getAllocated()));
-    }
-
-    protected NGGameEngineMemory getMemory(String aName) {
-        for (NGGameEngineMemory memory : FMemoryList) {
-            if (memory.getName().equals(aName)) {
-                return memory;
-            }
-        }
-        return null;
     }
 
     protected NGGameEngineMemory newMemory(String aName) {
@@ -28,109 +15,107 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         return memory;
     }
 
-    protected void addMemory(NGGameEngineMemory aMemory, int aPageSize, int aBaseSize, int aOffsetSize) {
+    protected void addMemory(NGGameEngineMemory aMemory, NGGameEngineMemoryTransaction aTransaction, int aPageSize, int aBaseSize, int aOffsetSize) {
         aMemory.addEventListener(this);
-        FMemoryList.add(aMemory);
+        addSubComponent(aMemory);
         writeLog(String.format("Memory [%s] added.", aMemory.getName()));
-        reallocateMemory(aMemory, aPageSize, aBaseSize, aOffsetSize);
+        reallocateMemory(aMemory, aTransaction, aPageSize, aBaseSize, aOffsetSize);
     }
 
-    protected void clearMemory(NGGameEngineMemory aMemory) {
-        aMemory.clearAllCells();
+    protected void clearMemory(NGGameEngineMemory aMemory, NGGameEngineMemoryTransaction aTransaction) {
+        aMemory.clearAllCells(aTransaction);
     }
 
-    protected void incAllMemoryCellsValue(NGGameEngineMemory aMemory) {
-        aMemory.incAllCellsValue();
+    protected void incAllMemoryCellsValue(NGGameEngineMemory aMemory, NGGameEngineMemoryTransaction aTransaction) {
+        aMemory.incAllCellsValue(aTransaction);
     }
 
-    protected void BeginTransaction(NGGameEngineMemory aMemory) {
-        aMemory.BeginTransaction();
+    protected NGGameEngineMemoryTransaction BeginTransaction(NGGameEngineMemory aMemory) {
+        return getTransactionManager().BeginTransaction(aMemory);
     }
 
-    protected void EndTransaction(NGGameEngineMemory aMemory) {
-        aMemory.EndTransaction();
+    protected void EndTransaction(NGGameEngineMemoryTransaction aTransaction) {
+        getTransactionManager().EndTransaction(aTransaction);
+    }
+
+    protected NGGameEngineMemory getMemory(String aName) {
+        return (NGGameEngineMemory)getSubComponent(aName);
     }
 
     @Override
     protected void BeforeInitialize() {
-        writeLog("Start memory initialization...");
+        writeLog("Start memory manager initialization...");
         super.BeforeInitialize();
     }
 
     @Override
-    protected void AfterInitialize() {
-        super.AfterInitialize();
-        writeLog("Memory initialized!");
-    }
-
-    @Override
     protected void BeforeFinalize() {
-        writeLog("Start memory release...");
+        writeLog("Start memory manager release...");
         super.BeforeFinalize();
     }
 
     @Override
     protected void AfterFinalize() {
         super.AfterFinalize();
-        writeLog("Memory released!");
+        writeLog("Memory manager released!");
+    }
+
+    @Override
+    protected void CreateSubComponents() {
+        super.CreateSubComponents();
+        NGUniplayComponent component = new NGGameEngineMemoryTransactionManager(this, NGGameEngineConstants.CMP_MEMORY_TRANSACTION_MANAGER);
+        addSubComponent(component);
+    }
+
+    protected NGGameEngineMemoryTransactionManager getTransactionManager() {
+        return (NGGameEngineMemoryTransactionManager)getSubComponent(NGGameEngineConstants.CMP_MEMORY_TRANSACTION_MANAGER);
     }
 
     public NGGameEngineMemoryManager(NGUniplayComponent aOwner, String aName) {
         super(aOwner, aName);
-        FMemoryList = new ArrayList<NGGameEngineMemory>();
-    }
-
-    public void BeginTransaction(String aName) {
-        NGGameEngineMemory memory = getMemory(aName);
-        BeginTransaction(memory);
-    }
-
-    public void EndTransaction(String aName) {
-        NGGameEngineMemory memory = getMemory(aName);
-        EndTransaction(memory);
     }
 
     public void addMemory(String aName, int aPageSize, int aBaseSize, int aOffsetSize) {
         NGGameEngineMemory memory = newMemory(aName);
-        BeginTransaction(memory);
+        NGGameEngineMemoryTransaction transaction = BeginTransaction(memory);
         try{
-            addMemory(memory, aPageSize, aBaseSize, aOffsetSize);
+            addMemory(memory, transaction, aPageSize, aBaseSize, aOffsetSize);
         }
         finally {
-            EndTransaction(memory);
+            EndTransaction(transaction);
         }
     }
 
     public void reallocateMemory(String aName, int aPageSize, int aBaseSize, int aOffsetSize) {
         NGGameEngineMemory memory = getMemory(aName);
-        BeginTransaction(memory);
+        NGGameEngineMemoryTransaction transaction = BeginTransaction(memory);
         try{
-            reallocateMemory(memory, aPageSize, aBaseSize, aOffsetSize);
+            reallocateMemory(memory, transaction, aPageSize, aBaseSize, aOffsetSize);
         }
         finally {
-            EndTransaction(memory);
+            EndTransaction(transaction);
         }
     }
 
     public void clearMemory(String aName) {
         NGGameEngineMemory memory = getMemory(aName);
-        BeginTransaction(memory);
+        NGGameEngineMemoryTransaction transaction = BeginTransaction(memory);
         try{
-            clearMemory(memory);
+            clearMemory(memory, transaction);
         }
         finally {
-            EndTransaction(memory);
+            EndTransaction(transaction);
         }
     }
 
     public void incAllMemoryCellsValue(String aName) {
         NGGameEngineMemory memory = getMemory(aName);
-        BeginTransaction(memory);
+        NGGameEngineMemoryTransaction transaction = BeginTransaction(memory);
         try{
-            incAllMemoryCellsValue(memory);
+            incAllMemoryCellsValue(memory, transaction);
         }
         finally {
-            EndTransaction(memory);
+            EndTransaction(transaction);
         }
     }
 

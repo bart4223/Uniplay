@@ -16,7 +16,7 @@ public class NGGameEngineEventHandlerMemoryCellsChanged extends NGGameEngineEven
     }
 
     public NGGameEngineEventHandlerMemoryCellsChanged() {
-        super(NGGameEngineMemory.EVT_MEMORY_CELLS_CHANGED);
+        super(NGGameEngineConstants.EVT_MEMORY_CELLS_CHANGED);
     }
 
 }

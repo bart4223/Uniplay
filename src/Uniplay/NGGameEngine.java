@@ -31,7 +31,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected ArrayList<NGLogEventListener> FLogListerener;
 
     protected void DoRun() {
-        FTickGenerator.SetAllEnabled(true);
         writeLog("Uniplay engine is running...");
     }
 
@@ -134,10 +133,10 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected void CreateSubComponents() {
         super.CreateSubComponents();
         writeLog(String.format("Start creation of %s sub components...", getName()));
-        NGUniplayComponent component = new NGGameEngineModuleManager(this, NGGameEngineConstants.CMP_MODULE_MANAGER);
+        NGUniplayComponent component = new NGGameEngineMemoryManager(this, NGGameEngineConstants.CMP_MEMORY_MANAGER);
         addSubComponent(component);
         writeLog(String.format("%s created.", component.getName()));
-        component = new NGGameEngineMemoryManager(this, NGGameEngineConstants.CMP_MEMORY_MANAGER);
+        component = new NGGameEngineModuleManager(this, NGGameEngineConstants.CMP_MODULE_MANAGER);
         addSubComponent(component);
         writeLog(String.format("%s created.", component.getName()));
         writeLog(String.format("All %s sub components created.", getName()));

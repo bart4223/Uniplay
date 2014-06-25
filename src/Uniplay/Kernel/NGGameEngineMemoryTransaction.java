@@ -3,20 +3,19 @@ package Uniplay.Kernel;
 import Uniplay.Base.NGUniplayObject;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class NGGameEngineMemoryTransaction extends NGUniplayObject {
 
-    protected Boolean FInTransaction;
+    protected UUID FGUID;
     protected ArrayList<NGGameEngineMemoryCell> FCells;
+    protected NGGameEngineMemory FMemory;
 
-    protected void clear() {
-        FCells.clear();
-    }
-
-    public NGGameEngineMemoryTransaction() {
+    public NGGameEngineMemoryTransaction(NGGameEngineMemory aMemory) {
         super();
+        FMemory = aMemory;
+        FGUID = UUID.randomUUID();
         FCells = new ArrayList<NGGameEngineMemoryCell>();
-        FInTransaction = false;
     }
 
     public void add(NGGameEngineMemoryCell aCell) {
@@ -25,25 +24,16 @@ public class NGGameEngineMemoryTransaction extends NGUniplayObject {
         }
     }
 
-    public void Begin() {
-        if (!FInTransaction) {
-            FInTransaction = true;
-            clear();
-        }
-    }
-
-    public void End() {
-        if (FInTransaction) {
-            FInTransaction = false;
-        }
-    }
-
-    public Boolean getInTransaction() {
-        return FInTransaction;
-    }
-
     public ArrayList<NGGameEngineMemoryCell> getCells() {
         return FCells;
+    }
+
+    public UUID getGUID() {
+        return FGUID;
+    }
+
+    public NGGameEngineMemory getMemory() {
+        return FMemory;
     }
 
 }
