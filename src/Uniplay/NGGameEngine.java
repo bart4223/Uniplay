@@ -209,7 +209,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         FObjectRequestBroker = new NGObjectRequestBroker(this);
         FObjectRequestBroker.setLogManager(FLogManager);
         registerObject(NGGameEngineConstants.OBJ_OBJECTREQUESTBROKER, FObjectRequestBroker);
-
     }
 
     @Override
