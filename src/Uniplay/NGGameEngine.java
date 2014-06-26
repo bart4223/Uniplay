@@ -5,8 +5,7 @@ import Uniplay.Base.NGUniplayObjectRegistration;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Base.NGUniplayRegisteredObjectItem;
 import Uniplay.Kernel.*;
-import Uniwork.Base.NGObject;
-import Uniwork.Base.NGObjectXMLDeserializerFile;
+import Uniwork.Base.*;
 import Uniwork.Misc.NGLogEvent;
 import Uniwork.Misc.NGLogEventListener;
 import Uniwork.Misc.NGLogManager;
@@ -17,9 +16,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayObjectRegistration {
+public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayObjectRegistration, NGObjectRequestRegistration {
 
     protected NGTickGenerator FTickGenerator;
+    protected NGObjectRequestBroker FObjectRequestBroker;
     protected ArrayList<NGUniplayRegisteredObjectItem> FRegisteredObjects;
     protected Properties FConfiguration;
     protected NGGameEngineDefinition FDefinition;
@@ -150,13 +150,21 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
 
     @Override
     protected Object DoResolveObject(String aName, Class aClass) {
-        Object result;
-        NGObject object = getRegisteredObject(aName);
-        if (object != null && aClass.isAssignableFrom(object.getClass())) {
-            return object;
+        Object result = null;
+        if (aName.length() == 0) {
+            for (NGUniplayRegisteredObjectItem item : FRegisteredObjects) {
+                if (aClass.isAssignableFrom(item.getObject().getClass())) {
+                    return item.getObject();
+                }
+            }
         }
-        result = super.DoResolveObject(aName, aClass);
-        return result;
+        else {
+            NGObject object = getRegisteredObject(aName);
+            if (object != null && aClass.isAssignableFrom(object.getClass())) {
+                return object;
+            }
+        }
+        return super.DoResolveObject(aName, aClass);
     }
 
     protected NGObject getRegisteredObject(String aName) {
@@ -184,6 +192,10 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         return null;
     }
 
+    protected void DoInvoke(NGObjectRequestItem aRequest) {
+        FObjectRequestBroker.Invoke(aRequest);
+    }
+
     public NGGameEngine(NGUniplayObject aOwner) {
         super(aOwner, NGGameEngineConstants.CMP_KERNEL);
         FRegisteredObjects = new ArrayList<NGUniplayRegisteredObjectItem>();
@@ -192,7 +204,12 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         FLogManager.addEventListener(this);
         FConfiguration = new Properties();
         FTickGenerator = new NGTickGenerator(10);
+        FTickGenerator.setLogManager(FLogManager);
         registerObject(NGGameEngineConstants.OBJ_TICKGENERATOR, FTickGenerator);
+        FObjectRequestBroker = new NGObjectRequestBroker(this);
+        FObjectRequestBroker.setLogManager(FLogManager);
+        registerObject(NGGameEngineConstants.OBJ_OBJECTREQUESTBROKER, FObjectRequestBroker);
+
     }
 
     @Override
@@ -254,10 +271,8 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         return FConfigurationFilename;
     }
 
-    // ToDo
-    public void Test() {
-        NGGameEngineMemoryManager manager = getMemoryManager();
-        manager.incAllMemoryCellsValue(NGGameEngineConstants.CMP_MAIN_MEMORY);
+    public void Invoke(NGObjectRequestItem aRequest) {
+        DoInvoke(aRequest);
     }
 
     @Override
@@ -272,6 +287,12 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         if (item != null && item.getObject().equals(aObject)) {
             FRegisteredObjects.remove(item);
         }
+    }
+
+    @Override
+    public void registerObjectRequest(String aName, Object aObject, String aMethod, String aObjectMethod) {
+        NGObjectRequestObject object = FObjectRequestBroker.addObject(aName, aObject);
+        object.addMethod(aMethod, aObjectMethod);
     }
 
 }

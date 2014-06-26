@@ -4,6 +4,7 @@ public class NGGameEngineConstants {
 
     // Objects
     public final static String OBJ_TICKGENERATOR              = "Tickgenerator";
+    public final static String OBJ_OBJECTREQUESTBROKER        = "ObjectRequestBroker";
 
     // Components
     public final static String CMP_KERNEL                     = "Kernel";
