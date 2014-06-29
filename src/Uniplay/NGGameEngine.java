@@ -13,7 +13,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayObjectRegistration, NGObjectRequestRegistration, NGLogEventListenerManagement {
+public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayObjectRegistration, NGObjectRequestRegistration, NGLogEventListenerRegistration, NGGameEngineLogManagement {
 
     protected NGTickGenerator FTickGenerator;
     protected NGObjectRequestBroker FObjectRequestBroker;
@@ -25,7 +25,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected Boolean FRunning = false;
     protected Boolean FConsoleShowLogEntrySource = false;
     protected Boolean FConsoleShowLog = true;
-    protected ArrayList<NGLogEventListener> FLogListerener;
+    protected ArrayList<NGLogEventListener> FLogListener;
 
     protected void DoRun() {
         writeLog("Uniplay engine is running...");
@@ -196,7 +196,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     public NGGameEngine(NGUniplayObject aOwner) {
         super(aOwner, NGGameEngineConstants.CMP_KERNEL);
         FRegisteredObjects = new ArrayList<NGUniplayRegisteredObjectItem>();
-        FLogListerener = new ArrayList<NGLogEventListener>();
+        FLogListener = new ArrayList<NGLogEventListener>();
         FLogManager = new NGLogManager();
         FLogManager.addEventListener(this);
         FConfiguration = new Properties();
@@ -213,7 +213,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         if (FConsoleShowLog) {
             System.out.println(e.LogEntry.GetFullAsString("YYYY/MM/dd HH:mm:ss", getConsoleShowLogEntrySource()));
         }
-        for (NGLogEventListener listener : FLogListerener) {
+        for (NGLogEventListener listener : FLogListener) {
             listener.handleAddLog(e);
         }
     }
@@ -289,12 +289,12 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
 
     @Override
     public void addLogListener(NGLogEventListener aLogListener) {
-        FLogListerener.add(aLogListener);
+        FLogListener.add(aLogListener);
     }
 
     @Override
     public void removeLogListener(NGLogEventListener aLogListener) {
-        FLogListerener.remove(aLogListener);
+        FLogListener.remove(aLogListener);
     }
 
     @Override
@@ -310,6 +310,11 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     @Override
     public String getCompleteLog(String aFormat) {
         return FLogManager.getCompleteLog(aFormat, getConsoleShowLogEntrySource());
+    }
+
+    @Override
+    public Boolean getShowLogEntrySource() {
+        return getConsoleShowLogEntrySource();
     }
 
 }
