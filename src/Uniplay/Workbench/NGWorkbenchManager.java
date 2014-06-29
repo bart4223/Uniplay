@@ -23,6 +23,7 @@ public class NGWorkbenchManager extends NGUniplayComponent {
     protected void AfterInitialize() {
         super.AfterInitialize();
         showControlStage();
+        perfectLayout();
     }
 
     protected void showControlStage() {
@@ -37,15 +38,18 @@ public class NGWorkbenchManager extends NGUniplayComponent {
             FControlController = (NGWorkbenchControlController)lXMLLoader.getController();
             FControlController.Manager = this;
             Parent lRoot = lXMLLoader.getRoot();
-            FControlStage.setTitle("Workbench.Control");
-            FControlStage.setScene(new Scene(lRoot, 500, 500, Color.WHITE));
+            FControlStage.setTitle("Uniplay.Workbench.Control");
+            FControlStage.setScene(new Scene(lRoot, 800, 50, Color.WHITE));
             FControlStage.setResizable(false);
-            FControlStage.setX(300);
-            FControlStage.setY(250);
         }
         catch( Exception e) {
             writeError("CreateWorkbenchStage", e.getMessage());
         }
+    }
+
+    protected void perfectLayout() {
+        FControlStage.setX(500);
+        FControlStage.setY(150);
     }
 
     public NGWorkbenchManager(NGUniplayObject aOwner, String aName) {

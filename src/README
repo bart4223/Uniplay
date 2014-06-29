@@ -3,4 +3,10 @@ The Uniplay project represents a game engine to realize some java games...
 Files:
     .udf    Uniplay Definition File (xml)
     .ucf    Uniplay Configuration File (properties)
-    .ulf    Uniplay Level File
+    .ulf    Uniplay Level File (xml)
+
+config.ucf:
+    Debuglevel = Debugger level >0
+    ConsoleShowLogEntrySource = Show the source of log entry
+    ConsoleShowLog = Show the log entries in console
+    DefinitionFilename = definition filename for Uniplay engine

@@ -14,6 +14,7 @@ public class NGGameEngineConstants {
     public final static String CMP_RENDERENGINE_MANAGER       = "RenderEngineManager";
     public final static String CMP_MAIN_MEMORY                = "Main";
     public final static String CMP_WORKBENCH_MANAGER          = "WorkbenchManager";
+    public final static String CMP_CONSOLE                    = "Console";
 
     // Events
     public final static String EVT_MEMORY_ALLOCATED           = "Memory.Allocated";

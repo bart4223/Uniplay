@@ -6,17 +6,14 @@ import Uniplay.Base.NGUniplayObject;
 import Uniplay.Base.NGUniplayRegisteredObjectItem;
 import Uniplay.Kernel.*;
 import Uniwork.Base.*;
-import Uniwork.Misc.NGLogEvent;
-import Uniwork.Misc.NGLogEventListener;
-import Uniwork.Misc.NGLogManager;
-import Uniwork.Misc.NGTickGenerator;
+import Uniwork.Misc.*;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayObjectRegistration, NGObjectRequestRegistration {
+public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayObjectRegistration, NGObjectRequestRegistration, NGLogEventListenerManagement {
 
     protected NGTickGenerator FTickGenerator;
     protected NGObjectRequestBroker FObjectRequestBroker;
@@ -214,7 +211,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     @Override
     public void handleAddLog(NGLogEvent e) {
         if (FConsoleShowLog) {
-            System.out.println(e.LogEntry.GetFullAsString("YYYY/MM/dd HH:mm:ss", FConsoleShowLogEntrySource));
+            System.out.println(e.LogEntry.GetFullAsString("YYYY/MM/dd HH:mm:ss", getConsoleShowLogEntrySource()));
         }
         for (NGLogEventListener listener : FLogListerener) {
             listener.handleAddLog(e);
@@ -254,12 +251,8 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         Finalize();
     }
 
-    public void addLogListener(NGLogEventListener aLogListener) {
-        FLogListerener.add(aLogListener);
-    }
-
-    public void removeLogListener(NGLogEventListener aLogListener) {
-        FLogListerener.remove(aLogListener);
+    public void Invoke(NGObjectRequestItem aRequest) {
+        DoInvoke(aRequest);
     }
 
     public void setConfigurationFilename(String aFilename) {
@@ -270,8 +263,8 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         return FConfigurationFilename;
     }
 
-    public void Invoke(NGObjectRequestItem aRequest) {
-        DoInvoke(aRequest);
+    public Boolean getConsoleShowLogEntrySource() {
+        return FConsoleShowLogEntrySource;
     }
 
     @Override
@@ -292,6 +285,31 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     public void registerObjectRequest(String aName, Object aObject, String aMethod, String aObjectMethod) {
         NGObjectRequestObject object = FObjectRequestBroker.addObject(aName, aObject);
         object.addMethod(aMethod, aObjectMethod);
+    }
+
+    @Override
+    public void addLogListener(NGLogEventListener aLogListener) {
+        FLogListerener.add(aLogListener);
+    }
+
+    @Override
+    public void removeLogListener(NGLogEventListener aLogListener) {
+        FLogListerener.remove(aLogListener);
+    }
+
+    @Override
+    public void clearLog() {
+        FLogManager.clearLog();
+    }
+
+    @Override
+    public String getCompleteLog() {
+        return FLogManager.getCompleteLog();
+    }
+
+    @Override
+    public String getCompleteLog(String aFormat) {
+        return FLogManager.getCompleteLog(aFormat, getConsoleShowLogEntrySource());
     }
 
 }

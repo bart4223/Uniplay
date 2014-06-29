@@ -1,0 +1,5 @@
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TextArea?>
+<AnchorPane fx:controller="Uniplay.Debugger.NGUniplayConsoleController" xmlns:fx="http://javafx.com/fxml">
+    <TextArea id="Log" minWidth="800" prefHeight="200" text="" wrapText="true" editable="false" AnchorPane.topAnchor="0" style="-fx-background-color: darkgray;" fx:id="Log"/>
+</AnchorPane>
