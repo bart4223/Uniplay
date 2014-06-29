@@ -1,6 +1,6 @@
 package Uniplay.Kernel;
 
-public interface NGGameEngineLogManagement {
+public interface NGGameEngineLoggingManagement {
 
     public void clearLog();
     public String getCompleteLog();

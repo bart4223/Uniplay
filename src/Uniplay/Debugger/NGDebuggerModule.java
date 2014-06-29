@@ -2,7 +2,7 @@ package Uniplay.Debugger;
 
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Kernel.NGGameEngineConstants;
-import Uniplay.Kernel.NGGameEngineLogManagement;
+import Uniplay.Kernel.NGGameEngineLoggingManagement;
 import Uniplay.Kernel.NGGameEngineModule;
 import Uniplay.Kernel.NGGameEngineModuleManager;
 import Uniwork.Misc.NGLogEventListenerRegistration;
@@ -22,7 +22,7 @@ public class NGDebuggerModule extends NGGameEngineModule {
         NGUniplayConsole console = getConsole();
         NGLogEventListenerRegistration lelr = (NGLogEventListenerRegistration)ResolveObject(NGLogEventListenerRegistration.class);
         lelr.addLogListener(console);
-        NGGameEngineLogManagement logManagement = (NGGameEngineLogManagement)ResolveObject(NGGameEngineLogManagement.class);
+        NGGameEngineLoggingManagement logManagement = (NGGameEngineLoggingManagement)ResolveObject(NGGameEngineLoggingManagement.class);
         console.writeLog(logManagement.getCompleteLog(NGUniplayConsole.FMT_DATETIME));
         console.setShowLogEntrySource(logManagement.getShowLogEntrySource());
     }
