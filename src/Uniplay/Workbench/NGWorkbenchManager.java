@@ -59,6 +59,8 @@ public class NGWorkbenchManager extends NGUniplayComponent {
         super.AfterInitialize();
         showControlStage();
         perfectLayout();
+        // ToDo
+        newLevelDesigner("");
     }
 
     public NGWorkbenchManager(NGUniplayObject aOwner, String aName) {
@@ -69,9 +71,9 @@ public class NGWorkbenchManager extends NGUniplayComponent {
         FControlStage.show();
     }
 
-    public void newLevelDesigner() {
+    public void newLevelDesigner(String aName) {
         NGLevelDesignerManager manager = getLevelDesignerManager();
-        NGLevelDesigner designer = manager.addLevelDesigner("");
+        NGLevelDesigner designer = manager.addLevelDesigner(aName);
         designer.setStagePosition(500, 250);
 
     }

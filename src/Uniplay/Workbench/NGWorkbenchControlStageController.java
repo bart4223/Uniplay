@@ -6,10 +6,9 @@ public class NGWorkbenchControlStageController {
 
     @FXML
     protected void handleLevelDesigner(){
-        Manager.newLevelDesigner();
+        Manager.newLevelDesigner("");
     }
 
     public NGWorkbenchManager Manager;
-
 
 }
