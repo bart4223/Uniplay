@@ -30,7 +30,7 @@ public class NGDebuggerModule extends NGGameEngineModule {
     @Override
     protected void AfterInitialize() {
         super.AfterInitialize();
-        getConsole().setStagePosition(1400, 1100);
+        getConsole().setStagePosition(500, 1100);
     }
 
     protected NGUniplayConsole getConsole() {

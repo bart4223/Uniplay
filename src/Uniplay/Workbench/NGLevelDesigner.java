@@ -22,7 +22,7 @@ public class NGLevelDesigner extends NGUniplayComponent {
             FStageController.Designer = this;
             Parent lRoot = lXMLLoader.getRoot();
             FStage.setTitle("Uniplay.Workbench.LevelDesigner");
-            FStage.setScene(new Scene(lRoot, 800, 1050, Color.WHITE));
+            FStage.setScene(new Scene(lRoot, 800, 800, Color.WHITE));
             FStage.setResizable(false);
         }
         catch( Exception e) {
