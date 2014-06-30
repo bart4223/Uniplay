@@ -2,6 +2,10 @@ package Uniplay.Workbench;
 
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.Kernel.NGGameEngineConstants;
+import Uniplay.Storage.NG2DGameFieldSize;
+import Uniplay.Storage.NG2DLevel;
+import Uniplay.Storage.NG2DLevelManager;
 import Uniwork.Base.NGObjectDeserializer;
 import Uniwork.Base.NGObjectXMLDeserializerFile;
 import javafx.fxml.FXMLLoader;
@@ -35,20 +39,30 @@ public class NG2DLevelDesigner extends NGUniplayComponent {
         }
     }
 
+    protected NG2DLevelManager getLevelManager() {
+        NG2DLevelManager levelManager = (NG2DLevelManager)ResolveObject(NGGameEngineConstants.CMP_2DLEVEL_MANAGER, NG2DLevelManager.class);
+        return levelManager;
+    }
+
+    protected void showLevel(NG2DLevel aLevel) {
+        FStageController.Level = aLevel;
+        FStageController.Render();
+    }
+
     @Override
     protected void DoInitialize() {
         super.DoInitialize();
         CreateStage();
     }
 
-    public NG2DLevelDesigner(NGUniplayObject aOwner, String aName) {
-        super(aOwner, aName);
-    }
-
     @Override
     protected void AfterInitialize() {
         super.AfterInitialize();
         showStage();
+    }
+
+    public NG2DLevelDesigner(NGUniplayObject aOwner, String aName) {
+        super(aOwner, aName);
     }
 
     public void showStage() {
@@ -72,9 +86,12 @@ public class NG2DLevelDesigner extends NGUniplayComponent {
             fileChooser.getExtensionFilters().add(extFilter);
             File chosenFile = fileChooser.showOpenDialog(FStage.getOwner());
             if (chosenFile != null) {
-                NGObjectDeserializer Deserializer = new NGObjectXMLDeserializerFile(this, chosenFile.getPath());
+                NG2DLevelManager levelManager = getLevelManager();
+                NG2DLevel level = levelManager.addLevel("NEW", new NG2DGameFieldSize(0, 0));
+                NGObjectDeserializer Deserializer = new NGObjectXMLDeserializerFile(level, chosenFile.getPath());
                 Deserializer.setLogManager(getLogManager());
                 Deserializer.deserializeObject();
+                showLevel(level);
             }
             else {
                 writeLog("Loading as GOF aborted...");
