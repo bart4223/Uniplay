@@ -15,7 +15,7 @@ public class NGUniplayConsole extends NGUniplayComponent implements NGLogEventLi
     public static final String FMT_DATETIME = "YYYY/MM/dd HH:mm:ss";
 
     protected Stage FStage;
-    protected NGUniplayConsoleController FController;
+    protected NGUniplayConsoleStageController FStageController;
     protected Boolean FShowLogEntrySource;
 
     protected void CreateStage(){
@@ -23,14 +23,15 @@ public class NGUniplayConsole extends NGUniplayComponent implements NGLogEventLi
         FXMLLoader lXMLLoader = new FXMLLoader(getClass().getResource("NGUniplayConsoleStage.fxml"));
         try {
             lXMLLoader.load();
-            FController = lXMLLoader.getController();
+            FStageController = lXMLLoader.getController();
+            FStageController.Console = this;
             Parent lRoot = lXMLLoader.getRoot();
             FStage.setTitle("Uniplay.Console");
             FStage.setScene(new Scene(lRoot, 800, 200, Color.LIGHTGRAY));
             FStage.setResizable(false);
         }
         catch( Exception e) {
-            e.printStackTrace();
+            writeError("CreateStage", e.getMessage());
         }
     }
 
@@ -67,11 +68,11 @@ public class NGUniplayConsole extends NGUniplayComponent implements NGLogEventLi
 
     @Override
     public void handleClearLog() {
-        FController.clearLog();
+        FStageController.clearLog();
     }
 
     public void writeLog(String aLog) {
-        FController.addLog(aLog);
+        FStageController.addLog(aLog);
     }
 
     public Boolean getShowLogEntrySource() {

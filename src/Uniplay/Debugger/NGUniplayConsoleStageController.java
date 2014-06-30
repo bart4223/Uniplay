@@ -8,10 +8,12 @@ import javafx.scene.control.TextArea;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class NGUniplayConsoleController implements Initializable {
+public class NGUniplayConsoleStageController implements Initializable {
 
     @FXML
     private TextArea Log;
+
+    public NGUniplayConsole Console;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
