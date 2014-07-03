@@ -64,7 +64,7 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
         super.LoadConfiguration();
         if (FConfigurationFilename.length() > 0) {
             try {
-                InputStream is = new FileInputStream(FConfigurationFilename);
+                InputStream is = new FileInputStream(getConfigurationFilename());
                 FConfiguration.load(is);
                 FConfigLoaded = true;
                 FDefinitionFilename = getConfigurationProperty("DefinitionFilename");
