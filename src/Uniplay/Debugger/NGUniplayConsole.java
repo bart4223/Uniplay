@@ -51,7 +51,7 @@ public class NGUniplayConsole extends NGUniplayComponent implements NGLogEventLi
         showStage();
     }
 
-    public NGUniplayConsole(NGUniplayObject aOwner, String aName) {
+    public NGUniplayConsole(NGUniplayComponent aOwner, String aName) {
         super(aOwner, aName);
         FShowLogEntrySource = false;
     }

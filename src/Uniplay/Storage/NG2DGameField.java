@@ -34,4 +34,8 @@ public class NG2DGameField extends NGUniplayObject {
         FSize.clear();
     }
 
+    public ArrayList<NG2DGameFieldLayer> getLayers() {
+        return FLayers;
+    }
+
 }

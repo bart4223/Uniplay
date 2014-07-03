@@ -21,4 +21,13 @@ public class NG2DLevelManager extends NGUniplayComponent {
         return level;
     }
 
+    public NG2DLevel getLevel(String aName) {
+        for (NG2DLevel level : FLevels) {
+            if (level.getName().equals(aName)) {
+                return level;
+            }
+        }
+        return null;
+    }
+
 }

@@ -60,7 +60,7 @@ public class NGWorkbenchManager extends NGUniplayComponent {
         showControlStage();
         perfectLayout();
         // ToDo
-        newLevelDesigner("");
+        newLevelDesigner(NGGameEngineConstants.CMP_WORKBENCH_LEVELDESIGNER);
     }
 
     public NGWorkbenchManager(NGUniplayObject aOwner, String aName) {

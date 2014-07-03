@@ -8,6 +8,7 @@ import Uniplay.Storage.NG2DLevel;
 import Uniplay.Storage.NG2DLevelManager;
 import Uniwork.Base.NGObjectDeserializer;
 import Uniwork.Base.NGObjectXMLDeserializerFile;
+import Uniwork.Misc.NGLogManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,6 +22,8 @@ public class NG2DLevelDesigner extends NGUniplayComponent {
 
     protected Stage FStage;
     protected NG2DLevelDesignerStageController FStageController;
+    protected String FImageName;
+    protected Integer FGridSize;
 
     protected void CreateStage(){
         FStage = new Stage();
@@ -58,11 +61,16 @@ public class NG2DLevelDesigner extends NGUniplayComponent {
     @Override
     protected void AfterInitialize() {
         super.AfterInitialize();
+        FImageName = getConfigurationProperty("Imagename");
+        FGridSize = Integer.parseInt(getConfigurationProperty("GridSize"));
         showStage();
+        FStageController.Render();
     }
 
     public NG2DLevelDesigner(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
+        FImageName = "";
+        FGridSize = 1;
     }
 
     public void showStage() {
@@ -72,6 +80,23 @@ public class NG2DLevelDesigner extends NGUniplayComponent {
     public void setStagePosition(int aX, int aY) {
         FStage.setX(aX);
         FStage.setY(aY);
+    }
+
+    public NG2DLevel getDesignLevel() {
+        NG2DLevelManager manager = getLevelManager();
+        NG2DLevel level = manager.getLevel("DESIGN");
+        if (level == null) {
+            level = manager.addLevel("DESIGN", new NG2DGameFieldSize(0, 0));
+        }
+        return level;
+    }
+
+    public String getImageName() {
+        return FImageName;
+    }
+
+    public Integer getGridSize() {
+        return FGridSize;
     }
 
     public void loadFromGOF() {
@@ -86,12 +111,10 @@ public class NG2DLevelDesigner extends NGUniplayComponent {
             fileChooser.getExtensionFilters().add(extFilter);
             File chosenFile = fileChooser.showOpenDialog(FStage.getOwner());
             if (chosenFile != null) {
-                NG2DLevelManager levelManager = getLevelManager();
-                NG2DLevel level = levelManager.addLevel("NEW", new NG2DGameFieldSize(0, 0));
-                NGObjectDeserializer Deserializer = new NGObjectXMLDeserializerFile(level, chosenFile.getPath());
+                NGObjectDeserializer Deserializer = new NGObjectXMLDeserializerFile(getDesignLevel(), chosenFile.getPath());
                 Deserializer.setLogManager(getLogManager());
                 Deserializer.deserializeObject();
-                showLevel(level);
+                showLevel(getDesignLevel());
             }
             else {
                 writeLog("Loading as GOF aborted...");
@@ -99,6 +122,14 @@ public class NG2DLevelDesigner extends NGUniplayComponent {
         }
         catch (Exception e) {
             writeError("loadFromGOF", e.getMessage());
+        }
+    }
+
+    public void setupDesignLevel() {
+        NG2DLevelManager manager = getLevelManager();
+        NG2DLevel level = manager.getLevel("DESIGN");
+        if (level != null) {
+            // ToDo Gamefield scannen
         }
     }
 

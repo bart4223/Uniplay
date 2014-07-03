@@ -10,7 +10,7 @@ public class NGLevelDesignerManager extends NGUniplayComponent {
     }
 
     public NG2DLevelDesigner addLevelDesigner(String aName) {
-        NG2DLevelDesigner designer = new NG2DLevelDesigner(FOwner, aName);
+        NG2DLevelDesigner designer = new NG2DLevelDesigner(this, aName);
         addSubComponent(designer);
         designer.Initialize();
         designer.showStage();

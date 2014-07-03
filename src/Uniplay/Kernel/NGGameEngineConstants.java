@@ -20,6 +20,7 @@ public class NGGameEngineConstants {
     // Workbench
     public final static String CMP_WORKBENCH_MANAGER                = "WorkbenchManager";
     public final static String CMP_WORKBENCH_LEVELDESIGNER_MANAGER  = "LevelDesignerManager";
+    public final static String CMP_WORKBENCH_LEVELDESIGNER          = "LevelDesigner";
 
     // --------------------- Events -----------------------
     // Memory

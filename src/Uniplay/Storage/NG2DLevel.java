@@ -68,24 +68,24 @@ public class NG2DLevel extends NGUniplayObject {
             if (lItr.hasNext())
                 point = (NGPoint2D)lItr.next();
             int pointsadded = 0;
-            for (double y = minY; y <= maxY; y++) {
-                for (double x = minX; x <= maxX; x++) {
-                    if (point != null && point.getX() == x && point.getY() == y) {
+            for (int y = 0; y <= maxY - minY; y++) {
+                for (int x = 0; x <= maxX - minX; x++) {
+                    if (point != null && point.getX() - minX == x && point.getY() - minY == y) {
                         String str = point.getID().substring(point.getID().indexOf('_') + 1, point.getID().length());
-                        layer.addCell(Integer.parseInt(str));
+                        layer.addCell(Integer.parseInt(str), y, x);
                         pointsadded++;
                         writeLog(10, String.format("%.0f,%.0f", point.getX(), point.getY()));
                         point = null;
                         while(lItr.hasNext()) {
                             point = (NGPoint2D)lItr.next();
-                            if (point.getX() != x || point.getY() != y)
+                            if (point.getX() - minX != x || point.getY() - minY != y)
                                 break;
                             else
                                 writeLog(0, String.format("Duplex Point %.0f,%.0f with ID: %s", point.getX(), point.getY(), point.getID()));
                         }
                     }
                     else {
-                        layer.addCell(0);
+                        layer.addCell(0, y, x);
                     }
                 }
             }
@@ -134,6 +134,10 @@ public class NG2DLevel extends NGUniplayObject {
 
     public NG2DGameFieldSize getGameFieldDSize() {
         return FGameField.getSize();
+    }
+
+    public NG2DGameField getGameField() {
+        return FGameField;
     }
 
 }

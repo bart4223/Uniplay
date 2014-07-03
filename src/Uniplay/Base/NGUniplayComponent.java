@@ -10,6 +10,8 @@ import java.util.ArrayList;
 public abstract class NGUniplayComponent extends NGUniplayObject implements NGInitializable, NGGameEngineEventListener {
 
     protected Boolean FInitialized;
+    protected Boolean FConfigLoaded;
+    protected Boolean FDefinitionLoaded;
     protected String FName;
     protected NGUniplayObject FOwner;
     protected NGLogManager FLogManager;
@@ -60,10 +62,12 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     }
 
     protected void BeforeInitialize() {
-        if (LoadConfiguration()) {
+        LoadConfiguration();
+        if (FConfigLoaded) {
             writeLog(String.format("Configuration from component [%s] loaded.", getName()));
         }
-        if (LoadDefinition()) {
+        LoadDefinition();
+        if (FDefinitionLoaded) {
             writeLog(String.format("Definition from component [%s] loaded.", getName()));
         }
         CreateSubComponents();
@@ -119,12 +123,12 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         return null;
     }
 
-    protected Boolean LoadConfiguration() {
-        return false;
+    protected void LoadConfiguration() {
+
     }
 
-    protected Boolean LoadDefinition() {
-        return false;
+    protected void LoadDefinition() {
+
     }
 
     protected void CreateSubComponents() {
@@ -154,6 +158,8 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         FSubComponents = new ArrayList<NGUniplayComponent>();
         FInitialized = false;
         FLogManager = null;
+        FConfigLoaded = false;
+        FDefinitionLoaded = false;
     }
 
     public String getName() {
@@ -178,6 +184,14 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
             InternalFinalize();
             FInitialized = false;
         }
+    }
+
+    public String getConfigurationProperty(String aName) {
+        if (!FConfigLoaded && FOwner instanceof NGUniplayComponent) {
+            NGUniplayComponent component = (NGUniplayComponent)FOwner;
+            return component.getConfigurationProperty(String.format("%s.%s", getName(), aName));
+        }
+        return "";
     }
 
     public void setLogManager(NGLogManager aLogManager) {

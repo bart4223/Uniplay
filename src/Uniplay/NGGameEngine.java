@@ -57,38 +57,42 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         writeLog("All modules created!");
     }
 
+    protected String getConfigrationProperty(String aName) {
+        if (FConfigLoaded) {
+            return FConfiguration.getProperty(aName);
+        }
+        return "";
+    }
+
     @Override
-    protected Boolean LoadConfiguration() {
+    protected void LoadConfiguration() {
         super.LoadConfiguration();
         Boolean result = FConfigurationFilename.length() > 0;
         if (result) {
             try {
                 InputStream is = new FileInputStream(FConfigurationFilename);
                 FConfiguration.load(is);
-                FDefinitionFilename = FConfiguration.getProperty("DefinitionFilename");
-                FConsoleShowLogEntrySource = Boolean.valueOf(FConfiguration.getProperty("ConsoleShowLogEntrySource"));
-                FConsoleShowLog = Boolean.valueOf(FConfiguration.getProperty("ConsoleShowLog"));
-                FLogManager.setLogLevel(Integer.parseInt(FConfiguration.getProperty("Debuglevel")));
+                FConfigLoaded = true;
+                FDefinitionFilename = getConfigrationProperty("DefinitionFilename");
+                FConsoleShowLogEntrySource = Boolean.valueOf(getConfigrationProperty("ConsoleShowLogEntrySource"));
+                FConsoleShowLog = Boolean.valueOf(getConfigrationProperty("ConsoleShowLog"));
+                FLogManager.setLogLevel(Integer.parseInt(getConfigrationProperty("Debuglevel")));
             }
             catch ( Exception e) {
-                result = false;
-                writeLog(e.getMessage());
+                writeError("LoadConfiguration", e.getMessage());
             }
         }
         writeLog("Welcome to Uniplay engine...");
-        return result;
     }
 
     @Override
-    protected Boolean LoadDefinition() {
-        Boolean result = FDefinitionFilename.length() > 0;
-        if (result) {
+    protected void LoadDefinition() {
+        if (FDefinitionFilename.length() > 0) {
             NGObjectXMLDeserializerFile loader = new NGObjectXMLDeserializerFile(null, FDefinitionFilename);
             loader.deserializeObject();
             FDefinition = (NGGameEngineDefinition)loader.getTarget();
-            result = FDefinition != null;
+            FDefinitionLoaded = FDefinition != null;
         }
-        return result;
     }
 
     @Override

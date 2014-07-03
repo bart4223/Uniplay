@@ -16,8 +16,8 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
     protected NGGameEngineModuleManager FManager;
     protected String FCaption;
     protected Properties FConfiguration;
-    protected String FConfigurationFilename = "";
-    protected String FDefinitionFilename = "";
+    protected String FConfigurationFilename;
+    protected String FDefinitionFilename;
 
     @Override
     protected void BeforeInitialize() {
@@ -60,34 +60,31 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
     }
 
     @Override
-    protected Boolean LoadConfiguration() {
+    protected void LoadConfiguration() {
         super.LoadConfiguration();
-        Boolean result = FConfigurationFilename.length() > 0;
-        if (result) {
+        if (FConfigurationFilename.length() > 0) {
             try {
                 InputStream is = new FileInputStream(FConfigurationFilename);
                 FConfiguration.load(is);
-                FDefinitionFilename = FConfiguration.getProperty("DefinitionFilename");
+                FConfigLoaded = true;
+                FDefinitionFilename = getConfigurationProperty("DefinitionFilename");
             }
-            catch ( Exception e) {
-                result = false;
-                writeLog(e.getMessage());
+            catch (Exception e) {
+                writeError("LoadConfiguration", e.getMessage());
             }
         }
-        return result;
     }
 
     @Override
-    protected Boolean LoadDefinition() {
-        Boolean result = FDefinitionFilename.length() > 0;
-        if (result) {
+    protected void LoadDefinition() {
+        if (FDefinitionFilename.length() > 0) {
             NGObjectXMLDeserializerFile loader = new NGObjectXMLDeserializerFile(null, FDefinitionFilename);
+            loader.setLogManager(getLogManager());
             loader.deserializeObject();
             FDefinition = (NGGameEngineModuleDefinition)loader.getTarget();
+            FDefinitionLoaded = FDefinition != null;
             setProperty(this, "Definition", loader.getTarget());
-            result = FDefinition != null;
         }
-        return result;
     }
 
     protected String getEventHandlerManagerName() {
@@ -106,6 +103,8 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
             FManager.addEventListener(this);
         }
         FCaption = "";
+        FDefinitionFilename = "";
+        FConfigurationFilename = "";
     }
 
     public NGGameEngineModuleManager getManager() {
@@ -134,6 +133,17 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
 
     public String getConfigurationFilename() {
         return FConfigurationFilename;
+    }
+
+    public String getConfigurationProperty(String aName) {
+        String res = "";
+        if (FConfigLoaded) {
+            res = FConfiguration.getProperty(aName);
+        }
+        if (res == null) {
+            res = "";
+        }
+        return res;
     }
 
     @Override

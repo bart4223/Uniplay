@@ -30,9 +30,9 @@ public class NG2DGameFieldLayer extends NGUniplayObject {
         FProps.clear();
     }
 
-    public void addCell(Integer aValue) {
+    public void addCell(Integer aValue, Integer aBase, Integer aOffset) {
         NG2DGameFieldSize size = getGameField().getSize();
-        NGGameEngineMemoryCell cell = new NGGameEngineMemoryCell(0, size.getHeightAsInt(), size.getWidthAsInt());
+        NGGameEngineMemoryCell cell = new NGGameEngineMemoryCell(0, aBase, aOffset);
         cell.setValue(aValue);
         FCells.add(cell);
     }
@@ -43,6 +43,10 @@ public class NG2DGameFieldLayer extends NGUniplayObject {
 
     public int getCellCount() {
         return FCells.size();
+    }
+
+    public ArrayList<NGGameEngineMemoryCell> getCells() {
+        return FCells;
     }
 
 }
