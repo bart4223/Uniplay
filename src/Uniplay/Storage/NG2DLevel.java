@@ -60,7 +60,7 @@ public class NG2DLevel extends NGUniplayObject {
             writeLog(String.format("Point count: %d", Points.size()));
             writeLog(String.format("minX:%.0f, minY:%.0f / maxX:%.0f, maxY:%.0f", minX, minY, maxX, maxY));
             setGameFieldSize(maxX - minX + 1, maxY - minY + 1);
-            writeLog(String.format("Game field size width:%.0f, height:%.0f", getGameFieldDSize().getWidth(), getGameFieldDSize().getHeight()));
+            writeLog(String.format("Game field size width:%.0f, height:%.0f", getGameFieldSize().getWidth(), getGameFieldSize().getHeight()));
             Collections.sort(Points);
             NG2DGameFieldLayer layer = FGameField.addLayer("DEFAULT");
             Iterator lItr = Points.iterator();
@@ -132,7 +132,7 @@ public class NG2DLevel extends NGUniplayObject {
         FGameField.getSize().setHeight(aHeight);
     }
 
-    public NG2DGameFieldSize getGameFieldDSize() {
+    public NG2DGameFieldSize getGameFieldSize() {
         return FGameField.getSize();
     }
 

@@ -49,7 +49,7 @@ public class NG2DLevelDesigner extends NGUniplayComponent {
 
     protected void showLevel(NG2DLevel aLevel) {
         FStageController.Level = aLevel;
-        FStageController.Render();
+        FStageController.RenderScene();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class NG2DLevelDesigner extends NGUniplayComponent {
         FImageName = getConfigurationProperty("Imagename");
         FGridSize = Integer.parseInt(getConfigurationProperty("GridSize"));
         showStage();
-        FStageController.Render();
+        FStageController.RenderScene();
     }
 
     public NG2DLevelDesigner(NGUniplayObject aOwner, String aName) {
