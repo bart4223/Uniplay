@@ -9,7 +9,7 @@ import Uniwork.Misc.NGTickEvent;
 import Uniwork.Misc.NGTickGenerator;
 import Uniwork.Misc.NGTickListener;
 
-public class NGTestModule extends NGGameEngineModule implements NGTickListener{
+public class NGTestModule extends NGGameEngineModule implements NGTickListener {
 
     public static final String TICK_SPEEDTEST = "SPEEDTEST";
 
@@ -23,7 +23,7 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener{
         NGTickGenerator tick = (NGTickGenerator)ResolveObject(NGGameEngineConstants.OBJ_TICKGENERATOR, NGTickGenerator.class);
         tick.NewItem(TICK_SPEEDTEST, 5);
         tick.addListener(TICK_SPEEDTEST, this);
-        //tick.SetItemEnabled(TICK_SPEEDTEST, true);
+        tick.SetItemEnabled(TICK_SPEEDTEST, true, 100);
         NGObjectRequestRegistration orr = (NGObjectRequestRegistration)ResolveObject(NGObjectRequestRegistration.class);
         orr.registerObjectRequest("TestModule", this, "Test", "incAllMainMemoryCells");
     }
