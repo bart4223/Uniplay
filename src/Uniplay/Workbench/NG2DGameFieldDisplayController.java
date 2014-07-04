@@ -21,6 +21,11 @@ public class NG2DGameFieldDisplayController extends NGImageDisplayController {
     }
 
     @Override
+    protected Boolean canRender() {
+        return super.canRender() && GameField != null;
+    }
+
+    @Override
     protected void BeforeRender() {
         super.BeforeRender();
         setPosition(getPositionX() * FWidth, getPositionY() * FHeight);

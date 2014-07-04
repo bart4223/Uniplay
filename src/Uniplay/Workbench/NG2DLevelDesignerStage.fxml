@@ -11,7 +11,7 @@
         </HBox>
     </AnchorPane>
     <AnchorPane prefHeight="750" minWidth="750" xmlns:fx="http://javafx.com/fxml" AnchorPane.bottomAnchor="0">
+        <Canvas id="Layer1" height="750" width="800" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" fx:id="Layer1" />
         <Canvas id="Layer0" height="750" width="800" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" fx:id="Layer0" />
-        <Canvas id="LayerGrid" height="750" width="800" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" fx:id="LayerGrid" />
     </AnchorPane>
 </AnchorPane>

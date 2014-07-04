@@ -3,27 +3,24 @@ package Uniplay.Workbench;
 import Uniplay.Storage.NG2DLevel;
 import Uniwork.Visuals.NGDisplayView;
 import Uniwork.Visuals.NGGrid2DDisplayController;
+import Uniwork.Visuals.NGStageController;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class NG2DLevelDesignerStageController extends NGStageController {
 
-public class NG2DLevelDesignerStageController implements Initializable {
-
-    protected NGGrid2DDisplayController FDCLayerGrid;
+    protected NGGrid2DDisplayController FDCGrid;
     protected NG2DGameFieldDisplayController FDCGameField;
     protected NGDisplayView FView;
 
     @FXML
-    public Canvas Layer0;
+    public Canvas Layer1;
 
     @FXML
-    public Canvas LayerGrid;
+    public Canvas Layer0;
 
     @FXML
     protected void handleLoadGOF(){
@@ -44,7 +41,7 @@ public class NG2DLevelDesignerStageController implements Initializable {
             if (y < 0) {
                 y = 0;
             }
-            double ymax = Level.getGameFieldSize().getWidth() * Designer.getGridSize() - FView.getHeight();
+            double ymax = Level.getGameFieldSize().getHeight() * Designer.getGridSize() - FView.getHeight();
             if (y > ymax) {
                 y = ymax;
             }
@@ -53,21 +50,23 @@ public class NG2DLevelDesignerStageController implements Initializable {
         }
     }
 
-    public NG2DLevelDesigner Designer;
-
-    public NG2DLevel Level;
-
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        FDCLayerGrid = new NGGrid2DDisplayController(LayerGrid);
-        FDCLayerGrid.GridColor = Color.DARKGRAY;
-        FDCLayerGrid.Initialize();
-        FView = new NGDisplayView(LayerGrid.getWidth(), LayerGrid.getHeight());
-        FView.setPosition(0, 0);
-        FDCGameField = new NG2DGameFieldDisplayController(Layer0);
+    @Override
+    protected void CreateDisplayController() {
+        FView = new NGDisplayView(Layer0.getWidth(), Layer0.getHeight());
+        FDCGrid = new NGGrid2DDisplayController(Layer0);
+        FDCGrid.setView(FView);
+        FDCGrid.GridColor = Color.DARKGRAY;
+        registerDisplayController(FDCGrid);
+        FDCGameField = new NG2DGameFieldDisplayController(Layer1);
         FDCGameField.setView(FView);
         FDCGameField.MaxImageNumber = -1;
-        FDCGameField.Initialize();
-        LayerGrid.setOnScroll(new EventHandler<ScrollEvent>() {
+        registerDisplayController(FDCGameField);
+    }
+
+    @Override
+    protected void DoInitialize() {
+        super.DoInitialize();
+        Layer0.setOnScroll(new EventHandler<ScrollEvent>() {
             @Override
             public void handle(ScrollEvent t) {
                 HandleMouseScrolled(t);
@@ -75,15 +74,20 @@ public class NG2DLevelDesignerStageController implements Initializable {
         });
     }
 
-    public void RenderScene() {
-        FDCLayerGrid.DrawGrid = true;
-        FDCLayerGrid.GridDistance = Designer.getGridSize();
-        FDCLayerGrid.Render();
+    @Override
+    protected void DoBeforeRenderScene() {
+        super.DoBeforeRenderScene();
+        FDCGrid.GridDistance = Designer.getGridSize();
+        FDCGameField.setImageName(Designer.getImageName());
         if (Level != null) {
             FDCGameField.GameField = Level.getGameField();
-            FDCGameField.setImageName(Designer.getImageName());
-            FDCGameField.Render();
+            FDCGrid.GridWidth = Level.getGameFieldSize().getWidth() * Designer.getGridSize();
+            FDCGrid.GridHeight = Level.getGameFieldSize().getHeight() * Designer.getGridSize();
         }
     }
+
+    public NG2DLevelDesigner Designer;
+
+    public NG2DLevel Level;
 
 }
