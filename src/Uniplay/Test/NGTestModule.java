@@ -1,15 +1,12 @@
 package Uniplay.Test;
 
-import Uniplay.Kernel.NGGameEngineConstants;
-import Uniplay.Kernel.NGGameEngineMemoryManager;
-import Uniplay.Kernel.NGGameEngineModule;
-import Uniplay.Kernel.NGGameEngineModuleManager;
+import Uniplay.Kernel.*;
 import Uniwork.Base.NGObjectRequestRegistration;
 import Uniwork.Misc.NGTickEvent;
 import Uniwork.Misc.NGTickGenerator;
 import Uniwork.Misc.NGTickListener;
 
-public class NGTestModule extends NGGameEngineModule implements NGTickListener {
+public class NGTestModule extends NGGameEngineModule implements NGTickListener, NGTaskCallback {
 
     public static final String TICK_SPEEDTEST = "SPEEDTEST";
 
@@ -17,13 +14,14 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
     protected void AfterInitialize() {
         super.AfterInitialize();
         int size = 64;
-        NGGameEngineMemoryManager manager = (NGGameEngineMemoryManager)ResolveObject(NGGameEngineConstants.CMP_MEMORY_MANAGER, NGGameEngineMemoryManager.class);
-        manager.addMemory(NGGameEngineConstants.CMP_MAIN_MEMORY, 1, size, size);
-        manager.clearMemory(NGGameEngineConstants.CMP_MAIN_MEMORY);
-        NGTickGenerator tick = (NGTickGenerator)ResolveObject(NGGameEngineConstants.OBJ_TICKGENERATOR, NGTickGenerator.class);
-        tick.NewItem(TICK_SPEEDTEST, 5);
-        tick.addListener(TICK_SPEEDTEST, this);
-        tick.SetItemEnabled(TICK_SPEEDTEST, true, 100);
+        NGGameEngineMemoryManager memory = (NGGameEngineMemoryManager)ResolveObject(NGGameEngineConstants.CMP_MEMORY_MANAGER, NGGameEngineMemoryManager.class);
+        memory.addMemory(NGGameEngineConstants.CMP_MAIN_MEMORY, 1, size, size);
+        memory.clearMemory(NGGameEngineConstants.CMP_MAIN_MEMORY);
+        NGTaskManager task = (NGTaskManager)ResolveObject(NGGameEngineConstants.CMP_TASK_MANAGER, NGTaskManager.class);
+        task.addPeriodicTask(TICK_SPEEDTEST, 5);
+        task.addListener(TICK_SPEEDTEST, this);
+        //task.startPeriodicTask(TICK_SPEEDTEST, 200);
+        //task.startSingularTask(this, 1000);
         NGObjectRequestRegistration orr = (NGObjectRequestRegistration)ResolveObject(NGObjectRequestRegistration.class);
         orr.registerObjectRequest("TestModule", this, "Test", "incAllMainMemoryCells");
     }
@@ -43,6 +41,11 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
     public void incAllMainMemoryCells() {
         NGGameEngineMemoryManager manager = (NGGameEngineMemoryManager)ResolveObject(NGGameEngineConstants.CMP_MEMORY_MANAGER, NGGameEngineMemoryManager.class);
         manager.incAllMemoryCellsValue(NGGameEngineConstants.CMP_MAIN_MEMORY);
+    }
+
+    @Override
+    public void Call() {
+        incAllMainMemoryCells();
     }
 
 }

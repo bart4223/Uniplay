@@ -114,6 +114,14 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         }
     }
 
+    protected void DoInitialized() {
+
+    }
+
+    protected void Initialized() {
+        DoInitialized();
+    }
+
     protected NGUniplayComponent getSubComponent(String aName) {
         for (NGUniplayComponent component : FSubComponents) {
             if (component.getName().equals(aName)) {
@@ -175,6 +183,7 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         if (!FInitialized) {
             InternalInitialize();
             FInitialized = true;
+            Initialized();
         }
     }
 

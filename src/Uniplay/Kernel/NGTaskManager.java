@@ -13,6 +13,19 @@ public class NGTaskManager extends NGUniplayComponent {
     protected NGTickGenerator FTickGenerator;
     protected Timer FTimer;
 
+    @Override
+    protected void DoInitialize() {
+        super.DoInitialize();
+        FTickGenerator.Initialize();
+    }
+
+    @Override
+    protected void DoFinalize() {
+        super.DoFinalize();
+        FTickGenerator.Finalize();
+        FTimer.cancel();
+    }
+
     public NGTaskManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
         FTickGenerator = new NGTickGenerator();
@@ -39,11 +52,15 @@ public class NGTaskManager extends NGUniplayComponent {
         FTickGenerator.SetItemEnabled(aName, false);
     }
 
-    public void startSingularTask(Integer aDelay) {
+    public void stopAllPeriodicTasks() {
+        FTickGenerator.SetAllEnabled(false);
+    }
+
+    public void startSingularTask(final NGTaskCallback aCallback, Integer aDelay) {
         TimerTask lTimerTask = new TimerTask() {
             public void run() {
                 synchronized (this) {
-                    //DoTick();
+                    aCallback.Call();
                 }
             }
         };

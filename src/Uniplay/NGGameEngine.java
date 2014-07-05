@@ -15,7 +15,6 @@ import java.util.Properties;
 
 public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayObjectRegistration, NGObjectRequestRegistration, NGLogEventListenerRegistration, NGGameEngineLoggingManagement {
 
-    protected NGTickGenerator FTickGenerator;
     protected NGObjectRequestBroker FObjectRequestBroker;
     protected ArrayList<NGUniplayRegisteredObjectItem> FRegisteredObjects;
     protected Properties FConfiguration;
@@ -32,7 +31,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     }
 
     protected void DoStop() {
-        FTickGenerator.SetAllEnabled(false);
+        getTaskManager().stopAllPeriodicTasks();
         writeLog("Uniplay engine is on hold...");
     }
 
@@ -100,14 +99,12 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         super.BeforeInitialize();
         NGUniplayComponent manager = getMemoryManager();
         manager.addEventListener(this);
-        FTickGenerator.setLogManager(FLogManager);
     }
 
     @Override
     protected void DoInitialize() {
         writeLog("Start Uniplay engine initialization...");
         super.DoInitialize();
-        FTickGenerator.Initialize();
     }
 
     @Override
@@ -119,7 +116,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     @Override
     protected void DoFinalize() {
         writeLog("Start Uniplay engine shutdown...");
-        FTickGenerator.Finalize();
         super.DoFinalize();
     }
 
@@ -138,6 +134,9 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         addSubComponent(component);
         writeLog(String.format("%s created.", component.getName()));
         component = new NGGameEngineModuleManager(this, NGGameEngineConstants.CMP_MODULE_MANAGER);
+        addSubComponent(component);
+        writeLog(String.format("%s created.", component.getName()));
+        component = new NGTaskManager(this, NGGameEngineConstants.CMP_TASK_MANAGER);
         addSubComponent(component);
         writeLog(String.format("%s created.", component.getName()));
         writeLog(String.format("All %s sub components created.", getName()));
@@ -184,6 +183,10 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         return (NGGameEngineMemoryManager)getSubComponent(NGGameEngineConstants.CMP_MEMORY_MANAGER);
     }
 
+    protected NGTaskManager getTaskManager() {
+        return (NGTaskManager)getSubComponent(NGGameEngineConstants.CMP_TASK_MANAGER);
+    }
+
     protected NGUniplayRegisteredObjectItem getRegisteredComponentItem(String aName) {
         for (NGUniplayRegisteredObjectItem item : FRegisteredObjects) {
             if (item.getName().equals(aName)) {
@@ -204,9 +207,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         FLogManager = new NGLogManager();
         FLogManager.addEventListener(this);
         FConfiguration = new Properties();
-        FTickGenerator = new NGTickGenerator(10);
-        FTickGenerator.setLogManager(FLogManager);
-        registerObject(NGGameEngineConstants.OBJ_TICKGENERATOR, FTickGenerator);
         FObjectRequestBroker = new NGObjectRequestBroker(this);
         FObjectRequestBroker.setLogManager(FLogManager);
         registerObject(NGGameEngineConstants.OBJ_OBJECTREQUESTBROKER, FObjectRequestBroker);
