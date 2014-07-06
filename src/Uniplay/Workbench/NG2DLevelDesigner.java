@@ -8,7 +8,6 @@ import Uniplay.Storage.NG2DLevel;
 import Uniplay.Storage.NG2DLevelManager;
 import Uniwork.Base.NGObjectDeserializer;
 import Uniwork.Base.NGObjectXMLDeserializerFile;
-import Uniwork.Misc.NGLogManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -63,8 +62,6 @@ public class NG2DLevelDesigner extends NGUniplayComponent {
         super.AfterInitialize();
         FImageName = getConfigurationProperty("Imagename");
         FGridSize = Integer.parseInt(getConfigurationProperty("GridSize"));
-        showStage();
-        FStageController.RenderScene();
     }
 
     public NG2DLevelDesigner(NGUniplayObject aOwner, String aName) {
@@ -75,6 +72,7 @@ public class NG2DLevelDesigner extends NGUniplayComponent {
 
     public void showStage() {
         FStage.show();
+        FStageController.RenderScene();
     }
 
     public void setStagePosition(int aX, int aY) {

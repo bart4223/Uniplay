@@ -1,5 +1,6 @@
 package Uniplay.Workbench;
 
+import Uniplay.Kernel.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineEventHandlerKernelStarted;
 
 public class NGWorkbenchManagerEventHandlerKernelStarted extends NGGameEngineEventHandlerKernelStarted {
@@ -10,6 +11,7 @@ public class NGWorkbenchManagerEventHandlerKernelStarted extends NGGameEngineEve
     protected void DoHandleEvent() {
         super.DoHandleEvent();
         FManager.showControlStage();
+        FManager.showLevelDesigner(NGGameEngineConstants.CMP_WORKBENCH_LEVELDESIGNER);
     }
 
     public NGWorkbenchManagerEventHandlerKernelStarted(NGWorkbenchManager aManager) {

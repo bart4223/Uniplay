@@ -3,6 +3,7 @@ package Uniplay.Workbench;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineConstants;
+import Uniplay.Kernel.NGGameEngineEventHandlerRegistration;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -64,9 +65,13 @@ public class NGWorkbenchManager extends NGUniplayComponent {
     }
 
     public void newLevelDesigner(String aName) {
-        NGLevelDesignerManager manager = getLevelDesignerManager();
-        NG2DLevelDesigner designer = manager.addLevelDesigner(aName);
+        NG2DLevelDesigner designer = getLevelDesignerManager().addLevelDesigner(aName);
         designer.setStagePosition(500, 250);
+    }
+
+    public void showLevelDesigner(String aName) {
+        NG2DLevelDesigner designer = getLevelDesignerManager().getLevelDesigner(aName);
+        designer.showStage();
     }
 
 }
