@@ -3,6 +3,7 @@ package Uniplay.Base;
 import Uniwork.Base.NGObjectRequestBroker;
 import Uniwork.Base.NGObjectRequestItem;
 import Uniwork.Base.NGObjectRequestObject;
+import Uniwork.Misc.NGLogManager;
 
 public class NGUniplayObjectRequestBroker extends NGUniplayComponent {
 
@@ -19,6 +20,11 @@ public class NGUniplayObjectRequestBroker extends NGUniplayComponent {
 
     public NGObjectRequestObject registerObject(String aName, Object aObject) {
         return FORB.addObject(aName, aObject);
+    }
+
+    public void setLogManager(NGLogManager aLogManager) {
+        super.setLogManager(aLogManager);
+        FORB.setLogManager(aLogManager);
     }
 
 }

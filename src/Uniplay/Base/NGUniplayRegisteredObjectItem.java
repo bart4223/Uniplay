@@ -5,9 +5,9 @@ import Uniwork.Base.NGObject;
 public class NGUniplayRegisteredObjectItem extends NGObject {
 
     protected String FName;
-    protected NGObject FObject;
+    protected Object FObject;
 
-    public NGUniplayRegisteredObjectItem(String aName, NGObject aObject) {
+    public NGUniplayRegisteredObjectItem(String aName, Object aObject) {
         super();
         FObject = aObject;
         FName = aName;
@@ -17,7 +17,7 @@ public class NGUniplayRegisteredObjectItem extends NGObject {
         return FName;
     }
 
-    public NGObject getObject() {
+    public Object getObject() {
         return FObject;
     }
 

@@ -3,7 +3,6 @@ package Uniplay.Kernel;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObjectRegistration;
 import Uniplay.NGGameEngine;
-import Uniwork.Base.NGObject;
 import Uniwork.Base.NGObjectXMLDeserializerFile;
 import Uniwork.Misc.NGLogManager;
 
@@ -135,6 +134,7 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
         return FConfigurationFilename;
     }
 
+    @Override
     public String getConfigurationProperty(String aName) {
         String res = "";
         if (FConfigLoaded) {
@@ -159,13 +159,13 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
     }
 
     @Override
-    public void registerObject(String aName, NGObject aObject) {
+    public void registerObject(String aName, Object aObject) {
         NGGameEngine ge = (NGGameEngine)ResolveObject(NGGameEngine.class);
         ge.registerObject(aName, aObject);
     }
 
     @Override
-    public void unregisterObject(String aName, NGObject aObject) {
+    public void unregisterObject(String aName, Object aObject) {
         NGGameEngine ge = (NGGameEngine)ResolveObject(NGGameEngine.class);
         ge.unregisterObject(aName, aObject);
     }

@@ -207,7 +207,8 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     public String getConfigurationProperty(String aName) {
         if (!FConfigLoaded && FOwner instanceof NGUniplayComponent) {
             NGUniplayComponent component = (NGUniplayComponent)FOwner;
-            return component.getConfigurationProperty(String.format("%s.%s", getName(), aName));
+            String path = String.format("%s.%s", getName(), aName);
+            return component.getConfigurationProperty(path);
         }
         return "";
     }

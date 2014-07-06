@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayObjectRegistration, NGObjectRequestRegistration, NGLogEventListenerRegistration, NGGameEngineLoggingManagement {
+public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayObjectRegistration, NGObjectRequestRegistration, NGLogEventListenerRegistration, NGGameEngineLoggingManagement, NGObjectRequestInvoker {
 
     protected ArrayList<NGUniplayRegisteredObjectItem> FRegisteredObjects;
     protected Properties FConfiguration;
@@ -199,7 +199,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
             }
         }
         else {
-            NGObject object = getRegisteredObject(aName);
+            Object object = getRegisteredObject(aName);
             if (object != null && aClass.isAssignableFrom(object.getClass())) {
                 return object;
             }
@@ -207,7 +207,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         return super.DoResolveObject(aName, aClass);
     }
 
-    protected NGObject getRegisteredObject(String aName) {
+    protected Object getRegisteredObject(String aName) {
         NGUniplayRegisteredObjectItem item = getRegisteredComponentItem(aName);
         if (item != null) {
             return item.getObject();
@@ -298,10 +298,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         Finalize();
     }
 
-    public void Invoke(NGObjectRequestItem aRequest) {
-        DoInvoke(aRequest);
-    }
-
     public void setConfigurationFilename(String aFilename) {
         FConfigurationFilename = aFilename;
     }
@@ -315,13 +311,18 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     }
 
     @Override
-    public void registerObject(String aName, NGObject aObject) {
+    public void Invoke(NGObjectRequestItem aRequest) {
+        DoInvoke(aRequest);
+    }
+
+    @Override
+    public void registerObject(String aName, Object aObject) {
         NGUniplayRegisteredObjectItem item = new NGUniplayRegisteredObjectItem(aName, aObject);
         FRegisteredObjects.add(item);
     }
 
     @Override
-    public void unregisterObject(String aName, NGObject aObject) {
+    public void unregisterObject(String aName, Object aObject) {
         NGUniplayRegisteredObjectItem item = getRegisteredComponentItem(aName);
         if (item != null && item.getObject().equals(aObject)) {
             FRegisteredObjects.remove(item);

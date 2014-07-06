@@ -52,6 +52,7 @@ public class NG2DLevelDesignerStageController extends NGStageController {
 
     @Override
     protected void CreateDisplayController() {
+        super.CreateDisplayController();
         FView = new NGDisplayView(Layer0.getWidth(), Layer0.getHeight());
         FDCGrid = new NGGrid2DDisplayController(Layer0);
         FDCGrid.setView(FView);
