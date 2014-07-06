@@ -2,7 +2,7 @@ package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayObject;
 
-public class NGGameEngineEventHandler extends NGUniplayObject {
+public abstract class NGGameEngineEventHandler extends NGUniplayObject {
 
     protected String FName;
     protected NGGameEngineEvent FEvent;

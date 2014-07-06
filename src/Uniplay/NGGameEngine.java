@@ -45,7 +45,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
                 module.setConfigurationFilename(item.getConfigurationFilename());
             }
             catch (Exception e) {
-                writeLog(e.getMessage());
+                writeError("DoCreateModules", e.getMessage());
             }
         }
     }
@@ -61,6 +61,17 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
             return FConfiguration.getProperty(aName);
         }
         return "";
+    }
+
+    protected void raiseKernelInitialized() {
+        NGGameEngineEventKernelInitialized event = new NGGameEngineEventKernelInitialized(this);
+        raiseEvent(NGGameEngineConstants.EVT_KERNEL_INITIALIZED, event);
+    }
+
+    @Override
+    protected void DoInitialized() {
+        super.DoInitialized();
+        raiseKernelInitialized();
     }
 
     @Override
@@ -150,7 +161,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
 
     @Override
     protected Object DoResolveObject(String aName, Class aClass) {
-        Object result = null;
         if (aName.length() == 0) {
             for (NGUniplayRegisteredObjectItem item : FRegisteredObjects) {
                 if (aClass.isAssignableFrom(item.getObject().getClass())) {

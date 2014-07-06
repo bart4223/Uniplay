@@ -7,7 +7,9 @@ public class NGGraphicEngineEventHandlerMemoryCellsChanged extends NGGameEngineE
 
     protected NGGraphicEngine FGraphicEngine;
 
+    @Override
     protected void DoHandleEvent() {
+        super.DoHandleEvent();
         if (FMemory.getName().equals(NGGameEngineConstants.CMP_MAIN_MEMORY)) {
             NGGraphicEngineRenderContext context = new NGGraphicEngineRenderContext(FMemory, FCells);
             FGraphicEngine.Render(context);

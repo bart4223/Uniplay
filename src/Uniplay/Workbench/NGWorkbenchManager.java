@@ -57,10 +57,9 @@ public class NGWorkbenchManager extends NGUniplayComponent {
     @Override
     protected void AfterInitialize() {
         super.AfterInitialize();
+        // ToDo
         showControlStage();
         perfectLayout();
-        // ToDo
-        newLevelDesigner(NGGameEngineConstants.CMP_WORKBENCH_LEVELDESIGNER);
     }
 
     public NGWorkbenchManager(NGUniplayObject aOwner, String aName) {
@@ -75,7 +74,6 @@ public class NGWorkbenchManager extends NGUniplayComponent {
         NGLevelDesignerManager manager = getLevelDesignerManager();
         NG2DLevelDesigner designer = manager.addLevelDesigner(aName);
         designer.setStagePosition(500, 250);
-
     }
 
 }

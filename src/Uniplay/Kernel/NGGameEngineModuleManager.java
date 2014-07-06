@@ -86,7 +86,7 @@ public class NGGameEngineModuleManager extends NGUniplayComponent {
             addModule(module);
         }
         catch (Exception e) {
-            writeLog(e.getMessage());
+            writeError("newModule", e.getMessage());
         }
         return module;
     }

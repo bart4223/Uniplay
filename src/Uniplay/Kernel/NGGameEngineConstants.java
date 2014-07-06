@@ -23,6 +23,8 @@ public class NGGameEngineConstants {
     public final static String CMP_WORKBENCH_LEVELDESIGNER          = "LevelDesigner";
 
     // --------------------- Events -----------------------
+    // Kernel
+    public final static String EVT_KERNEL_INITIALIZED               = "Kernel.Initialized";
     // Memory
     public final static String EVT_MEMORY_ALLOCATED                 = "Memory.Allocated";
     public final static String EVT_MEMORY_CELLS_CHANGED             = "Memory.Cells.Changed";
