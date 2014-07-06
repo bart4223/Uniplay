@@ -1,9 +1,6 @@
 package Uniplay;
 
-import Uniplay.Base.NGUniplayComponent;
-import Uniplay.Base.NGUniplayObjectRegistration;
-import Uniplay.Base.NGUniplayObject;
-import Uniplay.Base.NGUniplayRegisteredObjectItem;
+import Uniplay.Base.*;
 import Uniplay.Kernel.*;
 import Uniwork.Base.*;
 import Uniwork.Misc.*;
@@ -15,7 +12,6 @@ import java.util.Properties;
 
 public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayObjectRegistration, NGObjectRequestRegistration, NGLogEventListenerRegistration, NGGameEngineLoggingManagement {
 
-    protected NGObjectRequestBroker FObjectRequestBroker;
     protected ArrayList<NGUniplayRegisteredObjectItem> FRegisteredObjects;
     protected Properties FConfiguration;
     protected NGGameEngineDefinition FDefinition;
@@ -150,6 +146,9 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         component = new NGTaskManager(this, NGGameEngineConstants.CMP_TASK_MANAGER);
         addSubComponent(component);
         writeLog(String.format("%s created.", component.getName()));
+        component = new NGUniplayObjectRequestBroker(this, NGGameEngineConstants.CMP_OBJECTREQUESTBROKER);
+        addSubComponent(component);
+        writeLog(String.format("%s created.", component.getName()));
         writeLog(String.format("All %s sub components created.", getName()));
         if (FDefinition != null) {
             CreateModules();
@@ -197,6 +196,10 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         return (NGTaskManager)getSubComponent(NGGameEngineConstants.CMP_TASK_MANAGER);
     }
 
+    protected NGUniplayObjectRequestBroker getObjectRequestBroker() {
+        return (NGUniplayObjectRequestBroker)getSubComponent(NGGameEngineConstants.CMP_OBJECTREQUESTBROKER);
+    }
+
     protected NGUniplayRegisteredObjectItem getRegisteredComponentItem(String aName) {
         for (NGUniplayRegisteredObjectItem item : FRegisteredObjects) {
             if (item.getName().equals(aName)) {
@@ -207,7 +210,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     }
 
     protected void DoInvoke(NGObjectRequestItem aRequest) {
-        FObjectRequestBroker.Invoke(aRequest);
+        getObjectRequestBroker().Invoke(aRequest);
     }
 
     public NGGameEngine(NGUniplayObject aOwner) {
@@ -217,9 +220,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         FLogManager = new NGLogManager();
         FLogManager.addEventListener(this);
         FConfiguration = new Properties();
-        FObjectRequestBroker = new NGObjectRequestBroker(this);
-        FObjectRequestBroker.setLogManager(FLogManager);
-        registerObject(NGGameEngineConstants.OBJ_OBJECTREQUESTBROKER, FObjectRequestBroker);
     }
 
     @Override
@@ -297,7 +297,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
 
     @Override
     public void registerObjectRequest(String aName, Object aObject, String aMethod, String aObjectMethod) {
-        NGObjectRequestObject object = FObjectRequestBroker.addObject(aName, aObject);
+        NGObjectRequestObject object = getObjectRequestBroker().registerObject(aName, aObject);
         object.addMethod(aMethod, aObjectMethod);
     }
 
