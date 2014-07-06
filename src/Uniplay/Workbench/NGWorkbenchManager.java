@@ -3,7 +3,6 @@ package Uniplay.Workbench;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineConstants;
-import Uniplay.Kernel.NGGameEngineEventHandlerRegistration;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
