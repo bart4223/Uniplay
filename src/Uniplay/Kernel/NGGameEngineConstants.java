@@ -28,6 +28,7 @@ public class NGGameEngineConstants {
     public final static String EVT_KERNEL_INITIALIZED               = String.format("%s.%s", CMP_KERNEL, "Initialized");
     public final static String EVT_KERNEL_STARTED                   = String.format("%s.%s", CMP_KERNEL, "Started");
     public final static String EVT_KERNEL_STOPPED                   = String.format("%s.%s", CMP_KERNEL, "Stopped");
+    public final static String EVT_KERNEL_FINALIZED                 = String.format("%s.%s", CMP_KERNEL, "Finalized");
     // Memory
     public final static String EVT_MEMORY_ALLOCATED                 = String.format("%s.%s", CMP_MEMORY, "Allocated");
     public final static String EVT_MEMORY_CELLS_CHANGED             = String.format("%s.%s.%s", CMP_MEMORY, "Cells", "Changed");

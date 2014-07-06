@@ -14,12 +14,12 @@ public class NGWorkbenchManager extends NGUniplayComponent {
     protected Stage FControlStage;
     protected NGWorkbenchControlStageController FControlController;
 
-    protected void CreateWorkbenchStage(){
+    protected void CreateControlStage(){
         FControlStage = new Stage();
         FXMLLoader lXMLLoader = new FXMLLoader(getClass().getResource("NGWorkbenchControlStage.fxml"));
         try {
             lXMLLoader.load();
-            FControlController = (NGWorkbenchControlStageController)lXMLLoader.getController();
+            FControlController = lXMLLoader.getController();
             FControlController.Manager = this;
             Parent lRoot = lXMLLoader.getRoot();
             FControlStage.setTitle("Uniplay.Workbench.Control");
@@ -51,15 +51,7 @@ public class NGWorkbenchManager extends NGUniplayComponent {
     @Override
     protected void DoInitialize() {
         super.DoInitialize();
-        CreateWorkbenchStage();
-    }
-
-    @Override
-    protected void AfterInitialize() {
-        super.AfterInitialize();
-        // ToDo
-        showControlStage();
-        perfectLayout();
+        CreateControlStage();
     }
 
     public NGWorkbenchManager(NGUniplayObject aOwner, String aName) {
@@ -67,6 +59,7 @@ public class NGWorkbenchManager extends NGUniplayComponent {
     }
 
     public void showControlStage() {
+        perfectLayout();
         FControlStage.show();
     }
 

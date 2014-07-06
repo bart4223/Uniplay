@@ -22,13 +22,23 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected Boolean FConsoleShowLog = true;
     protected ArrayList<NGLogEventListener> FLogListener;
 
-    protected void DoRun() {
-        writeLog("Uniplay engine is running...");
+    protected void DoStart() {
+        writeLog("Uniplay engine is on starting...");
+    }
+
+    protected void DoStarted() {
+        writeLog("Uniplay engine is running.");
+        raiseKernelStarted();
     }
 
     protected void DoStop() {
+        writeLog("Uniplay engine is on stopping...");
         getTaskManager().stopAllPeriodicTasks();
-        writeLog("Uniplay engine is on hold...");
+    }
+
+    protected void DoStopped() {
+        raiseKernelStopped();
+        writeLog("Uniplay engine is stopped.");
     }
 
     protected void DoCreateModules() {
@@ -64,10 +74,19 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         raiseEvent(NGGameEngineConstants.EVT_KERNEL_INITIALIZED, event);
     }
 
-    @Override
-    protected void DoInitialized() {
-        super.DoInitialized();
-        raiseKernelInitialized();
+    protected void raiseKernelFinalized() {
+        NGGameEngineEventKernelFinalized event = new NGGameEngineEventKernelFinalized(this);
+        raiseEvent(NGGameEngineConstants.EVT_KERNEL_FINALIZED, event);
+    }
+
+    protected void raiseKernelStarted() {
+        NGGameEngineEventKernelStarted event = new NGGameEngineEventKernelStarted(this);
+        raiseEvent(NGGameEngineConstants.EVT_KERNEL_STARTED, event);
+    }
+
+    protected void raiseKernelStopped() {
+        NGGameEngineEventKernelStopped event = new NGGameEngineEventKernelStopped(this);
+        raiseEvent(NGGameEngineConstants.EVT_KERNEL_STOPPED, event);
     }
 
     @Override
@@ -131,6 +150,18 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         super.AfterFinalize();
         writeLog("Uniplay engine stopped!");
         writeLog("Bye Bye...");
+    }
+
+    @Override
+    protected void DoInitialized() {
+        super.DoInitialized();
+        raiseKernelInitialized();
+    }
+
+    @Override
+    protected void DoFinalized() {
+        super.DoFinalize();
+        raiseKernelFinalized();
     }
 
     @Override
@@ -241,10 +272,11 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         return FRunning;
     }
 
-    public void Run() {
+    public void Start() {
         if (!FRunning) {
-            DoRun();
+            DoStart();
             FRunning = true;
+            DoStarted();
         }
     }
 
@@ -252,12 +284,13 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         if (FRunning) {
             DoStop();
             FRunning = false;
+            DoStopped();
         }
     }
 
     public void Startup() {
         Initialize();
-        Run();
+        Start();
     }
 
     public void Shutdown() {

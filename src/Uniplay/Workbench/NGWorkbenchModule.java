@@ -12,6 +12,7 @@ public class NGWorkbenchModule extends NGGameEngineModule {
         NGWorkbenchManager manager = new NGWorkbenchManager(this, NGGameEngineConstants.CMP_WORKBENCH_MANAGER);
         addSubComponent(manager);
         registerEventHandler(new NGWorkbenchManagerEventHandlerKernelInitialized(manager));
+        registerEventHandler(new NGWorkbenchManagerEventHandlerKernelStarted(manager));
     }
 
     public NGWorkbenchModule(NGGameEngineModuleManager aManager, String aName) {

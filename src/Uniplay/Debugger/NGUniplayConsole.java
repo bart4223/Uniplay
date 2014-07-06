@@ -1,7 +1,6 @@
 package Uniplay.Debugger;
 
 import Uniplay.Base.NGUniplayComponent;
-import Uniplay.Base.NGUniplayObject;
 import Uniwork.Misc.NGLogEvent;
 import Uniwork.Misc.NGLogEventListener;
 import javafx.fxml.FXMLLoader;
@@ -43,12 +42,6 @@ public class NGUniplayConsole extends NGUniplayComponent implements NGLogEventLi
     protected void DoInitialize() {
         super.DoInitialize();
         CreateStage();
-    }
-
-    @Override
-    protected void AfterInitialize() {
-        super.AfterInitialize();
-        showStage();
     }
 
     public NGUniplayConsole(NGUniplayComponent aOwner, String aName) {

@@ -1,6 +1,5 @@
 package Uniplay.Debugger;
 
-import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Kernel.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineLoggingManagement;
 import Uniplay.Kernel.NGGameEngineModule;
@@ -12,8 +11,9 @@ public class NGDebuggerModule extends NGGameEngineModule {
     @Override
     protected void CreateSubComponents() {
         super.CreateSubComponents();
-        NGUniplayComponent component = new NGUniplayConsole(this, NGGameEngineConstants.CMP_CONSOLE);
-        addSubComponent(component);
+        NGUniplayConsole console = (NGUniplayConsole)new NGUniplayConsole(this, NGGameEngineConstants.CMP_CONSOLE);
+        addSubComponent(console);
+        registerEventHandler(new NGUniplayConsoleEventHandlerKernelStarted(console));
     }
 
     @Override
