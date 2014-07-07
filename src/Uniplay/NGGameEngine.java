@@ -26,6 +26,38 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected Boolean FShowSplash = false;
     protected ArrayList<NGLogEventListener> FLogListener;
 
+    protected static void startupThread(final NGGameEngine aGameEngine) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                while (!aGameEngine.getSplashFinished()) {
+                    try {
+                        sleep(10);
+                    } catch (Exception e) {
+                    }
+                }
+                aGameEngine.Start();
+            }
+        });
+    }
+
+    protected void DoStartup() {
+        Initialize();
+        if (FShowSplash) {
+            NGSplashManager splash = getSplashManager();
+            splash.InitRun();
+            startupThread(this);
+            splash.Run();
+        }
+        else {
+            Start();
+        }
+    }
+
+    protected void DoShutdown() {
+        Stop();
+        Finalize();
+    }
     protected void DoStart() {
         writeLog("Uniplay engine is on starting...");
     }
@@ -304,37 +336,12 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         }
     }
 
-    public static void startupThread(final NGGameEngine aGameEngine) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                while (!aGameEngine.getSplashFinished()) {
-                    try {
-                        sleep(10);
-                    } catch (Exception e) {
-                    }
-                }
-                aGameEngine.Start();
-            }
-        });
-    }
-
     public void Startup() {
-        Initialize();
-        if (FShowSplash) {
-            NGSplashManager splash = getSplashManager();
-            splash.InitRun();
-            startupThread(this);
-            splash.Run();
-        }
-        else {
-            Start();
-        }
+        DoStartup();
     }
 
     public void Shutdown() {
-        Stop();
-        Finalize();
+        DoShutdown();
     }
 
     public void setConfigurationFilename(String aFilename) {
