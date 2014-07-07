@@ -6,7 +6,21 @@ import Uniwork.Misc.NGTickEvent;
 import Uniwork.Misc.NGTickGenerator;
 import Uniwork.Misc.NGTickListener;
 
-public class NGTestModule extends NGGameEngineModule implements NGTickListener, NGTaskCallback {
+public class NGTestModule extends NGGameEngineModule implements NGTickListener {
+
+    private class Callback implements NGTaskCallback {
+
+        protected NGTestModule FModule;
+
+        public Callback(NGTestModule aModule) {
+            FModule = aModule;
+        }
+
+        @Override
+        public void Call() {
+            FModule.incAllMainMemoryCells();
+        }
+    }
 
     public static final String TICK_SPEEDTEST = "SPEEDTEST";
 
@@ -21,7 +35,7 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener, 
         task.addPeriodicTask(TICK_SPEEDTEST, 5);
         task.addListener(TICK_SPEEDTEST, this);
         //task.startPeriodicTask(TICK_SPEEDTEST, 200);
-        //task.startSingularTask(this, 1000);
+        //task.startSingularTask(new Callback(this), 1000);
         NGObjectRequestRegistration orr = (NGObjectRequestRegistration)ResolveObject(NGObjectRequestRegistration.class);
         orr.registerObjectRequest("TestModule", this, "Test", "incAllMainMemoryCells");
     }
@@ -41,11 +55,6 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener, 
     public void incAllMainMemoryCells() {
         NGGameEngineMemoryManager manager = (NGGameEngineMemoryManager)ResolveObject(NGGameEngineConstants.CMP_MEMORY_MANAGER, NGGameEngineMemoryManager.class);
         manager.incAllMemoryCellsValue(NGGameEngineConstants.CMP_MAIN_MEMORY);
-    }
-
-    @Override
-    public void Call() {
-        incAllMainMemoryCells();
     }
 
 }

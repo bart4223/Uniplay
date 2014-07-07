@@ -8,6 +8,7 @@ public class NGGameEngineConstants {
     public final static String CMP_KERNEL                           = "Kernel";
     public final static String CMP_MODULE_MANAGER                   = "ModuleManager";
     public final static String CMP_TASK_MANAGER                     = "TaskManager";
+    public final static String CMP_SPLASH_MANAGER                   = "SplashManager";
     public final static String CMP_MEMORY_MANAGER                   = "MemoryManager";
     public final static String CMP_MEMORY_TRANSACTION_MANAGER       = "MemoryTransactionManager";
     public final static String CMP_MEMORY                           = "Memory";

@@ -4,11 +4,14 @@ import Uniplay.Base.*;
 import Uniplay.Kernel.*;
 import Uniwork.Base.*;
 import Uniwork.Misc.*;
+import javafx.application.Platform;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
+
+import static java.lang.Thread.sleep;
 
 public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayObjectRegistration, NGObjectRequestRegistration, NGLogEventListenerRegistration, NGGameEngineLoggingManagement, NGObjectRequestInvoker {
 
@@ -20,6 +23,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected Boolean FRunning = false;
     protected Boolean FConsoleShowLogEntrySource = false;
     protected Boolean FConsoleShowLog = true;
+    protected Boolean FShowSplash = false;
     protected ArrayList<NGLogEventListener> FLogListener;
 
     protected void DoStart() {
@@ -180,6 +184,9 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         component = new NGUniplayObjectRequestBroker(this, NGGameEngineConstants.CMP_OBJECTREQUESTBROKER);
         addSubComponent(component);
         writeLog(String.format("%s created.", component.getName()));
+        component = new NGSplashManager(this, NGGameEngineConstants.CMP_SPLASH_MANAGER);
+        addSubComponent(component);
+        writeLog(String.format("%s created.", component.getName()));
         writeLog(String.format("All %s sub components created.", getName()));
         if (FDefinition != null) {
             CreateModules();
@@ -231,6 +238,10 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         return (NGUniplayObjectRequestBroker)getSubComponent(NGGameEngineConstants.CMP_OBJECTREQUESTBROKER);
     }
 
+    protected NGSplashManager getSplashManager() {
+        return (NGSplashManager)getSubComponent(NGGameEngineConstants.CMP_SPLASH_MANAGER);
+    }
+
     protected NGUniplayRegisteredObjectItem getRegisteredComponentItem(String aName) {
         for (NGUniplayRegisteredObjectItem item : FRegisteredObjects) {
             if (item.getName().equals(aName)) {
@@ -238,6 +249,10 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
             }
         }
         return null;
+    }
+
+    protected Boolean getSplashFinished() {
+        return getSplashManager().getFinished();
     }
 
     protected void DoInvoke(NGObjectRequestItem aRequest) {
@@ -251,6 +266,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         FLogManager = new NGLogManager();
         FLogManager.addEventListener(this);
         FConfiguration = new Properties();
+        FShowSplash = true;
     }
 
     @Override
@@ -288,9 +304,32 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         }
     }
 
+    public static void startupThread(final NGGameEngine aGameEngine) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                while (!aGameEngine.getSplashFinished()) {
+                    try {
+                        sleep(10);
+                    } catch (Exception e) {
+                    }
+                }
+                aGameEngine.Start();
+            }
+        });
+    }
+
     public void Startup() {
         Initialize();
-        Start();
+        if (FShowSplash) {
+            NGSplashManager splash = getSplashManager();
+            splash.InitRun();
+            startupThread(this);
+            splash.Run();
+        }
+        else {
+            Start();
+        }
     }
 
     public void Shutdown() {
