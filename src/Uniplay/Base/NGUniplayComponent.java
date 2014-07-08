@@ -83,14 +83,18 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     protected void DoInitialize() {
         for (NGUniplayComponent component : FSubComponents) {
             component.Initialize();
-            writeLog(String.format("Component [%s] initialized.", component.getName()));
+            writeLog(String.format("SubComponent [%s] initialized.", component.getName()));
         }
     }
 
     protected void InternalInitialize() {
         BeforeInitialize();
-        DoInitialize();
-        AfterInitialize();
+        try {
+            DoInitialize();
+        }
+        finally {
+            AfterInitialize();
+        }
     }
 
     protected void BeforeFinalize() {
@@ -110,7 +114,7 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     protected void DoFinalize() {
         for (NGUniplayComponent component : FSubComponents) {
             component.Finalize();
-            writeLog(String.format("Component [%s] finalized.", component.getName()));
+            writeLog(String.format("SubComponent [%s] finalized.", component.getName()));
         }
     }
 

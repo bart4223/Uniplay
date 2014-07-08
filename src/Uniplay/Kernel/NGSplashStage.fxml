@@ -1,0 +1,6 @@
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.canvas.Canvas?>
+<AnchorPane fx:controller="Uniplay.Kernel.NGSplashStageController" xmlns:fx="http://javafx.com/fxml" >
+    <Canvas id="Layer1" width="800" height="600" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" fx:id="Layer1" />
+    <Canvas id="Layer0" width="800" height="600" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" fx:id="Layer0" />
+</AnchorPane>

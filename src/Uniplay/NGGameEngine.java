@@ -30,13 +30,12 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                while (!aGameEngine.getSplashFinished()) {
-                    try {
-                        sleep(10);
-                    } catch (Exception e) {
-                    }
+                if (!aGameEngine.getSplashFinished()) {
+                    startupThread(aGameEngine);
                 }
-                aGameEngine.Start();
+                else {
+                    aGameEngine.Start();
+                }
             }
         });
     }

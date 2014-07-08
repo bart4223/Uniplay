@@ -40,8 +40,16 @@ public class NGTaskManager extends NGUniplayComponent {
         FTickGenerator.removeListener(aName, aListener);
     }
 
+    public void removePeriodicTask(String aName) {
+        FTickGenerator.DeleteItem(aName);
+    }
+
     public void addPeriodicTask(String aName, Integer aInterval) {
         FTickGenerator.NewItem(aName, aInterval);
+    }
+
+    public void startPeriodicTask(String aName) {
+        startPeriodicTask(aName, 0);
     }
 
     public void startPeriodicTask(String aName, Integer aDelay) {
