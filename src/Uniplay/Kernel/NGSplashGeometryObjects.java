@@ -1,55 +1,108 @@
 package Uniplay.Kernel;
 
-import Uniwork.Graphics.NGPoint2D;
+import Uniwork.Base.NGObjectDeserializer;
+import Uniwork.Base.NGObjectXMLDeserializerFile;
+import Uniwork.Base.NGSerializePropertyItem;
+import Uniwork.Graphics.*;
 import Uniwork.Visuals.NGGeometryObject2DDisplayManager;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class NGSplashGeometryObjects extends NGSplashItem {
 
+    protected class GeometryObjectItem {
+
+        protected NGGeometryObject2D FGO;
+
+        public GeometryObjectItem(NGGeometryObject2D aGO) {
+            FGO = aGO;
+        }
+
+        public NGGeometryObject2D getGO() {
+            return FGO;
+        }
+
+        public Color ObjectColor;
+
+    }
+
     protected NGGeometryObject2DDisplayManager FDisplayController;
-    protected Integer FCount;
+    protected ArrayList<GeometryObjectItem> FGeometryObjects;
     protected Random FGenerator;
+    protected GeometryObjectItem FCurrentItem;
 
     @Override
     protected void DoRun() {
         super.DoRun();
-        NGPoint2D point = new NGPoint2D(FGenerator.nextInt(25), FGenerator.nextInt(20));
-        FDisplayController.GeometryObject = point;
-        FCount++;
+        if (FGeometryObjects != null) {
+            //System.out.println(FGeometryObjects.size());
+            Integer index = FGenerator.nextInt(FGeometryObjects.size());
+            FCurrentItem = FGeometryObjects.get(index);
+            FDisplayController.GeometryObject = FCurrentItem.getGO();
+            FDisplayController.GeometryObjectColor = FCurrentItem.ObjectColor;
+        }
     }
 
     @Override
-    protected void InitRun() {
-        super.InitRun();
-        FCount = 0;
+    protected void AfterRun() {
+        super.AfterRun();
+        if (FCurrentItem != null)
+            FGeometryObjects.remove(FCurrentItem);
     }
 
     @Override
     protected void DoInitialize() {
         super.DoInitialize();
-        Canvas canvas = (Canvas) FManager.getControllerObject("Layer1", Canvas.class);
-        FDisplayController = new NGGeometryObject2DDisplayManager(canvas, "DCG1");
+        Canvas canvas = (Canvas) FManager.getControllerObject(ControllerObjectName, Canvas.class);
+        FDisplayController = new NGGeometryObject2DDisplayManager(canvas, String.format("DMGO.%s", ControllerObjectName));
         FDisplayController.GeometryObjectColor = Color.valueOf(GeometryObjectColor);
-        FDisplayController.setPixelSize(32);
+        FDisplayController.setPixelSize(16);
         FDisplayController.Initialize();
         registerDisplayController(FDisplayController);
+        NGObjectDeserializer Deserializer = new NGObjectXMLDeserializerFile(this, Filename);
+        Deserializer.setLogManager(getLogManager());
+        Deserializer.deserializeObject();
     }
 
+    @Override
+    protected void DoAssignFrom(Object aObject) {
+        if (aObject instanceof NGSerializeGeometryObjectList) {
+            NGSerializeGeometryObjectList sgol = (NGSerializeGeometryObjectList)aObject;
+            FGeometryObjects.clear();
+            for (NGSerializeGeometryObjectItem sgoi : sgol.getSGOS()) {
+                if (sgoi.getGO() instanceof NGGeometryObject2D) {
+                    NGGeometryObject2D go = (NGGeometryObject2D)sgoi.getGO();
+                    GeometryObjectItem item = new GeometryObjectItem(go);
+                    for (NGSerializePropertyItem prop : sgoi.getProps()) {
+                        if (prop.getName().equals("COLOR"))
+                            item.ObjectColor = Color.valueOf((String)prop.getValue());
+                    }
+                    FGeometryObjects.add(item);
+                }
+            }
+        }
+    }
 
     public NGSplashGeometryObjects(NGSplashManager aManager, String aName) {
         super(aManager, aName);
         FGenerator = new Random();
-        FCount = 0;
+        FGeometryObjects = new ArrayList<GeometryObjectItem>();
+        FCurrentItem = null;
+        // ToDo
+        Filename = "/Users/Nils/Desktop/Uniplay.gof";
+        ControllerObjectName = "Layer1";
     }
 
     @Override
     public Boolean getFinished() {
-        return FCount > 100;
+        return FGeometryObjects.size() == 0;
     }
 
     public String GeometryObjectColor;
+    public String Filename;
+    public String ControllerObjectName;
 
 }

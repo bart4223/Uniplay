@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import static java.lang.Thread.sleep;
 
 public class NGSplashManager extends NGUniplayComponent {
 
@@ -58,9 +59,9 @@ public class NGSplashManager extends NGUniplayComponent {
         NGSplashGeometryObjects item = new NGSplashGeometryObjects(this, "Splash.Uniplay");
         item.GeometryObjectColor = "#ff0000";
         addItem(item);
-        item = new NGSplashGeometryObjects(this, "Splash.Uniplay");
-        item.GeometryObjectColor = "#00ff00";
-        addItem(item);
+        //item = new NGSplashGeometryObjects(this, "Splash.Uniplay");
+        //item.GeometryObjectColor = "#00ff00";
+        //addItem(item);
     }
 
     protected void addItem(NGSplashItem aItem) {
@@ -89,6 +90,10 @@ public class NGSplashManager extends NGUniplayComponent {
                             runThread(aSplashManager, index);
                         }
                         else {
+                            try {
+                                sleep(1000);
+                            } catch (Exception e) {
+                            }
                             aSplashManager.closeStage();
                         }
                     }
@@ -156,7 +161,6 @@ public class NGSplashManager extends NGUniplayComponent {
     public Integer GridDistance;
 
     protected void playSound() {
-        //MediaPlayer mp = new MediaPlayer(new Media("file:///Users/Nils/Desktop/Source.mp3"));
         // ToDo
         MediaPlayer mp = new MediaPlayer(new Media("file:///Users/Nils/IdeaProjects/Boulderdash/resources/sound/source.mp3"));
         mp.play();

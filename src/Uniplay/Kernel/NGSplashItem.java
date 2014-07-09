@@ -2,6 +2,7 @@ package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayObject;
 import Uniwork.Base.NGPropertyList;
+import Uniwork.Misc.NGLogManager;
 import Uniwork.Visuals.NGDisplayController;
 import javafx.application.Platform;
 
@@ -17,10 +18,24 @@ public class NGSplashItem extends NGUniplayObject {
         FManager.registerDisplayController(aDisplayController);
     }
 
+    protected void InternalRun() {
+        for (int i = 0; i < 32; i++) {
+            if (!getFinished()) {
+                DoRun();
+                RenderScene();
+                AfterRun();
+            }
+        }
+    }
+
     protected void DoRun() {
     }
 
     protected void InitRun() {
+    }
+
+    protected void AfterRun() {
+
     }
 
     protected void RenderScene() {
@@ -31,8 +46,7 @@ public class NGSplashItem extends NGUniplayObject {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                aSplashItem.DoRun();
-                aSplashItem.RenderScene();
+                aSplashItem.InternalRun();
                 if (!aSplashItem.getFinished()) {
                     try {
                         sleep(aSplashItem.Interval);
@@ -49,12 +63,16 @@ public class NGSplashItem extends NGUniplayObject {
 
     }
 
+    protected NGLogManager getLogManager() {
+        return getManager().getLogManager();
+    }
+
     public NGSplashItem(NGSplashManager aManager, String aName) {
         super();
         FName = aName;
         FManager = aManager;
         FProps = new NGPropertyList();
-        Interval = 50;
+        Interval = 5;
     }
 
     public void Run() {
