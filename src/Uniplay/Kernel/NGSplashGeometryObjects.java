@@ -38,7 +38,6 @@ public class NGSplashGeometryObjects extends NGSplashItem {
     protected void DoRun() {
         super.DoRun();
         if (FGeometryObjects != null) {
-            //System.out.println(FGeometryObjects.size());
             Integer index = FGenerator.nextInt(FGeometryObjects.size());
             FCurrentItem = FGeometryObjects.get(index);
             FDisplayController.GeometryObject = FCurrentItem.getGO();
@@ -91,9 +90,6 @@ public class NGSplashGeometryObjects extends NGSplashItem {
         FGenerator = new Random();
         FGeometryObjects = new ArrayList<GeometryObjectItem>();
         FCurrentItem = null;
-        // ToDo
-        Filename = "/Users/Nils/Desktop/Uniplay.gof";
-        ControllerObjectName = "Layer1";
     }
 
     @Override
@@ -102,7 +98,5 @@ public class NGSplashGeometryObjects extends NGSplashItem {
     }
 
     public String GeometryObjectColor;
-    public String Filename;
-    public String ControllerObjectName;
 
 }

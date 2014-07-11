@@ -19,7 +19,7 @@ public class NGSplashItem extends NGUniplayObject {
     }
 
     protected void InternalRun() {
-        for (int i = 0; i < 32; i++) {
+        for (int i = 0; i < InternalRunCount; i++) {
             if (!getFinished()) {
                 DoRun();
                 RenderScene();
@@ -73,6 +73,11 @@ public class NGSplashItem extends NGUniplayObject {
         FManager = aManager;
         FProps = new NGPropertyList();
         Interval = 5;
+        WaitTimeAfterFinish = 5;
+        InternalRunCount = 5;
+        ControllerObjectName = "Layer1";
+        Filename = "";
+        WaitTimeAfterFinish = 2000;
     }
 
     public void Run() {
@@ -100,5 +105,13 @@ public class NGSplashItem extends NGUniplayObject {
     }
 
     public Integer Interval;
+
+    public String ControllerObjectName;
+
+    public String Filename;
+
+    public Integer WaitTimeAfterFinish;
+
+    public Integer InternalRunCount;
 
 }

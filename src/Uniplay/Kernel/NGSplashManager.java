@@ -11,6 +11,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.util.ArrayList;
 import static java.lang.Thread.sleep;
@@ -32,6 +33,7 @@ public class NGSplashManager extends NGUniplayComponent {
             FStage.setTitle("Uniplay.Splash");
             FStage.setScene(new Scene(lRoot, 800, 600, Color.LIGHTGRAY));
             FStage.setResizable(false);
+            FStage.initStyle(StageStyle.TRANSPARENT);
         }
         catch( Exception e) {
             writeError("CreateStage", e.getMessage());
@@ -55,13 +57,10 @@ public class NGSplashManager extends NGUniplayComponent {
     @Override
     protected void BeforeInitialize() {
         super.BeforeInitialize();
-        //ToDo
         NGSplashGeometryObjects item = new NGSplashGeometryObjects(this, "Splash.Uniplay");
         item.GeometryObjectColor = "#ff0000";
+        item.Filename = "resources/splash/uniplay.gof";
         addItem(item);
-        //item = new NGSplashGeometryObjects(this, "Splash.Uniplay");
-        //item.GeometryObjectColor = "#00ff00";
-        //addItem(item);
     }
 
     protected void addItem(NGSplashItem aItem) {
@@ -91,7 +90,7 @@ public class NGSplashManager extends NGUniplayComponent {
                         }
                         else {
                             try {
-                                sleep(1000);
+                                sleep(splashitem.WaitTimeAfterFinish);
                             } catch (Exception e) {
                             }
                             aSplashManager.closeStage();
@@ -134,7 +133,7 @@ public class NGSplashManager extends NGUniplayComponent {
     public void Run() {
         FController.RenderScene();
         showStage();
-        playSound();
+        //playSound();
         DoRun();
     }
 
