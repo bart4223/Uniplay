@@ -18,6 +18,10 @@ public class NGSplashItem extends NGUniplayObject {
         FManager.registerDisplayController(aDisplayController);
     }
 
+    protected void RunFinished() {
+
+    }
+
     protected void InternalRun() {
         for (int i = 0; i < InternalRunCount; i++) {
             if (!getFinished()) {
@@ -55,6 +59,9 @@ public class NGSplashItem extends NGUniplayObject {
                     }
                     runThread(aSplashItem);
                 }
+                else  {
+                    aSplashItem.RunFinished();
+                }
             }
         });
     }
@@ -77,7 +84,7 @@ public class NGSplashItem extends NGUniplayObject {
         InternalRunCount = 5;
         ControllerObjectName = "Layer1";
         Filename = "";
-        WaitTimeAfterFinish = 2000;
+        WaitTimeAfterFinish = 1000;
     }
 
     public void Run() {

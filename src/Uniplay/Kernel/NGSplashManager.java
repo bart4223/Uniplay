@@ -161,6 +161,7 @@ public class NGSplashManager extends NGUniplayComponent {
 
     protected void playSound() {
         // ToDo
+        //MediaPlayer mp = new MediaPlayer(new Media("file:///Users/Nils/IdeaProjects/Boulderdash/resources/sound/source.mp3"));
         MediaPlayer mp = new MediaPlayer(new Media("file:///Users/Nils/IdeaProjects/Boulderdash/resources/sound/source.mp3"));
         mp.play();
     }
