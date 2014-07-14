@@ -1,6 +1,5 @@
 package Uniplay.Workbench;
 
-import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineConstants;
 import Uniplay.Storage.NG2DGameFieldSize;
@@ -17,7 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-public class NG2DLevelDesigner extends NGUniplayComponent {
+public class NG2DLevelDesigner extends NGLevelDesigner {
 
     protected Stage FStage;
     protected NG2DLevelDesignerStageController FStageController;
