@@ -65,12 +65,16 @@ public class NGWorkbenchManager extends NGUniplayComponent {
 
     public void newLevelDesigner(String aName) {
         NG2DLevelDesigner designer = getLevelDesignerManager().addLevelDesigner(aName);
-        designer.setStagePosition(500, 250);
+        NGLevelDesignerDefinition def = getLevelDesignerManager().getLevelDesignerDefinition(aName);
+        designer.setLevelName(def.Levelname);
+        designer.setLevelCaption(def.Levelcaption);
+        designer.getProps().AssignFrom(def.getProps());
     }
 
     public void showLevelDesigner(String aName) {
         NG2DLevelDesigner designer = getLevelDesignerManager().getLevelDesigner(aName);
         designer.showStage();
+        designer.setStagePosition(500, 250);
     }
 
 }

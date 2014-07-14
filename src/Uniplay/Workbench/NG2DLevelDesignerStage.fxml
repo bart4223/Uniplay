@@ -7,7 +7,8 @@
     <AnchorPane prefHeight="50" minWidth="800" xmlns:fx="http://javafx.com/fxml" AnchorPane.TopAnchor="0">
         <HBox prefHeight="50" minWidth="800" alignment="TOP_LEFT" spacing="10" xmlns:fx="http://javafx.com/fxml" style="-fx-background-color: gray;">
             <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
-            <Button id="btnLoadGOF" prefWidth="150" text="Load GOF File" onAction="#handleLoadGOF" fx:id="btnLadGOF" />
+            <Button id="btnLoadGOF" prefWidth="150" text="Load GOF File" onAction="#handleLoadGOF" fx:id="btnLoadGOF" />
+            <Button id="btnSetupLevel" prefWidth="150" text="Setup Level" onAction="#handleSetupLevel" fx:id="btnSetupLevel" />
         </HBox>
     </AnchorPane>
     <AnchorPane prefHeight="750" minWidth="750" xmlns:fx="http://javafx.com/fxml" AnchorPane.bottomAnchor="0">

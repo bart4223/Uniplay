@@ -2,11 +2,12 @@ package Uniplay.Workbench;
 
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineConstants;
-import Uniplay.Storage.NG2DGameFieldSize;
-import Uniplay.Storage.NG2DLevel;
-import Uniplay.Storage.NG2DLevelManager;
+import Uniplay.Kernel.NGGameEngineMemoryCell;
+import Uniplay.Storage.*;
 import Uniwork.Base.NGObjectDeserializer;
 import Uniwork.Base.NGObjectXMLDeserializerFile;
+import Uniwork.Base.NGPropertyItem;
+import Uniwork.Misc.NGStrings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -81,9 +82,10 @@ public class NG2DLevelDesigner extends NGLevelDesigner {
 
     public NG2DLevel getDesignLevel() {
         NG2DLevelManager manager = getLevelManager();
-        NG2DLevel level = manager.getLevel("DESIGN");
+        NG2DLevel level = manager.getLevel(getLevelName());
         if (level == null) {
-            level = manager.addLevel("DESIGN", new NG2DGameFieldSize(0, 0));
+            level = manager.addLevel(getLevelName(), new NG2DGameFieldSize(0, 0));
+            level.setCaption(getLevelCaption());
         }
         return level;
     }
@@ -122,11 +124,26 @@ public class NG2DLevelDesigner extends NGLevelDesigner {
         }
     }
 
-    public void setupDesignLevel() {
+    public void setupLevel() {
         NG2DLevelManager manager = getLevelManager();
-        NG2DLevel level = manager.getLevel("DESIGN");
+        NG2DLevel level = manager.getLevel(getLevelName());
         if (level != null) {
-            // ToDo Gamefield scannen
+            for (NGPropertyItem prop : FProps.getItems()) {
+                if (prop.getName().startsWith("GAMEFIELD.")) {
+                    String levelname = NGStrings.getStringPos(prop.getName(), "\\.", 2);
+                    NG2DGameFieldLayer layer = level.getGameField().getLayer(levelname);
+                    if (layer != null) {
+                        Integer count = 0;
+                        for (NGGameEngineMemoryCell cell : layer.getCells()) {
+                            if (cell.getValue() == prop.getValue()) {
+                                count++;
+                            }
+                        }
+                        level.setProp(prop.getName(), count);
+                        writeLog(String.format("SetupLevel-Prop[%s=%d]", prop.getName(), count));
+                    }
+                }
+            }
         }
     }
 

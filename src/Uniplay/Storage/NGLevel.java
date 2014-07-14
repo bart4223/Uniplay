@@ -1,0 +1,68 @@
+package Uniplay.Storage;
+
+import Uniplay.Base.NGUniplayObject;
+import Uniwork.Base.NGPropertyList;
+import Uniwork.Misc.NGLogManager;
+
+public class NGLevel extends NGUniplayObject {
+
+    protected NGPropertyList FProps;
+    protected String FName;
+    protected String FCaption;
+    protected NGLogManager FLogManager;
+
+    protected void writeLog(String aLog) {
+        writeLog(0, aLog);
+    }
+
+    protected void writeLog(Integer aDebugLevel, String aLog) {
+        if (FLogManager != null) {
+            FLogManager.writeLog(aDebugLevel, aLog);
+        }
+    }
+
+    public NGLevel(String aName) {
+        super();
+        FName = aName;
+        FCaption = "";
+        FProps = new NGPropertyList();
+        FLogManager = null;
+    }
+
+    public void clear() {
+        FProps.clear();
+    }
+
+    public String getName() {
+        return FName;
+    }
+
+    public String getCaption() {
+        return FCaption;
+    }
+
+    public void setCaption(String aCaption) {
+        FCaption = aCaption;
+    }
+
+    public void setLogManager(NGLogManager aLogManager) {
+        FLogManager = aLogManager;
+    }
+
+    public NGLogManager getLogManager() {
+        return FLogManager;
+    }
+
+    public NGPropertyList getProps() {
+        return FProps;
+    }
+
+    public void setProp(String aName, Object aValue) {
+        FProps.set(aName, aValue);
+    }
+
+    public Object getProp(String aName) {
+        return FProps.get(aName);
+    }
+
+}

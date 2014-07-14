@@ -24,6 +24,15 @@ public class NG2DGameField extends NGUniplayObject {
         return layer;
     }
 
+    public NG2DGameFieldLayer getLayer(String aName) {
+        for (NG2DGameFieldLayer layer : FLayers) {
+            if (layer.getName().equals(aName)) {
+                return layer;
+            }
+        }
+        return null;
+    }
+
     public NG2DGameFieldSize getSize() {
         return FSize;
     }

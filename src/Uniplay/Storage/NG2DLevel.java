@@ -1,33 +1,16 @@
 package Uniplay.Storage;
 
-import Uniplay.Base.NGUniplayObject;
-import Uniwork.Base.NGPropertyList;
 import Uniwork.Graphics.NGPoint2D;
 import Uniwork.Graphics.NGSerializeGeometryObjectItem;
 import Uniwork.Graphics.NGSerializeGeometryObjectList;
-import Uniwork.Misc.NGLogManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-public class NG2DLevel extends NGUniplayObject {
+public class NG2DLevel extends NGLevel {
 
     protected NG2DGameField FGameField;
-    protected NGPropertyList FProps;
-    protected String FName;
-    protected String FCaption;
-    protected NGLogManager FLogManager;
-
-    protected void writeLog(String aLog) {
-        writeLog(0, aLog);
-    }
-
-    protected void writeLog(Integer aDebugLevel, String aLog) {
-        if (FLogManager != null) {
-            FLogManager.writeLog(aDebugLevel, aLog);
-        }
-    }
 
     @Override
     protected void DoAssignFrom(Object aObject) {
@@ -95,36 +78,14 @@ public class NG2DLevel extends NGUniplayObject {
     }
 
     public NG2DLevel(String aName, NG2DGameFieldSize aSize) {
-        super();
-        FName = aName;
+        super(aName);
         FGameField = new NG2DGameField(aSize);
-        FProps = new NGPropertyList();
-        FCaption = "";
     }
 
-    public String getName() {
-        return FName;
-    }
-
-    public String getCaption() {
-        return FCaption;
-    }
-
-    public void setCaption(String aCaption) {
-        FCaption = aCaption;
-    }
-
+    @Override
     public void clear() {
+        super.clear();
         FGameField.clear();
-        FProps.clear();
-    }
-
-    public void setLogManager(NGLogManager aLogManager) {
-        FLogManager = aLogManager;
-    }
-
-    public NGLogManager getLogManager() {
-        return FLogManager;
     }
 
     public void setGameFieldSize(double aWidth, double aHeight) {
