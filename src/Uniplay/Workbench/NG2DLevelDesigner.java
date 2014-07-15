@@ -133,14 +133,17 @@ public class NG2DLevelDesigner extends NGLevelDesigner {
                     String levelname = NGStrings.getStringPos(prop.getName(), "\\.", 2);
                     NG2DGameFieldLayer layer = level.getGameField().getLayer(levelname);
                     if (layer != null) {
-                        Integer count = 0;
-                        for (NGGameEngineMemoryCell cell : layer.getCells()) {
-                            if (cell.getValue() == prop.getValue()) {
-                                count++;
+                        String op = NGStrings.getStringPos(prop.getName(), "\\.", 4);
+                        if (op.equals("COUNT")) {
+                            Integer count = 0;
+                            for (NGGameEngineMemoryCell cell : layer.getCells()) {
+                                if (cell.getValue() == prop.getValue()) {
+                                    count++;
+                                }
                             }
+                            level.setProp(prop.getName(), count);
+                            writeLog(String.format("SetupLevel-Prop[COUNT:%s=%d]", prop.getName(), count));
                         }
-                        level.setProp(prop.getName(), count);
-                        writeLog(String.format("SetupLevel-Prop[%s=%d]", prop.getName(), count));
                     }
                 }
             }
