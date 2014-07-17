@@ -4,9 +4,7 @@ import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
 import Uniplay.Storage.*;
-import Uniwork.Base.NGObjectDeserializer;
-import Uniwork.Base.NGObjectXMLDeserializerFile;
-import Uniwork.Base.NGPropertyItem;
+import Uniwork.Base.*;
 import Uniwork.Misc.NGStrings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -147,6 +145,31 @@ public class NG2DLevelDesigner extends NGLevelDesigner {
                     }
                 }
             }
+        }
+    }
+
+    public void saveAsULF() {
+        try
+        {
+            FileChooser fileChooser = new FileChooser();
+            String userDirectoryString = System.getProperty("user.home");
+            File userDirectory = new File(userDirectoryString);
+            fileChooser.setInitialDirectory(userDirectory);
+            fileChooser.setTitle("Save as ULF");
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ULF files (*.ulf)", "*.ulf");
+            fileChooser.getExtensionFilters().add(extFilter);
+            File chosenFile = fileChooser.showSaveDialog(FStage.getOwner());
+            if (chosenFile != null) {
+                NGObjectSerializer Serializer = new NGObjectXMLSerializerFile(getDesignLevel(), NGSerialize2DLevel.class, chosenFile.getPath());
+                Serializer.setLogManager(getLogManager());
+                Serializer.serializeObject();
+            }
+            else {
+                writeLog("Saving as ULF aborted...");
+            }
+        }
+        catch (Exception e) {
+            writeError("loadFromGOF", e.getMessage());
         }
     }
 

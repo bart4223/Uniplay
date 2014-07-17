@@ -9,6 +9,7 @@
             <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
             <Button id="btnLoadGOF" prefWidth="150" text="Load GOF File" onAction="#handleLoadGOF" fx:id="btnLoadGOF" />
             <Button id="btnSetupLevel" prefWidth="150" text="Setup Level" onAction="#handleSetupLevel" fx:id="btnSetupLevel" />
+            <Button id="btnSaveULF" prefWidth="150" text="Save ULF File" onAction="#handleSaveULF" fx:id="btnSaveULF" />
         </HBox>
     </AnchorPane>
     <AnchorPane prefHeight="750" minWidth="750" xmlns:fx="http://javafx.com/fxml" AnchorPane.bottomAnchor="0">

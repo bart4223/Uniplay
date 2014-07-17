@@ -49,4 +49,8 @@ public class NG2DGameFieldLayer extends NGUniplayObject {
         return FCells;
     }
 
+    public NGPropertyList getProps() {
+        return FProps;
+    }
+
 }

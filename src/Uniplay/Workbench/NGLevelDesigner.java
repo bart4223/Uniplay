@@ -30,7 +30,7 @@ public class NGLevelDesigner extends NGUniplayComponent {
     }
 
     public void setLevelCaption(String aLevelCaption) {
-        FLevelName = aLevelCaption;
+        FLevelCaption = aLevelCaption;
     }
 
     public String getLevelCaption() {

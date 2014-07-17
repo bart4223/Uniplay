@@ -32,6 +32,11 @@ public class NG2DLevelDesignerStageController extends NGStageController {
         Designer.setupLevel();
     }
 
+    @FXML
+    protected void handleSaveULF(){
+        Designer.saveAsULF();
+    }
+
     protected void HandleMouseScrolled(ScrollEvent t) {
         if (Level != null) {
             double x = FView.getPositionX() - t.getDeltaX();

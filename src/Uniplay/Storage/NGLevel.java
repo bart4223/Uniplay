@@ -2,7 +2,10 @@ package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayObject;
 import Uniwork.Base.NGPropertyList;
+import Uniwork.Base.NGSerializePropertyItem;
 import Uniwork.Misc.NGLogManager;
+
+import java.util.ArrayList;
 
 public class NGLevel extends NGUniplayObject {
 
@@ -18,6 +21,20 @@ public class NGLevel extends NGUniplayObject {
     protected void writeLog(Integer aDebugLevel, String aLog) {
         if (FLogManager != null) {
             FLogManager.writeLog(aDebugLevel, aLog);
+        }
+    }
+
+    protected void assignToULF(NGSerializeLevel aLevel) {
+        aLevel.setName(getName());
+        aLevel.setCaption(getCaption());
+        aLevel.setProps(new ArrayList<NGSerializePropertyItem>());
+        getProps().AssignTo(aLevel.getProps());
+    }
+
+    @Override
+    protected void DoAssignTo(Object aObject) {
+        if (aObject instanceof NGSerializeLevel) {
+            assignToULF((NGSerializeLevel)aObject);
         }
     }
 
