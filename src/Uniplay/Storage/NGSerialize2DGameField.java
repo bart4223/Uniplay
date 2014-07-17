@@ -40,7 +40,7 @@ public class NGSerialize2DGameField extends NGUniplayObjectDefinition {
         return Width;
     }
 
-    public void setHeigth(Double value) {
+    public void setHeight(Double value) {
         Height = value;
     }
 

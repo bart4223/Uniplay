@@ -89,7 +89,7 @@ public class NG2DLevel extends NGLevel {
         if (aLevel instanceof NGSerialize2DLevel) {
             NGSerialize2DLevel level = (NGSerialize2DLevel)aLevel;
             level.setGameField(new NGSerialize2DGameField());
-            level.getGameField().setHeigth(getGameFieldSize().getHeight());
+            level.getGameField().setHeight(getGameFieldSize().getHeight());
             level.getGameField().setWidth(getGameFieldSize().getWidth());
             level.getGameField().setProps(new ArrayList<NGSerializePropertyItem>());
             getProps().AssignTo(level.getGameField().getProps());
@@ -104,6 +104,8 @@ public class NG2DLevel extends NGLevel {
                 for (NGGameEngineMemoryCell cell : layer.getCells()) {
                     NGSerializeGameEngineMemoryCell sc = new NGSerializeGameEngineMemoryCell();
                     sc.setValue(cell.getValue());
+                    sc.setBase(cell.getAddress().getBase());
+                    sc.setOffset(cell.getAddress().getOffset());
                     sl.getCells().add(sc);
                 }
             }
@@ -115,6 +117,16 @@ public class NG2DLevel extends NGLevel {
         super.assignFromULF(aLevel);
         if (aLevel instanceof NGSerialize2DLevel) {
             NGSerialize2DLevel level = (NGSerialize2DLevel)aLevel;
+            getGameFieldSize().setHeight(level.getGameField().getHeight());
+            getGameFieldSize().setWidth(level.getGameField().getWidth());
+            getProps().AssignFrom(level.getGameField().getProps());
+            for (NGSerialize2DGameFieldLayer sl : level.getGameField().getLayers()) {
+                NG2DGameFieldLayer layer = getGameField().addLayer(sl.getName());
+                layer.getProps().AssignFrom(sl.getProps());
+                for (NGSerializeGameEngineMemoryCell sc : sl.getCells()) {
+                    layer.addCell(sc.getValue(), sc.getBase(), sc.getOffset());
+                }
+            }
         }
     }
 

@@ -9,7 +9,7 @@ public class NGGameEngineMemoryCell extends NGUniplayObject {
     protected NGGameEngineMemoryCellValue FValue;
     protected NGPropertyList FProps;
 
-    public NGGameEngineMemoryCell(int aPage, int aBase, int aOffset) {
+    public NGGameEngineMemoryCell(Integer aPage, Integer aBase, Integer aOffset) {
         super();
         FValue = new NGGameEngineMemoryCellValue(0);
         FAddress = new NGGameEngineMemoryAddress(aPage, aBase, aOffset);
