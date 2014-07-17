@@ -87,7 +87,6 @@ public class NG2DLevel extends NGLevel {
     protected void assignToULF(NGSerializeLevel aLevel) {
         super.assignToULF(aLevel);
         if (aLevel instanceof NGSerialize2DLevel) {
-            writeLog("OK");
             NGSerialize2DLevel level = (NGSerialize2DLevel)aLevel;
             level.setGameField(new NGSerialize2DGameField());
             level.getGameField().setHeigth(getGameFieldSize().getHeight());
