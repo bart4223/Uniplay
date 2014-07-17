@@ -110,6 +110,14 @@ public class NG2DLevel extends NGLevel {
         }
     }
 
+    @Override
+    protected void assignFromULF(NGSerializeLevel aLevel) {
+        super.assignFromULF(aLevel);
+        if (aLevel instanceof NGSerialize2DLevel) {
+            NGSerialize2DLevel level = (NGSerialize2DLevel)aLevel;
+        }
+    }
+
     public NG2DLevel(String aName, NG2DGameFieldSize aSize) {
         super(aName);
         FGameField = new NG2DGameField(aSize);

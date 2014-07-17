@@ -31,10 +31,23 @@ public class NGLevel extends NGUniplayObject {
         getProps().AssignTo(aLevel.getProps());
     }
 
+    protected void assignFromULF(NGSerializeLevel aLevel) {
+        FName = aLevel.getName();
+        setCaption(aLevel.getCaption());
+        getProps().AssignFrom(aLevel.getProps());
+    }
+
     @Override
     protected void DoAssignTo(Object aObject) {
         if (aObject instanceof NGSerializeLevel) {
             assignToULF((NGSerializeLevel)aObject);
+        }
+    }
+
+    @Override
+    protected void DoAssignFrom(Object aObject) {
+        if (aObject instanceof NGSerializeLevel) {
+            assignFromULF((NGSerializeLevel)aObject);
         }
     }
 
