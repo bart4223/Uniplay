@@ -1,4 +1,4 @@
-package Uniplay.Kernel;
+package Uniplay.Misc;
 
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
@@ -133,7 +133,7 @@ public class NGSplashManager extends NGUniplayComponent {
     public void Run() {
         FController.RenderScene();
         showStage();
-        //playSound();
+        playSound();
         DoRun();
     }
 

@@ -1,4 +1,4 @@
-package Uniplay.Kernel;
+package Uniplay.Misc;
 
 import Uniplay.Base.NGUniplayObject;
 import Uniwork.Base.NGPropertyList;

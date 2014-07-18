@@ -1,4 +1,4 @@
-package Uniplay.Kernel;
+package Uniplay.Misc;
 
 import Uniwork.Base.NGObjectDeserializer;
 import Uniwork.Base.NGObjectXMLDeserializerFile;

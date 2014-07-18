@@ -1,4 +1,4 @@
-package Uniplay.Kernel;
+package Uniplay.Misc;
 
 import Uniwork.Visuals.NGGrid2DDisplayController;
 import Uniwork.Visuals.NGStageController;
