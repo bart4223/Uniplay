@@ -1,9 +1,9 @@
 package Uniplay.Test;
 
 import Uniplay.Kernel.*;
+import Uniplay.Storage.NGPlayerManager;
 import Uniwork.Base.NGObjectRequestRegistration;
 import Uniwork.Misc.NGTickEvent;
-import Uniwork.Misc.NGTickGenerator;
 import Uniwork.Misc.NGTickListener;
 
 public class NGTestModule extends NGGameEngineModule implements NGTickListener {
@@ -23,6 +23,12 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
     }
 
     public static final String TICK_SPEEDTEST = "SPEEDTEST";
+
+    @Override
+    protected void registerEventHandlers() {
+        super.registerEventHandlers();
+        registerEventHandler(new NGTestModuleEventHandlerKernelInitialized(this));
+    }
 
     @Override
     protected void AfterInitialize() {
@@ -55,6 +61,13 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
     public void incAllMainMemoryCells() {
         NGGameEngineMemoryManager manager = (NGGameEngineMemoryManager)ResolveObject(NGGameEngineConstants.CMP_MEMORY_MANAGER, NGGameEngineMemoryManager.class);
         manager.incAllMemoryCellsValue(NGGameEngineConstants.CMP_MAIN_MEMORY);
+    }
+
+    public void addTestPlayers() {
+        NGPlayerManager manager = (NGPlayerManager)ResolveObject(NGGameEngineConstants.CMP_PLAYER_MANAGER, NGPlayerManager.class);
+        manager.newPlayer("BART4223", "Bart4223");
+        manager.newPlayer("SEPPI", "Seppi");
+        manager.newPlayer("XMEN", "XMen");
     }
 
 }

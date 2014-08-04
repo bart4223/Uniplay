@@ -1,5 +1,6 @@
 package Uniplay.Workbench;
 
+import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Kernel.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineModule;
 import Uniplay.Kernel.NGGameEngineModuleManager;
@@ -7,12 +8,18 @@ import Uniplay.Kernel.NGGameEngineModuleManager;
 public class NGWorkbenchModule extends NGGameEngineModule {
 
     @Override
-    protected void CreateSubComponents() {
-        super.CreateSubComponents();
-        NGWorkbenchManager manager = new NGWorkbenchManager(this, NGGameEngineConstants.CMP_WORKBENCH_MANAGER);
-        addSubComponent(manager);
+    protected void registerEventHandlers() {
+        super.registerEventHandlers();
+        NGWorkbenchManager manager = getWorkbenchManager();
         registerEventHandler(new NGWorkbenchManagerEventHandlerKernelInitialized(manager));
         registerEventHandler(new NGWorkbenchManagerEventHandlerKernelStarted(manager));
+    }
+
+    @Override
+    protected void CreateSubComponents() {
+        super.CreateSubComponents();
+        NGUniplayComponent component = new NGWorkbenchManager(this, NGGameEngineConstants.CMP_WORKBENCH_MANAGER);
+        addSubComponent(component);
     }
 
     @Override

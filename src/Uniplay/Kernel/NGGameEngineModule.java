@@ -18,6 +18,20 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
     protected String FConfigurationFilename;
     protected String FDefinitionFilename;
 
+    protected void registerObjects() {
+
+    }
+
+    protected void registerEventHandlers() {
+
+    }
+
+    @Override
+    protected void DoInitialize() {
+        super.DoInitialize();
+        registerEventHandlers();
+    }
+
     @Override
     protected void BeforeInitialize() {
         writeLog(String.format("Start module [%s] initialization...", FName));
@@ -27,6 +41,7 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
     @Override
     protected void AfterInitialize() {
         super.AfterInitialize();
+        registerObjects();
         writeLog(String.format("Module [%s] initialized!", FName));
     }
 

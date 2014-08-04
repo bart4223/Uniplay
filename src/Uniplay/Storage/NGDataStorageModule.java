@@ -13,6 +13,16 @@ public class NGDataStorageModule extends NGGameEngineModule {
         return manager;
     }
 
+    protected NGPlayerManager getPlayerManager() {
+        NGPlayerManager manager = (NGPlayerManager)ResolveObject(NGGameEngineConstants.CMP_PLAYER_MANAGER, NGPlayerManager.class);
+        return manager;
+    }
+
+    protected NGGameManager getGameManager() {
+        NGGameManager manager = (NGGameManager)ResolveObject(NGGameEngineConstants.CMP_GAME_MANAGER, NGGameManager.class);
+        return manager;
+    }
+
     @Override
     protected void CreateSubComponents() {
         super.CreateSubComponents();
@@ -20,15 +30,17 @@ public class NGDataStorageModule extends NGGameEngineModule {
         addSubComponent(component);
         component = new NGPlayerManager(this, NGGameEngineConstants.CMP_PLAYER_MANAGER);
         addSubComponent(component);
-        component = new NGPlayerManager(this, NGGameEngineConstants.CMP_GAME_MANAGER);
+        component = new NGGameManager(this, NGGameEngineConstants.CMP_GAME_MANAGER);
         addSubComponent(component);
     }
 
     @Override
-    protected void AfterInitialize() {
-        super.AfterInitialize();
+    protected void registerObjects() {
+        super.registerObjects();
         NGUniplayObjectRegistration registration = (NGUniplayObjectRegistration)ResolveObject(NGUniplayObjectRegistration.class);
         registration.registerObject(NGGameEngineConstants.CMP_2DLEVEL_MANAGER, getLevelManager());
+        registration.registerObject(NGGameEngineConstants.CMP_PLAYER_MANAGER, getPlayerManager());
+        registration.registerObject(NGGameEngineConstants.CMP_GAME_MANAGER, getGameManager());
     }
 
     public NGDataStorageModule(NGGameEngineModuleManager aManager, String aName) {
