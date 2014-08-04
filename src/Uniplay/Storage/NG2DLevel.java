@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-public class NG2DLevel extends NGLevel {
+public class NG2DLevel extends NGCustomLevel {
 
     protected NG2DGameField FGameField;
 

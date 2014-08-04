@@ -18,6 +18,10 @@ public class NGDataStorageModule extends NGGameEngineModule {
         super.CreateSubComponents();
         NGUniplayComponent component = new NG2DLevelManager(this, NGGameEngineConstants.CMP_2DLEVEL_MANAGER);
         addSubComponent(component);
+        component = new NGPlayerManager(this, NGGameEngineConstants.CMP_PLAYER_MANAGER);
+        addSubComponent(component);
+        component = new NGPlayerManager(this, NGGameEngineConstants.CMP_GAME_MANAGER);
+        addSubComponent(component);
     }
 
     @Override

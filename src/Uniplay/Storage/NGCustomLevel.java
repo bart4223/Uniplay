@@ -7,7 +7,7 @@ import Uniwork.Misc.NGLogManager;
 
 import java.util.ArrayList;
 
-public class NGLevel extends NGUniplayObject {
+public abstract class NGCustomLevel extends NGUniplayObject {
 
     protected NGPropertyList FProps;
     protected String FName;
@@ -51,7 +51,7 @@ public class NGLevel extends NGUniplayObject {
         }
     }
 
-    public NGLevel(String aName) {
+    public NGCustomLevel(String aName) {
         super();
         FName = aName;
         FCaption = "";
