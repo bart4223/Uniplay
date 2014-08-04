@@ -20,6 +20,8 @@ public class NGPlayerManager extends NGUniplayComponent {
     }
 
     protected NGPlayer setCurrentPlayer(NGPlayer aPlayer) {
+        if (FCurrentPlayer != null && FCurrentPlayer.equals(aPlayer))
+            return FCurrentPlayer;
         FCurrentPlayer = aPlayer;
         if (FCurrentPlayer != null)
             writeLog(String.format("Current player is %s", FCurrentPlayer.getName()));
