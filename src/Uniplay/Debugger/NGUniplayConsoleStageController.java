@@ -1,24 +1,16 @@
 package Uniplay.Debugger;
 
 import Uniwork.Misc.NGStrings;
+import Uniwork.Visuals.NGStageController;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class NGUniplayConsoleStageController implements Initializable {
+public class NGUniplayConsoleStageController extends NGStageController {
 
     @FXML
     private TextArea Log;
 
     public NGUniplayConsole Console;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
 
     public void addLog(String aText) {
         Log.setText(NGStrings.addString(Log.getText(), aText, "\n"));

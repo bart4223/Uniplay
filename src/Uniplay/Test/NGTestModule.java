@@ -68,6 +68,7 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
         manager.newPlayer("BART4223", "Bart4223");
         manager.newPlayer("SEPPI", "Seppi");
         manager.newPlayer("XMEN", "XMen");
+        manager.setCurrentPlayer("BART4223");
     }
 
 }

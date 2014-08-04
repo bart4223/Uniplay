@@ -29,6 +29,7 @@ public class NG2DLevelDesigner extends NGLevelDesigner {
             lXMLLoader.load();
             FStageController = lXMLLoader.getController();
             FStageController.Designer = this;
+            FStageController.Initialize();
             Parent lRoot = lXMLLoader.getRoot();
             FStage.setTitle("Uniplay.Workbench.LevelDesigner");
             FStage.setScene(new Scene(lRoot, 800, 800, Color.WHITE));

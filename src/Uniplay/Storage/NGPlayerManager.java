@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 public class NGPlayerManager extends NGUniplayComponent {
 
-    protected ArrayList<NGCustomPlayer> FPlayers;
-    protected NGCustomPlayer FCurrentPlayer;
+    protected ArrayList<NGPlayer> FPlayers;
+    protected NGPlayer FCurrentPlayer;
 
-    protected NGCustomPlayer getPlayer(String aName) {
-        for (NGCustomPlayer player : FPlayers) {
+    protected NGPlayer getPlayer(String aName) {
+        for (NGPlayer player : FPlayers) {
             if (player.getName().equals(aName)) {
                 return player;
             }
@@ -19,33 +19,37 @@ public class NGPlayerManager extends NGUniplayComponent {
         return null;
     }
 
-    public NGPlayerManager(NGUniplayObject aOwner, String aName) {
-        super(aOwner, aName);
-        FPlayers = new ArrayList<NGCustomPlayer>();
-    }
-
-    public NGPlayer newPlayer(String aName, String aNickname) {
-        NGPlayer player = new NGPlayer(aName, aNickname);
-        writeLog(String.format("Player %s[%s] added.", player.getName(), player.getNickname()));
-        return player;
-    }
-
-    public NGNonPlayer newNonPlayer(String aName) {
-        NGNonPlayer player = new NGNonPlayer(aName);
-        writeLog(String.format("NPC %s added.", player.getName()));
-        return player;
-    }
-
-    public void setCurrentPlayer(String aName) {
-        FCurrentPlayer = getPlayer(aName);
+    protected NGPlayer setCurrentPlayer(NGPlayer aPlayer) {
+        FCurrentPlayer = aPlayer;
         if (FCurrentPlayer != null)
             writeLog(String.format("Current player is %s", FCurrentPlayer.getName()));
         else
             writeLog("No current player available");
+        return FCurrentPlayer;
+    }
+
+    public NGPlayerManager(NGUniplayObject aOwner, String aName) {
+        super(aOwner, aName);
+        FPlayers = new ArrayList<NGPlayer>();
+    }
+
+    public NGPlayer newPlayer(String aName, String aNickname) {
+        NGPlayer player = new NGPlayer(aName, aNickname);
+        FPlayers.add(player);
+        writeLog(String.format("Player %s[%s] added.", player.getName(), player.getNickname()));
+        return player;
+    }
+
+    public NGPlayer setCurrentPlayer(String aName) {
+        return setCurrentPlayer(getPlayer(aName));
     }
 
     public NGCustomPlayer getCurrentPlayer() {
         return FCurrentPlayer;
+    }
+
+    public ArrayList<NGPlayer> getPlayers() {
+        return FPlayers;
     }
 
 }
