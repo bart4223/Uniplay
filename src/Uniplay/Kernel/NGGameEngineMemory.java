@@ -1,6 +1,7 @@
 package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayComponent;
+import Uniplay.NGGameEngineConstants;
 
 import java.util.ArrayList;
 

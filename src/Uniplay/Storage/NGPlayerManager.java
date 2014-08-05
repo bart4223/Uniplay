@@ -24,7 +24,7 @@ public class NGPlayerManager extends NGUniplayComponent {
             return FCurrentPlayer;
         FCurrentPlayer = aPlayer;
         if (FCurrentPlayer != null)
-            writeLog(String.format("Current player is %s", FCurrentPlayer.getName()));
+            writeLog(String.format("Current player is %s[%s]", FCurrentPlayer.getName(), FCurrentPlayer.getNickname()));
         else
             writeLog("No current player available");
         return FCurrentPlayer;
@@ -38,7 +38,7 @@ public class NGPlayerManager extends NGUniplayComponent {
     public NGPlayer newPlayer(String aName, String aNickname) {
         NGPlayer player = new NGPlayer(aName, aNickname);
         FPlayers.add(player);
-        writeLog(String.format("Player %s[%s] added.", player.getName(), player.getNickname()));
+        writeLog(String.format("Player %s[%s] added", player.getName(), player.getNickname()));
         return player;
     }
 

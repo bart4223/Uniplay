@@ -1,5 +1,7 @@
 package Uniplay.Kernel;
 
+import Uniplay.NGGameEngineConstants;
+
 public abstract class NGGameEngineEventHandlerMemoryAllocated extends NGGameEngineEventHandler {
 
     protected NGGameEngineMemory FMemory;

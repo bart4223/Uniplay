@@ -1,7 +1,7 @@
 package Uniplay.Workbench;
 
 import Uniplay.Base.NGUniplayObject;
-import Uniplay.Kernel.NGGameEngineConstants;
+import Uniplay.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
 import Uniplay.Storage.*;
 import Uniwork.Base.*;

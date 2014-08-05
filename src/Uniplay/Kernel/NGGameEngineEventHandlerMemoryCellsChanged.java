@@ -1,5 +1,7 @@
 package Uniplay.Kernel;
 
+import Uniplay.NGGameEngineConstants;
+
 import java.util.ArrayList;
 
 public class NGGameEngineEventHandlerMemoryCellsChanged extends NGGameEngineEventHandler {

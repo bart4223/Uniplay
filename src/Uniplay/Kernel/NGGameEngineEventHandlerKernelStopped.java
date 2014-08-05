@@ -1,5 +1,7 @@
 package Uniplay.Kernel;
 
+import Uniplay.NGGameEngineConstants;
+
 public class NGGameEngineEventHandlerKernelStopped extends NGGameEngineEventHandler {
 
     public NGGameEngineEventHandlerKernelStopped() {

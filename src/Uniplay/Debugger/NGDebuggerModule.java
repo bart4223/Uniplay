@@ -1,6 +1,6 @@
 package Uniplay.Debugger;
 
-import Uniplay.Kernel.NGGameEngineConstants;
+import Uniplay.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineLoggingManagement;
 import Uniplay.Kernel.NGGameEngineModule;
 import Uniplay.Kernel.NGGameEngineModuleManager;

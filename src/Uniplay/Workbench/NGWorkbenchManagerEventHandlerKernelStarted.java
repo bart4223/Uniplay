@@ -1,6 +1,6 @@
 package Uniplay.Workbench;
 
-import Uniplay.Kernel.NGGameEngineConstants;
+import Uniplay.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineEventHandlerKernelStarted;
 
 public class NGWorkbenchManagerEventHandlerKernelStarted extends NGGameEngineEventHandlerKernelStarted {

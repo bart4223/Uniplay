@@ -1,6 +1,6 @@
 package Uniplay.Graphics;
 
-import Uniplay.Kernel.NGGameEngineConstants;
+import Uniplay.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineEventHandlerMemoryCellsChanged;
 
 public class NGGraphicEngineEventHandlerMemoryCellsChanged extends NGGameEngineEventHandlerMemoryCellsChanged {

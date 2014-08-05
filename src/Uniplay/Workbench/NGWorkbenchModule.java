@@ -1,7 +1,7 @@
 package Uniplay.Workbench;
 
 import Uniplay.Base.NGUniplayComponent;
-import Uniplay.Kernel.NGGameEngineConstants;
+import Uniplay.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineModule;
 import Uniplay.Kernel.NGGameEngineModuleManager;
 

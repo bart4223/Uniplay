@@ -2,7 +2,7 @@ package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObjectRegistration;
-import Uniplay.Kernel.NGGameEngineConstants;
+import Uniplay.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineModule;
 import Uniplay.Kernel.NGGameEngineModuleManager;
 

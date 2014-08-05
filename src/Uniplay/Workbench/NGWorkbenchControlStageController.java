@@ -1,6 +1,6 @@
 package Uniplay.Workbench;
 
-import Uniplay.Kernel.NGGameEngineConstants;
+import Uniplay.NGGameEngineConstants;
 import Uniwork.Visuals.NGStageController;
 import javafx.fxml.FXML;
 
