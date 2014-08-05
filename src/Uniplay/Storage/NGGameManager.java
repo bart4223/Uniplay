@@ -9,5 +9,18 @@ public class NGGameManager extends NGUniplayComponent {
         super(aOwner, aName);
     }
 
+    public void addGame(NGCustomGame aGame) {
+        addSubComponent(aGame);
+        writeLog(String.format("Game [%s] added.",aGame.getName()));
+    }
+
+    public void showGames() {
+        for (NGUniplayComponent component : FSubComponents) {
+            if (component instanceof NGCustomGame) {
+                NGCustomGame game = (NGCustomGame)component;
+                game.showStages();
+            }
+        }
+    }
 
 }
