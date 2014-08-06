@@ -1,7 +1,5 @@
 package Uniplay.Storage;
 
-import Uniplay.Base.NGUniplayObject;
-
 import java.util.ArrayList;
 
 public class NG2DGame extends NGCustomGame {
@@ -26,8 +24,8 @@ public class NG2DGame extends NGCustomGame {
         FNPCs.add(item);
     }
 
-    public NG2DGame(NGUniplayObject aOwner, String aName) {
-        super(aOwner, aName);
+    public NG2DGame(NGGameManager aManager, String aName) {
+        super(aManager, aName);
         FPlayers = new ArrayList<NG2DGamePlayerItem>();
         FNPCs = new ArrayList<NG2DGamePlayerItem>();
         FLevel = null;

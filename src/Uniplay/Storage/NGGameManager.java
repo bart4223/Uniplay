@@ -3,23 +3,33 @@ package Uniplay.Storage;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 
+import java.util.ArrayList;
+
 public class NGGameManager extends NGUniplayComponent {
+
+    protected ArrayList<NGCustomGame> FGames;
 
     public NGGameManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
+        FGames = new ArrayList<NGCustomGame>();
     }
 
-    public void addGame(NGCustomGame aGame) {
-        addSubComponent(aGame);
-        writeLog(String.format("Game [%s] added.",aGame.getName()));
+    public NGCustomGame addGame(String aName, Class aClass) {
+        NGCustomGame game = null;
+        try {
+            game = (NGCustomGame)aClass.getConstructor(NGGameManager.class, String.class).newInstance(this, aName);
+            game.setLogManager(getLogManager());
+            FGames.add(game);
+            writeLog(String.format("Game [%s] added.", game.getName()));
+        } catch (Exception e) {
+            writeError("addGame", e.getMessage());
+        }
+        return game;
     }
 
     public void showGames() {
-        for (NGUniplayComponent component : FSubComponents) {
-            if (component instanceof NGCustomGame) {
-                NGCustomGame game = (NGCustomGame)component;
-                game.showStages();
-            }
+        for (NGCustomGame game : FGames) {
+            game.showStages();
         }
     }
 
