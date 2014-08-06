@@ -1,13 +1,18 @@
 package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.NGGameEngineConstants;
 import Uniwork.Misc.NGLogManager;
 
 public abstract class NGCustomGame extends NGUniplayObject {
 
+    public enum State {Created, Started, Hold, Finished};
+
     protected String FName;
     protected NGGameManager FManager;
+    protected NGPlayerManager FPlayerManager;
     protected NGLogManager FLogManager;
+    protected State FState;
 
     protected void DoShowStages() {
 
@@ -40,11 +45,44 @@ public abstract class NGCustomGame extends NGUniplayObject {
         return result;
     }
 
+    protected void DoBeforeStart() {
+
+    }
+
+    protected void DoStart() {
+
+    }
+
+    protected void DoAfterStart() {
+
+    }
+
+    protected void DoBreak() {
+
+    }
+
+    protected void DoContinue() {
+
+    }
+
+    protected void DoFinish() {
+
+    }
+
+    public NGPlayerManager getPlayerManager() {
+        if (FPlayerManager == null) {
+            FPlayerManager = (NGPlayerManager)ResolveObject(NGGameEngineConstants.CMP_PLAYER_MANAGER, NGPlayerManager.class);
+        }
+        return FPlayerManager;
+    }
+
     public NGCustomGame(NGGameManager aManager, String aName) {
         super();
         FManager = aManager;
         FName = aName;
         FLogManager = null;
+        FPlayerManager = null;
+        FState = State.Created;
     }
 
     public NGGameManager getManager() {
@@ -65,6 +103,49 @@ public abstract class NGCustomGame extends NGUniplayObject {
 
     public void showStages() {
         DoShowStages();
+    }
+
+    public void Start() {
+        if (FState == State.Created || FState == State.Finished) {
+            DoBeforeStart();
+            try
+            {
+                DoStart();
+            }
+            finally {
+                DoAfterStart();
+            }
+            FState = State.Started;
+            writeLog(String.format("Game [%s] started...", getName()));
+        }
+    }
+
+    public void Break() {
+        if (FState == State.Started) {
+            DoBreak();
+            FState = State.Hold;
+            writeLog(String.format("Game [%s] hold.", getName()));
+        }
+    }
+
+    public void Continue() {
+        if (FState == State.Hold) {
+            DoContinue();
+            FState = State.Started;
+            writeLog(String.format("Game [%s] started...", getName()));
+        }
+    }
+
+    public void Finish() {
+        if (FState == State.Started || FState == State.Hold) {
+            DoFinish();
+            FState = State.Finished;
+            writeLog(String.format("Game [%s] finished.", getName()));
+        }
+    }
+
+    public State getState() {
+        return FState;
     }
 
 }

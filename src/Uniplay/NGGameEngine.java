@@ -12,8 +12,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import static java.lang.Thread.sleep;
-
 public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayObjectRegistration, NGObjectRequestRegistration, NGLogEventListenerRegistration, NGGameEngineLoggingManagement, NGObjectRequestInvoker {
 
     protected ArrayList<NGUniplayRegisteredObjectItem> FRegisteredObjects;
