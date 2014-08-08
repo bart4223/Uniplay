@@ -34,6 +34,7 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
     @Override
     protected void AfterInitialize() {
         super.AfterInitialize();
+        /*
         int size = 64;
         NGGameEngineMemoryManager memory = (NGGameEngineMemoryManager)ResolveObject(NGGameEngineConstants.CMP_MEMORY_MANAGER, NGGameEngineMemoryManager.class);
         memory.addMemory(NGGameEngineConstants.CMP_MAIN_MEMORY, 1, size, size);
@@ -45,6 +46,7 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
         //task.startSingularTask(new Callback(this), 1000);
         NGObjectRequestRegistration orr = (NGObjectRequestRegistration)ResolveObject(NGObjectRequestRegistration.class);
         orr.registerObjectRequest("TestModule", this, "Test", "incAllMainMemoryCells");
+        */
     }
 
     public NGTestModule(NGGameEngineModuleManager aManager, String aName) {
@@ -69,6 +71,7 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
         manager.newPlayer("BART4223", "Bart4223");
         manager.newPlayer("SEPPI", "Seppi");
         manager.newPlayer("XMEN", "XMen");
+        manager.newPlayer("SKYGENERATION", "Sky");
         manager.setCurrentPlayer("BART4223");
     }
 

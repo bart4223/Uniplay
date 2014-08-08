@@ -1,15 +1,27 @@
 package Uniplay.Storage;
 
+import Uniplay.NGGameEngineConstants;
+import Uniwork.Base.NGObjectDeserializer;
+import Uniwork.Base.NGObjectXMLDeserializerFile;
+
 import java.util.ArrayList;
 
 public class NG2DGame extends NGCustomGame {
 
+    private static final String C_LEVEL_NAME = "level_%d";
+
     protected ArrayList<NG2DGamePlayerItem> FPlayers;
     protected ArrayList<NG2DGamePlayerItem> FNPCs;
     protected NG2DLevel FLevel;
+    protected NG2DLevelManager FLevelManager;
+    protected Integer FLevelIndex;
 
     protected NG2DLevel getLevel() {
         return FLevel;
+    }
+
+    protected void setLevel(NG2DLevel aLevel) {
+        FLevel = aLevel;
     }
 
     @Override
@@ -17,7 +29,22 @@ public class NG2DGame extends NGCustomGame {
         super.DoStart();
         resetPlayers();
         removeAllNPCs();
-        // ToDo LoadLevel
+        loadLevel(String.format(C_LEVEL_NAME, FLevelIndex));
+    }
+
+    protected void loadLevel(String aName) {
+        NG2DLevelManager lm = getLevelManager();
+        setLevel(lm.addLevel(aName));
+        NGObjectDeserializer Deserializer = new NGObjectXMLDeserializerFile(getLevel(), String.format("resources/levels/%s.ulf", aName));
+        Deserializer.setLogManager(getLogManager());
+        if (Deserializer.deserializeObject()) {
+            reallocateMemory();
+            writeLog(String.format("Level \"%s\"[%s] loaded.", getLevel().getCaption(), getLevel().getName()));
+        }
+    }
+
+    protected void reallocateMemory() {
+        getMemoryManager().reallocateMemory(getMemoryName(), 1, (int)FLevel.getGameFieldSize().getWidth(), (int)FLevel.getGameFieldSize().getHeight());
     }
 
     protected void resetPlayers() {
@@ -42,11 +69,20 @@ public class NG2DGame extends NGCustomGame {
         FNPCs.add(item);
     }
 
+    protected NG2DLevelManager getLevelManager() {
+        if (FLevelManager == null) {
+            FLevelManager = (NG2DLevelManager)ResolveObject(NGGameEngineConstants.CMP_2DLEVEL_MANAGER, NG2DLevelManager.class);
+        }
+        return FLevelManager;
+    }
+
     public NG2DGame(NGGameManager aManager, String aName) {
         super(aManager, aName);
         FPlayers = new ArrayList<NG2DGamePlayerItem>();
         FNPCs = new ArrayList<NG2DGamePlayerItem>();
         FLevel = null;
+        FLevelManager = null;
+        FLevelIndex = 1;
     }
 
     public void removeAllPlayers() {

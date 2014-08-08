@@ -1,6 +1,7 @@
 package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.Kernel.NGGameEngineMemoryManager;
 import Uniplay.NGGameEngineConstants;
 import Uniwork.Misc.NGLogManager;
 
@@ -11,6 +12,7 @@ public abstract class NGCustomGame extends NGUniplayObject {
     protected String FName;
     protected NGGameManager FManager;
     protected NGPlayerManager FPlayerManager;
+    protected NGGameEngineMemoryManager FMemoryManager;
     protected NGLogManager FLogManager;
     protected State FState;
 
@@ -69,11 +71,22 @@ public abstract class NGCustomGame extends NGUniplayObject {
 
     }
 
+    protected String getMemoryName() {
+        return String.format("%s.%s",FName,NGGameEngineConstants.CMP_MAIN_MEMORY);
+    }
+
     public NGPlayerManager getPlayerManager() {
         if (FPlayerManager == null) {
             FPlayerManager = (NGPlayerManager)ResolveObject(NGGameEngineConstants.CMP_PLAYER_MANAGER, NGPlayerManager.class);
         }
         return FPlayerManager;
+    }
+
+    public NGGameEngineMemoryManager getMemoryManager() {
+        if (FMemoryManager == null) {
+            FMemoryManager = (NGGameEngineMemoryManager)ResolveObject(NGGameEngineConstants.CMP_MEMORY_MANAGER, NGGameEngineMemoryManager.class);
+        }
+        return FMemoryManager;
     }
 
     public NGCustomGame(NGGameManager aManager, String aName) {
@@ -83,6 +96,7 @@ public abstract class NGCustomGame extends NGUniplayObject {
         FLogManager = null;
         FPlayerManager = null;
         FState = State.Created;
+        getMemoryManager().addMemory(getMemoryName(), 0, 0, 0);
     }
 
     public NGGameManager getManager() {
@@ -107,6 +121,7 @@ public abstract class NGCustomGame extends NGUniplayObject {
 
     public void Start() {
         if (FState == State.Created || FState == State.Finished) {
+            writeLog(String.format("Game [%s] starting...", getName()));
             DoBeforeStart();
             try
             {
@@ -116,7 +131,7 @@ public abstract class NGCustomGame extends NGUniplayObject {
                 DoAfterStart();
             }
             FState = State.Started;
-            writeLog(String.format("Game [%s] started...", getName()));
+            writeLog(String.format("Game [%s] started.", getName()));
         }
     }
 
@@ -132,7 +147,7 @@ public abstract class NGCustomGame extends NGUniplayObject {
         if (FState == State.Hold) {
             DoContinue();
             FState = State.Started;
-            writeLog(String.format("Game [%s] started...", getName()));
+            writeLog(String.format("Game [%s] started.", getName()));
         }
     }
 

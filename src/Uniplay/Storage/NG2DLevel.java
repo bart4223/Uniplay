@@ -81,6 +81,9 @@ public class NG2DLevel extends NGCustomLevel {
         if (aObject instanceof NGSerializeGeometryObjectList) {
             assignFromGOF((NGSerializeGeometryObjectList)aObject);
         }
+        else if (aObject instanceof NGSerialize2DLevel) {
+            assignFromULF((NGSerializeLevel)aObject);
+        }
     }
 
     @Override
@@ -88,6 +91,7 @@ public class NG2DLevel extends NGCustomLevel {
         super.assignToULF(aLevel);
         if (aLevel instanceof NGSerialize2DLevel) {
             NGSerialize2DLevel level = (NGSerialize2DLevel)aLevel;
+            level.setCaption(getCaption());
             level.setGameField(new NGSerialize2DGameField());
             level.getGameField().setHeight(getGameFieldSize().getHeight());
             level.getGameField().setWidth(getGameFieldSize().getWidth());
@@ -117,6 +121,7 @@ public class NG2DLevel extends NGCustomLevel {
         super.assignFromULF(aLevel);
         if (aLevel instanceof NGSerialize2DLevel) {
             NGSerialize2DLevel level = (NGSerialize2DLevel)aLevel;
+            setCaption(level.getCaption());
             getGameFieldSize().setHeight(level.getGameField().getHeight());
             getGameFieldSize().setWidth(level.getGameField().getWidth());
             getProps().AssignFrom(level.getGameField().getProps());
@@ -128,6 +133,10 @@ public class NG2DLevel extends NGCustomLevel {
                 }
             }
         }
+    }
+
+    public NG2DLevel(String aName) {
+        this(aName, new NG2DGameFieldSize(0, 0));
     }
 
     public NG2DLevel(String aName, NG2DGameFieldSize aSize) {

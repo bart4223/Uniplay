@@ -14,6 +14,10 @@ public class NG2DLevelManager extends NGUniplayComponent {
         FLevels = new ArrayList<NG2DLevel>();
     }
 
+    public NG2DLevel addLevel(String aName) {
+        return addLevel(aName, new NG2DGameFieldSize(0, 0));
+    }
+
     public NG2DLevel addLevel(String aName, NG2DGameFieldSize aSize) {
         NG2DLevel level = new NG2DLevel(aName, aSize);
         level.setLogManager(getLogManager());
