@@ -20,11 +20,15 @@ public class NGGameEngineMemoryCell extends NGUniplayObject {
         return FAddress;
     }
 
-    public void setValue(Integer aValue) {
+    public NGGameEngineMemoryCellValue getValue() {
+        return FValue;
+    }
+
+    public void setValueAsInteger(Integer aValue) {
         FValue.setInteger(aValue);
     }
 
-    public Integer getValue() {
+    public Integer getValueAsInteger() {
         return FValue.getInteger();
     }
 

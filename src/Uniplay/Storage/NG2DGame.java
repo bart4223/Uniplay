@@ -1,5 +1,8 @@
 package Uniplay.Storage;
 
+import Uniplay.Kernel.NGGameEngineMemoryAddress;
+import Uniplay.Kernel.NGGameEngineMemoryCell;
+import Uniplay.Kernel.NGGameEngineMemoryCellValueItem;
 import Uniplay.NGGameEngineConstants;
 import Uniwork.Base.NGObjectDeserializer;
 import Uniwork.Base.NGObjectXMLDeserializerFile;
@@ -22,6 +25,7 @@ public class NG2DGame extends NGCustomGame {
 
     protected void setLevel(NG2DLevel aLevel) {
         FLevel = aLevel;
+        writeLog(String.format("Current level is \"%s\"[%s].", FLevel.getCaption(), FLevel.getName()));
     }
 
     @Override
@@ -29,22 +33,47 @@ public class NG2DGame extends NGCustomGame {
         super.DoStart();
         resetPlayers();
         removeAllNPCs();
-        loadLevel(String.format(C_LEVEL_NAME, FLevelIndex));
+        NG2DLevel level = loadLevel(String.format(C_LEVEL_NAME, FLevelIndex));
+        setLevel(level);
     }
 
-    protected void loadLevel(String aName) {
+    protected NG2DLevel loadLevel(String aName) {
         NG2DLevelManager lm = getLevelManager();
-        setLevel(lm.addLevel(aName));
-        NGObjectDeserializer Deserializer = new NGObjectXMLDeserializerFile(getLevel(), String.format("resources/levels/%s.ulf", aName));
+        NG2DLevel level = lm.addLevel(aName);
+        NGObjectDeserializer Deserializer = new NGObjectXMLDeserializerFile(level, String.format("resources/levels/%s.ulf", aName));
         Deserializer.setLogManager(getLogManager());
         if (Deserializer.deserializeObject()) {
-            reallocateMemory();
-            writeLog(String.format("Level \"%s\"[%s] loaded.", getLevel().getCaption(), getLevel().getName()));
+            reallocateLevelMemory(level);
+            loadLevelToMemory(level);
+            writeLog(String.format("Level \"%s\"[%s] loaded.", level.getCaption(), level.getName()));
         }
+        return level;
     }
 
-    protected void reallocateMemory() {
-        getMemoryManager().reallocateMemory(getMemoryName(), 1, (int)FLevel.getGameFieldSize().getWidth(), (int)FLevel.getGameFieldSize().getHeight());
+    protected void reallocateLevelMemory(NG2DLevel aLevel) {
+        getMemoryManager().reallocateMemory(getMemoryName(), 1, (int)aLevel.getGameFieldSize().getWidth(), (int)aLevel.getGameFieldSize().getHeight());
+    }
+
+    protected void loadLevelToMemory(NG2DLevel aLevel) {
+        Integer page = 1;
+        NGGameEngineMemoryCellValueItem item;
+        ArrayList<NGGameEngineMemoryCellValueItem> items = new ArrayList<NGGameEngineMemoryCellValueItem>();
+        for (NG2DGameFieldLayer layer : aLevel.getGameField().getLayers()) {
+            Integer base = 0;
+            Integer offset = 0;
+            for (NGGameEngineMemoryCell cell : layer.getCells()) {
+                item = new NGGameEngineMemoryCellValueItem(new NGGameEngineMemoryAddress(page, base, offset), cell.getValue());
+                items.add(item);
+                offset = offset + 1;
+                if (offset >= aLevel.getGameFieldSize().getWidth()) {
+                    base = base + 1;
+                    offset = 0;
+                }
+            }
+            page = page + 1;
+        }
+        getMemoryManager().setCellsValue(getMemoryName(),items);
+        writeLog(String.format("%d cell(s) value in memory [%s] stored.", items.size(), getMemoryName()));
     }
 
     protected void resetPlayers() {

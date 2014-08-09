@@ -136,7 +136,7 @@ public class NG2DLevelDesigner extends NGLevelDesigner {
                         if (op.equals("COUNT")) {
                             Integer count = 0;
                             for (NGGameEngineMemoryCell cell : layer.getCells()) {
-                                if (cell.getValue() == prop.getValue()) {
+                                if (cell.getValueAsInteger() == prop.getValue()) {
                                     count++;
                                 }
                             }

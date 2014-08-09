@@ -72,7 +72,7 @@ public abstract class NGCustomGame extends NGUniplayObject {
     }
 
     protected String getMemoryName() {
-        return String.format("%s.%s",FName,NGGameEngineConstants.CMP_MAIN_MEMORY);
+        return String.format("%s.%s", FName, NGGameEngineConstants.CMP_MAIN_MEMORY);
     }
 
     public NGPlayerManager getPlayerManager() {

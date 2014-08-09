@@ -3,6 +3,8 @@ package Uniplay.Kernel;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.NGGameEngineConstants;
 
+import java.util.ArrayList;
+
 public class NGGameEngineMemoryManager extends NGUniplayComponent {
 
     protected void reallocateMemory(NGGameEngineMemory aMemory, NGGameEngineMemoryTransaction aTransaction, int aPageSize, int aBaseSize, int aOffsetSize) {
@@ -29,6 +31,10 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
 
     protected void incAllMemoryCellsValue(NGGameEngineMemory aMemory, NGGameEngineMemoryTransaction aTransaction) {
         aMemory.incAllCellsValue(aTransaction);
+    }
+
+    protected void setCellsValue(NGGameEngineMemory aMemory, NGGameEngineMemoryTransaction aTransaction, ArrayList<NGGameEngineMemoryCellValueItem> aItems) {
+        aMemory.setCellsValue(aTransaction, aItems);
     }
 
     protected NGGameEngineMemoryTransaction BeginTransaction(NGGameEngineMemory aMemory) {
@@ -114,6 +120,17 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         NGGameEngineMemoryTransaction transaction = BeginTransaction(memory);
         try{
             incAllMemoryCellsValue(memory, transaction);
+        }
+        finally {
+            EndTransaction(transaction);
+        }
+    }
+
+    public void setCellsValue(String aName, ArrayList<NGGameEngineMemoryCellValueItem> aItems) {
+        NGGameEngineMemory memory = getMemory(aName);
+        NGGameEngineMemoryTransaction transaction = BeginTransaction(memory);
+        try{
+            setCellsValue(memory, transaction, aItems);
         }
         finally {
             EndTransaction(transaction);

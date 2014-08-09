@@ -107,7 +107,7 @@ public class NG2DLevel extends NGCustomLevel {
                 level.getGameField().getLayers().add(sl);
                 for (NGGameEngineMemoryCell cell : layer.getCells()) {
                     NGSerializeGameEngineMemoryCell sc = new NGSerializeGameEngineMemoryCell();
-                    sc.setValue(cell.getValue());
+                    sc.setValue(cell.getValueAsInteger());
                     sc.setBase(cell.getAddress().getBase());
                     sc.setOffset(cell.getAddress().getOffset());
                     sl.getCells().add(sc);

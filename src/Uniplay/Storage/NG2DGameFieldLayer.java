@@ -33,7 +33,7 @@ public class NG2DGameFieldLayer extends NGUniplayObject {
     public void addCell(Integer aValue, Integer aBase, Integer aOffset) {
         NG2DGameFieldSize size = getGameField().getSize();
         NGGameEngineMemoryCell cell = new NGGameEngineMemoryCell(FGameField.getLayers().indexOf(this), aBase, aOffset);
-        cell.setValue(aValue);
+        cell.setValueAsInteger(aValue);
         FCells.add(cell);
     }
 
