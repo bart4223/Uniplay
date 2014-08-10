@@ -81,7 +81,6 @@ public class NG2DGame extends NGCustomGame {
                     }
                 }
             }
-
         }
     }
 
@@ -142,7 +141,7 @@ public class NG2DGame extends NGCustomGame {
 
     protected void setPlayerPosition(NG2DGamePlayerItem aPlayerItem, double aX, double aY) {
         aPlayerItem.setPosition(aX, aY);
-        writeLog(String.format("Player [%s] position is (%.1f/%.1f).", aPlayerItem.getPlayer().getName(), aPlayerItem.getPosition().getX(), aPlayerItem.getPosition().getY()));
+        writeLog(String.format("Player's [%s] position is (%.1f/%.1f).", aPlayerItem.getPlayer().getName(), aPlayerItem.getPosition().getX(), aPlayerItem.getPosition().getY()));
     }
 
     public NG2DGame(NGGameManager aManager, String aName) {
