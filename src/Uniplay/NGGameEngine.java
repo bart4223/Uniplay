@@ -222,7 +222,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
             CreateModules();
         }
         else {
-            writeLog(String.format("No definition for module creation!", getName()));
+            writeLog(String.format("No definition for module %s creation!", getName()));
         }
     }
 

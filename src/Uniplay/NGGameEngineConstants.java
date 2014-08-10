@@ -17,6 +17,8 @@ public class NGGameEngineConstants {
     public final static String CMP_2DLEVEL_MANAGER                  = "2DLevelManager";
     public final static String CMP_PLAYER_MANAGER                   = "PlayerManager";
     public final static String CMP_GAME_MANAGER                     = "GameManager";
+    // Control Center
+    public final static String CMP_CONTROLMIMIC_MANAGER             = "ControlMimicManager";
     // Graphic Engine
     public final static String CMP_RENDERENGINE_MANAGER             = "RenderEngineManager";
     // Debugger
