@@ -53,4 +53,12 @@ public class NG2DGameFieldLayer extends NGUniplayObject {
         return FProps;
     }
 
+    public void setProp(String aName, Object aValue) {
+        FProps.set(aName, aValue);
+    }
+
+    public Object getProp(String aName) {
+        return FProps.get(aName);
+    }
+
 }

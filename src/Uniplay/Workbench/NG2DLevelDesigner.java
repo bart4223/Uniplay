@@ -140,8 +140,20 @@ public class NG2DLevelDesigner extends NGLevelDesigner {
                                     count++;
                                 }
                             }
-                            level.setProp(prop.getName(), count);
-                            writeLog(String.format("SetupLevel-Prop[COUNT:%s=%d]", prop.getName(), count));
+                            layer.setProp(prop.getName(), count);
+                            writeLog(String.format("SetupLevel-Prop [COUNT:%s=%d]", prop.getName(), count));
+                        }
+                        else if (op.equals("POSITION")) {
+                            NG2DGamePlayerPosition pos = null;
+                            for (NGGameEngineMemoryCell cell : layer.getCells()) {
+                                if (cell.getValueAsInteger() == prop.getValue()) {
+                                    pos = new NG2DGamePlayerPosition(cell.getAddress().getOffset(), cell.getAddress().getBase());
+                                }
+                            }
+                            if (pos != null) {
+                                layer.setProp(prop.getName(), pos);
+                                writeLog(String.format("SetupLevel-Prop [POSITION:%s=(%.1f/%.1f)]", prop.getName(), pos.getX(), pos.getY()));
+                            }
                         }
                     }
                 }

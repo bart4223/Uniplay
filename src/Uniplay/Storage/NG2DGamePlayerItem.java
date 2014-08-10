@@ -9,7 +9,7 @@ public class NG2DGamePlayerItem extends NGGamePlayerItem {
         FPosition = new NG2DGamePlayerPosition();
     }
 
-    public void setPosition(Integer aX, Integer aY) {
+    public void setPosition(double aX, double aY) {
         FPosition.setX(aX);
         FPosition.setY(aY);
     }

@@ -2,32 +2,32 @@ package Uniplay.Storage;
 
 public class NG2DGamePlayerPosition extends NGGamePlayerPosition {
 
-    protected Integer FX;
-    protected Integer FY;
+    protected double FX;
+    protected double FY;
 
     public NG2DGamePlayerPosition() {
-        this(0, 0);
+        this(0.0, 0.0);
     }
 
-    public NG2DGamePlayerPosition(Integer aX, Integer aY) {
+    public NG2DGamePlayerPosition(double aX, double aY) {
         super();
         FX = aX;
         FY = aY;
     }
 
-    public void setX(Integer aX) {
+    public void setX(double aX) {
         FX = aX;
     }
 
-    public Integer getX() {
+    public double getX() {
         return FX;
     }
 
-    public void setY(Integer aY) {
+    public void setY(double aY) {
         FY = aY;
     }
 
-    public Integer getY() {
+    public double getY() {
         return FY;
     }
 
