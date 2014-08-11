@@ -1,5 +1,6 @@
 package Uniplay.Control;
 
+import Uniplay.Kernel.NGTaskManager;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Storage.NGCustomGame;
 import Uniwork.Misc.NGTickEvent;
@@ -14,22 +15,26 @@ public abstract class NGControlMimicPeriodicAction extends NGCustomControlMimic 
     @Override
     protected void DoActivate() {
         super.DoActivate();
-        getManager().getTaskManager().startPeriodicTask(getPeriodicTaskName(), 0);
+        getTaskManager().startPeriodicTask(getPeriodicTaskName(), 0);
     }
 
     @Override
     protected void DoDeactivate() {
         super.DoDeactivate();
-        getManager().getTaskManager().stopPeriodicTask(getPeriodicTaskName());
+        getTaskManager().stopPeriodicTask(getPeriodicTaskName());
     }
 
     protected void addPeriodicTask(Integer aInterval) {
-        getManager().getTaskManager().addPeriodicTask(getPeriodicTaskName(), aInterval);
-        getManager().getTaskManager().addListener(getPeriodicTaskName(), this);
+        getTaskManager().addPeriodicTask(getPeriodicTaskName(), aInterval);
+        getTaskManager().addListener(getPeriodicTaskName(), this);
     }
 
     protected String getPeriodicTaskName() {
         return String.format("Mimic.%s", getName());
+    }
+
+    protected NGTaskManager getTaskManager() {
+        return FManager.getTaskManager();
     }
 
     public NGControlMimicPeriodicAction(NGControlMimicManager aManager, NGCustomGame aGame, String aName, Integer aInterval) {

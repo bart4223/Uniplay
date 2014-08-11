@@ -46,4 +46,9 @@ public abstract class NGGameEngineConstants {
     public final static String EVT_MEMORY_ALLOCATED                 = String.format("%s.%s", CMP_MEMORY, "Allocated");
     public final static String EVT_MEMORY_CELLS_CHANGED             = String.format("%s.%s.%s", CMP_MEMORY, "Cells", "Changed");
 
+    // --------------------- ORB ------------------------------------
+    // Mimic
+    public final static String MIMIC_OBJECTREQUESTMETHOD_DEFAULT    = "Execute";
+    public final static String MIMIC_OBJECTREQUEST_ACTION_TEMPLATE  = "Mimic.Action.%s";
+
 }
