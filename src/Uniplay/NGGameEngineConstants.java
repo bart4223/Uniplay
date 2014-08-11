@@ -1,6 +1,14 @@
 package Uniplay;
 
-public class NGGameEngineConstants {
+public abstract class NGGameEngineConstants {
+
+    // --------------------- Debug ----------------------------------
+    // Level
+    public final static Integer DEBUG_LEVEL_NONE                    = -1;
+    public final static Integer DEBUG_LEVEL_DEFAULT                 = 0;
+    public final static Integer DEBUG_LEVEL_MIMIC                   = 10;
+    public final static Integer DEBUG_LEVEL_RENDERING               = 20;
+    public final static Integer DEBUG_LEVEL_EVENTS                  = 30;
 
     // --------------------- Components -----------------------------
     // Kernel

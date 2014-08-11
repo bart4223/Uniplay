@@ -3,6 +3,7 @@ package Uniplay.Graphics;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
+import Uniplay.NGGameEngineConstants;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class NGRenderEngineManager extends NGUniplayComponent {
 
     public void Render(NGGraphicEngineRenderContext aContext) {
         int i = 0;
-        writeLog(5, String.format("Render cells [%d] started...", aContext.getCells().size()));
+        writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render cells [%d] started...", aContext.getCells().size()));
         for (NGRenderEngineItem item : FRenderEngines) {
             NGRenderEngine renderengine = item.getRenderEngine();
             for (NGGameEngineMemoryCell cell : aContext.FCells) {
@@ -40,7 +41,7 @@ public class NGRenderEngineManager extends NGUniplayComponent {
                 }
             }
         }
-        writeLog(5, String.format("Render cells [%d] finished.", i));
+        writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render cells [%d] finished.", i));
     }
 
 }

@@ -116,14 +116,14 @@ public class NG2DGame extends NGCustomGame {
         FNPCs.clear();
     }
 
-    protected void addPlayer(NGPlayer aPlayer, Double aX, Double aY, Integer aMaxLives) {
-        NG2DGamePlayerItem item = new NG2DGamePlayerItem(aPlayer, aMaxLives);
+    protected void addPlayer(NGPlayer aPlayer, Integer aLayer, double aX, double aY, Integer aMaxLives) {
+        NG2DGamePlayerItem item = new NG2DGamePlayerItem(aPlayer, aLayer, aMaxLives);
         item.setPosition(aX, aY);
         FPlayers.add(item);
     }
 
-    protected void addNPC(NGNonPlayer aNPC, Double aX, Double aY, Integer aMaxLives) {
-        NG2DGamePlayerItem item = new NG2DGamePlayerItem(aNPC, aMaxLives);
+    protected void addNPC(NGNonPlayer aNPC, Integer aLayer, double aX, double aY, Integer aMaxLives) {
+        NG2DGamePlayerItem item = new NG2DGamePlayerItem(aNPC, aLayer, aMaxLives);
         item.setPosition(aX, aY);
         FNPCs.add(item);
     }
@@ -159,8 +159,16 @@ public class NG2DGame extends NGCustomGame {
     }
 
     public void addPlayer(NGPlayer aPlayer) {
-        addPlayer(aPlayer, 0.0, 0.0, 0);
+        addPlayer(aPlayer, 1, 0.0, 0.0, 0);
         writeLog(String.format("Player [%s] added in game [%s].", aPlayer.getName(), getName()));
+    }
+
+    public ArrayList<NG2DGamePlayerItem> getPlayers() {
+        return FPlayers;
+    }
+
+    public ArrayList<NG2DGamePlayerItem> getNPCs() {
+        return FNPCs;
     }
 
 }

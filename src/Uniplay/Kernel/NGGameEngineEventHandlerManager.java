@@ -2,6 +2,7 @@ package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.NGGameEngineConstants;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ public class NGGameEngineEventHandlerManager extends NGUniplayComponent implemen
     protected ArrayList<NGGameEngineEventHandler> FHandlers;
 
     protected void DoHandleEvent(String aName, NGGameEngineEvent aEvent) {
-        writeLog(10, String.format("Event handler [%s].DoHandleEvent->[%s]", getName(), aName));
+        writeLog(NGGameEngineConstants.DEBUG_LEVEL_EVENTS, String.format("Event handler [%s].DoHandleEvent->[%s]", getName(), aName));
         for (NGGameEngineEventHandler handler : FHandlers) {
             if (handler.getName().equals(aName)) {
                 handler.handleEvent(aEvent);

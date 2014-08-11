@@ -44,6 +44,11 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         addCellTransaction(aTransaction, aCell);
     }
 
+    protected void InternalSetCellValueByAddress(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryAddress aAddress, Integer aValue) {
+        NGGameEngineMemoryCell cell = getCell(aAddress);
+        setCellValue(aTransaction, cell, aValue);
+    }
+
     protected void InternalIncCellValue(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryCell aCell) {
         aCell.incValue();
         addCellTransaction(aTransaction, aCell);
@@ -68,6 +73,25 @@ public class NGGameEngineMemory extends NGUniplayComponent {
     protected void DoInitialize() {
         super.DoInitialize();
         DoAllocate();
+    }
+
+    protected void setCellValue(NGGameEngineMemoryTransaction aTransaction, int aIndex, Integer aValue) {
+        NGGameEngineMemoryCell cell = FCells.get(aIndex);
+        setCellValue(aTransaction, cell, aValue);
+    }
+
+    protected void setCellValue(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryCell aCell, Integer aValue) {
+        InternalSetCellValue(aTransaction, aCell, aValue);
+        writeLog(10, String.format("Memory [%s] cell with address [%d,%d,%d] value %d stored.", getName(), aCell.getAddress().getPage(), aCell.getAddress().getBase(), aCell.getAddress().getOffset(), aValue));
+    }
+
+    protected void incCellValue(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryCell aCell) {
+        InternalIncCellValue(aTransaction, aCell);
+    }
+
+    protected void setCellValue(NGGameEngineMemoryTransaction aTransaction, int aPage, int aBase, int aOffset, Integer aValue) {
+        NGGameEngineMemoryAddress address = new NGGameEngineMemoryAddress(aPage, aBase, aOffset);
+        InternalSetCellValueByAddress(aTransaction, address, aValue);
     }
 
     public NGGameEngineMemory(NGGameEngineMemoryManager aManager, String aName) {
@@ -99,13 +123,6 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         raiseCellsChangedEvent(aTransaction.getCells());
     }
 
-    public void incAllCellsValue(NGGameEngineMemoryTransaction aTransaction) {
-        for (NGGameEngineMemoryCell cell : FCells) {
-            incCellValue(aTransaction, cell);
-        }
-        raiseCellsChangedEvent(aTransaction.getCells());
-    }
-
     public int getAbsolutCellAddress(NGGameEngineMemoryCell aCell) {
         return getAbsolutAddress(aCell.getAddress());
     }
@@ -128,42 +145,41 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         return getCell(address);
     }
 
-    public void setCellValue(NGGameEngineMemoryTransaction aTransaction, int aPage, int aBase, int aOffset, Integer aValue) {
-        NGGameEngineMemoryAddress address = new NGGameEngineMemoryAddress(aPage, aBase, aOffset);
-        setCellValue(aTransaction, address, aValue);
+    public Integer getCellValueAsInteger(NGGameEngineMemoryAddress aAddress) {
+        NGGameEngineMemoryCell cell = getCell(aAddress);
+        return cell.getValueAsInteger();
+    }
+
+    public Integer getCellValueAsInteger(int aPage, int aBase, int aOffset) {
+        NGGameEngineMemoryCell cell = getCell(aPage, aBase, aOffset);
+        return cell.getValueAsInteger();
     }
 
     public void setCellsValue(NGGameEngineMemoryTransaction aTransaction, ArrayList<NGGameEngineMemoryCellValueItem> aItems) {
         for (NGGameEngineMemoryCellValueItem item : aItems) {
-            setCellValue(aTransaction, item.getAddress(), item.getValue().getInteger());
+            InternalSetCellValueByAddress(aTransaction, item.getAddress(), item.getValue().getInteger());
         }
         raiseCellsChangedEvent(aTransaction.getCells());
         writeLog(10, String.format("%d cell(s) in Memory [%s] changed", aTransaction.getCells().size(), getName()));
     }
 
     public void setCellValue(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryCellValueItem aItem) {
-        setCellValue(aTransaction, aItem.getAddress(), aItem.getValue().getInteger());
+        InternalSetCellValueByAddress(aTransaction, aItem.getAddress(), aItem.getValue().getInteger());
         raiseCellsChangedEvent(aTransaction.getCells());
         writeLog(10, String.format("Cell in Memory [%s] changed", getName()));
     }
 
     public void setCellValue(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryAddress aAddress, Integer aValue) {
-        NGGameEngineMemoryCell cell = getCell(aAddress);
-        setCellValue(aTransaction, cell, aValue);
+        InternalSetCellValueByAddress(aTransaction, aAddress, aValue);
+        raiseCellsChangedEvent(aTransaction.getCells());
+        writeLog(10, String.format("Cell in Memory [%s] changed", getName()));
     }
 
-    public void setCellValue(NGGameEngineMemoryTransaction aTransaction, int aIndex, Integer aValue) {
-        NGGameEngineMemoryCell cell = FCells.get(aIndex);
-        setCellValue(aTransaction, cell, aValue);
-    }
-
-    public void setCellValue(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryCell aCell, Integer aValue) {
-        InternalSetCellValue(aTransaction, aCell, aValue);
-        writeLog(10, String.format("Memory [%s] cell with address [%d,%d,%d] value %d stored.", getName(), aCell.getAddress().getPage(), aCell.getAddress().getBase(), aCell.getAddress().getOffset(), aValue));
-    }
-
-    public void incCellValue(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryCell aCell) {
-        InternalIncCellValue(aTransaction, aCell);
+    public void incAllCellsValue(NGGameEngineMemoryTransaction aTransaction) {
+        for (NGGameEngineMemoryCell cell : FCells) {
+            incCellValue(aTransaction, cell);
+        }
+        raiseCellsChangedEvent(aTransaction.getCells());
     }
 
     public NGGameEngineMemoryManager getManager() {

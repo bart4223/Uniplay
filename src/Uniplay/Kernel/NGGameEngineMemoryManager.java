@@ -37,6 +37,10 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         aMemory.setCellsValue(aTransaction, aItems);
     }
 
+    protected void setCellValue(NGGameEngineMemory aMemory, NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryAddress aAddress, Integer aValue) {
+        aMemory.setCellValue(aTransaction, aAddress, aValue);
+    }
+
     protected NGGameEngineMemoryTransaction BeginTransaction(NGGameEngineMemory aMemory) {
         return getTransactionManager().BeginTransaction(aMemory);
     }
@@ -135,6 +139,22 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         finally {
             EndTransaction(transaction);
         }
+    }
+
+    public void setCellValue(String aName, NGGameEngineMemoryAddress aAddress, Integer aValue) {
+        NGGameEngineMemory memory = getMemory(aName);
+        NGGameEngineMemoryTransaction transaction = BeginTransaction(memory);
+        try{
+            setCellValue(memory, transaction, aAddress, aValue);
+        }
+        finally {
+            EndTransaction(transaction);
+        }
+    }
+
+    public Integer getCellValueAsInteger(String aName, NGGameEngineMemoryAddress aAddress) {
+        NGGameEngineMemory memory = getMemory(aName);
+        return memory.getCellValueAsInteger(aAddress);
     }
 
 }

@@ -4,14 +4,14 @@ import Uniplay.Base.NGUniplayObject;
 
 public class NGControlMimicItem extends NGUniplayObject {
 
-    protected NGControlMimic FMimic;
+    protected NGCustomControlMimic FMimic;
 
-    public NGControlMimicItem(NGControlMimic aMimic) {
+    public NGControlMimicItem(NGCustomControlMimic aMimic) {
         super();
         FMimic = aMimic;
     }
 
-    public NGControlMimic getMimic() {
+    public NGCustomControlMimic getMimic() {
         return FMimic;
     }
 

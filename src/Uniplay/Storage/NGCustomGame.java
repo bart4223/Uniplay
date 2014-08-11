@@ -1,6 +1,8 @@
 package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.Control.NGControlMimicManager;
+import Uniplay.Control.NGControlMimicPeriodicAction;
 import Uniplay.Kernel.NGGameEngineMemoryManager;
 import Uniplay.NGGameEngineConstants;
 import Uniwork.Misc.NGLogManager;
@@ -13,6 +15,7 @@ public abstract class NGCustomGame extends NGUniplayObject {
     protected NGGameManager FManager;
     protected NGPlayerManager FPlayerManager;
     protected NGGameEngineMemoryManager FMemoryManager;
+    protected NGControlMimicManager FMimicManager;
     protected NGLogManager FLogManager;
     protected State FState;
 
@@ -48,7 +51,7 @@ public abstract class NGCustomGame extends NGUniplayObject {
     }
 
     protected void DoBeforeStart() {
-
+        registerMimicActions();
     }
 
     protected void DoStart() {
@@ -56,7 +59,7 @@ public abstract class NGCustomGame extends NGUniplayObject {
     }
 
     protected void DoAfterStart() {
-
+        ActivateAllMimicActions();
     }
 
     protected void DoBreak() {
@@ -71,22 +74,11 @@ public abstract class NGCustomGame extends NGUniplayObject {
 
     }
 
-    protected String getMemoryName() {
-        return NGGameEngineConstants.CMP_MAIN_MEMORY;
+    protected void registerMimicActions() {
     }
 
-    public NGPlayerManager getPlayerManager() {
-        if (FPlayerManager == null) {
-            FPlayerManager = (NGPlayerManager)ResolveObject(NGGameEngineConstants.CMP_PLAYER_MANAGER, NGPlayerManager.class);
-        }
-        return FPlayerManager;
-    }
-
-    public NGGameEngineMemoryManager getMemoryManager() {
-        if (FMemoryManager == null) {
-            FMemoryManager = (NGGameEngineMemoryManager)ResolveObject(NGGameEngineConstants.CMP_MEMORY_MANAGER, NGGameEngineMemoryManager.class);
-        }
-        return FMemoryManager;
+    protected void ActivateAllMimicActions() {
+        getMimicManager().ActivateAllMimics();
     }
 
     public NGCustomGame(NGGameManager aManager, String aName) {
@@ -113,6 +105,27 @@ public abstract class NGCustomGame extends NGUniplayObject {
 
     public NGLogManager getLogManager() {
         return FLogManager;
+    }
+
+    public NGPlayerManager getPlayerManager() {
+        if (FPlayerManager == null) {
+            FPlayerManager = (NGPlayerManager)ResolveObject(NGGameEngineConstants.CMP_PLAYER_MANAGER, NGPlayerManager.class);
+        }
+        return FPlayerManager;
+    }
+
+    public NGGameEngineMemoryManager getMemoryManager() {
+        if (FMemoryManager == null) {
+            FMemoryManager = (NGGameEngineMemoryManager)ResolveObject(NGGameEngineConstants.CMP_MEMORY_MANAGER, NGGameEngineMemoryManager.class);
+        }
+        return FMemoryManager;
+    }
+
+    public NGControlMimicManager getMimicManager() {
+        if (FMimicManager == null) {
+            FMimicManager = (NGControlMimicManager)ResolveObject(NGGameEngineConstants.CMP_CONTROLMIMIC_MANAGER, NGControlMimicManager.class);
+        }
+        return FMimicManager;
     }
 
     public void showStages() {
@@ -161,6 +174,10 @@ public abstract class NGCustomGame extends NGUniplayObject {
 
     public State getState() {
         return FState;
+    }
+
+    public String getMemoryName() {
+        return NGGameEngineConstants.CMP_MAIN_MEMORY;
     }
 
 }
