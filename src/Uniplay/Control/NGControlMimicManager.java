@@ -2,9 +2,9 @@ package Uniplay.Control;
 
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.Base.NGUniplayObjectRequestBroker;
 import Uniplay.Kernel.NGTaskManager;
 import Uniplay.NGGameEngineConstants;
-import Uniwork.Base.NGObjectRequestBroker;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ public class NGControlMimicManager extends NGUniplayComponent {
 
     protected ArrayList<NGControlMimicItem> FMimics;
     protected NGTaskManager FTaskManager;
-    protected NGObjectRequestBroker FORB;
+    protected NGUniplayObjectRequestBroker FORB;
 
     protected NGControlMimicItem getMimic(String aName) {
         for (NGControlMimicItem item : FMimics) {
@@ -73,9 +73,9 @@ public class NGControlMimicManager extends NGUniplayComponent {
         return FTaskManager;
     }
 
-    public NGObjectRequestBroker getObjectRequestBroker() {
+    public NGUniplayObjectRequestBroker getObjectRequestBroker() {
         if (FORB == null) {
-            FORB = (NGObjectRequestBroker)ResolveObject(NGGameEngineConstants.CMP_OBJECTREQUESTBROKER, NGObjectRequestBroker.class);
+            FORB = (NGUniplayObjectRequestBroker)ResolveObject(NGGameEngineConstants.CMP_OBJECTREQUESTBROKER, NGUniplayObjectRequestBroker.class);
         }
         return FORB;
     }

@@ -9,7 +9,7 @@ import Uniwork.Misc.NGLogManager;
 
 public abstract class NGCustomGame extends NGUniplayObject {
 
-    public enum State {Created, Started, Hold, Finished};
+    public enum State {Created, Initialized, Started, Hold, Finished};
 
     protected String FName;
     protected NGGameManager FManager;
@@ -51,7 +51,6 @@ public abstract class NGCustomGame extends NGUniplayObject {
     }
 
     protected void DoBeforeStart() {
-        registerMimicActions();
     }
 
     protected void DoStart() {
@@ -75,10 +74,15 @@ public abstract class NGCustomGame extends NGUniplayObject {
     }
 
     protected void registerMimicActions() {
+
     }
 
     protected void ActivateAllMimicActions() {
         getMimicManager().ActivateAllMimics();
+    }
+
+    protected void DoInitialize() {
+        registerMimicActions();
     }
 
     public NGCustomGame(NGGameManager aManager, String aName) {
@@ -89,6 +93,11 @@ public abstract class NGCustomGame extends NGUniplayObject {
         FPlayerManager = null;
         FState = State.Created;
         getMemoryManager().addMemory(getMemoryName(), 0, 0, 0);
+    }
+
+    public void Initialize() {
+        DoInitialize();
+        FState = State.Initialized;
     }
 
     public NGGameManager getManager() {
@@ -133,7 +142,7 @@ public abstract class NGCustomGame extends NGUniplayObject {
     }
 
     public void Start() {
-        if (FState == State.Created || FState == State.Finished) {
+        if (FState == State.Initialized || FState == State.Finished) {
             writeLog(String.format("Game [%s] starting...", getName()));
             DoBeforeStart();
             try
