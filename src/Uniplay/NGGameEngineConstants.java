@@ -8,7 +8,8 @@ public abstract class NGGameEngineConstants {
     public final static Integer DEBUG_LEVEL_DEFAULT                 = 0;
     public final static Integer DEBUG_LEVEL_MIMIC                   = 10;
     public final static Integer DEBUG_LEVEL_RENDERING               = 20;
-    public final static Integer DEBUG_LEVEL_EVENTS                  = 30;
+    public final static Integer DEBUG_LEVEL_MEMORY                  = 30;
+    public final static Integer DEBUG_LEVEL_EVENTS                  = 40;
 
     // --------------------- Components -----------------------------
     // Kernel

@@ -82,7 +82,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
 
     protected void setCellValue(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryCell aCell, Integer aValue) {
         InternalSetCellValue(aTransaction, aCell, aValue);
-        writeLog(10, String.format("Memory [%s] cell with address [%d,%d,%d] value %d stored.", getName(), aCell.getAddress().getPage(), aCell.getAddress().getBase(), aCell.getAddress().getOffset(), aValue));
+        writeLog(NGGameEngineConstants.DEBUG_LEVEL_MEMORY, String.format("Memory [%s] cell with address [%d,%d,%d] value %d stored.", getName(), aCell.getAddress().getPage(), aCell.getAddress().getBase(), aCell.getAddress().getOffset(), aValue));
     }
 
     protected void incCellValue(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryCell aCell) {
@@ -160,19 +160,19 @@ public class NGGameEngineMemory extends NGUniplayComponent {
             InternalSetCellValueByAddress(aTransaction, item.getAddress(), item.getValue().getInteger());
         }
         raiseCellsChangedEvent(aTransaction.getCells());
-        writeLog(10, String.format("%d cell(s) in Memory [%s] changed", aTransaction.getCells().size(), getName()));
+        writeLog(NGGameEngineConstants.DEBUG_LEVEL_MEMORY, String.format("%d cell(s) in Memory [%s] changed", aTransaction.getCells().size(), getName()));
     }
 
     public void setCellValue(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryCellValueItem aItem) {
         InternalSetCellValueByAddress(aTransaction, aItem.getAddress(), aItem.getValue().getInteger());
         raiseCellsChangedEvent(aTransaction.getCells());
-        writeLog(10, String.format("Cell in Memory [%s] changed", getName()));
+        writeLog(NGGameEngineConstants.DEBUG_LEVEL_MEMORY, String.format("Cell in Memory [%s] changed", getName()));
     }
 
     public void setCellValue(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryAddress aAddress, Integer aValue) {
         InternalSetCellValueByAddress(aTransaction, aAddress, aValue);
         raiseCellsChangedEvent(aTransaction.getCells());
-        writeLog(10, String.format("Cell in Memory [%s] changed", getName()));
+        writeLog(NGGameEngineConstants.DEBUG_LEVEL_MEMORY, String.format("Cell in Memory [%s] changed", getName()));
     }
 
     public void incAllCellsValue(NGGameEngineMemoryTransaction aTransaction) {
