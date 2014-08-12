@@ -12,7 +12,7 @@ public class NGControlMimicORBAction extends NGControlMimicSingleAction {
     protected NGObjectRequestMethod FObjectRequestMethod;
 
     protected void DoExecute() {
-        writeLog(NGGameEngineConstants.DEBUG_LEVEL_MIMIC, String.format("Mimic-ORB-Action [%s.%s] from executed.", FObjectRequestObject.getName(), FObjectRequestMethod.getName()));
+        writeLog(NGGameEngineConstants.DEBUG_LEVEL_MIMIC, String.format("Mimic-ORB-Action [%s.%s] executed.", FObjectRequestObject.getName(), FObjectRequestMethod.getName()));
     }
 
     protected NGUniplayObjectRequestBroker getObjectRequestBroker() {
