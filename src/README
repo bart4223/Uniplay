@@ -6,7 +6,7 @@ Files:
     .ulf    Uniplay Level File (xml)
 
 File config.ucf:
-    Debuglevel = Debugger level >0
+    Debuglevel = Debugger level >= 0 (No debug -1)
     ConsoleShowLogEntrySource = Show the source of log entry
     ConsoleShowLog = Show the log entries in console
     DefinitionFilename = definition filename for Uniplay engine
