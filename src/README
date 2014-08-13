@@ -5,8 +5,17 @@ Files:
     .ucf    Uniplay Configuration File (properties)
     .ulf    Uniplay Level File (xml)
 
-config.ucf:
+File config.ucf:
     Debuglevel = Debugger level >0
     ConsoleShowLogEntrySource = Show the source of log entry
     ConsoleShowLog = Show the log entries in console
     DefinitionFilename = definition filename for Uniplay engine
+
+Source Milestones:
+    01.05.14    Start implementation
+    27.05.14    First running kernel
+    07.06.14    Bender created
+    15.06.14    First level created
+    15.07.14    First level load in workbench
+    09.08.14    First start game with an level
+    11.08.14    First moving player
