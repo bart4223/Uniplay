@@ -31,6 +31,9 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
         writeLog(NGGameEngineConstants.DEBUG_LEVEL_DEFAULT, String.format("<<<WARNING>>> at [%s.%s] with exception [%s]!", getClass().getName(), aMethodName, aWarningText));
     }
 
+    protected void DoReset() {
+
+    }
 
     protected void DoActivate() {
 
@@ -87,6 +90,10 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
 
     public Boolean getActive() {
         return FActive;
+    }
+
+    public void reset() {
+        DoReset();
     }
 
 }

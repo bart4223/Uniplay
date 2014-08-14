@@ -51,6 +51,7 @@ public abstract class NGCustomGame extends NGUniplayObject {
     }
 
     protected void DoBeforeStart() {
+        ResetAllMimicActions();
     }
 
     protected void DoStart() {
@@ -70,7 +71,7 @@ public abstract class NGCustomGame extends NGUniplayObject {
     }
 
     protected void DoFinish() {
-
+        DeactivateAllMimicActions();
     }
 
     protected void registerMimicActions() {
@@ -79,6 +80,14 @@ public abstract class NGCustomGame extends NGUniplayObject {
 
     protected void ActivateAllMimicActions() {
         getMimicManager().ActivateAllMimics();
+    }
+
+    protected void DeactivateAllMimicActions() {
+        getMimicManager().DeactivateAllMimics();
+    }
+
+    protected void ResetAllMimicActions() {
+        getMimicManager().ResetAllMimics();
     }
 
     protected void DoInitialize() {

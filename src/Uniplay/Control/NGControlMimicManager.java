@@ -23,6 +23,10 @@ public class NGControlMimicManager extends NGUniplayComponent {
         return null;
     }
 
+    protected void resetMimic(NGControlMimicItem aMimic) {
+        aMimic.getMimic().reset();
+    }
+
     protected void ActivateMimic(NGControlMimicItem aMimic, Boolean aValue) {
         aMimic.getMimic().setActive(aValue);
         if (aValue) {
@@ -42,6 +46,12 @@ public class NGControlMimicManager extends NGUniplayComponent {
         NGControlMimicItem item = new NGControlMimicItem(aMimic);
         FMimics.add(item);
         return item;
+    }
+
+    public void ResetAllMimics() {
+        for (NGControlMimicItem item : FMimics) {
+            resetMimic(item);
+        }
     }
 
     public void ActivateAllMimics() {
@@ -64,6 +74,11 @@ public class NGControlMimicManager extends NGUniplayComponent {
     public void DeactivateMimic(String aName) {
         NGControlMimicItem item = getMimic(aName);
         ActivateMimic(item, false);
+    }
+
+    public void resetMimic(String aName) {
+        NGControlMimicItem item = getMimic(aName);
+        resetMimic(item);
     }
 
     public NGTaskManager getTaskManager() {
