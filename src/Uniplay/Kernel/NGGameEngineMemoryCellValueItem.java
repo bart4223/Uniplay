@@ -5,9 +5,9 @@ import Uniplay.Base.NGUniplayObject;
 public class NGGameEngineMemoryCellValueItem extends NGUniplayObject {
 
     protected NGGameEngineMemoryAddress FAddress;
-    protected NGGameEngineMemoryCellValue FValue;
+    protected NGGameEngineMemoryCustomCellValue FValue;
 
-    public NGGameEngineMemoryCellValueItem(NGGameEngineMemoryAddress aAddress, NGGameEngineMemoryCellValue aValue) {
+    public NGGameEngineMemoryCellValueItem(NGGameEngineMemoryAddress aAddress, NGGameEngineMemoryCustomCellValue aValue) {
         super();
         FAddress = aAddress;
         FValue = aValue;
@@ -17,7 +17,7 @@ public class NGGameEngineMemoryCellValueItem extends NGUniplayObject {
         return FAddress;
     }
 
-    public NGGameEngineMemoryCellValue getValue() {
+    public NGGameEngineMemoryCustomCellValue getValue() {
         return FValue;
     }
 
