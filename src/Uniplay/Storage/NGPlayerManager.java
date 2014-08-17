@@ -2,16 +2,18 @@ package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.NGGameEngineConstants;
 
 import java.util.ArrayList;
 
 public class NGPlayerManager extends NGUniplayComponent {
 
-    protected ArrayList<NGPlayer> FPlayers;
+    protected ArrayList<NGPlayerItem> FPlayers;
     protected NGPlayer FCurrentPlayer;
 
     protected NGPlayer getPlayer(String aName) {
-        for (NGPlayer player : FPlayers) {
+        for (NGPlayerItem item : FPlayers) {
+            NGPlayer player = item.getPlayer();
             if (player.getName().equals(aName)) {
                 return player;
             }
@@ -30,16 +32,35 @@ public class NGPlayerManager extends NGUniplayComponent {
         return FCurrentPlayer;
     }
 
+    @Override
+    protected void CreateSubComponents() {
+        super.CreateSubComponents();
+        NGUniplayComponent component = new NGPlayerStatisticManager(this, NGGameEngineConstants.CMP_PLAYER_STATISTIC_MANAGER);
+        addSubComponent(component);
+    }
+
+    protected NGPlayerStatisticManager getStatisticManager() {
+        return (NGPlayerStatisticManager)ResolveObject(NGGameEngineConstants.CMP_PLAYER_STATISTIC_MANAGER, NGPlayerStatisticManager.class);
+    }
+
     public NGPlayerManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
-        FPlayers = new ArrayList<NGPlayer>();
+        FPlayers = new ArrayList<NGPlayerItem>();
     }
 
     public NGPlayer newPlayer(String aName, String aNickname) {
         NGPlayer player = new NGPlayer(aName, aNickname);
-        FPlayers.add(player);
+        FPlayers.add(new NGPlayerItem(player));
         writeLog(String.format("Player %s[%s] added.", player.getName(), player.getNickname()));
         return player;
+    }
+
+    public NGPlayerStatisticItem addStatistic(NGCustomPlayerStatistic aStatistic) {
+        return getStatisticManager().addStatistic(aStatistic);
+    }
+
+    public NGCustomPlayerStatistic getStatistic(NGPlayer aPlayer, String aName) {
+        return getStatisticManager().getPlayerStatistic(aPlayer, aName);
     }
 
     public NGPlayer setCurrentPlayer(String aName) {
@@ -50,7 +71,7 @@ public class NGPlayerManager extends NGUniplayComponent {
         return FCurrentPlayer;
     }
 
-    public ArrayList<NGPlayer> getPlayers() {
+    public ArrayList<NGPlayerItem> getPlayers() {
         return FPlayers;
     }
 

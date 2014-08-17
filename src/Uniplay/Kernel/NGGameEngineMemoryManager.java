@@ -86,7 +86,7 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         super(aOwner, aName);
     }
 
-    public void addMemory(String aName, int aPageSize, int aBaseSize, int aOffsetSize) {
+    public void addMemory(String aName, Integer aPageSize, Integer aBaseSize, Integer aOffsetSize) {
         NGGameEngineMemory memory = newMemory(aName);
         NGGameEngineMemoryTransaction transaction = BeginTransaction(memory);
         try{
@@ -97,7 +97,7 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         }
     }
 
-    public void reallocateMemory(String aName, int aPageSize, int aBaseSize, int aOffsetSize) {
+    public void reallocateMemory(String aName, Integer aPageSize, Integer aBaseSize, Integer aOffsetSize) {
         NGGameEngineMemory memory = getMemory(aName);
         NGGameEngineMemoryTransaction transaction = BeginTransaction(memory);
         try{

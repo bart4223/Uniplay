@@ -2,7 +2,7 @@ package Uniplay.Storage;
 
 import Uniplay.Kernel.NGGameEngineMemoryAddress;
 
-public class NG2DGamePlayerItem extends NGGamePlayerItem {
+public class NG2DGamePlayerItem extends NGCustomGamePlayerItem {
 
     protected NG2DGamePlayerPosition FPosition;
     protected Integer FLayer;

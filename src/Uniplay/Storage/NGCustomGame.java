@@ -2,15 +2,18 @@ package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Control.NGControlMimicManager;
-import Uniplay.Control.NGControlMimicPeriodicAction;
 import Uniplay.Kernel.NGGameEngineMemoryManager;
 import Uniplay.NGGameEngineConstants;
 import Uniwork.Misc.NGLogManager;
+
+import java.util.ArrayList;
 
 public abstract class NGCustomGame extends NGUniplayObject {
 
     public enum State {Created, Initialized, Started, Hold, Finished};
 
+    protected ArrayList<NGCustomGamePlayerItem> FPlayers;
+    protected ArrayList<NGCustomGamePlayerItem> FNPCs;
     protected String FName;
     protected NGGameManager FManager;
     protected NGPlayerManager FPlayerManager;
@@ -55,10 +58,10 @@ public abstract class NGCustomGame extends NGUniplayObject {
     }
 
     protected void DoStart() {
-
     }
 
     protected void DoAfterStart() {
+        collectPlayerStatistic();
         ActivateAllMimicActions();
     }
 
@@ -72,6 +75,14 @@ public abstract class NGCustomGame extends NGUniplayObject {
 
     protected void DoFinish() {
         DeactivateAllMimicActions();
+    }
+
+    protected void collectPlayerStatistic() {
+        for (NGCustomGamePlayerItem item : FPlayers) {
+            NGPlayerGameStatistic statistic = getPlayerGameStatistic((NGPlayer)item.getPlayer());
+            statistic.incTotal();
+            writeLog(statistic.toString());
+        }
     }
 
     protected void registerMimicActions() {
@@ -94,8 +105,38 @@ public abstract class NGCustomGame extends NGUniplayObject {
         registerMimicActions();
     }
 
+    protected NGPlayerGameStatistic addPlayerGameStatistic(NGPlayer aPlayer) {
+        return (NGPlayerGameStatistic)FPlayerManager.addStatistic(new NGPlayerGameStatistic(aPlayer, getName())).getStatistic();
+    }
+
+    protected NGPlayerGameStatistic getPlayerGameStatistic(NGPlayer aPlayer) {
+        NGPlayerGameStatistic statistic = (NGPlayerGameStatistic)FPlayerManager.getStatistic(aPlayer, getName());
+        if (statistic == null) {
+            statistic = addPlayerGameStatistic(aPlayer);
+        }
+        return statistic;
+    }
+
+    protected void resetPlayers() {
+        for (NGCustomGamePlayerItem item : FPlayers) {
+            item.reset();
+        }
+    }
+
+    protected void addPlayerItem(NGCustomGamePlayerItem aPlayerItem) {
+        FPlayers.add(aPlayerItem);
+        writeLog(String.format("Player [%s] added in game [%s].", aPlayerItem.getPlayer().getName(), getName()));
+    }
+
+    protected void addNPCItem(NGCustomGamePlayerItem aPlayerItem) {
+        FNPCs.add(aPlayerItem);
+        writeLog(String.format("NPC [%s] added in game [%s].", aPlayerItem.getPlayer().getName(), getName()));
+    }
+
     public NGCustomGame(NGGameManager aManager, String aName) {
         super();
+        FPlayers = new ArrayList<NGCustomGamePlayerItem>();
+        FNPCs = new ArrayList<NGCustomGamePlayerItem>();
         FManager = aManager;
         FName = aName;
         FLogManager = null;
@@ -130,6 +171,22 @@ public abstract class NGCustomGame extends NGUniplayObject {
             FPlayerManager = (NGPlayerManager)ResolveObject(NGGameEngineConstants.CMP_PLAYER_MANAGER, NGPlayerManager.class);
         }
         return FPlayerManager;
+    }
+
+    public ArrayList<NGCustomGamePlayerItem> getPlayers() {
+        return FPlayers;
+    }
+
+    public ArrayList<NGCustomGamePlayerItem> getNPCs() {
+        return FNPCs;
+    }
+
+    public void removeAllPlayers() {
+        FPlayers.clear();
+    }
+
+    public void removeAllNPCs() {
+        FNPCs.clear();
     }
 
     public NGGameEngineMemoryManager getMemoryManager() {

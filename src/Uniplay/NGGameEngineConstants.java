@@ -25,6 +25,7 @@ public abstract class NGGameEngineConstants {
     // Data Storage
     public final static String CMP_2DLEVEL_MANAGER                  = "2DLevelManager";
     public final static String CMP_PLAYER_MANAGER                   = "PlayerManager";
+    public final static String CMP_PLAYER_STATISTIC_MANAGER         = "PlayerStatisticManager";
     public final static String CMP_GAME_MANAGER                     = "GameManager";
     // Control Center
     public final static String CMP_CONTROLMIMIC_MANAGER             = "ControlMimicManager";

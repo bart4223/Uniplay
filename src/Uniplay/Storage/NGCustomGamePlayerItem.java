@@ -2,13 +2,13 @@ package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayObject;
 
-public abstract class NGGamePlayerItem extends NGUniplayObject {
+public abstract class NGCustomGamePlayerItem extends NGUniplayObject {
 
     protected NGCustomPlayer FPlayer;
     protected Integer FMaxLives;
     protected Integer FCurrentLives;
 
-    public NGGamePlayerItem(NGCustomPlayer aPlayer, Integer aMaxLives) {
+    public NGCustomGamePlayerItem(NGCustomPlayer aPlayer, Integer aMaxLives) {
         super();
         FPlayer = aPlayer;
         FMaxLives = aMaxLives;
