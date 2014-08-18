@@ -9,7 +9,7 @@ public class NGTestModuleEventHandlerKernelInitialized extends NGGameEngineEvent
     @Override
     protected void DoHandleEvent() {
         super.DoHandleEvent();
-        FModule.addTestPlayers();
+        FModule.handleKernelInitialized();
     }
 
     public NGTestModuleEventHandlerKernelInitialized(NGTestModule aModule) {

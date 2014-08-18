@@ -2,6 +2,9 @@ package Uniplay.Misc;
 
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.NGGameEngineConstants;
+import Uniplay.Sound.NGMediaPlayerSoundItem;
+import Uniplay.Sound.NGSoundManager;
 import Uniwork.Visuals.NGDisplayController;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +32,7 @@ public class NGSplashManager extends NGUniplayComponent {
             lXMLLoader.load();
             FController = lXMLLoader.getController();
             FController.Manager = this;
+            FController.Initialize();
             Parent lRoot = lXMLLoader.getRoot();
             FStage.setTitle("Uniplay.Splash");
             FStage.setScene(new Scene(lRoot, 800, 600, Color.LIGHTGRAY));
@@ -61,6 +65,12 @@ public class NGSplashManager extends NGUniplayComponent {
         item.GeometryObjectColor = "#ff0000";
         item.Filename = "resources/splash/uniplay.gof";
         addItem(item);
+        NGSoundManager manager = getSoundManager();
+        manager.addSound(NGGameEngineConstants.SOUND_SPLASH_SOURCE, "resources/sound/source.mp3");
+    }
+
+    protected NGSoundManager getSoundManager() {
+        return (NGSoundManager)ResolveObject(NGGameEngineConstants.CMP_SOUND_MANAGER, NGSoundManager.class);
     }
 
     protected void addItem(NGSplashItem aItem) {
@@ -93,7 +103,7 @@ public class NGSplashManager extends NGUniplayComponent {
                                 sleep(splashitem.WaitTimeAfterFinish);
                             } catch (Exception e) {
                             }
-                            aSplashManager.closeStage();
+                            aSplashManager.Finish();
                         }
                     }
                 }
@@ -137,6 +147,11 @@ public class NGSplashManager extends NGUniplayComponent {
         DoRun();
     }
 
+    public void Finish() {
+        closeStage();
+        stopSound();
+    }
+
     public Boolean getFinished() {
         for (NGSplashItem item : FItems) {
             if (!item.getFinished())
@@ -160,10 +175,13 @@ public class NGSplashManager extends NGUniplayComponent {
     public Integer GridDistance;
 
     protected void playSound() {
-        // ToDo
-        //MediaPlayer mp = new MediaPlayer(new Media("file:///Users/Nils/IdeaProjects/Boulderdash/resources/sound/source.mp3"));
-        MediaPlayer mp = new MediaPlayer(new Media("file:///Users/Nils/IdeaProjects/Boulderdash/resources/sound/source.mp3"));
-        mp.play();
+        NGSoundManager manager = getSoundManager();
+        manager.playSound(NGGameEngineConstants.SOUND_SPLASH_SOURCE, NGMediaPlayerSoundItem.Mode.singular);
+    }
+
+    protected void stopSound() {
+        NGSoundManager manager = getSoundManager();
+        manager.stopSound(NGGameEngineConstants.SOUND_SPLASH_SOURCE);
     }
 
 }

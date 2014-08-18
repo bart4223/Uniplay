@@ -296,7 +296,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         FLogManager = new NGLogManager();
         FLogManager.addEventListener(this);
         FConfiguration = new Properties();
-        FShowSplash = false;
+        FShowSplash = true;
     }
 
     @Override

@@ -29,6 +29,8 @@ public abstract class NGGameEngineConstants {
     public final static String CMP_GAME_MANAGER                     = "GameManager";
     // Control Center
     public final static String CMP_CONTROLMIMIC_MANAGER             = "ControlMimicManager";
+    // Sound System
+    public final static String CMP_SOUND_MANAGER                    = "SoundManager";
     // Graphic Engine
     public final static String CMP_RENDERENGINE_MANAGER             = "RenderEngineManager";
     // Debugger
@@ -52,5 +54,9 @@ public abstract class NGGameEngineConstants {
     // Mimic
     public final static String MIMIC_OBJECTREQUESTMETHOD_DEFAULT    = "Execute";
     public final static String MIMIC_OBJECTREQUEST_ACTION_TEMPLATE  = "Mimic.Action.%s";
+
+    // --------------------- SOUNDS ---------------------------------
+    // Splash
+    public final static String SOUND_SPLASH_SOURCE                  = "Source";
 
 }

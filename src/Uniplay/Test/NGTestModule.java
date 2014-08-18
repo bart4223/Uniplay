@@ -2,7 +2,9 @@ package Uniplay.Test;
 
 import Uniplay.Kernel.*;
 import Uniplay.NGGameEngineConstants;
-import Uniplay.Storage.NGPlayer;
+import Uniplay.Sound.NGMediaPlayerSoundItem;
+import Uniplay.Sound.NGSoundItem;
+import Uniplay.Sound.NGSoundManager;
 import Uniplay.Storage.NGPlayerManager;
 import Uniwork.Base.NGObjectRequestRegistration;
 import Uniwork.Misc.NGTickEvent;
@@ -45,9 +47,28 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
         task.addListener(TICK_SPEEDTEST, this);
         //task.startPeriodicTask(TICK_SPEEDTEST, 200);
         //task.startSingularTask(new Callback(this), 1000);
-        NGObjectRequestRegistration orr = (NGObjectRequestRegistration)ResolveObject(NGObjectRequestRegistration.class);
-        orr.registerObjectRequest("TestModule", this, "Test", "incAllMainMemoryCells");
         */
+        NGObjectRequestRegistration orr = (NGObjectRequestRegistration)ResolveObject(NGObjectRequestRegistration.class);
+        orr.registerObjectRequest("TestModule", this, "Test", "stopAllSounds");
+    }
+
+    protected void addTestPlayers() {
+        NGPlayerManager manager = (NGPlayerManager)ResolveObject(NGGameEngineConstants.CMP_PLAYER_MANAGER, NGPlayerManager.class);
+        manager.newPlayer("BART4223", "Bart4223");
+        manager.newPlayer("SEPPI", "Seppi");
+        manager.newPlayer("XMEN", "XMen");
+        manager.newPlayer("SKYGENERATION", "Sky");
+        manager.setCurrentPlayer("BART4223");
+    }
+
+    protected void playSound() {
+        NGSoundManager manager = (NGSoundManager)ResolveObject(NGGameEngineConstants.CMP_SOUND_MANAGER, NGSoundManager.class);
+        if (manager != null) {
+            NGSoundItem item = manager.addSound("Source", "resources/sound/source.mp3");
+            manager.playSound(item, NGMediaPlayerSoundItem.Mode.singular);
+        }
+        else
+            writeLog("No sound manager available!");
     }
 
     public NGTestModule(NGGameEngineModuleManager aManager, String aName) {
@@ -67,13 +88,16 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
         manager.incAllMemoryCellsValue(NGGameEngineConstants.CMP_MAIN_MEMORY);
     }
 
-    public void addTestPlayers() {
-        NGPlayerManager manager = (NGPlayerManager)ResolveObject(NGGameEngineConstants.CMP_PLAYER_MANAGER, NGPlayerManager.class);
-        manager.newPlayer("BART4223", "Bart4223");
-        manager.newPlayer("SEPPI", "Seppi");
-        manager.newPlayer("XMEN", "XMen");
-        manager.newPlayer("SKYGENERATION", "Sky");
-        manager.setCurrentPlayer("BART4223");
+    public void stopAllSounds() {
+        NGSoundManager manager = (NGSoundManager)ResolveObject(NGGameEngineConstants.CMP_SOUND_MANAGER, NGSoundManager.class);
+        if (manager != null) {
+            manager.stopAllSounds();
+        }
+    }
+
+    public void handleKernelInitialized() {
+        addTestPlayers();
+        //playSound();
     }
 
 }
