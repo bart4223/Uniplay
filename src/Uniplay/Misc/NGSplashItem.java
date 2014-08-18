@@ -70,6 +70,10 @@ public class NGSplashItem extends NGUniplayObject {
 
     }
 
+    protected void DoFinish() {
+
+    }
+
     protected NGLogManager getLogManager() {
         return getManager().getLogManager();
     }
@@ -93,6 +97,10 @@ public class NGSplashItem extends NGUniplayObject {
 
     public void Initialize() {
         DoInitialize();
+    }
+
+    public void Finish() {
+        DoFinish();
     }
 
     public NGSplashManager getManager() {

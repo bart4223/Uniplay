@@ -91,7 +91,8 @@ public class NGSplashManager extends NGUniplayComponent {
                         runThread(aSplashManager, aIndex);
                     }
                     else {
-                        int index = aIndex + 1;
+                        aSplashManager.getItem(aIndex).Finish();
+                        Integer index = aIndex + 1;
                         if (aSplashManager.FItems.size() > index) {
                             splashitem = aSplashManager.getItem(index);
                             splashitem.InitRun();
