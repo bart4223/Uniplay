@@ -66,7 +66,9 @@ public class NGSplashManager extends NGUniplayComponent {
         item.Filename = "resources/splash/uniplay.gof";
         addItem(item);
         NGSoundManager manager = getSoundManager();
-        manager.addSound(NGGameEngineConstants.SOUND_SPLASH_SOURCE, "resources/sound/source.mp3");
+        if (manager != null) {
+            manager.addSound(NGGameEngineConstants.SOUND_SPLASH_SOURCE, "resources/sound/source.mp3");
+        }
     }
 
     protected NGSoundManager getSoundManager() {
@@ -144,13 +146,17 @@ public class NGSplashManager extends NGUniplayComponent {
     public void Run() {
         FController.RenderScene();
         showStage();
-        playSound();
+        if (getSoundManager() != null) {
+            playSound();
+        }
         DoRun();
     }
 
     public void Finish() {
         closeStage();
-        stopSound();
+        if (getSoundManager() != null) {
+            stopSound();
+        }
     }
 
     public Boolean getFinished() {

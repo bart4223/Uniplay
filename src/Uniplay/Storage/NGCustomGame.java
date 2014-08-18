@@ -4,6 +4,7 @@ import Uniplay.Base.NGUniplayObject;
 import Uniplay.Control.NGControlMimicManager;
 import Uniplay.Kernel.NGGameEngineMemoryManager;
 import Uniplay.NGGameEngineConstants;
+import Uniplay.Sound.NGSoundManager;
 import Uniwork.Misc.NGLogManager;
 
 import java.util.ArrayList;
@@ -131,6 +132,10 @@ public abstract class NGCustomGame extends NGUniplayObject {
     protected void addNPCItem(NGCustomGamePlayerItem aPlayerItem) {
         FNPCs.add(aPlayerItem);
         writeLog(String.format("NPC [%s] added in game [%s].", aPlayerItem.getPlayer().getName(), getName()));
+    }
+
+    protected NGSoundManager getSoundManager() {
+        return (NGSoundManager)ResolveObject(NGGameEngineConstants.CMP_SOUND_MANAGER, NGSoundManager.class);
     }
 
     public NGCustomGame(NGGameManager aManager, String aName) {

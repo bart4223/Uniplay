@@ -70,8 +70,11 @@ public class NGSoundManager extends NGUniplayComponent {
     }
 
     public void stopSound(String aName) {
-        NGMediaPlayerSoundItem item = getMediaPlayerSoundItem(aName);
-        stopSound(item);
+        for (NGMediaPlayerSoundItem item : FMediaPlayerItems) {
+            if (item.getSoundItem().getName().equals(aName)) {
+                stopSound(item);
+            }
+        }
     }
 
     public void stopAllSounds() {
