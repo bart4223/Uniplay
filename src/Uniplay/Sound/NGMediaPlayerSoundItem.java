@@ -66,4 +66,8 @@ public class NGMediaPlayerSoundItem extends NGUniplayObject {
         FMediaPlayer.stop();
     }
 
+    public MediaPlayer.Status getStatus() {
+        return FMediaPlayer.getStatus();
+    }
+
 }

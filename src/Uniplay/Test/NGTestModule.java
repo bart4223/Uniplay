@@ -49,7 +49,7 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
         //task.startSingularTask(new Callback(this), 1000);
         */
         NGObjectRequestRegistration orr = (NGObjectRequestRegistration)ResolveObject(NGObjectRequestRegistration.class);
-        orr.registerObjectRequest("TestModule", this, "Test", "stopAllSounds");
+        orr.registerObjectRequest("TestModule", this, "Test", "Test");
     }
 
     protected void addTestPlayers() {
@@ -81,6 +81,10 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
             NGGameEngineMemoryManager manager = (NGGameEngineMemoryManager)ResolveObject(NGGameEngineConstants.CMP_MEMORY_MANAGER, NGGameEngineMemoryManager.class);
             manager.incAllMemoryCellsValue(NGGameEngineConstants.CMP_MAIN_MEMORY);
         }
+    }
+
+    public void Test() {
+        stopAllSounds();
     }
 
     public void incAllMainMemoryCells() {

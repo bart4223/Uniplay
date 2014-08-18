@@ -2,6 +2,7 @@ package Uniplay.Sound;
 
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
+import javafx.scene.media.MediaPlayer;
 
 import java.util.ArrayList;
 
@@ -39,8 +40,10 @@ public class NGSoundManager extends NGUniplayComponent {
     }
 
     protected void stopSound(NGMediaPlayerSoundItem aItem) {
-        aItem.stop();
-        writeLog(String.format("Sound [%s] stop playing!", aItem.getSoundItem().getName()));
+        if (aItem.getStatus() == MediaPlayer.Status.PLAYING) {
+            aItem.stop();
+            writeLog(String.format("Sound [%s] stop playing!", aItem.getSoundItem().getName()));
+        }
     }
 
     public NGSoundManager(NGUniplayObject aOwner, String aName) {
