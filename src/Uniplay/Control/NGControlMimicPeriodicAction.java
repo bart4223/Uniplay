@@ -38,7 +38,11 @@ public abstract class NGControlMimicPeriodicAction extends NGCustomControlMimic 
     }
 
     public NGControlMimicPeriodicAction(NGControlMimicManager aManager, NGCustomGame aGame, String aName, Integer aInterval) {
-        super(aManager, aGame, aName);
+        this(aManager, aGame, aName, Kind.permant, aInterval);
+    }
+
+    public NGControlMimicPeriodicAction(NGControlMimicManager aManager, NGCustomGame aGame, String aName, Kind aKind, Integer aInterval) {
+        super(aManager, aGame, aName, aKind);
         addPeriodicTask(aInterval);
     }
 

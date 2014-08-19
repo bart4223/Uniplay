@@ -2,6 +2,7 @@ package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Control.NGControlMimicManager;
+import Uniplay.Control.NGCustomControlMimic;
 import Uniplay.Kernel.NGGameEngineMemoryManager;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Sound.NGSoundManager;
@@ -63,7 +64,7 @@ public abstract class NGCustomGame extends NGUniplayObject {
 
     protected void DoAfterStart() {
         collectPlayerStatistic();
-        ActivateAllMimicActions();
+        ActivateMimicActions(NGCustomControlMimic.Kind.permant);
     }
 
     protected void DoBreak() {
@@ -88,6 +89,10 @@ public abstract class NGCustomGame extends NGUniplayObject {
 
     protected void registerMimicActions() {
 
+    }
+
+    protected void ActivateMimicActions(NGCustomControlMimic.Kind aKind) {
+        getMimicManager().ActivateMimics(aKind);
     }
 
     protected void ActivateAllMimicActions() {

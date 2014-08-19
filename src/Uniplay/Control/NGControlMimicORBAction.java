@@ -30,7 +30,7 @@ public class NGControlMimicORBAction extends NGControlMimicSingleAction {
     }
 
     public NGControlMimicORBAction(NGControlMimicManager aManager, NGCustomGame aGame, String aName) {
-        super(aManager, aGame, aName);
+        super(aManager, aGame, aName, Kind.permant);
         registerObject();
     }
 

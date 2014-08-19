@@ -7,11 +7,14 @@ import Uniwork.Misc.NGLogManager;
 
 public abstract class NGCustomControlMimic extends NGUniplayObject {
 
+    public enum Kind {permant, temporary};
+
     protected String FName;
     protected Boolean FActive;
     protected NGControlMimicManager FManager;
     protected NGLogManager FLogManager;
     protected NGCustomGame FGame;
+    protected Kind FKind;
 
     protected void writeLog(String aText) {
         writeLog(0, aText);
@@ -51,7 +54,7 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
         DoDeactivate();
     }
 
-    public NGCustomControlMimic(NGControlMimicManager aManager, NGCustomGame aGame, String aName) {
+    public NGCustomControlMimic(NGControlMimicManager aManager, NGCustomGame aGame, String aName, Kind aKind) {
         super();
         FManager = aManager;
         FGame = aGame;
@@ -59,6 +62,7 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
             FLogManager = FManager.getLogManager();
         }
         FName = aName;
+        FKind = aKind;
         FActive = false;
     }
 
@@ -94,6 +98,10 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
 
     public void reset() {
         DoReset();
+    }
+
+    public Kind getKind() {
+        return FKind;
     }
 
 }

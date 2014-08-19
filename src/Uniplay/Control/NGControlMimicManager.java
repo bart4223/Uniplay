@@ -28,12 +28,18 @@ public class NGControlMimicManager extends NGUniplayComponent {
     }
 
     protected void ActivateMimic(NGControlMimicItem aMimic, Boolean aValue) {
-        aMimic.getMimic().setActive(aValue);
-        if (aValue) {
-            writeLog(String.format("Mimic [%s] activated.", aMimic.getMimic().getName()));
-        }
-        else {
-            writeLog(String.format("Mimic [%s] deactivated.", aMimic.getMimic().getName()));
+        ActivateMimic(aMimic.getMimic().getKind(), aMimic, aValue);
+    }
+
+    protected void ActivateMimic(NGCustomControlMimic.Kind aKind, NGControlMimicItem aMimic, Boolean aValue) {
+        if (aMimic.getMimic().getKind() == aKind) {
+            aMimic.getMimic().setActive(aValue);
+            if (aValue) {
+                writeLog(String.format("Mimic [%s] activated.", aMimic.getMimic().getName()));
+            }
+            else {
+                writeLog(String.format("Mimic [%s] deactivated.", aMimic.getMimic().getName()));
+            }
         }
     }
 
@@ -54,9 +60,21 @@ public class NGControlMimicManager extends NGUniplayComponent {
         }
     }
 
+    public void ActivateMimics(NGCustomControlMimic.Kind aKind) {
+        for (NGControlMimicItem item : FMimics) {
+            ActivateMimic(aKind, item, true);
+        }
+    }
+
     public void ActivateAllMimics() {
         for (NGControlMimicItem item : FMimics) {
             ActivateMimic(item, true);
+        }
+    }
+
+    public void DeactivateMimics(NGCustomControlMimic.Kind aKind) {
+        for (NGControlMimicItem item : FMimics) {
+            ActivateMimic(aKind, item, false);
         }
     }
 
