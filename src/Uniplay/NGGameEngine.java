@@ -155,11 +155,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     }
 
     @Override
-    protected void BeforeInitialize() {
-        super.BeforeInitialize();
-    }
-
-    @Override
     protected void DoInitialize() {
         writeLog("Start Uniplay engine initialization...");
         super.DoInitialize();
@@ -203,6 +198,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
         NGUniplayComponent component = new NGGameEngineEventManager(this, NGGameEngineConstants.CMP_EVENT_MANAGER);
         addSubComponent(component);
         addEventListener(component);
+        writeLog(String.format("%s created.", component.getName()));
         component = new NGGameEngineMemoryManager(this, NGGameEngineConstants.CMP_MEMORY_MANAGER);
         addSubComponent(component);
         writeLog(String.format("%s created.", component.getName()));
