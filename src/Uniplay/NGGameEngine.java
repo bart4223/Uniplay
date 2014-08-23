@@ -157,8 +157,6 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     @Override
     protected void BeforeInitialize() {
         super.BeforeInitialize();
-        NGUniplayComponent manager = getMemoryManager();
-        manager.addEventListener(this);
     }
 
     @Override
@@ -202,7 +200,10 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected void CreateSubComponents() {
         super.CreateSubComponents();
         writeLog(String.format("Start creation of %s sub components...", getName()));
-        NGUniplayComponent component = new NGGameEngineMemoryManager(this, NGGameEngineConstants.CMP_MEMORY_MANAGER);
+        NGUniplayComponent component = new NGGameEngineEventManager(this, NGGameEngineConstants.CMP_EVENT_MANAGER);
+        addSubComponent(component);
+        addEventListener(component);
+        component = new NGGameEngineMemoryManager(this, NGGameEngineConstants.CMP_MEMORY_MANAGER);
         addSubComponent(component);
         writeLog(String.format("%s created.", component.getName()));
         component = new NGGameEngineModuleManager(this, NGGameEngineConstants.CMP_MODULE_MANAGER);
@@ -270,6 +271,10 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
 
     protected NGSplashManager getSplashManager() {
         return (NGSplashManager)getSubComponent(NGGameEngineConstants.CMP_SPLASH_MANAGER);
+    }
+
+    protected NGGameEngineEventManager getEventManager() {
+        return (NGGameEngineEventManager)getSubComponent(NGGameEngineConstants.CMP_EVENT_MANAGER);
     }
 
     protected NGUniplayRegisteredObjectItem getRegisteredComponentItem(String aName) {

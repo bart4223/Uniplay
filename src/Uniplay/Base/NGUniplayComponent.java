@@ -55,10 +55,6 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     }
 
     protected void DoHandleEvent(String name, NGGameEngineEvent e) {
-        for (NGGameEngineEventListener listener : FEventListeners) {
-            if (!e.getSource().equals(this))
-                listener.handleEvent(this, name, e);
-        }
     }
 
     protected void BeforeInitialize() {
@@ -77,7 +73,6 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     }
 
     protected void AfterInitialize() {
-
     }
 
     protected void DoInitialize() {
@@ -157,6 +152,9 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
 
     protected void addSubComponent(NGUniplayComponent aComponent) {
         aComponent.setLogManager(FLogManager);
+        for (NGGameEngineEventListener listener : FEventListeners) {
+            aComponent.addEventListener(listener);
+        }
         FSubComponents.add(aComponent);
     }
 

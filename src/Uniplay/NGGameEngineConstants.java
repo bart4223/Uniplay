@@ -18,24 +18,31 @@ public abstract class NGGameEngineConstants {
     public final static String CMP_MODULE_MANAGER                   = "ModuleManager";
     public final static String CMP_TASK_MANAGER                     = "TaskManager";
     public final static String CMP_SPLASH_MANAGER                   = "SplashManager";
+    public final static String CMP_EVENT_MANAGER                    = "EventManager";
     public final static String CMP_MEMORY_MANAGER                   = "MemoryManager";
     public final static String CMP_MEMORY_TRANSACTION_MANAGER       = "MemoryTransactionManager";
     public final static String CMP_MEMORY                           = "Memory";
     public final static String CMP_MAIN_MEMORY                      = "Main";
     // Data Storage
+    public final static String CMP_STORAGE                          = "Storage";
     public final static String CMP_2DLEVEL_MANAGER                  = "2DLevelManager";
     public final static String CMP_PLAYER_MANAGER                   = "PlayerManager";
     public final static String CMP_PLAYER_STATISTIC_MANAGER         = "PlayerStatisticManager";
     public final static String CMP_GAME_MANAGER                     = "GameManager";
+    public final static String CMP_2DGAME                           = "2DGame";
     // Control Center
+    public final static String CMP_CONTROL                          = "Control";
     public final static String CMP_CONTROLMIMIC_MANAGER             = "ControlMimicManager";
     // Sound System
+    public final static String CMP_SOUND                            = "Sound";
     public final static String CMP_SOUND_MANAGER                    = "SoundManager";
     // Graphic Engine
+    public final static String CMP_GRAPHIC                          = "Graphic";
     public final static String CMP_RENDERENGINE_MANAGER             = "RenderEngineManager";
     // Debugger
     public final static String CMP_CONSOLE                          = "Console";
     // Workbench
+    public final static String CMP_WORKBENCH                        = "Workbench";
     public final static String CMP_WORKBENCH_MANAGER                = "WorkbenchManager";
     public final static String CMP_WORKBENCH_LEVELDESIGNER_MANAGER  = "LevelDesignerManager";
     public final static String CMP_WORKBENCH_LEVELDESIGNER          = "LevelDesigner";
@@ -49,6 +56,8 @@ public abstract class NGGameEngineConstants {
     // Memory
     public final static String EVT_MEMORY_ALLOCATED                 = String.format("%s.%s", CMP_MEMORY, "Allocated");
     public final static String EVT_MEMORY_CELLS_CHANGED             = String.format("%s.%s.%s", CMP_MEMORY, "Cells", "Changed");
+    // Storage
+    public final static String EVT_2DGAME_PLAYER_POSITION_CHANGED   = String.format("%s.%s.%s.%s", CMP_2DGAME, "Player", "Position","Changed");
 
     // --------------------- ORB ------------------------------------
     // Mimic

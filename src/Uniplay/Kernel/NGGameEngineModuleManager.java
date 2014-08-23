@@ -9,7 +9,6 @@ public class NGGameEngineModuleManager extends NGUniplayComponent {
     protected ArrayList<NGGameEngineModule> FModules;
 
     protected void removeModule(NGGameEngineModule aModule) {
-        aModule.removeEventListener(this);
         FModules.remove(aModule);
         writeLog(String.format("Module [%s] removed.", aModule.getName()));
     }
@@ -17,6 +16,9 @@ public class NGGameEngineModuleManager extends NGUniplayComponent {
     protected void addModule(NGGameEngineModule aModule) {
         aModule.setLogManager(FLogManager);
         FModules.add(aModule);
+        for (NGGameEngineEventListener listener : FEventListeners) {
+            aModule.addEventListener(listener);
+        }
         writeLog(String.format("Module [%s] added.", aModule.getName()));
     }
 
@@ -71,9 +73,6 @@ public class NGGameEngineModuleManager extends NGUniplayComponent {
 
     public NGGameEngineModuleManager(NGUniplayComponent aOwner, String aName) {
         super(aOwner, aName);
-        if (aOwner != null) {
-            aOwner.addEventListener(this);
-        }
         FModules = new ArrayList<NGGameEngineModule>();
     }
 

@@ -3,6 +3,7 @@ package Uniplay.Kernel;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObjectRegistration;
 import Uniplay.NGGameEngine;
+import Uniplay.NGGameEngineConstants;
 import Uniwork.Base.NGObjectXMLDeserializerFile;
 import Uniwork.Misc.NGLogManager;
 
@@ -10,7 +11,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
-public abstract class NGGameEngineModule extends NGUniplayComponent implements NGGameEngineEventHandlerRegistration, NGUniplayObjectRegistration {
+public class NGGameEngineModule extends NGUniplayComponent implements NGGameEngineEventHandlerRegistration, NGUniplayObjectRegistration {
 
     protected NGGameEngineModuleManager FManager;
     protected String FCaption;
@@ -67,13 +68,6 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
     }
 
     @Override
-    protected void CreateSubComponents() {
-        super.CreateSubComponents();
-        NGUniplayComponent component = new NGGameEngineEventHandlerManager(this, getEventHandlerManagerName());
-        addSubComponent(component);
-    }
-
-    @Override
     protected void LoadConfiguration() {
         super.LoadConfiguration();
         if (FConfigurationFilename.length() > 0) {
@@ -101,21 +95,14 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
         }
     }
 
-    protected String getEventHandlerManagerName() {
-        return String.format("EventHandler%s", FName);
-    }
-
-    protected NGGameEngineEventHandlerManager getEventHandlerManager() {
-        return (NGGameEngineEventHandlerManager)getSubComponent(getEventHandlerManagerName());
+    protected NGGameEngineEventManager getEventManager() {
+        return (NGGameEngineEventManager)DoResolveObject(NGGameEngineConstants.CMP_EVENT_MANAGER, NGGameEngineEventManager.class);
     }
 
     public NGGameEngineModule(NGGameEngineModuleManager aManager, String aName) {
         super(aManager, aName);
         FConfiguration = new Properties();
         FManager = aManager;
-        if (FManager != null) {
-            FManager.addEventListener(this);
-        }
         FCaption = "";
         FDefinitionFilename = "";
         FConfigurationFilename = "";
@@ -131,14 +118,6 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
 
     public String getCaption() {
         return FCaption;
-    }
-
-    public void setLogManager(NGLogManager aLogManager) {
-        super.setLogManager(aLogManager);
-        NGUniplayComponent component = getEventHandlerManager();
-        if (component != null) {
-            component.setLogManager(aLogManager);
-        }
     }
 
     public void setConfigurationFilename(String aFilename) {
@@ -162,18 +141,6 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
     }
 
     @Override
-    public void registerEventHandler(NGGameEngineEventHandler aHandler) {
-        NGGameEngineEventHandlerManager component = (NGGameEngineEventHandlerManager)getSubComponent(getEventHandlerManagerName());
-        component.addHandler(aHandler);
-    }
-
-    @Override
-    public void unregisterEventHandler(NGGameEngineEventHandler aHandler) {
-        NGGameEngineEventHandlerManager component = (NGGameEngineEventHandlerManager)getSubComponent(getEventHandlerManagerName());
-        component.removeHandler(aHandler);
-    }
-
-    @Override
     public void registerObject(String aName, Object aObject) {
         NGGameEngine ge = (NGGameEngine)ResolveObject(NGGameEngine.class);
         ge.registerObject(aName, aObject);
@@ -183,6 +150,16 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
     public void unregisterObject(String aName, Object aObject) {
         NGGameEngine ge = (NGGameEngine)ResolveObject(NGGameEngine.class);
         ge.unregisterObject(aName, aObject);
+    }
+
+    @Override
+    public void registerEventHandler(NGGameEngineEventHandler aHandler) {
+        getEventManager().registerEventHandler(aHandler);
+    }
+
+    @Override
+    public void unregisterEventHandler(NGGameEngineEventHandler aHandler) {
+        getEventManager().unregisterEventHandler(aHandler);
     }
 
 }

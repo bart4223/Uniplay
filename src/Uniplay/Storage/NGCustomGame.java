@@ -1,5 +1,6 @@
 package Uniplay.Storage;
 
+import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Control.NGControlMimicManager;
 import Uniplay.Control.NGCustomControlMimic;
@@ -10,40 +11,20 @@ import Uniwork.Misc.NGLogManager;
 
 import java.util.ArrayList;
 
-public abstract class NGCustomGame extends NGUniplayObject {
+public abstract class NGCustomGame extends NGUniplayComponent {
 
     public enum State {Created, Initialized, Started, Hold, Finished};
 
     protected ArrayList<NGCustomGamePlayerItem> FPlayers;
     protected ArrayList<NGCustomGamePlayerItem> FNPCs;
-    protected String FName;
     protected NGGameManager FManager;
     protected NGPlayerManager FPlayerManager;
     protected NGGameEngineMemoryManager FMemoryManager;
     protected NGControlMimicManager FMimicManager;
-    protected NGLogManager FLogManager;
     protected State FState;
 
     protected void DoShowStages() {
 
-    }
-
-    protected void writeLog(String aText) {
-        writeLog(0, aText);
-    }
-
-    protected void writeLog(int aLogLevel, String aText) {
-        if (FLogManager != null) {
-            FLogManager.writeLog(aLogLevel, aText, getClass().getName());
-        }
-    }
-
-    protected void writeError(String aMethodName, String aErrorText) {
-        writeLog(0, String.format("<<<ERROR>>> at [%s.%s] with exception [%s]!", getClass().getName(), aMethodName, aErrorText));
-    }
-
-    protected void writeWarning(String aMethodName, String aWarningText) {
-        writeLog(0, String.format("<<<WARNING>>> at [%s.%s] with exception [%s]!", getClass().getName(), aMethodName, aWarningText));
     }
 
     @Override
@@ -107,7 +88,9 @@ public abstract class NGCustomGame extends NGUniplayObject {
         getMimicManager().ResetAllMimics();
     }
 
+    @Override
     protected void DoInitialize() {
+        super.DoInitialize();
         registerMimicActions();
     }
 
@@ -144,36 +127,23 @@ public abstract class NGCustomGame extends NGUniplayObject {
     }
 
     public NGCustomGame(NGGameManager aManager, String aName) {
-        super();
+        super(aManager, aName);
         FPlayers = new ArrayList<NGCustomGamePlayerItem>();
         FNPCs = new ArrayList<NGCustomGamePlayerItem>();
         FManager = aManager;
-        FName = aName;
-        FLogManager = null;
         FPlayerManager = null;
         FState = State.Created;
         getMemoryManager().addMemory(getMemoryName(), 0, 0, 0);
     }
 
+    @Override
     public void Initialize() {
-        DoInitialize();
+        super.Initialize();
         FState = State.Initialized;
     }
 
     public NGGameManager getManager() {
         return FManager;
-    }
-
-    public String getName() {
-        return FName;
-    }
-
-    public void setLogManager(NGLogManager aLogManager) {
-        FLogManager = aLogManager;
-    }
-
-    public NGLogManager getLogManager() {
-        return FLogManager;
     }
 
     public NGPlayerManager getPlayerManager() {

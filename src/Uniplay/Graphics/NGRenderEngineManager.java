@@ -9,39 +9,57 @@ import java.util.ArrayList;
 
 public class NGRenderEngineManager extends NGUniplayComponent {
 
-    protected ArrayList<NGRenderEngineItem> FRenderEngines;
+    protected ArrayList<NGCustomRenderEngineItem> FRenderEngines;
+
+    protected void DoInitializeRenderEngines() {
+        for (NGCustomRenderEngineItem item : FRenderEngines) {
+            item.Initialize();
+        }
+    }
+
+    protected Integer DoRender(NGGraphicEngineRenderContext aContext, NGRenderEngine aRenderEngine, Integer aLayerIndex) {
+        Integer count = 0;
+        for (NGGameEngineMemoryCell cell : aContext.FCells) {
+            if (aLayerIndex == cell.getAddress().getPage()) {
+                aRenderEngine.Cell = cell;
+                aRenderEngine.Render();
+                count++;
+            }
+        }
+        return count;
+    }
+
+    protected void DoRender(NGGraphicEngineRenderContext aContext) {
+        Integer count = 0;
+        writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render cells [%d] started...", aContext.getCells().size()));
+        for (NGCustomRenderEngineItem item : FRenderEngines) {
+            NGRenderEngine renderengine = item.getRenderEngine();
+            count = count + DoRender(aContext, renderengine, item.getLayerIndex());
+        }
+        writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render cells [%d] finished.", count));
+    }
 
     @Override
     protected void DoInitialize() {
         super.DoInitialize();
-        for (NGRenderEngineItem item : FRenderEngines) {
-            item.getRenderEngine().Initialize();
-        }
+        DoInitializeRenderEngines();
     }
 
     public NGRenderEngineManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
-        FRenderEngines = new ArrayList<NGRenderEngineItem>();
+        FRenderEngines = new ArrayList<NGCustomRenderEngineItem>();
     }
 
-    public void addItem(NGRenderEngineItem aItem) {
+    public void addItem(NG2DRenderEngineItem aItem) {
         FRenderEngines.add(aItem);
     }
 
     public void Render(NGGraphicEngineRenderContext aContext) {
-        int i = 0;
-        writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render cells [%d] started...", aContext.getCells().size()));
-        for (NGRenderEngineItem item : FRenderEngines) {
-            NGRenderEngine renderengine = item.getRenderEngine();
-            for (NGGameEngineMemoryCell cell : aContext.FCells) {
-                if (item.getLayerIndex() == cell.getAddress().getPage()) {
-                    renderengine.Cell = cell;
-                    renderengine.Render();
-                    i++;
-                }
-            }
-        }
-        writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render cells [%d] finished.", i));
+        DoRender(aContext);
+    }
+
+    public ArrayList<NGCustomRenderEngineItem> getItems() {
+        return FRenderEngines;
     }
 
 }
