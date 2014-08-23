@@ -1,13 +1,11 @@
 package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayComponent;
-import Uniplay.Base.NGUniplayObject;
 import Uniplay.Control.NGControlMimicManager;
 import Uniplay.Control.NGCustomControlMimic;
 import Uniplay.Kernel.NGGameEngineMemoryManager;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Sound.NGSoundManager;
-import Uniwork.Misc.NGLogManager;
 
 import java.util.ArrayList;
 
@@ -41,6 +39,7 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     }
 
     protected void DoStart() {
+
     }
 
     protected void DoAfterStart() {

@@ -15,6 +15,7 @@ public class NG2DRenderEngineItem extends NGCustomRenderEngineItem {
 
     public void setViewPosition(double aX, double aY) {
         NGDisplayController dc = FRenderEngine.getController("DEFAULT");
+        // ToDo
         //FView.setPosition(aX * dc.getWidth(), aY * dc.getHeight());
         FView.setPosition(aX, aY);
     }
