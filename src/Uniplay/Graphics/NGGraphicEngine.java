@@ -1,6 +1,8 @@
 package Uniplay.Graphics;
 
 import Uniplay.Base.NGUniplayComponent;
+import Uniplay.Base.NGUniplayObjectDefinition;
+import Uniplay.Kernel.NGGameEngineEventHandler;
 import Uniplay.Kernel.NGGameEngineMemoryManager;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineModule;
@@ -9,6 +11,8 @@ import Uniwork.Base.NGSerializePropertyItem;
 import Uniwork.Visuals.NGDisplayController;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
+
+import java.lang.reflect.Constructor;
 
 public abstract class NGGraphicEngine extends NGGameEngineModule {
 
@@ -37,7 +41,23 @@ public abstract class NGGraphicEngine extends NGGameEngineModule {
     @Override
     protected void registerEventHandlers() {
         super.registerEventHandlers();
-        registerEventHandler(new NGGraphicEngineEventHandlerMemoryCellsChanged(this));
+        for (NGGraphicEngineDefinitionEventHandlerItem item : Definition.getEventHandlers()) {
+            if (!item.Created) {
+                try {
+                    Class cl = NGUniplayObjectDefinition.class.getClassLoader().loadClass(item.getClassname());
+                    Constructor<NGGameEngineEventHandler> cobj = cl.getConstructor(NGGraphicEngine.class);
+                    if (cobj != null) {
+                        NGGameEngineEventHandler obj = cobj.newInstance(this);
+                        item.Created = obj != null;
+                        if (item.Created) {
+                            registerEventHandler(obj);
+                        }
+                    }
+                } catch (Exception e) {
+                    writeError("registerEventHandlers", e.getMessage());
+                }
+            }
+        }
     }
 
     @Override
