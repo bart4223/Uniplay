@@ -1,6 +1,7 @@
 package Uniplay.Graphics;
 
 import Uniplay.Base.NGUniplayComponent;
+import Uniplay.Kernel.NGGameEngineMemoryManager;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineModule;
 import Uniplay.Kernel.NGGameEngineModuleManager;
@@ -23,6 +24,14 @@ public abstract class NGGraphicEngine extends NGGameEngineModule {
     protected void DoRender(NGGraphicEngineRenderContext aContext) {
         NGRenderEngineManager manager = getRenderEngineManager();
         renderThread(manager, aContext);
+    }
+
+    protected void DoRefresh() {
+        getMemoryManager().Invalidate(NGGameEngineConstants.CMP_MAIN_MEMORY);
+    }
+
+    protected NGGameEngineMemoryManager getMemoryManager() {
+        return (NGGameEngineMemoryManager)ResolveObject(NGGameEngineConstants.CMP_MEMORY_MANAGER, NGGameEngineMemoryManager.class);
     }
 
     @Override
@@ -83,6 +92,10 @@ public abstract class NGGraphicEngine extends NGGameEngineModule {
 
     public void Render(NGGraphicEngineRenderContext aContext) {
         DoRender(aContext);
+    }
+
+    public void Refesh() {
+        DoRefresh();
     }
 
 }

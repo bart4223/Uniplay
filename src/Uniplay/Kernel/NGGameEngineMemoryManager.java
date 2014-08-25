@@ -19,7 +19,6 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
     }
 
     protected void addMemory(NGGameEngineMemory aMemory, NGGameEngineMemoryTransaction aTransaction, int aPageSize, int aBaseSize, int aOffsetSize) {
-        aMemory.addEventListener(this);
         addSubComponent(aMemory);
         writeLog(String.format("Memory [%s] added.", aMemory.getName()));
         reallocateMemory(aMemory, aTransaction, aPageSize, aBaseSize, aOffsetSize);
@@ -49,10 +48,6 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         getTransactionManager().EndTransaction(aTransaction);
     }
 
-    protected NGGameEngineMemory getMemory(String aName) {
-        return (NGGameEngineMemory)getSubComponent(aName);
-    }
-
     @Override
     protected void BeforeInitialize() {
         writeLog("Start memory manager initialization...");
@@ -80,6 +75,10 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
 
     protected NGGameEngineMemoryTransactionManager getTransactionManager() {
         return (NGGameEngineMemoryTransactionManager)getSubComponent(NGGameEngineConstants.CMP_MEMORY_TRANSACTION_MANAGER);
+    }
+
+    protected NGGameEngineMemory getMemory(String aName) {
+        return (NGGameEngineMemory)getSubComponent(aName);
     }
 
     public NGGameEngineMemoryManager(NGUniplayComponent aOwner, String aName) {
@@ -155,6 +154,17 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
     public Integer getCellValueAsInteger(String aName, NGGameEngineMemoryAddress aAddress) {
         NGGameEngineMemory memory = getMemory(aName);
         return memory.getCellValueAsInteger(aAddress);
+    }
+
+    public void Invalidate(String aName) {
+        NGGameEngineMemory memory = getMemory(aName);
+        NGGameEngineMemoryTransaction transaction = BeginTransaction(memory);
+        try{
+            memory.Invalidate();
+        }
+        finally {
+            EndTransaction(transaction);
+        }
     }
 
 }

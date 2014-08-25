@@ -62,4 +62,14 @@ public class NGRenderEngineManager extends NGUniplayComponent {
         return FRenderEngines;
     }
 
+    public NGRenderEngine getRenderEngine(String aName) {
+        for(NGCustomRenderEngineItem item : FRenderEngines) {
+            NGRenderEngine re = item.getRenderEngine();
+            if (re.getName().equals(aName)) {
+                return re;
+            }
+        }
+        return null;
+    }
+
 }

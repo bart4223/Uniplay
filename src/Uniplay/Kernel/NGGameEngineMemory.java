@@ -186,4 +186,8 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         return FManager;
     }
 
+    public void Invalidate() {
+        raiseCellsChangedEvent(FCells);
+    }
+
 }

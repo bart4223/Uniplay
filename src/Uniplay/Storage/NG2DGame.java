@@ -83,7 +83,7 @@ public class NG2DGame extends NGCustomGame {
     }
 
     protected void reallocateLevelMemory(NG2DLevel aLevel) {
-        getMemoryManager().reallocateMemory(getMemoryName(), 1, (int)aLevel.getGameFieldSize().getWidth(), (int)aLevel.getGameFieldSize().getHeight());
+        getMemoryManager().reallocateMemory(getMemoryName(), 1, (int)aLevel.getGameFieldSize().getHeight(), (int)aLevel.getGameFieldSize().getWidth());
     }
 
     protected void loadLevelToMemory(NG2DLevel aLevel, NG2DGameFieldLayer aLayer) {

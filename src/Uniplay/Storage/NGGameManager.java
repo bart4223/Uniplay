@@ -2,7 +2,6 @@ package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
-import Uniplay.Kernel.NGGameEngineEventListener;
 
 import java.util.ArrayList;
 
@@ -12,10 +11,8 @@ public class NGGameManager extends NGUniplayComponent {
 
     protected void addGame(NGCustomGame aGame) {
         aGame.setLogManager(getLogManager());
+        bindEventListernerTo(aGame);
         aGame.Initialize();
-        for (NGGameEngineEventListener listener : FEventListeners) {
-            aGame.addEventListener(listener);
-        }
         FGames.add(aGame);
     }
 

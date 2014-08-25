@@ -5,13 +5,12 @@ import Uniplay.Base.NGUniplayObjectRegistration;
 import Uniplay.NGGameEngine;
 import Uniplay.NGGameEngineConstants;
 import Uniwork.Base.NGObjectXMLDeserializerFile;
-import Uniwork.Misc.NGLogManager;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class NGGameEngineModule extends NGUniplayComponent implements NGGameEngineEventHandlerRegistration, NGUniplayObjectRegistration {
+public abstract class NGGameEngineModule extends NGUniplayComponent implements NGGameEngineEventHandlerRegistration, NGUniplayObjectRegistration {
 
     protected NGGameEngineModuleManager FManager;
     protected String FCaption;

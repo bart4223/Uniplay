@@ -150,11 +150,15 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
 
     }
 
-    protected void addSubComponent(NGUniplayComponent aComponent) {
-        aComponent.setLogManager(FLogManager);
+    protected void bindEventListernerTo(NGUniplayComponent aComponent) {
         for (NGGameEngineEventListener listener : FEventListeners) {
             aComponent.addEventListener(listener);
         }
+    }
+
+    protected void addSubComponent(NGUniplayComponent aComponent) {
+        aComponent.setLogManager(FLogManager);
+        bindEventListernerTo(aComponent);
         FSubComponents.add(aComponent);
     }
 
