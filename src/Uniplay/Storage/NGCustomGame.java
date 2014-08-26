@@ -3,6 +3,8 @@ package Uniplay.Storage;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Control.NGControlMimicManager;
 import Uniplay.Control.NGCustomControlMimic;
+import Uniplay.Kernel.NGGameEngineMemoryCustomCellValue;
+import Uniplay.Kernel.NGGameEngineMemoryIntegerCellValue;
 import Uniplay.Kernel.NGGameEngineMemoryManager;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Sound.NGSoundManager;
@@ -132,7 +134,7 @@ public abstract class NGCustomGame extends NGUniplayComponent {
         FManager = aManager;
         FPlayerManager = null;
         FState = State.Created;
-        getMemoryManager().addMemory(getMemoryName(), 0, 0, 0);
+        getMemoryManager().addMemory(getMemoryName(), 0, 0, 0, NGGameEngineMemoryIntegerCellValue.class);
     }
 
     @Override

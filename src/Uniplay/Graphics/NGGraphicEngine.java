@@ -54,7 +54,6 @@ public abstract class NGGraphicEngine extends NGGameEngineModule {
                         }
                     }
                 } catch (Exception e) {
-                    writeError("registerEventHandlers", e.getMessage());
                 }
             }
         }

@@ -2,6 +2,7 @@ package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
+import Uniplay.Kernel.NGGameEngineMemoryCustomCellValue;
 import Uniwork.Base.NGPropertyList;
 
 import java.util.ArrayList;
@@ -30,11 +31,11 @@ public class NG2DGameFieldLayer extends NGUniplayObject {
         FProps.clear();
     }
 
-    public void addCell(Integer aValue, Integer aBase, Integer aOffset) {
+    public NGGameEngineMemoryCell addCell(Integer aBase, Integer aOffset, Class aCellValueClass) {
         NG2DGameFieldSize size = getGameField().getSize();
-        NGGameEngineMemoryCell cell = new NGGameEngineMemoryCell(FGameField.getLayers().indexOf(this), aBase, aOffset);
-        cell.setValueAsInteger(aValue);
+        NGGameEngineMemoryCell cell = new NGGameEngineMemoryCell(FGameField.getLayers().indexOf(this), aBase, aOffset, aCellValueClass);
         FCells.add(cell);
+        return cell;
     }
 
     public NG2DGameField getGameField() {

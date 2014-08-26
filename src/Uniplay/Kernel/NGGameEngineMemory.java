@@ -12,27 +12,28 @@ public class NGGameEngineMemory extends NGUniplayComponent {
     protected int FOffsetSize;
     protected NGGameEngineMemoryManager FManager;
     protected ArrayList<NGGameEngineMemoryCell> FCells;
+    protected Class FCellValueClass;
 
     protected void addCellTransaction(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryCell aCell) {
         aTransaction.add(aCell);
     }
 
-    protected NGGameEngineMemoryCell allocateCell(int aPage, int aBase, int aOffset) {
-        NGGameEngineMemoryCell cell = new NGGameEngineMemoryCell(aPage, aBase, aOffset);
+    protected NGGameEngineMemoryCell allocateCell(int aPage, int aBase, int aOffset, Class aCellValueClass) {
+        NGGameEngineMemoryCell cell = new NGGameEngineMemoryCell(aPage, aBase, aOffset, aCellValueClass);
         FCells.add(cell);
         return cell;
     }
 
-    protected void DoReallocate(NGGameEngineMemoryTransaction aTransaction) {
+    protected void DoReallocate(NGGameEngineMemoryTransaction aTransaction, Class aCellValueClass) {
         clearAllCells(aTransaction);
-        DoAllocate();
+        DoAllocate(aCellValueClass);
     }
 
-    protected void DoAllocate() {
+    protected void DoAllocate(Class<NGGameEngineMemoryCustomCellValue> aCellValueClass) {
         for (int page = 0; page < FPageSize; page++) {
             for (int base = 0; base < FBaseSize; base++) {
                 for (int offset = 0; offset < FOffsetSize; offset++) {
-                    allocateCell(page, base, offset);
+                    allocateCell(page, base, offset, aCellValueClass);
                 }
             }
         }
@@ -72,7 +73,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
     @Override
     protected void DoInitialize() {
         super.DoInitialize();
-        DoAllocate();
+        DoAllocate(FCellValueClass);
     }
 
     protected void setCellValue(NGGameEngineMemoryTransaction aTransaction, int aIndex, Integer aValue) {
@@ -94,10 +95,11 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         InternalSetCellValueByAddress(aTransaction, address, aValue);
     }
 
-    public NGGameEngineMemory(NGGameEngineMemoryManager aManager, String aName) {
+    public NGGameEngineMemory(NGGameEngineMemoryManager aManager, String aName, Class aCellValueClass) {
         super(aManager, aName);
         FManager = aManager;
         FCells = new ArrayList<NGGameEngineMemoryCell>();
+        FCellValueClass = aCellValueClass;
         FPageSize = 0;
         FBaseSize = 0;
         FOffsetSize = 0;
@@ -112,7 +114,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
             FPageSize = aPageSize;
             FBaseSize = aBaseSize;
             FOffsetSize = aOffsetSize;
-            DoReallocate(aTransaction);
+            DoReallocate(aTransaction, FCellValueClass);
         }
     }
 

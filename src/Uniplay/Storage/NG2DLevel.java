@@ -1,7 +1,6 @@
 package Uniplay.Storage;
 
-import Uniplay.Kernel.NGGameEngineMemoryCell;
-import Uniplay.Kernel.NGSerializeGameEngineMemoryCell;
+import Uniplay.Kernel.*;
 import Uniwork.Base.NGSerializePropertyItem;
 import Uniwork.Graphics.NGPoint2D;
 import Uniwork.Graphics.NGSerializeGeometryObjectItem;
@@ -54,7 +53,8 @@ public class NG2DLevel extends NGCustomLevel {
             for (int x = 0; x <= maxX - minX; x++) {
                 if (point != null && point.getX() - minX == x && point.getY() - minY == y) {
                     String str = point.getID().substring(point.getID().indexOf('_') + 1, point.getID().length());
-                    layer.addCell(Integer.parseInt(str), y, x);
+                    NGGameEngineMemoryCell cell = layer.addCell(y, x, NGGameEngineMemoryIntegerCellValue.class);
+                    cell.setValueAsInteger(Integer.parseInt(str));
                     pointsadded++;
                     writeLog(10, String.format("%.0f,%.0f", point.getX(), point.getY()));
                     point = null;
@@ -67,7 +67,8 @@ public class NG2DLevel extends NGCustomLevel {
                     }
                 }
                 else {
-                    layer.addCell(0, y, x);
+                    NGGameEngineMemoryCell cell = layer.addCell(y, x, NGGameEngineMemoryIntegerCellValue.class);
+                    cell.setValueAsInteger(0);
                 }
             }
         }
@@ -129,7 +130,8 @@ public class NG2DLevel extends NGCustomLevel {
                 NG2DGameFieldLayer layer = getGameField().addLayer(sl.getName());
                 layer.getProps().AssignFrom(sl.getProps());
                 for (NGSerializeGameEngineMemoryCell sc : sl.getCells()) {
-                    layer.addCell(sc.getValue(), sc.getBase(), sc.getOffset());
+                    NGGameEngineMemoryCell cell = layer.addCell(sc.getBase(), sc.getOffset(), NGGameEngineMemoryIntegerCellValue.class);
+                    cell.setValueAsInteger(sc.getValue());
                 }
             }
         }

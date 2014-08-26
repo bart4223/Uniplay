@@ -2,6 +2,10 @@ package Uniplay.Kernel;
 
 public class NGGameEngineMemoryIntegerCellValue extends NGGameEngineMemoryCustomCellValue {
 
+    public NGGameEngineMemoryIntegerCellValue() {
+        this(0);
+    }
+
     public NGGameEngineMemoryIntegerCellValue(Integer aInteger) {
         super(aInteger);
     }
@@ -16,11 +20,13 @@ public class NGGameEngineMemoryIntegerCellValue extends NGGameEngineMemoryCustom
         return (Integer)getObject();
     }
 
+    @Override
     public void clear() {
         setInteger(0);
     }
 
-    public void Inc() {
+    @Override
+    public void inc() {
         setInteger(getInteger() + 1);
     }
 

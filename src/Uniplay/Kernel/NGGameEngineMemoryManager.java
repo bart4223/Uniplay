@@ -12,8 +12,8 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         writeLog(String.format("Memory [%s] %d cells allocated.", aMemory.getName(), aMemory.getAllocated()));
     }
 
-    protected NGGameEngineMemory newMemory(String aName) {
-        NGGameEngineMemory memory = new NGGameEngineMemory(this, aName);
+    protected NGGameEngineMemory newMemory(String aName, Class<NGGameEngineMemoryCustomCellValue> aCellValueClass) {
+        NGGameEngineMemory memory = new NGGameEngineMemory(this, aName, aCellValueClass);
         writeLog(String.format("Memory [%s] created.", aName));
         return memory;
     }
@@ -85,8 +85,8 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         super(aOwner, aName);
     }
 
-    public void addMemory(String aName, Integer aPageSize, Integer aBaseSize, Integer aOffsetSize) {
-        NGGameEngineMemory memory = newMemory(aName);
+    public void addMemory(String aName, Integer aPageSize, Integer aBaseSize, Integer aOffsetSize, Class aCellValueClass) {
+        NGGameEngineMemory memory = newMemory(aName, aCellValueClass);
         NGGameEngineMemoryTransaction transaction = BeginTransaction(memory);
         try{
             addMemory(memory, transaction, aPageSize, aBaseSize, aOffsetSize);

@@ -6,6 +6,10 @@ public abstract class NGGameEngineMemoryCustomCellValue extends NGUniplayObject 
 
     protected Object FObject;
 
+    public NGGameEngineMemoryCustomCellValue() {
+        this(null);
+    }
+
     public NGGameEngineMemoryCustomCellValue(Object aObject) {
         super();
         FObject = aObject;
