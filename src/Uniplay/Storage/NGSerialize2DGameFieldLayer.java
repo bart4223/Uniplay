@@ -10,6 +10,7 @@ public class NGSerialize2DGameFieldLayer extends NGUniplayObjectDefinition {
 
     protected ArrayList<NGSerializeGameEngineMemoryCell> Cells;
     protected String Name;
+    protected String Cellsclassname;
     protected ArrayList<NGSerializePropertyItem> Props;
 
     public NGSerialize2DGameFieldLayer() {
@@ -30,6 +31,14 @@ public class NGSerialize2DGameFieldLayer extends NGUniplayObjectDefinition {
 
     public String getName() {
         return Name;
+    }
+
+    public void setCellsclassname(String value) {
+        Cellsclassname = value;
+    }
+
+    public String getCellsclassname() {
+        return Cellsclassname;
     }
 
     public void setProps(ArrayList<NGSerializePropertyItem> Value) {

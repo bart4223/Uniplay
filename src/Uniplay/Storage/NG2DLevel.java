@@ -1,5 +1,6 @@
 package Uniplay.Storage;
 
+import Uniplay.Base.NGUniplayObjectDefinition;
 import Uniplay.Kernel.*;
 import Uniwork.Base.NGSerializePropertyItem;
 import Uniwork.Graphics.NGPoint2D;
@@ -127,10 +128,17 @@ public class NG2DLevel extends NGCustomLevel {
             getGameFieldSize().setWidth(level.getGameField().getWidth());
             getProps().AssignFrom(level.getGameField().getProps());
             for (NGSerialize2DGameFieldLayer sl : level.getGameField().getLayers()) {
+                Class cl;
+                try {
+                    cl = getClass().getClassLoader().loadClass(sl.getCellsclassname());
+                }
+                catch (Exception e) {
+                    cl = NGGameEngineMemoryIntegerCellValue.class;
+                }
                 NG2DGameFieldLayer layer = getGameField().addLayer(sl.getName());
                 layer.getProps().AssignFrom(sl.getProps());
                 for (NGSerializeGameEngineMemoryCell sc : sl.getCells()) {
-                    NGGameEngineMemoryCell cell = layer.addCell(sc.getBase(), sc.getOffset(), NGGameEngineMemoryIntegerCellValue.class);
+                    NGGameEngineMemoryCell cell = layer.addCell(sc.getBase(), sc.getOffset(), cl);
                     cell.setValueAsInteger(sc.getValue());
                 }
             }
