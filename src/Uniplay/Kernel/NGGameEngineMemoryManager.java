@@ -156,11 +156,11 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         return memory.getCellValueAsInteger(aAddress);
     }
 
-    public void Invalidate(String aName) {
+    public void refreshAllCells(String aName) {
         NGGameEngineMemory memory = getMemory(aName);
         NGGameEngineMemoryTransaction transaction = BeginTransaction(memory);
         try{
-            memory.Invalidate();
+            memory.refreshAllCells();
         }
         finally {
             EndTransaction(transaction);

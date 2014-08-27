@@ -31,7 +31,7 @@ public abstract class NGGraphicEngine extends NGGameEngineModule {
     }
 
     protected void DoRefresh() {
-        getMemoryManager().Invalidate(NGGameEngineConstants.CMP_MAIN_MEMORY);
+        getMemoryManager().refreshAllCells(NGGameEngineConstants.CMP_MAIN_MEMORY);
     }
 
     protected NGGameEngineMemoryManager getMemoryManager() {
