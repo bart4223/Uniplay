@@ -28,8 +28,16 @@ public class NGGameEngineMemoryCell extends NGUniplayObject {
         return FValue;
     }
 
+    public void setValueAsObject(Object aValue) {
+        FValue.setObject(aValue);
+    }
+
     public void setValueAsInteger(Integer aValue) {
         FValue.setInteger(aValue);
+    }
+
+    public Object getValueAsObject() {
+        return FValue.getObject();
     }
 
     public Integer getValueAsInteger() {
