@@ -3,7 +3,6 @@ package Uniplay.Control;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Base.NGUniplayObjectRequestBroker;
-import Uniplay.Graphics.NGCustomRenderEngineItem;
 import Uniplay.Kernel.NGTaskManager;
 import Uniplay.NGGameEngineConstants;
 
