@@ -39,4 +39,13 @@ public class NGGameManager extends NGUniplayComponent {
         }
     }
 
+    public NGCustomGame getGame(String aName) {
+        for (NGCustomGame game : FGames) {
+            if (game.getName().equals(aName)) {
+                return game;
+            }
+        }
+        return null;
+    }
+
 }

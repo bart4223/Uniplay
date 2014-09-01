@@ -68,10 +68,6 @@ public abstract class NGCustomGame extends NGUniplayComponent {
         }
     }
 
-    protected void registerMimicActions() {
-
-    }
-
     protected void ActivateMimicActions(NGCustomControlMimic.Kind aKind) {
         getMimicManager().ActivateMimics(aKind);
     }
@@ -86,12 +82,6 @@ public abstract class NGCustomGame extends NGUniplayComponent {
 
     protected void ResetAllMimicActions() {
         getMimicManager().ResetAllMimics();
-    }
-
-    @Override
-    protected void DoInitialize() {
-        super.DoInitialize();
-        registerMimicActions();
     }
 
     protected NGPlayerGameStatistic addPlayerGameStatistic(NGPlayer aPlayer) {

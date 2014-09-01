@@ -8,6 +8,8 @@ import Uniwork.Misc.NGTickListener;
 
 public abstract class NGControlMimicPeriodicAction extends NGCustomControlMimic implements NGTickListener {
 
+    protected Boolean FTaskAdded;
+
     protected void DoHandleTick() {
 
     }
@@ -15,6 +17,9 @@ public abstract class NGControlMimicPeriodicAction extends NGCustomControlMimic 
     @Override
     protected void DoActivate() {
         super.DoActivate();
+        if (!FTaskAdded) {
+            addPeriodicTask(Interval);
+        }
         getTaskManager().startPeriodicTask(getPeriodicTaskName(), 0);
     }
 
@@ -27,6 +32,7 @@ public abstract class NGControlMimicPeriodicAction extends NGCustomControlMimic 
     protected void addPeriodicTask(Integer aInterval) {
         getTaskManager().addPeriodicTask(getPeriodicTaskName(), aInterval);
         getTaskManager().addListener(getPeriodicTaskName(), this);
+        FTaskAdded = true;
     }
 
     protected String getPeriodicTaskName() {
@@ -37,13 +43,14 @@ public abstract class NGControlMimicPeriodicAction extends NGCustomControlMimic 
         return FManager.getTaskManager();
     }
 
-    public NGControlMimicPeriodicAction(NGControlMimicManager aManager, NGCustomGame aGame, String aName, Integer aInterval) {
-        this(aManager, aGame, aName, Kind.permant, aInterval);
+    public NGControlMimicPeriodicAction(NGControlMimicManager aManager, NGCustomGame aGame, String aName) {
+        this(aManager, aGame, aName, Kind.permant);
     }
 
-    public NGControlMimicPeriodicAction(NGControlMimicManager aManager, NGCustomGame aGame, String aName, Kind aKind, Integer aInterval) {
+    public NGControlMimicPeriodicAction(NGControlMimicManager aManager, NGCustomGame aGame, String aName, Kind aKind) {
         super(aManager, aGame, aName, aKind);
-        addPeriodicTask(aInterval);
+        Interval = 0;
+        FTaskAdded = false;
     }
 
     @Override
@@ -51,5 +58,7 @@ public abstract class NGControlMimicPeriodicAction extends NGCustomControlMimic 
         writeLog(NGGameEngineConstants.DEBUG_LEVEL_MIMIC, String.format("Mimic [%s] tick.", getName()));
         DoHandleTick();
     }
+
+    public Integer Interval;
 
 }
