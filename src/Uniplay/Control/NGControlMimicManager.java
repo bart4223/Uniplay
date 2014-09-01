@@ -3,6 +3,7 @@ package Uniplay.Control;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Base.NGUniplayObjectRequestBroker;
+import Uniplay.Graphics.NGCustomRenderEngineItem;
 import Uniplay.Kernel.NGTaskManager;
 import Uniplay.NGGameEngineConstants;
 
@@ -40,6 +41,13 @@ public class NGControlMimicManager extends NGUniplayComponent {
             else {
                 writeLog(String.format("Mimic [%s] deactivated.", aMimic.getMimic().getName()));
             }
+        }
+    }
+
+    protected void DoInitialize() {
+        super.DoInitialize();
+        for (NGControlMimicItem item : FMimics) {
+            item.Initialize();
         }
     }
 

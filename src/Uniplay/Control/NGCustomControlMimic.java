@@ -15,6 +15,7 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
     protected NGLogManager FLogManager;
     protected NGCustomGame FGame;
     protected Kind FKind;
+    protected Boolean FInitialized;
 
     protected void writeLog(String aText) {
         writeLog(0, aText);
@@ -54,6 +55,10 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
         DoDeactivate();
     }
 
+    protected void DoInitialize() {
+
+    }
+
     public NGCustomControlMimic(NGControlMimicManager aManager, NGCustomGame aGame, String aName, Kind aKind) {
         super();
         FManager = aManager;
@@ -64,6 +69,7 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
         FName = aName;
         FKind = aKind;
         FActive = false;
+        FInitialized = false;
     }
 
     public String getName() {
@@ -102,6 +108,13 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
 
     public Kind getKind() {
         return FKind;
+    }
+
+    public void Initialize() {
+        if (!FInitialized) {
+            DoInitialize();
+            FInitialized = true;
+        }
     }
 
 }

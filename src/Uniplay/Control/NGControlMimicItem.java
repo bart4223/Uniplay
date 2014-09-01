@@ -15,4 +15,8 @@ public class NGControlMimicItem extends NGUniplayObject {
         return FMimic;
     }
 
+    public void Initialize() {
+        getMimic().Initialize();
+    }
+
 }
