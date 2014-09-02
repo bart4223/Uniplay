@@ -7,8 +7,8 @@ public class NG2DGamePlayerItem extends NGCustomGamePlayerItem {
     protected NG2DGamePlayerPosition FPosition;
     protected Integer FLayer;
 
-    public NG2DGamePlayerItem(NGCustomPlayer aPlayer, Integer aLayer, Integer aMaxLives) {
-        super(aPlayer, aMaxLives);
+    public NG2DGamePlayerItem(NGCustomGame aGame, NGCustomPlayer aPlayer, Integer aLayer, Integer aMaxLives) {
+        super(aGame, aPlayer, aMaxLives);
         FPosition = new NG2DGamePlayerPosition();
         FLayer = aLayer;
     }

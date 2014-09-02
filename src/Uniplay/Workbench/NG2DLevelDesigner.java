@@ -144,10 +144,10 @@ public class NG2DLevelDesigner extends NGLevelDesigner {
                             writeLog(String.format("SetupLevel-Prop [COUNT:%s=%d]", prop.getName(), count));
                         }
                         else if (op.equals("POSITION")) {
-                            NG2DGamePlayerPosition pos = null;
+                            NG2DGameObjectPosition pos = null;
                             for (NGGameEngineMemoryCell cell : layer.getCells()) {
                                 if (cell.getValueAsInteger() == prop.getValue()) {
-                                    pos = new NG2DGamePlayerPosition(cell.getAddress().getOffset(), cell.getAddress().getBase());
+                                    pos = new NG2DGameObjectPosition(cell.getAddress().getOffset(), cell.getAddress().getBase());
                                 }
                             }
                             if (pos != null) {

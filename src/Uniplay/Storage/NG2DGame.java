@@ -70,7 +70,7 @@ public class NG2DGame extends NGCustomGame {
                 if (obj.equals("PLAYER")) {
                     String op = NGStrings.getStringPos(prop.getName(), "\\.", 4);
                     if (op.equals("POSITION")) {
-                        NG2DGamePlayerPosition pos = (NG2DGamePlayerPosition)prop.getValue();
+                        NG2DGameObjectPosition pos = (NG2DGameObjectPosition)prop.getValue();
                         setPlayerPosition(i, pos.getX(), pos.getY());
                         i++;
                         if (i >= FPlayers.size()) {
@@ -105,13 +105,13 @@ public class NG2DGame extends NGCustomGame {
     }
 
     protected void add2DGamePlayerItem(NGPlayer aPlayer, Integer aLayer, double aX, double aY, Integer aMaxLives) {
-        NG2DGamePlayerItem item = new NG2DGamePlayerItem(aPlayer, aLayer, aMaxLives);
+        NG2DGamePlayerItem item = new NG2DGamePlayerItem(this, aPlayer, aLayer, aMaxLives);
         item.setPosition(aX, aY);
         addPlayerItem(item);
     }
 
     protected void add2DGameNPCItem(NGNonPlayer aNPC, Integer aLayer, double aX, double aY, Integer aMaxLives) {
-        NG2DGamePlayerItem item = new NG2DGamePlayerItem(aNPC, aLayer, aMaxLives);
+        NG2DGamePlayerItem item = new NG2DGamePlayerItem(this, aNPC, aLayer, aMaxLives);
         item.setPosition(aX, aY);
         addNPCItem(item);
     }
