@@ -35,9 +35,9 @@ public abstract class NGGameEngineEventHandler extends NGUniplayObject {
         FName = aName;
     }
 
-    public void handleEvent(String aName, NGGameEngineEvent aEvent) {
+    public void handleEvent(String aEventname, NGGameEngineEvent aEvent) {
         FEvent = aEvent;
-        FEventName = aName;
+        FEventName = aEventname;
         try {
             InternalhandleEvent();
         }
