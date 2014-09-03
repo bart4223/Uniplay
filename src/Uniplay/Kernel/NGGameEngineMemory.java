@@ -26,6 +26,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
 
     protected void DoReallocate(NGGameEngineMemoryTransaction aTransaction, Class aCellValueClass) {
         clearAllCells(aTransaction);
+        FCells.clear();
         DoAllocate(aCellValueClass);
     }
 

@@ -1,5 +1,6 @@
 package Uniplay.Storage;
 
+import Uniplay.Control.NGCustomControlMimic;
 import Uniplay.Kernel.NGGameEngineMemoryAddress;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
 import Uniplay.Kernel.NGGameEngineMemoryCellValueItem;
@@ -39,15 +40,28 @@ public class NG2DGame extends NGCustomGame {
     }
 
     @Override
-    protected void DoStart() {
-        super.DoStart();
+    protected void resetAll() {
+        super.resetAll();
         resetPlayers();
         removeAllNPCs();
+        FLevelIndex = 1;
+    }
+
+    @Override
+    protected void DoBeforeStartLevel() {
+        super.DoBeforeStartLevel();
         NG2DLevel level = loadLevel(String.format(C_LEVEL_NAME, FLevelIndex));
         setCurrentLevel(level);
         setCurrentGameFieldLayer(level.getGameField().getLayer("DEFAULT"));
         loadLevelToMemory(level, getCurrentGameFieldLayer());
         assignPlayerPositions(getCurrentGameFieldLayer());
+    }
+
+    @Override
+    protected void DoNextLevel() {
+        FLevelIndex++;
+        ResetAllMimicActions();
+        DoStartLevel();
     }
 
     protected NG2DLevel loadLevel(String aName) {

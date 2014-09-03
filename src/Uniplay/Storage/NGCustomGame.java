@@ -35,8 +35,12 @@ public abstract class NGCustomGame extends NGUniplayComponent {
         return result;
     }
 
-    protected void DoBeforeStart() {
+    protected void resetAll() {
         ResetAllMimicActions();
+    }
+
+    protected void DoBeforeStart() {
+        resetAll();
     }
 
     protected void DoStart() {
@@ -46,6 +50,30 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     protected void DoAfterStart() {
         collectPlayerStatistic();
         ActivateMimicActions(NGCustomControlMimic.Kind.permant);
+        DoStartLevel();
+    }
+
+    protected void DoBeforeStartLevel() {
+
+    }
+
+    protected void DoStartLevel() {
+        DoBeforeStartLevel();
+        try
+        {
+            DoInternalStartLevel();
+        }
+        finally {
+            DoAfterStartLevel();
+        }
+    }
+
+    protected void DoInternalStartLevel() {
+
+    }
+
+    protected void DoAfterStartLevel() {
+
     }
 
     protected void DoBreak() {
@@ -66,6 +94,10 @@ public abstract class NGCustomGame extends NGUniplayComponent {
             statistic.incTotal();
             writeLog(statistic.toString());
         }
+    }
+
+    protected void DoNextLevel() {
+
     }
 
     protected void ActivateMimicActions(NGCustomControlMimic.Kind aKind) {
@@ -227,6 +259,16 @@ public abstract class NGCustomGame extends NGUniplayComponent {
 
     public String getMemoryName() {
         return NGGameEngineConstants.CMP_MAIN_MEMORY;
+    }
+
+    public void LevelFinished() {
+        DeactivateAllMimicActions();
+        try {
+            DoNextLevel();
+        }
+        finally {
+            ActivateMimicActions(NGCustomControlMimic.Kind.permant);
+        }
     }
 
 }
