@@ -83,4 +83,12 @@ public class NGSoundManager extends NGUniplayComponent {
         }
     }
 
+    public void playSoundOnEvent(String aEventName) {
+        for (NGSoundItem item : FItems) {
+            if (item.playOnEvent(aEventName)) {
+                playSound(item, NGMediaPlayerSoundItem.Mode.singular);
+            }
+        }
+    }
+
 }

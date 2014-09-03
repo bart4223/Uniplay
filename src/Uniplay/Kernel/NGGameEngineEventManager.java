@@ -13,8 +13,8 @@ public class NGGameEngineEventManager extends NGUniplayComponent implements NGGa
     protected void DoHandleEvent(String aName, NGGameEngineEvent aEvent) {
         writeLog(NGGameEngineConstants.DEBUG_LEVEL_EVENTS, String.format("Event manager [%s].DoHandleEvent->[%s]", getName(), aName));
         for (NGGameEngineEventHandler handler : FHandlers) {
-            if (handler.getName().equals(aName)) {
-                handler.handleEvent(aEvent);
+            if (handler.getName().length() == 0 || handler.getName().equals(aName)) {
+                handler.handleEvent(aName, aEvent);
             }
         }
     }
@@ -70,4 +70,5 @@ public class NGGameEngineEventManager extends NGUniplayComponent implements NGGa
     public void unregisterEventHandler(NGGameEngineEventHandler aHandler) {
         removeHandler(aHandler);
     }
+
 }

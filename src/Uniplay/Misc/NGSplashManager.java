@@ -63,10 +63,6 @@ public class NGSplashManager extends NGUniplayComponent {
         item.GeometryObjectColor = "#ff0000";
         item.Filename = "resources/splash/uniplay.gof";
         addItem(item);
-        NGSoundManager manager = getSoundManager();
-        if (manager != null) {
-            manager.addSound(NGGameEngineConstants.SOUND_SPLASH_SOURCE, "resources/sound/source.mp3");
-        }
     }
 
     protected NGSoundManager getSoundManager() {

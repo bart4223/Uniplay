@@ -5,6 +5,7 @@ import Uniplay.Base.NGUniplayObject;
 public abstract class NGGameEngineEventHandler extends NGUniplayObject {
 
     protected String FName;
+    protected String FEventName;
     protected NGGameEngineEvent FEvent;
 
     protected void BeforeHandleEvent() {
@@ -12,6 +13,7 @@ public abstract class NGGameEngineEventHandler extends NGUniplayObject {
     }
 
     protected void DoHandleEvent() {
+
     }
 
     protected void AfterHandleEvent() {
@@ -24,18 +26,24 @@ public abstract class NGGameEngineEventHandler extends NGUniplayObject {
         AfterHandleEvent();
     }
 
+    public NGGameEngineEventHandler() {
+        this("");
+    }
+
     public NGGameEngineEventHandler(String aName) {
         super();
         FName = aName;
     }
 
-    public void handleEvent(NGGameEngineEvent aEvent) {
+    public void handleEvent(String aName, NGGameEngineEvent aEvent) {
         FEvent = aEvent;
+        FEventName = aName;
         try {
             InternalhandleEvent();
         }
         finally {
             FEvent = null;
+            FEventName = "";
         }
     }
 

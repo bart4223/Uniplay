@@ -61,14 +61,14 @@ public abstract class NGCustomGame extends NGUniplayComponent {
         DoBeforeStartLevel();
         try
         {
-            DoInternalStartLevel();
+            InternalStartLevel();
         }
         finally {
             DoAfterStartLevel();
         }
     }
 
-    protected void DoInternalStartLevel() {
+    protected void InternalStartLevel() {
 
     }
 

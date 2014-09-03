@@ -61,16 +61,6 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
         manager.setCurrentPlayer("BART4223");
     }
 
-    protected void playSound() {
-        NGSoundManager manager = (NGSoundManager)ResolveObject(NGGameEngineConstants.CMP_SOUND_MANAGER, NGSoundManager.class);
-        if (manager != null) {
-            NGSoundItem item = manager.addSound("Source", "resources/sound/source.mp3");
-            manager.playSound(item, NGMediaPlayerSoundItem.Mode.singular);
-        }
-        else
-            writeLog("No sound manager available!");
-    }
-
     public NGTestModule(NGGameEngineModuleManager aManager, String aName) {
         super(aManager, aName);
     }
@@ -101,7 +91,6 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
 
     public void handleKernelInitialized() {
         addTestPlayers();
-        //playSound();
     }
 
 }
