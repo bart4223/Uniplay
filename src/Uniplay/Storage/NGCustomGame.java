@@ -69,7 +69,7 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     }
 
     protected void InternalStartLevel() {
-
+        raiseLevelStartEvent();
     }
 
     protected void DoAfterStartLevel() {
@@ -167,6 +167,14 @@ public abstract class NGCustomGame extends NGUniplayComponent {
 
     protected void raiseGameFinishEvent() {
         raiseEvent(NGGameEngineConstants.EVT_GAME_FINISH, new NGCustomGameEventFinishGame(this));
+    }
+
+    protected void raiseLevelStartEvent() {
+        raiseEvent(NGGameEngineConstants.EVT_GAME_LEVEL_START, new NGCustomGameEventStartLevel(this));
+    }
+
+    protected void raiseLevelFinishEvent() {
+        raiseEvent(NGGameEngineConstants.EVT_GAME_LEVEL_FINISH, new NGCustomGameEventFinishLevel(this));
     }
 
     public NGCustomGame(NGGameManager aManager, String aName) {
@@ -279,7 +287,8 @@ public abstract class NGCustomGame extends NGUniplayComponent {
         return NGGameEngineConstants.CMP_MAIN_MEMORY;
     }
 
-    public void LevelFinished() {
+    public void FinishLevel() {
+        raiseLevelFinishEvent();
         DeactivateAllMimicActions();
         try {
             DoNextLevel();
