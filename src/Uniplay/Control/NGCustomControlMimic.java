@@ -117,8 +117,16 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
         }
     }
 
-    public Boolean InActivating() {
-        return FManager.InActivating();
+    public Boolean InUpdate() {
+        return FManager.InUpdate() || FGame.InUpdate();
+    }
+
+    public void BeginUpdate() {
+        FGame.BeginUpdate();
+    }
+
+    public void EndUpdate() {
+        FGame.EndUpdate();
     }
 
 }

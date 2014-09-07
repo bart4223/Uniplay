@@ -43,7 +43,7 @@ public class NG2DGame extends NGCustomGame {
         super.resetAll();
         resetPlayers();
         removeAllNPCs();
-        FLevelIndex = 2;
+        FLevelIndex = 1;
     }
 
     @Override
@@ -58,9 +58,8 @@ public class NG2DGame extends NGCustomGame {
 
     @Override
     protected void DoNextLevel() {
+        super.DoNextLevel();
         FLevelIndex++;
-        ResetAllMimicActions();
-        DoStartLevel();
     }
 
     protected NG2DLevel loadLevel(String aName) {

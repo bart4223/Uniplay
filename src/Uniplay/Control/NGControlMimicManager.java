@@ -13,7 +13,7 @@ public class NGControlMimicManager extends NGUniplayComponent {
     protected ArrayList<NGControlMimicItem> FMimics;
     protected NGTaskManager FTaskManager;
     protected NGUniplayObjectRequestBroker FORB;
-    protected Boolean FInActivating;
+    protected Boolean FInUpdate;
 
     protected NGControlMimicItem getMimic(String aName) {
         for (NGControlMimicItem item : FMimics) {
@@ -54,7 +54,7 @@ public class NGControlMimicManager extends NGUniplayComponent {
     public NGControlMimicManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
         FMimics = new ArrayList<NGControlMimicItem>();
-        FInActivating = false;
+        FInUpdate = false;
     }
 
     public NGControlMimicItem addMimic(NGCustomControlMimic aMimic) {
@@ -64,38 +64,62 @@ public class NGControlMimicManager extends NGUniplayComponent {
     }
 
     public void ResetAllMimics() {
-        for (NGControlMimicItem item : FMimics) {
-            resetMimic(item);
+        FInUpdate = true;
+        try {
+            for (NGControlMimicItem item : FMimics) {
+                resetMimic(item);
+            }
+        }
+        finally {
+            FInUpdate = false;
         }
     }
 
     public void ActivateMimics(NGCustomControlMimic.Kind aKind) {
-        FInActivating = true;
+        FInUpdate = true;
         try {
             for (NGControlMimicItem item : FMimics) {
                 ActivateMimic(aKind, item, true);
             }
         }
         finally {
-            FInActivating = false;
+            FInUpdate = false;
         }
     }
 
     public void ActivateAllMimics() {
-        for (NGControlMimicItem item : FMimics) {
-            ActivateMimic(item, true);
+        FInUpdate = true;
+        try {
+            for (NGControlMimicItem item : FMimics) {
+                ActivateMimic(item, true);
+            }
+        }
+        finally {
+            FInUpdate = false;
         }
     }
 
     public void DeactivateMimics(NGCustomControlMimic.Kind aKind) {
-        for (NGControlMimicItem item : FMimics) {
-            ActivateMimic(aKind, item, false);
+        FInUpdate = true;
+        try {
+            for (NGControlMimicItem item : FMimics) {
+                ActivateMimic(aKind, item, false);
+            }
+        }
+        finally {
+            FInUpdate = false;
         }
     }
 
     public void DeactivateAllMimics() {
-        for (NGControlMimicItem item : FMimics) {
-            ActivateMimic(item, false);
+        FInUpdate = true;
+        try {
+            for (NGControlMimicItem item : FMimics) {
+                ActivateMimic(item, false);
+            }
+        }
+        finally {
+            FInUpdate = false;
         }
     }
 
@@ -128,8 +152,8 @@ public class NGControlMimicManager extends NGUniplayComponent {
         return FORB;
     }
 
-    public Boolean InActivating() {
-        return FInActivating;
+    public Boolean InUpdate() {
+        return FInUpdate;
     }
 
 }

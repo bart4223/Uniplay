@@ -11,6 +11,18 @@ public class NGControlMimicORBAction extends NGControlMimicSingleAction {
     protected NGObjectRequestObject FObjectRequestObject;
     protected NGObjectRequestMethod FObjectRequestMethod;
 
+    @Override
+    protected void DoActivate() {
+        super.DoActivate();
+        FObjectRequestMethod.Activate();
+    }
+
+    @Override
+    protected void DoDeactivate() {
+        super.DoDeactivate();
+        FObjectRequestMethod.Deactivate();
+    }
+
     protected void DoExecute() {
         writeLog(NGGameEngineConstants.DEBUG_LEVEL_MIMIC, String.format("Mimic-ORB-Action [%s.%s] executed.", FObjectRequestObject.getName(), FObjectRequestMethod.getName()));
     }
@@ -35,8 +47,14 @@ public class NGControlMimicORBAction extends NGControlMimicSingleAction {
     }
 
     public void Execute() {
-        if (!InActivating()) {
-            DoExecute();
+        if (!InUpdate()) {
+            BeginUpdate();
+            try {
+                DoExecute();
+            }
+            finally {
+                EndUpdate();
+            }
         }
     }
 

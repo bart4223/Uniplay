@@ -21,6 +21,7 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     protected NGGameEngineMemoryManager FMemoryManager;
     protected NGControlMimicManager FMimicManager;
     protected State FState;
+    protected Integer FUpdateCount;
 
     protected void DoShowStages() {
 
@@ -49,7 +50,6 @@ public abstract class NGCustomGame extends NGUniplayComponent {
 
     protected void DoAfterStart() {
         collectPlayerStatistic();
-        ActivateMimicActions(NGCustomControlMimic.Kind.permant);
         DoStartLevel();
     }
 
@@ -73,7 +73,7 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     }
 
     protected void DoAfterStartLevel() {
-
+        ActivateMimicActions(NGCustomControlMimic.Kind.permant);
     }
 
     protected void DoBreak() {
@@ -98,7 +98,7 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     }
 
     protected void DoNextLevel() {
-
+        ResetAllMimicActions();
     }
 
     protected void ActivateMimicActions(NGCustomControlMimic.Kind aKind) {
@@ -177,6 +177,7 @@ public abstract class NGCustomGame extends NGUniplayComponent {
         FPlayerManager = null;
         FState = State.Created;
         getMemoryManager().addMemory(getMemoryName(), 0, 0, 0, getMemoryCellValueClass());
+        FUpdateCount = 0;
     }
 
     @Override
@@ -284,8 +285,23 @@ public abstract class NGCustomGame extends NGUniplayComponent {
             DoNextLevel();
         }
         finally {
-            ActivateMimicActions(NGCustomControlMimic.Kind.permant);
+            DoStartLevel();
         }
+    }
+
+    public void BeginUpdate() {
+        FUpdateCount = FUpdateCount + 1;
+    }
+
+    public void EndUpdate() {
+        FUpdateCount = FUpdateCount - 1;
+        if (FUpdateCount < 0) {
+            FUpdateCount = 0;
+        }
+    }
+
+    public Boolean InUpdate() {
+        return FUpdateCount > 0;
     }
 
 }
