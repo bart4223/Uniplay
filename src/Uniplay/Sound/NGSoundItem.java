@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class NGSoundItem extends NGUniplayObject {
 
     protected String FName;
-    protected ArrayList<String> FEventnames;
+    protected ArrayList<String> FRunEventnames;
+    protected ArrayList<String> FStopEventnames;
     protected Media FMedia;
 
     public NGSoundItem(String aName, String aFilename) {
@@ -18,7 +19,8 @@ public class NGSoundItem extends NGUniplayObject {
         File file = new File(aFilename);
         String path = file.getAbsoluteFile().getPath();
         FMedia = new Media(String.format("file://%s", path));
-        FEventnames = new ArrayList<String>();
+        FRunEventnames = new ArrayList<String>();
+        FStopEventnames = new ArrayList<String>();
     }
 
     public String getName() {
@@ -29,12 +31,25 @@ public class NGSoundItem extends NGUniplayObject {
         return FMedia;
     }
 
-    public void addEventname(String aEventname) {
-        FEventnames.add(aEventname);
+    public void addRunEventname(String aEventname) {
+        FRunEventnames.add(aEventname);
+    }
+
+    public void addStopEventname(String aEventname) {
+        FStopEventnames.add(aEventname);
     }
 
     public Boolean playOnEvent(String aEventname) {
-        for (String item : FEventnames) {
+        for (String item : FRunEventnames) {
+            if (item.equals(aEventname)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean stopOnEvent(String aEventname) {
+        for (String item : FStopEventnames) {
             if (item.equals(aEventname)) {
                 return true;
             }

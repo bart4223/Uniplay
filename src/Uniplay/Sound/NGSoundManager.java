@@ -59,7 +59,7 @@ public class NGSoundManager extends NGUniplayComponent {
         return item;
     }
 
-    public void playSound(String aName, NGMediaPlayerSoundItem.Mode aMode) {
+    public void playSound1(String aName, NGMediaPlayerSoundItem.Mode aMode) {
         NGSoundItem item = getSoundItem(aName);
         playSound(item, aMode);
     }
@@ -83,10 +83,15 @@ public class NGSoundManager extends NGUniplayComponent {
         }
     }
 
-    public void playSoundOnEvent(String aEventName) {
+    public void PlayOrStopSoundOnEvent(String aEventName) {
         for (NGSoundItem item : FItems) {
             if (item.playOnEvent(aEventName)) {
                 playSound(item, NGMediaPlayerSoundItem.Mode.singular);
+            }
+        }
+        for (NGMediaPlayerSoundItem item : FMediaPlayerItems) {
+            if (item.stopOnEvent(aEventName)) {
+                stopSound(item);
             }
         }
     }

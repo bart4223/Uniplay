@@ -2,15 +2,15 @@ package Uniplay.Sound;
 
 import Uniplay.Kernel.NGGameEngineEventHandler;
 
-public class NGSoundSystemEventHandler extends NGGameEngineEventHandler {
+public class NGSoundSystemCommonEventHandler extends NGGameEngineEventHandler {
 
     protected NGSoundManager FSoundManager;
 
     protected void DoHandleEvent() {
-        FSoundManager.playSoundOnEvent(FEventName);
+        FSoundManager.PlayOrStopSoundOnEvent(FEventName);
     }
 
-    public NGSoundSystemEventHandler(NGSoundManager aSoundManager) {
+    public NGSoundSystemCommonEventHandler(NGSoundManager aSoundManager) {
         super();
         FSoundManager = aSoundManager;
     }

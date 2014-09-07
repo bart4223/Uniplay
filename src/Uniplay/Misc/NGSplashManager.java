@@ -3,8 +3,6 @@ package Uniplay.Misc;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.NGGameEngineConstants;
-import Uniplay.Sound.NGMediaPlayerSoundItem;
-import Uniplay.Sound.NGSoundManager;
 import Uniwork.Visuals.NGDisplayController;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -65,10 +63,6 @@ public class NGSplashManager extends NGUniplayComponent {
         addItem(item);
     }
 
-    protected NGSoundManager getSoundManager() {
-        return (NGSoundManager)ResolveObject(NGGameEngineConstants.CMP_SOUND_MANAGER, NGSoundManager.class);
-    }
-
     protected void addItem(NGSplashItem aItem) {
         FItems.add(aItem);
     }
@@ -117,6 +111,14 @@ public class NGSplashManager extends NGUniplayComponent {
         }
     }
 
+    protected void raiseRunEvent() {
+        raiseEvent(NGGameEngineConstants.EVT_KERNEL_SPLASH_RUN, new NGSplashManagerEventRun(this));
+    }
+
+    protected void raiseFinishEvent() {
+        raiseEvent(NGGameEngineConstants.EVT_KERNEL_SPLASH_FINISH, new NGSplashManagerEventFinish(this));
+    }
+
     public NGSplashManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
         FItems = new ArrayList<NGSplashItem>();
@@ -140,17 +142,13 @@ public class NGSplashManager extends NGUniplayComponent {
     public void Run() {
         FController.RenderScene();
         showStage();
-        if (getSoundManager() != null) {
-            playSound();
-        }
+        raiseRunEvent();
         DoRun();
     }
 
     public void Finish() {
         closeStage();
-        if (getSoundManager() != null) {
-            stopSound();
-        }
+        raiseFinishEvent();
     }
 
     public Boolean getFinished() {
@@ -174,15 +172,5 @@ public class NGSplashManager extends NGUniplayComponent {
     }
 
     public Integer GridDistance;
-
-    protected void playSound() {
-        NGSoundManager manager = getSoundManager();
-        manager.playSound(NGGameEngineConstants.SOUND_SPLASH_SOURCE, NGMediaPlayerSoundItem.Mode.singular);
-    }
-
-    protected void stopSound() {
-        NGSoundManager manager = getSoundManager();
-        manager.stopSound(NGGameEngineConstants.SOUND_SPLASH_SOURCE);
-    }
 
 }

@@ -30,6 +30,7 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
     protected void registerEventHandlers() {
         super.registerEventHandlers();
         registerEventHandler(new NGTestModuleEventHandlerKernelInitialized(this));
+        registerEventHandler(new NGTestModuleCommonEventHandler());
     }
 
     @Override

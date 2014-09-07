@@ -70,4 +70,8 @@ public class NGMediaPlayerSoundItem extends NGUniplayObject {
         return FMediaPlayer.getStatus();
     }
 
+    public Boolean stopOnEvent(String aEventname) {
+        return FSoundItem.stopOnEvent(aEventname);
+    }
+
 }

@@ -13,6 +13,7 @@ public class NGControlMimicManager extends NGUniplayComponent {
     protected ArrayList<NGControlMimicItem> FMimics;
     protected NGTaskManager FTaskManager;
     protected NGUniplayObjectRequestBroker FORB;
+    protected Boolean FInActivating;
 
     protected NGControlMimicItem getMimic(String aName) {
         for (NGControlMimicItem item : FMimics) {
@@ -53,6 +54,7 @@ public class NGControlMimicManager extends NGUniplayComponent {
     public NGControlMimicManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
         FMimics = new ArrayList<NGControlMimicItem>();
+        FInActivating = false;
     }
 
     public NGControlMimicItem addMimic(NGCustomControlMimic aMimic) {
@@ -68,8 +70,14 @@ public class NGControlMimicManager extends NGUniplayComponent {
     }
 
     public void ActivateMimics(NGCustomControlMimic.Kind aKind) {
-        for (NGControlMimicItem item : FMimics) {
-            ActivateMimic(aKind, item, true);
+        FInActivating = true;
+        try {
+            for (NGControlMimicItem item : FMimics) {
+                ActivateMimic(aKind, item, true);
+            }
+        }
+        finally {
+            FInActivating = false;
         }
     }
 
@@ -118,6 +126,10 @@ public class NGControlMimicManager extends NGUniplayComponent {
             FORB = (NGUniplayObjectRequestBroker)ResolveObject(NGGameEngineConstants.CMP_OBJECTREQUESTBROKER, NGUniplayObjectRequestBroker.class);
         }
         return FORB;
+    }
+
+    public Boolean InActivating() {
+        return FInActivating;
     }
 
 }

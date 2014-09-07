@@ -44,7 +44,7 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     }
 
     protected void DoStart() {
-
+        raiseGameStartEvent();
     }
 
     protected void DoAfterStart() {
@@ -77,14 +77,15 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     }
 
     protected void DoBreak() {
-
+        raiseGameBreakEvent();
     }
 
     protected void DoContinue() {
-
+        raiseGameContinueEvent();
     }
 
     protected void DoFinish() {
+        raiseGameFinishEvent();
         DeactivateAllMimicActions();
     }
 
@@ -150,6 +151,22 @@ public abstract class NGCustomGame extends NGUniplayComponent {
 
     protected Class getMemoryCellValueClass() {
         return NGGameEngineMemoryIntegerCellValue.class;
+    }
+
+    protected void raiseGameStartEvent() {
+        raiseEvent(NGGameEngineConstants.EVT_GAME_START, new NGCustomGameEventStartGame(this));
+    }
+
+    protected void raiseGameBreakEvent() {
+        raiseEvent(NGGameEngineConstants.EVT_GAME_BREAK, new NGCustomGameEventBreakGame(this));
+    }
+
+    protected void raiseGameContinueEvent() {
+        raiseEvent(NGGameEngineConstants.EVT_GAME_CONTINUE, new NGCustomGameEventContinueGame(this));
+    }
+
+    protected void raiseGameFinishEvent() {
+        raiseEvent(NGGameEngineConstants.EVT_GAME_FINISH, new NGCustomGameEventFinishGame(this));
     }
 
     public NGCustomGame(NGGameManager aManager, String aName) {

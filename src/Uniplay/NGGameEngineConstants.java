@@ -29,7 +29,7 @@ public abstract class NGGameEngineConstants {
     public final static String CMP_PLAYER_MANAGER                   = "PlayerManager";
     public final static String CMP_PLAYER_STATISTIC_MANAGER         = "PlayerStatisticManager";
     public final static String CMP_GAME_MANAGER                     = "GameManager";
-    public final static String CMP_2DGAME                           = "2DGame";
+    public final static String CMP_GAME                             = "Game";
     // Control Center
     public final static String CMP_CONTROL                          = "Control";
     public final static String CMP_CONTROLMIMIC_MANAGER             = "ControlMimicManager";
@@ -53,11 +53,17 @@ public abstract class NGGameEngineConstants {
     public final static String EVT_KERNEL_STARTED                   = String.format("%s.%s", CMP_KERNEL, "Started");
     public final static String EVT_KERNEL_STOPPED                   = String.format("%s.%s", CMP_KERNEL, "Stopped");
     public final static String EVT_KERNEL_FINALIZED                 = String.format("%s.%s", CMP_KERNEL, "Finalized");
+    public final static String EVT_KERNEL_SPLASH_RUN                = String.format("%s.%s.%s", CMP_KERNEL, "Splash", "Run");
+    public final static String EVT_KERNEL_SPLASH_FINISH             = String.format("%s.%s.%s", CMP_KERNEL, "Splash", "Finish");
     // Memory
     public final static String EVT_MEMORY_ALLOCATED                 = String.format("%s.%s", CMP_MEMORY, "Allocated");
     public final static String EVT_MEMORY_CELLS_CHANGED             = String.format("%s.%s.%s", CMP_MEMORY, "Cells", "Changed");
     // Storage
-    public final static String EVT_2DGAME_PLAYER_POSITION_CHANGED   = String.format("%s.%s.%s.%s", CMP_2DGAME, "Player", "Position","Changed");
+    public final static String EVT_GAME_START                       = String.format("%s.%s", CMP_GAME, "Start");
+    public final static String EVT_GAME_BREAK                       = String.format("%s.%s", CMP_GAME, "Break");
+    public final static String EVT_GAME_CONTINUE                    = String.format("%s.%s", CMP_GAME, "Continue");
+    public final static String EVT_GAME_FINISH                      = String.format("%s.%s", CMP_GAME, "Finish");
+    public final static String EVT_GAME_PLAYER_POSITION_CHANGED     = String.format("%s.%s.%s.%s", CMP_GAME, "Player", "Position", "Changed");
 
     // --------------------- ORB ------------------------------------
     // Mimic

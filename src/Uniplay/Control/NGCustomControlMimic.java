@@ -117,4 +117,8 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
         }
     }
 
+    public Boolean InActivating() {
+        return FManager.InActivating();
+    }
+
 }

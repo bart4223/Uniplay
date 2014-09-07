@@ -25,7 +25,7 @@ public class NG2DGameEventHandlerPlayerPositionChanged extends NGGameEngineEvent
     }
 
     public NG2DGameEventHandlerPlayerPositionChanged() {
-        super(NGGameEngineConstants.EVT_2DGAME_PLAYER_POSITION_CHANGED);
+        super(NGGameEngineConstants.EVT_GAME_PLAYER_POSITION_CHANGED);
     }
 
 }

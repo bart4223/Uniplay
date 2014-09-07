@@ -1,6 +1,5 @@
 package Uniplay.Storage;
 
-import Uniplay.Control.NGCustomControlMimic;
 import Uniplay.Kernel.NGGameEngineMemoryAddress;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
 import Uniplay.Kernel.NGGameEngineMemoryCellValueItem;
@@ -44,7 +43,7 @@ public class NG2DGame extends NGCustomGame {
         super.resetAll();
         resetPlayers();
         removeAllNPCs();
-        FLevelIndex = 1;
+        FLevelIndex = 2;
     }
 
     @Override
@@ -139,7 +138,7 @@ public class NG2DGame extends NGCustomGame {
 
     protected void raisePositionChangedEvent(NG2DGamePlayerItem aPlayerItem) {
         NG2DGamePlayerPositionChanged event = new NG2DGamePlayerPositionChanged(this, aPlayerItem);
-        raiseEvent(NGGameEngineConstants.EVT_2DGAME_PLAYER_POSITION_CHANGED, event);
+        raiseEvent(NGGameEngineConstants.EVT_GAME_PLAYER_POSITION_CHANGED, event);
     }
 
 

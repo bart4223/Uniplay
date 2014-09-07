@@ -55,7 +55,9 @@ public abstract class NGControlMimicPeriodicAction extends NGCustomControlMimic 
     @Override
     public void handleTick(NGTickEvent e) {
         writeLog(NGGameEngineConstants.DEBUG_LEVEL_MIMIC, String.format("Mimic [%s] tick.", getName()));
-        DoHandleTick();
+        if (!InActivating()) {
+            DoHandleTick();
+        }
     }
 
     public Integer Interval;

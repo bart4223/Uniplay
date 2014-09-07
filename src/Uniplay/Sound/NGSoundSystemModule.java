@@ -15,7 +15,7 @@ public class NGSoundSystemModule extends NGGameEngineModule {
     @Override
     protected void registerEventHandlers() {
         super.registerEventHandlers();
-        registerEventHandler(new NGSoundSystemEventHandler(getSoundManager()));
+        registerEventHandler(new NGSoundSystemCommonEventHandler(getSoundManager()));
     }
 
     @Override
@@ -38,7 +38,12 @@ public class NGSoundSystemModule extends NGGameEngineModule {
         NGSoundManager sm = getSoundManager();
         for (NGSoundSystemDefinitionSoundItem item :  Definition.getSounds()) {
             NGSoundItem si = sm.addSound(item.getName(), item.getFilename());
-            si.addEventname(item.Eventname);
+            for (String re : item.getRuneventnames()) {
+                si.addRunEventname(re);
+            }
+            for (String re : item.getStopeventnames()) {
+                si.addStopEventname(re);
+            }
         }
     }
 

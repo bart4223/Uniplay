@@ -35,7 +35,9 @@ public class NGControlMimicORBAction extends NGControlMimicSingleAction {
     }
 
     public void Execute() {
-        DoExecute();
+        if (!InActivating()) {
+            DoExecute();
+        }
     }
 
     public NGObjectRequestObject getObjectRequestObject() {
