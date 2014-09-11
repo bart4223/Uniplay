@@ -38,7 +38,7 @@ public class NG2DGameFieldDisplayController extends NGImageDisplayController {
             for (NGGameEngineMemoryCell cell : layer.getCells()) {
                 NGGameEngineMemoryAddress address = cell.getAddress();
                 setPosition(address.getOffset(), address.getBase());
-                ImageNumber = cell.getValueAsInteger();
+                setProperty(this, "Background.ImageNumber", cell.getValueAsInteger());
                 super.InternalRender();
             }
         }

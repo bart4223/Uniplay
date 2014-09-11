@@ -70,7 +70,6 @@ public class NG2DLevelDesignerStageController extends NGStageController {
         registerDisplayController(FDCGrid);
         FDCGameField = new NG2DGameFieldDisplayController(Layer1);
         FDCGameField.setView(FView);
-        FDCGameField.MaxImageNumber = -1;
         registerDisplayController(FDCGameField);
     }
 
