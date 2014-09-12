@@ -23,4 +23,8 @@ public abstract class NGGameEngineMemoryCustomCellValue extends NGUniplayObject 
         return FObject;
     }
 
+    public Object getPropValue(String aName) {
+        return null;
+    }
+
 }

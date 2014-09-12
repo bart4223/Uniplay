@@ -9,7 +9,7 @@ public class NG2DRenderEngineItem extends NGCustomRenderEngineItem {
     public NG2DRenderEngineItem(NGCustomRenderEngine aRenderEngine, int aLayerIndex, double aWidth, double aHeight) {
         super(aRenderEngine, aLayerIndex);
         FView = new NGDisplayView(aWidth, aHeight);
-        getRenderEngine().setView(FView);
+        setDisplayView(FView);
     }
 
     public void setViewPosition(double aX, double aY) {

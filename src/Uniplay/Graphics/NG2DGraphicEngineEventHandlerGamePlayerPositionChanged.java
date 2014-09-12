@@ -10,24 +10,24 @@ public class NG2DGraphicEngineEventHandlerGamePlayerPositionChanged extends NG2D
     @Override
     protected void DoHandleEvent() {
         super.DoHandleEvent();
-        NGCustomRenderEngine re = F2DGraphicEngine.getRenderEngineManager().getRenderEngine("DEFAULT");
-        NGDisplayController dc = re.getController("DEFAULT");
+        NGCustomRenderEngineItem reitem = F2DGraphicEngine.getRenderEngineManager().getRenderEngine("DEFAULT");
+        NGDisplayController dc = reitem.getDisplayController("DEFAULT");
         if (dc.getInitialized()) {
             Integer x = 0;
-            double deltaX = (FPosition.getPosition().getX() * dc.getWidth() - re.getView().getWidth() / 2);
+            double deltaX = (FPosition.getPosition().getX() * dc.getWidth() - reitem.getDisplayView().getWidth() / 2);
             if (deltaX > 0) {
                 x = (int)(deltaX / dc.getWidth());
-                if (x * dc.getWidth() + re.getView().getWidth() > getCurrentLevelWidth() * dc.getWidth()) {
-                    x = (int)(getCurrentLevelWidth() - re.getView().getWidth() / dc.getWidth());
+                if (x * dc.getWidth() + reitem.getDisplayView().getWidth() > getCurrentLevelWidth() * dc.getWidth()) {
+                    x = (int)(getCurrentLevelWidth() - reitem.getDisplayView().getWidth() / dc.getWidth());
                 }
                 x = (int)(x * dc.getWidth());
             }
             Integer y = 0;
-            double deltaY = (FPosition.getPosition().getY() * dc.getHeight() - re.getView().getHeight() / 2);
+            double deltaY = (FPosition.getPosition().getY() * dc.getHeight() - reitem.getDisplayView().getHeight() / 2);
             if (deltaY > 0) {
                 y = (int)(deltaY / dc.getHeight());
-                if (y * dc.getHeight() + re.getView().getHeight() > getCurrentLevelHeight() * dc.getHeight()) {
-                    y = (int)(getCurrentLevelHeight() - re.getView().getHeight() / dc.getHeight());
+                if (y * dc.getHeight() + reitem.getDisplayView().getHeight() > getCurrentLevelHeight() * dc.getHeight()) {
+                    y = (int)(getCurrentLevelHeight() - reitem.getDisplayView().getHeight() / dc.getHeight());
                 }
                 y = (int)(y * dc.getHeight());
             }

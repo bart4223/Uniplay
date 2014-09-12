@@ -5,13 +5,22 @@ import Uniwork.Visuals.NGDisplayController;
 
 public class NG2DRenderEngine extends NGCustomRenderEngine {
 
+    protected void prepareDisplayController(NGDisplayController aDisplayController) {
+        NGGameEngineMemoryAddress address = Cell.getAddress();
+        aDisplayController.setPosition(address.getOffset() * aDisplayController.getWidth(), address.getBase() * aDisplayController.getHeight());
+        aDisplayController.setProperty(aDisplayController, String.format("%s.%s", ValueLayername, ValuePropname), Cell.getValueAsInteger());
+    }
+
     @Override
     protected void DoBeforeRender() {
         super.DoBeforeRender();
-        for (NGDisplayController dc : FControllers) {
-            NGGameEngineMemoryAddress address = Cell.getAddress();
-            dc.setPosition(address.getOffset() * dc.getWidth(), address.getBase() * dc.getHeight());
-            dc.setProperty(dc, String.format("%s.%s", ValueLayername, ValuePropname), Cell.getValueAsInteger());
+        if (getCurrentController() == null) {
+            for (NGDisplayController dc : FControllers) {
+                prepareDisplayController(dc);
+            }
+        }
+        else {
+            prepareDisplayController(getCurrentController());
         }
     }
 

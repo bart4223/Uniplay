@@ -48,10 +48,8 @@ public abstract class NGGraphicEngine extends NGGameEngineModule {
                     Constructor<NGGameEngineEventHandler> cobj = cl.getConstructor(NGGraphicEngine.class);
                     if (cobj != null) {
                         NGGameEngineEventHandler obj = cobj.newInstance(this);
-                        item.Created = obj != null;
-                        if (item.Created) {
-                            registerEventHandler(obj);
-                        }
+                        item.Created = true;
+                        registerEventHandler(obj);
                     }
                 } catch (Exception e) {
                 }
@@ -79,7 +77,11 @@ public abstract class NGGraphicEngine extends NGGameEngineModule {
                     for (NGSerializePropertyItem prop: dcitem.getProps()) {
                         dc.setProperty(dc, prop.getName(), prop.getValue());
                     }
-                    REitem.getRenderEngine().addController(dc);
+                    for (NGGraphicEngineDefinitionRenderEngineDisplayControllerLayerItem layeritem : dcitem.Layers) {
+                        dc.addLayer(layeritem.getName(), layeritem.getImagename());
+                        writeLog(String.format("Layer [%s] for display controller [%s] for render engine [%s] added.", layeritem.getName(), dc.getName(), RE.getName()));
+                    }
+                    REitem.addDisplayController(dc);
                     writeLog(String.format("Display controller [%s] for render engine [%s] added.", dc.getName(), RE.getName()));
                 }
                 for (NGSerializePropertyItem prop: item.getProps()) {

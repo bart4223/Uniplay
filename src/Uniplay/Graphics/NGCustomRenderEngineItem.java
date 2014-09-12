@@ -2,16 +2,30 @@ package Uniplay.Graphics;
 
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
+import Uniwork.Visuals.NGDisplayController;
+import Uniwork.Visuals.NGDisplayView;
 
 public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
 
-    protected int FLayerIndex;
     protected NGCustomRenderEngine FRenderEngine;
+    protected NGGameEngineMemoryCell FCell;
+    protected Integer FLayerIndex;
+
+    protected void DoInitialize() {
+        FRenderEngine.Initialize();
+    }
+
+    protected void DoRender() {
+        FRenderEngine.setCurrentController((String)FCell.getPropValue("DisplayControllerName"));
+        FRenderEngine.Cell = FCell;
+        FRenderEngine.Render();
+    }
 
     public NGCustomRenderEngineItem(NGCustomRenderEngine aRenderEngine, Integer aLayerIndex) {
         super();
         FRenderEngine = aRenderEngine;
         FLayerIndex = aLayerIndex;
+        FCell = null;
     }
 
     @Override
@@ -45,23 +59,43 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
     }
 
     public void Initialize() {
-        FRenderEngine.Initialize();
+        DoInitialize();
     }
 
     public void Render() {
-        FRenderEngine.Render();
+        DoRender();
     }
 
     public void setCell(NGGameEngineMemoryCell aCell) {
-        FRenderEngine.Cell = aCell;
+        FCell = aCell;
     }
 
-    public NGCustomRenderEngine getRenderEngine() {
-        return FRenderEngine;
+    public NGGameEngineMemoryCell getCell() {
+        return FCell;
+    }
+
+    public void addDisplayController(NGDisplayController aDisplayController) {
+        FRenderEngine.addController(aDisplayController);
+    }
+
+    public NGDisplayController getDisplayController(String aName) {
+        return FRenderEngine.getController(aName);
+    }
+
+    public void setDisplayView(NGDisplayView aView) {
+        FRenderEngine.setView(aView);
+    }
+
+    public NGDisplayView getDisplayView() {
+        return FRenderEngine.getView();
     }
 
     public int getLayerIndex() {
         return FLayerIndex;
+    }
+
+    public String getName() {
+        return FRenderEngine.getName();
     }
 
 }

@@ -12,6 +12,7 @@ public class NGGraphicEngineDefinitionRenderEngineDisplayControllerItem extends 
     protected Integer Pixelsize = 1;
     protected String Imagename = "";
     protected ArrayList<NGSerializePropertyItem> Props;
+    protected ArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerLayerItem> Layers;
 
     public NGGraphicEngineDefinitionRenderEngineDisplayControllerItem() {
         super();
@@ -27,5 +28,7 @@ public class NGGraphicEngineDefinitionRenderEngineDisplayControllerItem extends 
     public String getImagename() { return Imagename; }
     public void setProps(ArrayList<NGSerializePropertyItem> value) { Props = value;}
     public ArrayList<NGSerializePropertyItem> getProps() { return Props; }
+    public void setLayers(ArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerLayerItem> value) { Layers = value;}
+    public ArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerLayerItem> getLayers() { return Layers; }
 
 }

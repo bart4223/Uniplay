@@ -49,7 +49,11 @@ public class NGGameEngineMemoryCell extends NGUniplayObject {
     }
 
     public Object getPropValue(String aName) {
-        return FProps.get(aName);
+        Object prop = FProps.get(aName);
+        if (prop == null) {
+            return FValue.getPropValue(aName);
+        }
+        return prop;
     }
 
     public void incValue() {

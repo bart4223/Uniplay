@@ -26,8 +26,7 @@ public class NGRenderEngineManager extends NGUniplayComponent {
 
     protected void DoRender(NGGraphicEngineRenderContext aContext) {
         for (NGCustomRenderEngineItem item : FRenderEngines) {
-            NGCustomRenderEngine re = item.getRenderEngine();
-            writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render engine [%s] start rendering...", re.getName()));
+            writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render engine [%s] start rendering...", item.getName()));
             ArrayList<NGGameEngineMemoryCell> cells = new ArrayList<NGGameEngineMemoryCell>();
             for (NGGameEngineMemoryCell cell : aContext.getCells()) {
                 if (item.getLayerIndex() == cell.getAddress().getPage()) {
@@ -35,7 +34,7 @@ public class NGRenderEngineManager extends NGUniplayComponent {
                 }
             }
             DoRenderItem(item, cells);
-            writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render engine [%s] [%d] cells rendered.", re.getName(), cells.size()));
+            writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render engine [%s] [%d] cells rendered.", item.getName(), cells.size()));
         }
     }
 
@@ -62,11 +61,10 @@ public class NGRenderEngineManager extends NGUniplayComponent {
         return FRenderEngines;
     }
 
-    public NGCustomRenderEngine getRenderEngine(String aName) {
+    public NGCustomRenderEngineItem getRenderEngine(String aName) {
         for(NGCustomRenderEngineItem item : FRenderEngines) {
-            NGCustomRenderEngine re = item.getRenderEngine();
-            if (re.getName().equals(aName)) {
-                return re;
+            if (item.getName().equals(aName)) {
+                return item;
             }
         }
         return null;
