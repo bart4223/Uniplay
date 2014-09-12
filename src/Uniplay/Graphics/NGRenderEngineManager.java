@@ -17,26 +17,26 @@ public class NGRenderEngineManager extends NGUniplayComponent {
         }
     }
 
-    protected Integer DoRender(NGGraphicEngineRenderContext aContext, NGRenderEngine aRenderEngine, Integer aLayerIndex) {
-        Integer count = 0;
-        for (NGGameEngineMemoryCell cell : aContext.FCells) {
-            if (aLayerIndex == cell.getAddress().getPage()) {
-                aRenderEngine.Cell = cell;
-                aRenderEngine.Render();
-                count++;
-            }
+    protected void DoRenderCells(NGRenderEngine aRenderEngine, ArrayList<NGGameEngineMemoryCell> aCells) {
+        for (NGGameEngineMemoryCell cell : aCells) {
+            aRenderEngine.Cell = cell;
+            aRenderEngine.Render();
         }
-        return count;
     }
 
     protected void DoRender(NGGraphicEngineRenderContext aContext) {
-        Integer count = 0;
-        writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render cells [%d] started...", aContext.getCells().size()));
         for (NGCustomRenderEngineItem item : FRenderEngines) {
-            NGRenderEngine renderengine = item.getRenderEngine();
-            count = count + DoRender(aContext, renderengine, item.getLayerIndex());
+            NGRenderEngine re = item.getRenderEngine();
+            writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render engine [%s] rendering started...", re.getName()));
+            ArrayList<NGGameEngineMemoryCell> cells = new ArrayList<NGGameEngineMemoryCell>();
+            for (NGGameEngineMemoryCell cell : aContext.getCells()) {
+                if (item.getLayerIndex() == cell.getAddress().getPage()) {
+                    cells.add(cell);
+                }
+            }
+            DoRenderCells(item.getRenderEngine(), cells);
+            writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render engine [%s] [%d] cells rendered.", re.getName(), cells.size()));
         }
-        writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render cells [%d] finished.", count));
     }
 
     @Override
