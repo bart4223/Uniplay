@@ -3,12 +3,21 @@ package Uniplay.Graphics;
 import Uniplay.Kernel.NGGameEngineMemoryAddress;
 import Uniwork.Visuals.NGDisplayController;
 
+import java.util.ArrayList;
+
 public class NG2DRenderEngine extends NGCustomRenderEngine {
 
     protected void prepareDisplayController(NGDisplayController aDisplayController) {
         NGGameEngineMemoryAddress address = Cell.getAddress();
         aDisplayController.setPosition(address.getOffset() * aDisplayController.getWidth(), address.getBase() * aDisplayController.getHeight());
         aDisplayController.setProperty(aDisplayController, String.format("%s.%s", ValueLayername, ValuePropname), Cell.getValueAsInteger());
+        Object obj = Cell.getPropValue("DisplayControllerLayerPropValues");
+        if (obj instanceof ArrayList<?>) {
+            ArrayList<NGDisplayControllerLayerProp> props = (ArrayList<NGDisplayControllerLayerProp>)obj;
+            for (NGDisplayControllerLayerProp prop : props) {
+                aDisplayController.setProperty(aDisplayController, String.format("%s.%s", prop.getName(), ValuePropname), prop.getValue());
+            }
+        }
     }
 
     @Override
