@@ -1,6 +1,7 @@
 package Uniplay.Graphics;
 
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.Kernel.NGGameEngineMemoryCell;
 
 public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
 
@@ -28,8 +29,31 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
             super.setProperty(aObject, aName, aValue);
     }
 
+    @Override
+    public Object getProperty(Object aObject, String aName) {
+        int index = aName.indexOf(".");
+        if (index >= 0) {
+            String name = aName.substring(0, index);
+            if (name.equals("RenderEngine")) {
+                return FRenderEngine.getProperty(FRenderEngine, aName.substring(index + 1, aName.length()));
+            }
+            else
+                return super.getProperty(aObject, aName);
+        }
+        else
+            return super.getProperty(aObject, aName);
+    }
+
     public void Initialize() {
         FRenderEngine.Initialize();
+    }
+
+    public void Render() {
+        FRenderEngine.Render();
+    }
+
+    public void setCell(NGGameEngineMemoryCell aCell) {
+        FRenderEngine.Cell = aCell;
     }
 
     public NGRenderEngine getRenderEngine() {

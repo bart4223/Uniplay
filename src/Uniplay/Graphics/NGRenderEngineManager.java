@@ -17,24 +17,24 @@ public class NGRenderEngineManager extends NGUniplayComponent {
         }
     }
 
-    protected void DoRenderCells(NGRenderEngine aRenderEngine, ArrayList<NGGameEngineMemoryCell> aCells) {
+    protected void DoRenderItem(NGCustomRenderEngineItem aItem, ArrayList<NGGameEngineMemoryCell> aCells) {
         for (NGGameEngineMemoryCell cell : aCells) {
-            aRenderEngine.Cell = cell;
-            aRenderEngine.Render();
+            aItem.setCell(cell);
+            aItem.Render();
         }
     }
 
     protected void DoRender(NGGraphicEngineRenderContext aContext) {
         for (NGCustomRenderEngineItem item : FRenderEngines) {
             NGRenderEngine re = item.getRenderEngine();
-            writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render engine [%s] rendering started...", re.getName()));
+            writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render engine [%s] start rendering...", re.getName()));
             ArrayList<NGGameEngineMemoryCell> cells = new ArrayList<NGGameEngineMemoryCell>();
             for (NGGameEngineMemoryCell cell : aContext.getCells()) {
                 if (item.getLayerIndex() == cell.getAddress().getPage()) {
                     cells.add(cell);
                 }
             }
-            DoRenderCells(item.getRenderEngine(), cells);
+            DoRenderItem(item, cells);
             writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render engine [%s] [%d] cells rendered.", re.getName(), cells.size()));
         }
     }
