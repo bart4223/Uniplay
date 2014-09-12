@@ -10,7 +10,7 @@ public class NG2DGraphicEngineEventHandlerGamePlayerPositionChanged extends NG2D
     @Override
     protected void DoHandleEvent() {
         super.DoHandleEvent();
-        NGRenderEngine re = F2DGraphicEngine.getRenderEngineManager().getRenderEngine("DEFAULT");
+        NGCustomRenderEngine re = F2DGraphicEngine.getRenderEngineManager().getRenderEngine("DEFAULT");
         NGDisplayController dc = re.getController("DEFAULT");
         if (dc.getInitialized()) {
             Integer x = 0;

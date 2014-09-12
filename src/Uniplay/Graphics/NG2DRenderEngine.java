@@ -3,7 +3,7 @@ package Uniplay.Graphics;
 import Uniplay.Kernel.NGGameEngineMemoryAddress;
 import Uniwork.Visuals.NGDisplayController;
 
-public class NG2DRenderEngine extends NGRenderEngine {
+public class NG2DRenderEngine extends NGCustomRenderEngine {
 
     @Override
     protected void DoBeforeRender() {

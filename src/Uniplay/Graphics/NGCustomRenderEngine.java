@@ -3,9 +3,9 @@ package Uniplay.Graphics;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
 import Uniwork.Visuals.NGDisplayManager;
 
-public class NGRenderEngine extends NGDisplayManager {
+public abstract class NGCustomRenderEngine extends NGDisplayManager {
 
-    public NGRenderEngine(String aName) {
+    public NGCustomRenderEngine(String aName) {
         super(null, aName);
         ValueLayername = "";
         ValuePropname = "";

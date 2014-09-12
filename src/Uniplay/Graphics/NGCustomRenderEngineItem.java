@@ -6,9 +6,9 @@ import Uniplay.Kernel.NGGameEngineMemoryCell;
 public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
 
     protected int FLayerIndex;
-    protected NGRenderEngine FRenderEngine;
+    protected NGCustomRenderEngine FRenderEngine;
 
-    public NGCustomRenderEngineItem(NGRenderEngine aRenderEngine, Integer aLayerIndex) {
+    public NGCustomRenderEngineItem(NGCustomRenderEngine aRenderEngine, Integer aLayerIndex) {
         super();
         FRenderEngine = aRenderEngine;
         FLayerIndex = aLayerIndex;
@@ -56,7 +56,7 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
         FRenderEngine.Cell = aCell;
     }
 
-    public NGRenderEngine getRenderEngine() {
+    public NGCustomRenderEngine getRenderEngine() {
         return FRenderEngine;
     }
 
