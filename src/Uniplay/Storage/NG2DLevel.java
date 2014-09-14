@@ -1,6 +1,5 @@
 package Uniplay.Storage;
 
-import Uniplay.Base.NGUniplayObjectDefinition;
 import Uniplay.Kernel.*;
 import Uniwork.Base.NGSerializePropertyItem;
 import Uniwork.Graphics.NGPoint2D;

@@ -1,15 +1,15 @@
 package Uniplay.Storage;
 
-public class NG2DGameObjectPosition extends NGGameObjectPosition {
+public class NG2DObjectPosition extends NGObjectPosition {
 
     protected double FX;
     protected double FY;
 
-    public NG2DGameObjectPosition() {
+    public NG2DObjectPosition() {
         this(0.0, 0.0);
     }
 
-    public NG2DGameObjectPosition(double aX, double aY) {
+    public NG2DObjectPosition(double aX, double aY) {
         super();
         FX = aX;
         FY = aY;

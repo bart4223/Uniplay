@@ -8,7 +8,7 @@ import Uniplay.Kernel.NGGameEngineModuleManager;
 
 public class NGDataStorageModule extends NGGameEngineModule {
 
-    protected NG2DLevelManager getLevelManager() {
+    protected NG2DLevelManager get2DLevelManager() {
         NG2DLevelManager manager = (NG2DLevelManager)ResolveObject(NGGameEngineConstants.CMP_2DLEVEL_MANAGER, NG2DLevelManager.class);
         return manager;
     }
@@ -38,7 +38,7 @@ public class NGDataStorageModule extends NGGameEngineModule {
     protected void registerObjects() {
         super.registerObjects();
         NGUniplayObjectRegistration registration = (NGUniplayObjectRegistration)ResolveObject(NGUniplayObjectRegistration.class);
-        registration.registerObject(NGGameEngineConstants.CMP_2DLEVEL_MANAGER, getLevelManager());
+        registration.registerObject(NGGameEngineConstants.CMP_2DLEVEL_MANAGER, get2DLevelManager());
         registration.registerObject(NGGameEngineConstants.CMP_PLAYER_MANAGER, getPlayerManager());
         registration.registerObject(NGGameEngineConstants.CMP_GAME_MANAGER, getGameManager());
     }

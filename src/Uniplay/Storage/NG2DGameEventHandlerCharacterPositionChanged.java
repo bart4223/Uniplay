@@ -3,9 +3,9 @@ package Uniplay.Storage;
 import Uniplay.Kernel.NGGameEngineEventHandler;
 import Uniplay.NGGameEngineConstants;
 
-public class NG2DGameEventHandlerPlayerPositionChanged extends NGGameEngineEventHandler {
+public class NG2DGameEventHandlerCharacterPositionChanged extends NGGameEngineEventHandler {
 
-    protected NG2DGamePlayerItem FPosition;
+    protected NG2DGameCharacter FCharacterPosition;
     protected NG2DGame FGame;
 
     protected double getCurrentLevelWidth() {
@@ -19,13 +19,13 @@ public class NG2DGameEventHandlerPlayerPositionChanged extends NGGameEngineEvent
     @Override
     protected void BeforeHandleEvent() {
         super.BeforeHandleEvent();
-        NG2DGamePlayerPositionChanged event = (NG2DGamePlayerPositionChanged)FEvent;
-        FPosition = event.getPlayerPosition();
+        NG2DGameCharacterPositionChanged event = (NG2DGameCharacterPositionChanged)FEvent;
+        FCharacterPosition = event.getCharacterPosition();
         FGame = event.getGame();
     }
 
-    public NG2DGameEventHandlerPlayerPositionChanged() {
-        super(NGGameEngineConstants.EVT_GAME_PLAYER_POSITION_CHANGED);
+    public NG2DGameEventHandlerCharacterPositionChanged() {
+        super(NGGameEngineConstants.EVT_GAME_CHARACTER_POSITION_CHANGED);
     }
 
 }

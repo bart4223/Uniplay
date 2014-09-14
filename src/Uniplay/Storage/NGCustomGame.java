@@ -3,6 +3,7 @@ package Uniplay.Storage;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Control.NGControlMimicManager;
 import Uniplay.Control.NGCustomControlMimic;
+import Uniplay.Kernel.NGGameEngineMemoryAddress;
 import Uniplay.Kernel.NGGameEngineMemoryIntegerCellValue;
 import Uniplay.Kernel.NGGameEngineMemoryManager;
 import Uniplay.NGGameEngineConstants;
@@ -14,8 +15,8 @@ public abstract class NGCustomGame extends NGUniplayComponent {
 
     public enum State {Created, Initialized, Started, Hold, Finished};
 
-    protected ArrayList<NGCustomGamePlayerItem> FPlayers;
-    protected ArrayList<NGCustomGamePlayerItem> FNPCs;
+    protected ArrayList<NGCustomGameCharacter> FPCs;
+    protected ArrayList<NGCustomGameCharacter> FNPCs;
     protected NGGameManager FManager;
     protected NGPlayerManager FPlayerManager;
     protected NGGameEngineMemoryManager FMemoryManager;
@@ -90,8 +91,8 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     }
 
     protected void collectPlayerStatistic() {
-        for (NGCustomGamePlayerItem item : FPlayers) {
-            NGPlayerGameStatistic statistic = getPlayerGameStatistic((NGPlayer)item.getPlayer());
+        for (NGCustomGameCharacter pc : FPCs) {
+            NGPlayerGameStatistic statistic = getPlayerGameStatistic((NGPlayer)pc.getPlayer());
             statistic.incTotal();
             writeLog(statistic.toString());
         }
@@ -129,20 +130,20 @@ public abstract class NGCustomGame extends NGUniplayComponent {
         return statistic;
     }
 
-    protected void resetPlayers() {
-        for (NGCustomGamePlayerItem item : FPlayers) {
-            item.reset();
+    protected void resetPCs() {
+        for (NGCustomGameCharacter pc : FPCs) {
+            pc.reset();
         }
     }
 
-    protected void addPlayerItem(NGCustomGamePlayerItem aPlayerItem) {
-        FPlayers.add(aPlayerItem);
-        writeLog(String.format("Player [%s] added in game [%s].", aPlayerItem.getPlayer().getName(), getName()));
+    protected void addPC(NGCustomGameCharacter aPlayer) {
+        FPCs.add(aPlayer);
+        writeLog(String.format("Player character [%s] added in game [%s].", aPlayer.getPlayer().getName(), getName()));
     }
 
-    protected void addNPCItem(NGCustomGamePlayerItem aPlayerItem) {
-        FNPCs.add(aPlayerItem);
-        writeLog(String.format("NPC [%s] added in game [%s].", aPlayerItem.getPlayer().getName(), getName()));
+    protected void addNPC(NGCustomGameCharacter aNPC) {
+        FNPCs.add(aNPC);
+        writeLog(String.format("NPC [%s] added in game [%s].", aNPC.getPlayer().getName(), getName()));
     }
 
     protected NGSoundManager getSoundManager() {
@@ -154,33 +155,33 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     }
 
     protected void raiseGameStartEvent() {
-        raiseEvent(NGGameEngineConstants.EVT_GAME_START, new NGCustomGameEventStartGame(this));
+        raiseEvent(NGGameEngineConstants.EVT_GAME_START, new NGGameEventStartGame(this));
     }
 
     protected void raiseGameBreakEvent() {
-        raiseEvent(NGGameEngineConstants.EVT_GAME_BREAK, new NGCustomGameEventBreakGame(this));
+        raiseEvent(NGGameEngineConstants.EVT_GAME_BREAK, new NGGameEventBreakGame(this));
     }
 
     protected void raiseGameContinueEvent() {
-        raiseEvent(NGGameEngineConstants.EVT_GAME_CONTINUE, new NGCustomGameEventContinueGame(this));
+        raiseEvent(NGGameEngineConstants.EVT_GAME_CONTINUE, new NGGameEventContinueGame(this));
     }
 
     protected void raiseGameFinishEvent() {
-        raiseEvent(NGGameEngineConstants.EVT_GAME_FINISH, new NGCustomGameEventFinishGame(this));
+        raiseEvent(NGGameEngineConstants.EVT_GAME_FINISH, new NGGameEventFinishGame(this));
     }
 
     protected void raiseLevelStartEvent() {
-        raiseEvent(NGGameEngineConstants.EVT_GAME_LEVEL_START, new NGCustomGameEventStartLevel(this));
+        raiseEvent(NGGameEngineConstants.EVT_GAME_LEVEL_START, new NGGameEventStartLevel(this));
     }
 
     protected void raiseLevelFinishEvent() {
-        raiseEvent(NGGameEngineConstants.EVT_GAME_LEVEL_FINISH, new NGCustomGameEventFinishLevel(this));
+        raiseEvent(NGGameEngineConstants.EVT_GAME_LEVEL_FINISH, new NGGameEventFinishLevel(this));
     }
 
     public NGCustomGame(NGGameManager aManager, String aName) {
         super(aManager, aName);
-        FPlayers = new ArrayList<NGCustomGamePlayerItem>();
-        FNPCs = new ArrayList<NGCustomGamePlayerItem>();
+        FPCs = new ArrayList<NGCustomGameCharacter>();
+        FNPCs = new ArrayList<NGCustomGameCharacter>();
         FManager = aManager;
         FPlayerManager = null;
         FState = State.Created;
@@ -189,8 +190,8 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     }
 
     @Override
-    public void Initialize() {
-        super.Initialize();
+    public void DoInitialized() {
+        super.DoInitialized();
         FState = State.Initialized;
     }
 
@@ -205,16 +206,16 @@ public abstract class NGCustomGame extends NGUniplayComponent {
         return FPlayerManager;
     }
 
-    public ArrayList<NGCustomGamePlayerItem> getPlayers() {
-        return FPlayers;
+    public ArrayList<NGCustomGameCharacter> getPCs() {
+        return FPCs;
     }
 
-    public ArrayList<NGCustomGamePlayerItem> getNPCs() {
+    public ArrayList<NGCustomGameCharacter> getNPCs() {
         return FNPCs;
     }
 
-    public void removeAllPlayers() {
-        FPlayers.clear();
+    public void removeAllPCs() {
+        FPCs.clear();
     }
 
     public void removeAllNPCs() {
@@ -311,6 +312,10 @@ public abstract class NGCustomGame extends NGUniplayComponent {
 
     public Boolean InUpdate() {
         return FUpdateCount > 0;
+    }
+
+    public void refreshMemoryCell(NGGameEngineMemoryAddress aAddress) {
+        getMemoryManager().refreshCell(getMemoryName(), aAddress);
     }
 
 }

@@ -48,11 +48,17 @@ public class NGPlayerManager extends NGUniplayComponent {
         FPlayers = new ArrayList<NGPlayerItem>();
     }
 
-    public NGPlayer newPlayer(String aName, String aNickname) {
-        NGPlayer player = new NGPlayer(aName, aNickname);
-        FPlayers.add(new NGPlayerItem(player));
-        writeLog(String.format("Player %s[%s] added.", player.getName(), player.getNickname()));
-        return player;
+    public NGPlayer newPlayer(Class aPlayerClass, String aName, String aNickname) {
+        try {
+            NGPlayer player = (NGPlayer)(aPlayerClass.getConstructor(String.class, String.class).newInstance(aName, aNickname));
+            FPlayers.add(new NGPlayerItem(player));
+            writeLog(String.format("Player %s[%s] added.", player.getName(), player.getNickname()));
+            return player;
+        }
+        catch (Exception e) {
+            writeError("newPlayer", e.getMessage());
+            return null;
+        }
     }
 
     public NGPlayerStatisticItem addStatistic(NGCustomPlayerStatistic aStatistic) {

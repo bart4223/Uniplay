@@ -41,7 +41,7 @@ public class NG2DGame extends NGCustomGame {
     @Override
     protected void resetAll() {
         super.resetAll();
-        resetPlayers();
+        resetPCs();
         removeAllNPCs();
         FLevelIndex = 1;
     }
@@ -76,16 +76,16 @@ public class NG2DGame extends NGCustomGame {
 
     protected void assignPlayerPositions(NG2DGameFieldLayer aLayer) {
         Integer i = 0;
-        if (FPlayers.size() > i) {
+        if (FPCs.size() > i) {
             for (NGPropertyItem prop : aLayer.getProps().getItems()) {
                 String obj = NGStrings.getStringPos(prop.getName(), "\\.", 3);
                 if (obj.equals("PLAYER")) {
                     String op = NGStrings.getStringPos(prop.getName(), "\\.", 4);
                     if (op.equals("POSITION")) {
-                        NG2DGameObjectPosition pos = (NG2DGameObjectPosition)prop.getValue();
-                        setPlayerPosition(i, pos.getX(), pos.getY());
+                        NG2DObjectPosition pos = (NG2DObjectPosition)prop.getValue();
+                        setPCPosition(i, pos.getX(), pos.getY());
                         i++;
-                        if (i >= FPlayers.size()) {
+                        if (i >= FPCs.size()) {
                             return;
                         }
                     }
@@ -116,16 +116,34 @@ public class NG2DGame extends NGCustomGame {
         writeLog(String.format("%d cell(s) value in memory [%s] stored.", items.size(), getMemoryName()));
     }
 
-    protected void add2DGamePlayerItem(NGPlayer aPlayer, Integer aLayer, double aX, double aY, Integer aMaxLives) {
-        NG2DGamePlayerItem item = new NG2DGamePlayerItem(this, aPlayer, aLayer, aMaxLives);
-        item.setPosition(aX, aY);
-        addPlayerItem(item);
+    protected Class getGameCharacterClass() {
+        return NG2DGameCharacter.class;
     }
 
-    protected void add2DGameNPCItem(NGNonPlayer aNPC, Integer aLayer, double aX, double aY, Integer aMaxLives) {
-        NG2DGamePlayerItem item = new NG2DGamePlayerItem(this, aNPC, aLayer, aMaxLives);
-        item.setPosition(aX, aY);
-        addNPCItem(item);
+    protected NG2DGameCharacter createGameCharacter(NGCustomPlayer aPlayer) {
+        try {
+            return (NG2DGameCharacter)(getGameCharacterClass().getConstructor(NGCustomGame.class, NGCustomPlayer.class).newInstance(this, aPlayer));
+        }
+        catch (Exception e) {
+            writeError("createGameCharacter", e.getMessage());
+        }
+        return null;
+    }
+
+    protected void add2DGamePC(NGPlayer aPlayer, Integer aLayer, double aX, double aY, Integer aMaxLives) {
+        NG2DGameCharacter character = createGameCharacter(aPlayer);
+        character.setPosition(aX, aY);
+        character.setMaxLives(aMaxLives);
+        character.setLayer(aLayer);
+        addPC(character);
+    }
+
+    protected void add2DGameNPC(NGNonPlayer aNPC, Integer aLayer, double aX, double aY, Integer aMaxLives) {
+        NG2DGameCharacter character = createGameCharacter(aNPC);
+        character.setPosition(aX, aY);
+        character.setMaxLives(aMaxLives);
+        character.setLayer(aLayer);
+        addNPC(character);
     }
 
     protected NG2DLevelManager getLevelManager() {
@@ -135,14 +153,14 @@ public class NG2DGame extends NGCustomGame {
         return FLevelManager;
     }
 
-    protected void raisePositionChangedEvent(NG2DGamePlayerItem aPlayerItem) {
-        NG2DGamePlayerPositionChanged event = new NG2DGamePlayerPositionChanged(this, aPlayerItem);
-        raiseEvent(NGGameEngineConstants.EVT_GAME_PLAYER_POSITION_CHANGED, event);
+    protected void raisePositionChangedEvent(NG2DGameCharacter aPlayerItem) {
+        NG2DGameCharacterPositionChanged event = new NG2DGameCharacterPositionChanged(this, aPlayerItem);
+        raiseEvent(NGGameEngineConstants.EVT_GAME_CHARACTER_POSITION_CHANGED, event);
     }
 
 
-    protected NG2DGamePlayerItem get2DGamePlayerItem(Integer aIndex) {
-        return (NG2DGamePlayerItem)FPlayers.get(aIndex);
+    protected NG2DGameCharacter get2DGamePC(Integer aIndex) {
+        return (NG2DGameCharacter)FPCs.get(aIndex);
     }
 
     public NG2DGame(NGGameManager aManager, String aName) {
@@ -153,15 +171,15 @@ public class NG2DGame extends NGCustomGame {
         FLevelIndex = 1;
     }
 
-    public void add2DGamePlayer(NGPlayer aPlayer) {
-        add2DGamePlayerItem(aPlayer, 1, 0.0, 0.0, 0);
+    public void add2DGamePC(NGPlayer aPlayer) {
+        add2DGamePC(aPlayer, 1, 0.0, 0.0, 0);
     }
 
-    public void setPlayerPosition(Integer aIndex, double aX, double aY) {
-        setPlayerPosition(get2DGamePlayerItem(aIndex), aX, aY);
+    public void setPCPosition(Integer aIndex, double aX, double aY) {
+        setPCPosition(get2DGamePC(aIndex), aX, aY);
     }
 
-    public void setPlayerPosition(NG2DGamePlayerItem aPlayerItem, double aX, double aY) {
+    public void setPCPosition(NG2DGameCharacter aPlayerItem, double aX, double aY) {
         aPlayerItem.setPosition(aX, aY);
         raisePositionChangedEvent(aPlayerItem);
         writeLog(String.format("Player's [%s] position is (%.1f/%.1f).", aPlayerItem.getPlayer().getName(), aPlayerItem.getPosition().getX(), aPlayerItem.getPosition().getY()));

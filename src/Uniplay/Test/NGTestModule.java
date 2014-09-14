@@ -3,7 +3,6 @@ package Uniplay.Test;
 import Uniplay.Kernel.*;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Sound.NGSoundManager;
-import Uniplay.Storage.NGPlayerManager;
 import Uniwork.Base.NGObjectRequestRegistration;
 import Uniwork.Misc.NGTickEvent;
 import Uniwork.Misc.NGTickListener;
@@ -51,14 +50,6 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
         orr.registerObjectRequest("TestModule", this, "Test", "Test");
     }
 
-    protected void addTestPlayers() {
-        NGPlayerManager manager = (NGPlayerManager)ResolveObject(NGGameEngineConstants.CMP_PLAYER_MANAGER, NGPlayerManager.class);
-        manager.newPlayer("BART4223", "Bart4223");
-        manager.newPlayer("SEPPI", "Seppi");
-        manager.newPlayer("XMEN", "XMen");
-        manager.newPlayer("SKYGENERATION", "Sky");
-        manager.setCurrentPlayer("BART4223");
-    }
 
     public NGTestModule(NGGameEngineModuleManager aManager, String aName) {
         super(aManager, aName);
@@ -89,7 +80,7 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
     }
 
     public void handleKernelInitialized() {
-        addTestPlayers();
+
     }
 
 }
