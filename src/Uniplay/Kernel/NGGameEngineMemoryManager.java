@@ -12,7 +12,7 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         writeLog(String.format("Memory [%s] %d cells allocated.", aMemory.getName(), aMemory.getAllocated()));
     }
 
-    protected NGGameEngineMemory newMemory(String aName, Class<NGGameEngineMemoryCustomCellValue> aCellValueClass) {
+    protected NGGameEngineMemory newMemory(String aName, Class<NGGameEngineMemoryObjectCellValue> aCellValueClass) {
         NGGameEngineMemory memory = new NGGameEngineMemory(this, aName, aCellValueClass);
         writeLog(String.format("Memory [%s] created.", aName));
         return memory;

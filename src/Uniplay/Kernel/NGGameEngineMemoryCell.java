@@ -6,13 +6,13 @@ import Uniwork.Base.NGPropertyList;
 public class NGGameEngineMemoryCell extends NGUniplayObject {
 
     protected NGGameEngineMemoryAddress FAddress;
-    protected NGGameEngineMemoryCustomCellValue FValue;
+    protected NGGameEngineMemoryObjectCellValue FValue;
     protected NGPropertyList FProps;
 
     public NGGameEngineMemoryCell(Integer aPage, Integer aBase, Integer aOffset, Class aCellValueClass) {
         super();
         try {
-            FValue = (NGGameEngineMemoryCustomCellValue)aCellValueClass.getConstructor().newInstance();
+            FValue = (NGGameEngineMemoryObjectCellValue)aCellValueClass.getConstructor().newInstance();
         } catch (Exception e) {
             FValue = null;
         }
@@ -24,7 +24,7 @@ public class NGGameEngineMemoryCell extends NGUniplayObject {
         return FAddress;
     }
 
-    public NGGameEngineMemoryCustomCellValue getValue() {
+    public NGGameEngineMemoryObjectCellValue getValue() {
         return FValue;
     }
 
@@ -51,7 +51,7 @@ public class NGGameEngineMemoryCell extends NGUniplayObject {
     public Object getPropValue(String aName) {
         Object prop = FProps.get(aName);
         if (prop == null) {
-            return FValue.getPropValue(aName);
+            return FValue.getProperty(FValue, aName);
         }
         return prop;
     }

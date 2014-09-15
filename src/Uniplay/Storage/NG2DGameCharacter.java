@@ -34,4 +34,8 @@ public class NG2DGameCharacter extends NGCustomGameCharacter {
         FLayer = aValue;
     }
 
+    public Boolean IsCharacterFromAddress(NGGameEngineMemoryAddress aAddress) {
+        return getMemoryAddress().equals(aAddress);
+    }
+
 }

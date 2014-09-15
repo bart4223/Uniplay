@@ -3,9 +3,7 @@ package Uniplay.Storage;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Control.NGControlMimicManager;
 import Uniplay.Control.NGCustomControlMimic;
-import Uniplay.Kernel.NGGameEngineMemoryAddress;
-import Uniplay.Kernel.NGGameEngineMemoryIntegerCellValue;
-import Uniplay.Kernel.NGGameEngineMemoryManager;
+import Uniplay.Kernel.*;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Sound.NGSoundManager;
 
@@ -150,10 +148,6 @@ public abstract class NGCustomGame extends NGUniplayComponent {
         return (NGSoundManager)ResolveObject(NGGameEngineConstants.CMP_SOUND_MANAGER, NGSoundManager.class);
     }
 
-    protected Class getMemoryCellValueClass() {
-        return NGGameEngineMemoryIntegerCellValue.class;
-    }
-
     protected void raiseGameStartEvent() {
         raiseEvent(NGGameEngineConstants.EVT_GAME_START, new NGGameEventStartGame(this));
     }
@@ -176,6 +170,27 @@ public abstract class NGCustomGame extends NGUniplayComponent {
 
     protected void raiseLevelFinishEvent() {
         raiseEvent(NGGameEngineConstants.EVT_GAME_LEVEL_FINISH, new NGGameEventFinishLevel(this));
+    }
+
+    protected void assignMemoryCellValueFrom(NGGameEngineMemoryAddress aAddress, NGGameEngineMemoryObjectCellValue aCellValue, Object aObject) {
+
+    }
+
+    protected NGGameEngineMemoryObjectCellValue createMemoryCellValueFrom(NGGameEngineMemoryAddress aAddress, Object aObject) {
+        NGGameEngineMemoryObjectCellValue result;
+        try {
+            result = (NGGameEngineMemoryObjectCellValue)getMemoryCellValueClass().getConstructor().newInstance();
+        }
+        catch (Exception e) {
+            result = null;
+            writeError("createMemoryCellValue", e.getMessage());
+        }
+        assignMemoryCellValueFrom(aAddress, result, aObject);
+        return result;
+    }
+
+    protected Class getMemoryCellValueClass() {
+        return NGGameEngineMemoryObjectCellValue.class;
     }
 
     public NGCustomGame(NGGameManager aManager, String aName) {

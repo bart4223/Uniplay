@@ -49,11 +49,14 @@ public class NG2DGame extends NGCustomGame {
     @Override
     protected void DoBeforeStartLevel() {
         super.DoBeforeStartLevel();
-        NG2DLevel level = loadLevel(String.format(C_LEVEL_NAME, FLevelIndex));
-        setCurrentLevel(level);
-        setCurrentGameFieldLayer(level.getGameField().getLayer("DEFAULT"));
-        loadLevelToMemory(level, getCurrentGameFieldLayer());
-        assignPlayerPositions(getCurrentGameFieldLayer());
+        NG2DLevel level = null;
+        BeforeLoadLevel();
+        try {
+            level = loadLevel(String.format(C_LEVEL_NAME, FLevelIndex));                    }
+        finally {
+            AfterLoadLevel(level);
+            loadLevelToMemory(level, getCurrentGameFieldLayer());
+        }
     }
 
     @Override
@@ -62,13 +65,27 @@ public class NG2DGame extends NGCustomGame {
         FLevelIndex++;
     }
 
+    protected void BeforeLoadLevel() {
+
+    }
+
+    protected void assignGameObjects() {
+        assignPlayerPositions(getCurrentGameFieldLayer());
+    }
+
+    protected void AfterLoadLevel(NG2DLevel aLevel) {
+        reallocateLevelMemory(aLevel);
+        setCurrentLevel(aLevel);
+        setCurrentGameFieldLayer(aLevel.getGameField().getLayer("DEFAULT"));
+        assignGameObjects();
+    }
+
     protected NG2DLevel loadLevel(String aName) {
         NG2DLevelManager lm = getLevelManager();
         NG2DLevel level = lm.addLevel(aName);
         NGObjectDeserializer Deserializer = new NGObjectXMLDeserializerFile(level, String.format("resources/levels/%s.ulf", aName));
         Deserializer.setLogManager(getLogManager());
         if (Deserializer.deserializeObject()) {
-            reallocateLevelMemory(level);
             writeLog(String.format("Level \"%s\"[%s] loaded.", level.getCaption(), level.getName()));
         }
         return level;
@@ -104,7 +121,8 @@ public class NG2DGame extends NGCustomGame {
         Integer base = 0;
         Integer offset = 0;
         for (NGGameEngineMemoryCell cell : aLayer.getCells()) {
-            item = new NGGameEngineMemoryCellValueItem(new NGGameEngineMemoryAddress(1, base, offset), cell.getValue());
+            NGGameEngineMemoryAddress address = new NGGameEngineMemoryAddress(1, base, offset);
+            item = new NGGameEngineMemoryCellValueItem(address, createMemoryCellValueFrom(address, cell.getValue()));
             items.add(item);
             offset = offset + 1;
             if (offset >= aLevel.getGameFieldSize().getWidth()) {
@@ -183,6 +201,26 @@ public class NG2DGame extends NGCustomGame {
         aPlayerItem.setPosition(aX, aY);
         raisePositionChangedEvent(aPlayerItem);
         writeLog(String.format("Player's [%s] position is (%.1f/%.1f).", aPlayerItem.getPlayer().getName(), aPlayerItem.getPosition().getX(), aPlayerItem.getPosition().getY()));
+    }
+
+    public NG2DGameCharacter getPCfromAddress(NGGameEngineMemoryAddress aAddress) {
+        for (NGCustomGameCharacter item : FPCs) {
+            NG2DGameCharacter character = (NG2DGameCharacter)item;
+            if (character.IsCharacterFromAddress(aAddress)) {
+                return character;
+            }
+        }
+        return null;
+    }
+
+    public NG2DGameCharacter getNPCfromAddress(NGGameEngineMemoryAddress aAddress) {
+        for (NGCustomGameCharacter item : FNPCs) {
+            NG2DGameCharacter character = (NG2DGameCharacter)item;
+            if (character.IsCharacterFromAddress(aAddress)) {
+                return character;
+            }
+        }
+        return null;
     }
 
 }

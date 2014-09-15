@@ -8,7 +8,7 @@ public class NGGameEngineMemoryAddress extends NGUniplayObject {
     protected int FBase;
     protected int FOffset;
 
-    public NGGameEngineMemoryAddress(int aPage, int aBase, int aOffset) {
+    public NGGameEngineMemoryAddress(Integer aPage, Integer aBase, Integer aOffset) {
         super();
         FPage = aPage;
         FBase = aBase;

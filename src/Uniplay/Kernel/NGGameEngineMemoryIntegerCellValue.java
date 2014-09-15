@@ -1,6 +1,6 @@
 package Uniplay.Kernel;
 
-public class NGGameEngineMemoryIntegerCellValue extends NGGameEngineMemoryCustomCellValue {
+public class NGGameEngineMemoryIntegerCellValue extends NGGameEngineMemoryObjectCellValue {
 
     public NGGameEngineMemoryIntegerCellValue() {
         this(0);
