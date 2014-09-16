@@ -18,7 +18,7 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
     }
 
     protected void DoRender() {
-        FRenderEngine.setCurrentController((String)FCell.getProperty(FCell, NGGameEngineConstants.PROP_GRAPHIC_DISPLAYCONTROLLER_NAME));
+        FRenderEngine.setCurrentController((String) FCell.getProperty(FCell, NGGameEngineConstants.PROP_GRAPHIC_DISPLAYCONTROLLER_NAME));
         FRenderEngine.Cell = FCell;
         FRenderEngine.Render();
     }
@@ -56,11 +56,13 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
             if (name.equals("RenderEngine")) {
                 return FRenderEngine.getProperty(FRenderEngine, aName.substring(index + 1, aName.length()));
             }
-            else
+            else {
                 return super.getProperty(aObject, aName);
+            }
         }
-        else
+        else {
             return super.getProperty(aObject, aName);
+        }
     }
 
     public void Initialize() {
