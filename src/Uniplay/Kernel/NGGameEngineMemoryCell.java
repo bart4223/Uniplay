@@ -2,6 +2,7 @@ package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayObject;
 import Uniwork.Base.NGPropertyList;
+import Uniwork.Base.NGQualityOfService;
 
 public class NGGameEngineMemoryCell extends NGUniplayObject {
 
@@ -44,16 +45,25 @@ public class NGGameEngineMemoryCell extends NGUniplayObject {
         return FValue.getInteger();
     }
 
-    public void setPropValue(String aName, Object aValue) {
-        FProps.set(aName, aValue);
+    @Override
+    public Boolean setProperty(Object aObject, String aName, Object aValue) {
+        Boolean res = super.setProperty(aObject, aName, aValue);
+        if (!res) {
+           res = FProps.set(aName, aValue) != null;
+        }
+        return res;
     }
 
-    public Object getPropValue(String aName) {
-        Object prop = FProps.get(aName);
-        if (prop == null) {
-            return FValue.getProperty(FValue, aName);
+    @Override
+    public Object getProperty(Object aObject, String aName) {
+        Object res =  super.getProperty(aObject, aName);
+        if (res == null) {
+            res = FProps.get(aName);
+            if (res == null) {
+                res = FValue.getProperty(FValue, aName);
+            }
         }
-        return prop;
+        return res;
     }
 
     public void incValue() {

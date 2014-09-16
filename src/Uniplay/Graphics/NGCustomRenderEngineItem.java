@@ -18,7 +18,7 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
     }
 
     protected void DoRender() {
-        FRenderEngine.setCurrentController((String)FCell.getPropValue("DisplayControllerName"));
+        FRenderEngine.setCurrentController((String)FCell.getProperty(FCell, "DisplayControllerName"));
         FRenderEngine.Cell = FCell;
         FRenderEngine.Render();
     }
@@ -31,18 +31,22 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
     }
 
     @Override
-    public void setProperty(Object aObject, String aName, Object aValue) {
-        int index = aName.indexOf(".");
+    public Boolean setProperty(Object aObject, String aName, Object aValue) {
+        Boolean res;
+        Integer index = aName.indexOf(".");
         if (index >= 0) {
             String name = aName.substring(0, index);
             if (name.equals("RenderEngine")) {
-                FRenderEngine.setProperty(FRenderEngine, aName.substring(index + 1, aName.length()), aValue);
+                res = FRenderEngine.setProperty(FRenderEngine, aName.substring(index + 1, aName.length()), aValue);
             }
-            else
-                super.setProperty(aObject, aName, aValue);
+            else {
+                res = super.setProperty(aObject, aName, aValue);
+            }
         }
-        else
-            super.setProperty(aObject, aName, aValue);
+        else {
+            res = super.setProperty(aObject, aName, aValue);
+        }
+        return res;
     }
 
     @Override

@@ -25,12 +25,13 @@ public class NGGameEngineMemoryObjectCellValue extends NGUniplayObject implement
     }
 
     @Override
-    public void setProperty(Object aObject, String aName, Object aValue) {
-        super.setProperty(aObject, aName, aValue);
-        if (FObject instanceof NGQualityOfService) {
+    public Boolean setProperty(Object aObject, String aName, Object aValue) {
+        Boolean res = super.setProperty(aObject, aName, aValue);
+        if (!res && FObject instanceof NGQualityOfService) {
             NGQualityOfService QOS = (NGQualityOfService)FObject;
-            QOS.setProperty(FObject, aName, aValue);
+            res = QOS.setProperty(FObject, aName, aValue);
         }
+        return res;
     }
 
     @Override
