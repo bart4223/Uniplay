@@ -4,7 +4,6 @@ import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
 import Uniplay.NGGameEngineConstants;
-import Uniwork.Misc.NGStrings;
 
 import java.util.ArrayList;
 
@@ -31,8 +30,11 @@ public class NGRenderEngineManager extends NGUniplayComponent {
             writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render engine [%s] start rendering...", item.getName()));
             cells.clear();
             for (NGGameEngineMemoryCell cell : aContext.getCells()) {
-                if (NGStrings.IsStringInString(item.getName(), (String)cell.getProperty(cell, NGGameEngineConstants.PROP_GRAPHIC_RENDERENGINE_NAME), ",")) {
-                    cells.add(cell);
+                if (cell.getValueAsObject() instanceof NGRenderEngineInformation) {
+                    NGRenderEngineInformation ri = (NGRenderEngineInformation)cell.getValueAsObject();
+                    if (ri.IsRenderEngineResponsible(item)) {
+                        cells.add(cell);
+                    }
                 }
             }
             DoRenderItem(item, cells);

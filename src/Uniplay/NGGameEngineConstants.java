@@ -67,12 +67,6 @@ public abstract class NGGameEngineConstants {
     public final static String EVT_GAME_LEVEL_FINISH                        = String.format("%s.%s.%s", CMP_GAME, "Level", "Finish");
     public final static String EVT_GAME_CHARACTER_POSITION_CHANGED          = String.format("%s.%s.%s.%s", CMP_GAME, "Character", "Position", "Changed");
 
-    // --------------------- Props ------------------------------------------
-    // Graphic Engine
-    public final static String PROP_GRAPHIC_RENDERENGINE_NAME               = String.format("%s.%s.%s", CMP_GRAPHIC, "RenderEngine", "Name");
-    public final static String PROP_GRAPHIC_DISPLAYCONTROLLER_NAME          = String.format("%s.%s.%s", CMP_GRAPHIC, "DisplayController", "Name");
-    public final static String PROP_GRAPHIC_DISPLAYCONTROLLER_LAYER_PROPS   = String.format("%s.%s.%s.%s", CMP_GRAPHIC, "DisplayController", "Layer", "Props");
-
     // --------------------- ORB --------------------------------------------
     // Mimic
     public final static String MIMIC_OBJECTREQUESTMETHOD_DEFAULT            = "Execute";

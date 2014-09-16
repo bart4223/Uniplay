@@ -2,7 +2,6 @@ package Uniplay.Graphics;
 
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
-import Uniplay.NGGameEngineConstants;
 import Uniwork.Visuals.NGDisplayController;
 import Uniwork.Visuals.NGDisplayView;
 
@@ -18,7 +17,10 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
     }
 
     protected void DoRender() {
-        FRenderEngine.setCurrentController((String) FCell.getProperty(FCell, NGGameEngineConstants.PROP_GRAPHIC_DISPLAYCONTROLLER_NAME));
+        if (FCell.getValueAsObject() instanceof NGRenderEngineInformation) {
+            NGRenderEngineInformation ri = (NGRenderEngineInformation)FCell.getValueAsObject();
+            FRenderEngine.setCurrentController(ri.getResponsibleDisplayControllerName(this));
+        }
         FRenderEngine.Cell = FCell;
         FRenderEngine.Render();
     }
