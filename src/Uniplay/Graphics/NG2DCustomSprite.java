@@ -8,7 +8,6 @@ public abstract class NG2DCustomSprite extends NGUniplayObject implements NGRend
 
     public NG2DCustomSprite() {
         super();
-        FID = 0;
     }
 
     public Integer getID() {
