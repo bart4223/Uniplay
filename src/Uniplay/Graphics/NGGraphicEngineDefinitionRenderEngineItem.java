@@ -10,7 +10,6 @@ public class NGGraphicEngineDefinitionRenderEngineItem extends NGUniplayObjectDe
     protected String Name = "";
     protected String Classname = "";
     protected String Layername = "";
-    protected Integer LayerIndex = 0;
     protected ArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerItem> DisplayControllers;
     protected ArrayList<NGSerializePropertyItem> Props;
 
@@ -22,8 +21,6 @@ public class NGGraphicEngineDefinitionRenderEngineItem extends NGUniplayObjectDe
     public String getName() { return Name; }
     public void setLayername(String value) { Layername = value;}
     public String getLayername() { return Layername; }
-    public void setLayerIndex(Integer value) { LayerIndex = value;}
-    public Integer getLayerIndex() { return LayerIndex; }
     public void setDisplayControllers(ArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerItem> value) { DisplayControllers = value;}
     public ArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerItem> getDisplayControllers() { return DisplayControllers; }
     public void setClassname(String value) { Classname = value;}

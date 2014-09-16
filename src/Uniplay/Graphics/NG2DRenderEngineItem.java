@@ -6,8 +6,8 @@ public class NG2DRenderEngineItem extends NGCustomRenderEngineItem {
 
     protected NGDisplayView FView;
 
-    public NG2DRenderEngineItem(NGCustomRenderEngine aRenderEngine, int aLayerIndex, double aWidth, double aHeight) {
-        super(aRenderEngine, aLayerIndex);
+    public NG2DRenderEngineItem(NGCustomRenderEngine aRenderEngine, double aWidth, double aHeight) {
+        super(aRenderEngine);
         FView = new NGDisplayView(aWidth, aHeight);
         setDisplayView(FView);
     }

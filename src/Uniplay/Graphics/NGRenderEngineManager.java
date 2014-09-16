@@ -29,7 +29,7 @@ public class NGRenderEngineManager extends NGUniplayComponent {
             writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render engine [%s] start rendering...", item.getName()));
             ArrayList<NGGameEngineMemoryCell> cells = new ArrayList<NGGameEngineMemoryCell>();
             for (NGGameEngineMemoryCell cell : aContext.getCells()) {
-                if (item.getLayerIndex() == cell.getAddress().getPage()) {
+                if (item.getName().equals(cell.getProperty(cell, NGGameEngineConstants.PROP_GRAPHIC_RENDERENGINE_NAME))) {
                     cells.add(cell);
                 }
             }

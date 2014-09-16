@@ -2,6 +2,7 @@ package Uniplay.Graphics;
 
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
+import Uniplay.NGGameEngineConstants;
 import Uniwork.Visuals.NGDisplayController;
 import Uniwork.Visuals.NGDisplayView;
 
@@ -11,22 +12,20 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
 
     protected NGCustomRenderEngine FRenderEngine;
     protected NGGameEngineMemoryCell FCell;
-    protected Integer FLayerIndex;
 
     protected void DoInitialize() {
         FRenderEngine.Initialize();
     }
 
     protected void DoRender() {
-        FRenderEngine.setCurrentController((String)FCell.getProperty(FCell, "DisplayControllerName"));
+        FRenderEngine.setCurrentController((String)FCell.getProperty(FCell, NGGameEngineConstants.PROP_GRAPHIC_DISPLAYCONTROLLER_NAME));
         FRenderEngine.Cell = FCell;
         FRenderEngine.Render();
     }
 
-    public NGCustomRenderEngineItem(NGCustomRenderEngine aRenderEngine, Integer aLayerIndex) {
+    public NGCustomRenderEngineItem(NGCustomRenderEngine aRenderEngine) {
         super();
         FRenderEngine = aRenderEngine;
-        FLayerIndex = aLayerIndex;
         FCell = null;
     }
 
@@ -102,10 +101,6 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
 
     public NGDisplayView getDisplayView() {
         return FRenderEngine.getView();
-    }
-
-    public int getLayerIndex() {
-        return FLayerIndex;
     }
 
     public String getName() {
