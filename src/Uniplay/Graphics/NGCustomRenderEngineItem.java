@@ -5,6 +5,8 @@ import Uniplay.Kernel.NGGameEngineMemoryCell;
 import Uniwork.Visuals.NGDisplayController;
 import Uniwork.Visuals.NGDisplayView;
 
+import java.util.ArrayList;
+
 public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
 
     protected NGCustomRenderEngine FRenderEngine;
@@ -80,6 +82,14 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
 
     public NGDisplayController getDisplayController(String aName) {
         return FRenderEngine.getController(aName);
+    }
+
+    public NGDisplayController getCurrentDisplayControllers() {
+        return FRenderEngine.getCurrentController();
+    }
+
+    public ArrayList<NGDisplayController> getDisplayControllers() {
+        return FRenderEngine.getControllers();
     }
 
     public void setDisplayView(NGDisplayView aView) {
