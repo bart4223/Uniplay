@@ -41,8 +41,6 @@ public class NG2DGame extends NGCustomGame {
     @Override
     protected void resetAll() {
         super.resetAll();
-        resetPCs();
-        removeAllNPCs();
         FLevelIndex = 1;
     }
 

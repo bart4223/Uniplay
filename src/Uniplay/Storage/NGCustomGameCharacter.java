@@ -6,6 +6,10 @@ public abstract class NGCustomGameCharacter extends NGCustomGameObject {
     protected Integer FMaxLives;
     protected Integer FCurrentLives;
 
+    protected void DoReset() {
+        FCurrentLives = FMaxLives;
+    }
+
     public NGCustomGameCharacter(NGCustomGame aGame, NGCustomPlayer aPlayer) {
         super(aGame);
         FPlayer = aPlayer;
@@ -30,7 +34,7 @@ public abstract class NGCustomGameCharacter extends NGCustomGameObject {
     }
 
     public void reset() {
-        FCurrentLives = FMaxLives;
+        DoReset();
     }
 
     public void subCurrentLives() {

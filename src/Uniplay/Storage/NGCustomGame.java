@@ -53,7 +53,8 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     }
 
     protected void DoBeforeStartLevel() {
-
+        resetPCs();
+        removeAllNPCs();
     }
 
     protected void DoStartLevel() {
