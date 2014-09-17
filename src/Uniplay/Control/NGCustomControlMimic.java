@@ -70,6 +70,7 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
         FKind = aKind;
         FActive = false;
         FInitialized = false;
+        Type = "";
     }
 
     public String getName() {
@@ -128,5 +129,7 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
     public void EndUpdate() {
         FGame.EndUpdate();
     }
+
+    public String Type;
 
 }

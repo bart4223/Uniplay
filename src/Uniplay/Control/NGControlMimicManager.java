@@ -32,15 +32,26 @@ public class NGControlMimicManager extends NGUniplayComponent {
         ActivateMimic(aMimic.getMimic().getKind(), aMimic, aValue);
     }
 
+    protected void writeActivateLog(NGControlMimicItem aMimic, Boolean aValue) {
+        if (aValue) {
+            writeLog(String.format("Mimic [%s] activated.", aMimic.getMimic().getName()));
+        }
+        else {
+            writeLog(String.format("Mimic [%s] deactivated.", aMimic.getMimic().getName()));
+        }
+    }
+
+    protected void ActivateMimic(String aType, NGControlMimicItem aMimic, Boolean aValue) {
+        if (aMimic.getMimic().Type.equals(aType)) {
+            aMimic.getMimic().setActive(aValue);
+            writeActivateLog(aMimic, aValue);
+        }
+    }
+
     protected void ActivateMimic(NGCustomControlMimic.Kind aKind, NGControlMimicItem aMimic, Boolean aValue) {
         if (aMimic.getMimic().getKind() == aKind) {
             aMimic.getMimic().setActive(aValue);
-            if (aValue) {
-                writeLog(String.format("Mimic [%s] activated.", aMimic.getMimic().getName()));
-            }
-            else {
-                writeLog(String.format("Mimic [%s] deactivated.", aMimic.getMimic().getName()));
-            }
+            writeActivateLog(aMimic, aValue);
         }
     }
 
@@ -87,6 +98,18 @@ public class NGControlMimicManager extends NGUniplayComponent {
         }
     }
 
+    public void ActivateMimics(String aType) {
+        FInUpdate = true;
+        try {
+            for (NGControlMimicItem item : FMimics) {
+                ActivateMimic(aType, item, true);
+            }
+        }
+        finally {
+            FInUpdate = false;
+        }
+    }
+
     public void ActivateAllMimics() {
         FInUpdate = true;
         try {
@@ -104,6 +127,18 @@ public class NGControlMimicManager extends NGUniplayComponent {
         try {
             for (NGControlMimicItem item : FMimics) {
                 ActivateMimic(aKind, item, false);
+            }
+        }
+        finally {
+            FInUpdate = false;
+        }
+    }
+
+    public void DeactivateMimics(String aType) {
+        FInUpdate = true;
+        try {
+            for (NGControlMimicItem item : FMimics) {
+                ActivateMimic(aType, item, false);
             }
         }
         finally {
