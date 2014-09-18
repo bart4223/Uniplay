@@ -4,7 +4,6 @@ import Uniplay.Kernel.*;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Sound.NGSoundManager;
 import Uniwork.Base.NGObjectRequestRegistration;
-import Uniwork.Base.NGObjectStack;
 import Uniwork.Base.NGObjectStackManager;
 import Uniwork.Misc.NGTickEvent;
 import Uniwork.Misc.NGTickListener;
