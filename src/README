@@ -4,6 +4,7 @@ Files:
     .udf    Uniplay Definition File (xml)
     .ucf    Uniplay Configuration File (properties)
     .ulf    Uniplay Level File (xml)
+    .upf    Uniplay Player File (xml)
 
 File config.ucf:
     Debuglevel = Debugger level >= 0 (No debug -1)
