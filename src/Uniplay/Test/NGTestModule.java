@@ -3,6 +3,7 @@ package Uniplay.Test;
 import Uniplay.Kernel.*;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Sound.NGSoundManager;
+import Uniwork.Base.NGObjectQueueManager;
 import Uniwork.Base.NGObjectRequestRegistration;
 import Uniwork.Base.NGObjectStackManager;
 import Uniwork.Misc.NGTickEvent;
@@ -27,6 +28,7 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
     public static final String TICK_SPEEDTEST = "SPEEDTEST";
 
     protected NGObjectStackManager FStackManager;
+    protected NGObjectQueueManager FQueueManager;
 
     @Override
     protected void registerEventHandlers() {
@@ -50,7 +52,9 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
         //task.startSingularTask(new Callback(this), 1000);
         */
         FStackManager = new NGObjectStackManager();
-        FStackManager.addStack("TEST");
+        FStackManager.addStack("STACK");
+        FQueueManager = new NGObjectQueueManager();
+        FQueueManager.addQueue("QUEUE");
         NGObjectRequestRegistration orr = (NGObjectRequestRegistration)ResolveObject(NGObjectRequestRegistration.class);
         orr.registerObjectRequest("TestModule", this, "Test", "Test");
     }
@@ -69,8 +73,9 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
     }
 
     public void Test() {
-        //stopAllSounds();
+        stopAllSounds();
         TestObjectStack();
+        TestObjectQueue();
     }
 
     public void incAllMainMemoryCells() {
@@ -79,14 +84,27 @@ public class NGTestModule extends NGGameEngineModule implements NGTickListener {
     }
 
     public void TestObjectStack() {
-        FStackManager.pushStack("TEST", "1", 1);
-        FStackManager.pushStack("TEST", "2", 2);
-        FStackManager.pushStack("TEST", "3", 3);
-        while (!FStackManager.isStackEmpty("TEST")) {
-            Integer value = (Integer)FStackManager.popStack("TEST");
-            //Integer value = (Integer)FStackManager.popStack("TEST", "2");
+        FStackManager.pushStack("STACK", "1", 1);
+        FStackManager.pushStack("STACK", "2", 2);
+        FStackManager.pushStack("STACK", "3", 3);
+        while (!FStackManager.isStackEmpty("STACK")) {
+            Integer value = (Integer)FStackManager.popStack("STACK");
+            //Integer value = (Integer)FStackManager.popStack("STACK", "2");
             if (value != null) {
-                writeLog(String.format("%d", value));
+                writeLog(String.format("Stack: %d", value));
+            }
+        }
+    }
+
+    public void TestObjectQueue() {
+        FQueueManager.enterQueue("QUEUE", "1", 1);
+        FQueueManager.enterQueue("QUEUE", "2", 2);
+        FQueueManager.enterQueue("QUEUE", "3", 3);
+        while (!FQueueManager.isQueueEmpty("QUEUE")) {
+            Integer value = (Integer)FQueueManager.leaveQueue("QUEUE");
+            //Integer value = (Integer)FQueueManager.leaveQueue("QUEUE", "2");
+            if (value != null) {
+                writeLog(String.format("Queue: %d", value));
             }
         }
     }
