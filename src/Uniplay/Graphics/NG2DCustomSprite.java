@@ -2,7 +2,7 @@ package Uniplay.Graphics;
 
 import Uniplay.Base.NGUniplayObject;
 
-public abstract class NG2DCustomSprite extends NGUniplayObject implements NGRenderEngineInformation {
+public abstract class NG2DCustomSprite extends NGUniplayObject implements NGRenderInformation {
 
     protected Integer FID;
 

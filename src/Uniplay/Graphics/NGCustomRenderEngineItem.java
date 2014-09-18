@@ -17,12 +17,19 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
     }
 
     protected void DoRender() {
-        if (FCell.getValueAsObject() instanceof NGRenderEngineInformation) {
-            NGRenderEngineInformation ri = (NGRenderEngineInformation)FCell.getValueAsObject();
-            FRenderEngine.setCurrentController(ri.getResponsibleDisplayControllerName(this));
+        Boolean render = true;
+        if (FCell.getValueAsObject() instanceof NGRenderInformation) {
+            NGRenderInformation ri = (NGRenderInformation)FCell.getValueAsObject();
+            String name = ri.getResponsibleDisplayControllerName(this);
+            render = name.length() > 0;
+            if (render) {
+                FRenderEngine.setCurrentController(name);
+            }
         }
-        FRenderEngine.Cell = FCell;
-        FRenderEngine.Render();
+        if (render) {
+            FRenderEngine.Cell = FCell;
+            FRenderEngine.Render();
+        }
     }
 
     public NGCustomRenderEngineItem(NGCustomRenderEngine aRenderEngine) {

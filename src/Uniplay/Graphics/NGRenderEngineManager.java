@@ -30,8 +30,8 @@ public class NGRenderEngineManager extends NGUniplayComponent {
             writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render engine [%s] start rendering...", item.getName()));
             cells.clear();
             for (NGGameEngineMemoryCell cell : aContext.getCells()) {
-                if (cell.getValueAsObject() instanceof NGRenderEngineInformation) {
-                    NGRenderEngineInformation ri = (NGRenderEngineInformation)cell.getValueAsObject();
+                if (cell.getValueAsObject() instanceof NGRenderInformation) {
+                    NGRenderInformation ri = (NGRenderInformation)cell.getValueAsObject();
                     if (ri.IsRenderEngineResponsible(item)) {
                         cells.add(cell);
                     }

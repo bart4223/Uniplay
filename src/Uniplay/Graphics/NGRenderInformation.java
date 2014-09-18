@@ -4,7 +4,7 @@ import Uniwork.Visuals.NGDisplayController;
 
 import java.util.ArrayList;
 
-public interface NGRenderEngineInformation {
+public interface NGRenderInformation {
 
     public Boolean IsRenderEngineResponsible(NGCustomRenderEngineItem aRenderEngine);
     public String getResponsibleDisplayControllerName(NGCustomRenderEngineItem aRenderEngine);

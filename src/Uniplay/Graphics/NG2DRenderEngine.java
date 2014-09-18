@@ -10,8 +10,8 @@ public class NG2DRenderEngine extends NGCustomRenderEngine {
     protected void prepareDisplayController(NGDisplayController aDisplayController) {
         NGGameEngineMemoryAddress address = Cell.getAddress();
         aDisplayController.setPosition(address.getOffset() * aDisplayController.getWidth(), address.getBase() * aDisplayController.getHeight());
-        if (Cell.getValueAsObject() instanceof NGRenderEngineInformation) {
-            NGRenderEngineInformation ri = (NGRenderEngineInformation)Cell.getValueAsObject();
+        if (Cell.getValueAsObject() instanceof NGRenderInformation) {
+            NGRenderInformation ri = (NGRenderInformation)Cell.getValueAsObject();
             aDisplayController.setProperty(aDisplayController, String.format("%s.%s", ValueLayername, ValuePropname), ri.getValueForDisplayController(getName(), aDisplayController));
             ArrayList<NGDisplayControllerLayerProp> props = ri.getDisplayControllerLayerProps(getName(), aDisplayController);
             for (NGDisplayControllerLayerProp prop : props) {
