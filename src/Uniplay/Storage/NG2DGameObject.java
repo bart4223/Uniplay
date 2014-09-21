@@ -2,14 +2,14 @@ package Uniplay.Storage;
 
 import Uniplay.Kernel.NGGameEngineMemoryAddress;
 
-public class NG2DGameCharacter extends NGCustomGameCharacter {
+public class NG2DGameObject extends NGCustomGameObject {
 
-    protected NG2DGameCharacterPosition FPosition;
+    protected NG2DObjectPosition FPosition;
     protected Integer FLayer;
 
-    public NG2DGameCharacter(NGCustomGame aGame, NGCustomPlayer aPlayer) {
-        super(aGame, aPlayer);
-        FPosition = new NG2DGameCharacterPosition();
+    public NG2DGameObject(NGCustomGame aGame) {
+        super(aGame);
+        FPosition = new NG2DObjectPosition();
         FLayer = 0;
     }
 
@@ -18,12 +18,8 @@ public class NG2DGameCharacter extends NGCustomGameCharacter {
         FPosition.setY(aY);
     }
 
-    public NG2DGameCharacterPosition getPosition() {
+    public NG2DObjectPosition getPosition() {
         return FPosition;
-    }
-
-    public NGGameEngineMemoryAddress getMemoryAddress() {
-        return new NGGameEngineMemoryAddress(FLayer, (int)getPosition().getY(), (int)getPosition().getX());
     }
 
     public Integer getLayer() {
@@ -32,6 +28,10 @@ public class NG2DGameCharacter extends NGCustomGameCharacter {
 
     public void setLayer(Integer aValue) {
         FLayer = aValue;
+    }
+
+    public NGGameEngineMemoryAddress getMemoryAddress() {
+        return new NGGameEngineMemoryAddress(FLayer, (int)FPosition.getY(), (int)FPosition.getX());
     }
 
     public Boolean IsFromAddress(NGGameEngineMemoryAddress aAddress) {

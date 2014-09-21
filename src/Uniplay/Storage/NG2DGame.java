@@ -204,7 +204,7 @@ public class NG2DGame extends NGCustomGame {
     public NG2DGameCharacter getPCfromAddress(NGGameEngineMemoryAddress aAddress) {
         for (NGCustomGameCharacter item : FPCs) {
             NG2DGameCharacter character = (NG2DGameCharacter)item;
-            if (character.IsCharacterFromAddress(aAddress)) {
+            if (character.IsFromAddress(aAddress)) {
                 return character;
             }
         }
@@ -214,7 +214,7 @@ public class NG2DGame extends NGCustomGame {
     public NG2DGameCharacter getNPCfromAddress(NGGameEngineMemoryAddress aAddress) {
         for (NGCustomGameCharacter item : FNPCs) {
             NG2DGameCharacter character = (NG2DGameCharacter)item;
-            if (character.IsCharacterFromAddress(aAddress)) {
+            if (character.IsFromAddress(aAddress)) {
                 return character;
             }
         }
