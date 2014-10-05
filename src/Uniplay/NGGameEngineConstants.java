@@ -7,9 +7,10 @@ public abstract class NGGameEngineConstants {
     public final static Integer DEBUG_LEVEL_NONE                            = -1;
     public final static Integer DEBUG_LEVEL_DEFAULT                         = 0;
     public final static Integer DEBUG_LEVEL_MIMIC                           = 10;
-    public final static Integer DEBUG_LEVEL_RENDERING                       = 20;
-    public final static Integer DEBUG_LEVEL_MEMORY                          = 30;
-    public final static Integer DEBUG_LEVEL_EVENTS                          = 40;
+    public final static Integer DEBUG_LEVEL_PHYSICS                         = 20;
+    public final static Integer DEBUG_LEVEL_RENDERING                       = 30;
+    public final static Integer DEBUG_LEVEL_MEMORY                          = 40;
+    public final static Integer DEBUG_LEVEL_EVENTS                          = 50;
 
     // --------------------- Components -------------------------------------
     // Kernel
@@ -39,6 +40,10 @@ public abstract class NGGameEngineConstants {
     // Graphic Engine
     public final static String CMP_GRAPHIC                                  = "Graphic";
     public final static String CMP_RENDERENGINE_MANAGER                     = "RenderEngineManager";
+    // Physics Engine
+    public final static String CMP_PHYSICS                                  = "Physics";
+    public final static String CMP_PHYSICS_BEHAVIOUR_MANAGER                = "PhysicsBehaviourManager";
+    public final static String CMP_PHYSICS_PROCESSOR                        = "PhysicsProcessor";
     // Debugger
     public final static String CMP_CONSOLE                                  = "Console";
     // Workbench

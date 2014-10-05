@@ -1,16 +1,18 @@
 package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.Base.NGUniplayObjectPhysicsProperties;
 
 public abstract class NGCustomGameObject extends NGUniplayObject {
 
     protected NGCustomGame FGame;
-    protected double FMass;
+    protected NGUniplayObjectPhysicsProperties FPhysics;
 
     public NGCustomGameObject(NGCustomGame aGame) {
         super();
         FGame = aGame;
-        FMass = 0.0;
+        FPhysics = new NGUniplayObjectPhysicsProperties();
+        FPhysics.Mass = 0.0;
     }
 
     public NGCustomGame getGame() {
@@ -18,7 +20,7 @@ public abstract class NGCustomGameObject extends NGUniplayObject {
     }
 
     public double getMass() {
-        return FMass;
+        return FPhysics.Mass;
     }
 
 }
