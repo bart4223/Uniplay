@@ -3,7 +3,6 @@ package Uniplay.Physics;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.NGGameEngineConstants;
-import Uniplay.Storage.NGCustomGameObject;
 import Uniwork.Base.NGObjectQueue;
 import Uniwork.Base.NGObjectQueueManager;
 
@@ -24,7 +23,7 @@ public class NGObjectPhysicsProcessor extends NGUniplayComponent {
     }
 
     protected void DoExecute() {
-
+        System.out.println("Tick");
     }
 
     protected void DoAfterExecute() {

@@ -3,10 +3,13 @@ package Uniplay.Physics;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Kernel.NGGameEngineModule;
 import Uniplay.Kernel.NGGameEngineModuleManager;
+import Uniplay.Kernel.NGTaskManager;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Storage.NGCustomGameObject;
+import Uniwork.Misc.NGTickEvent;
+import Uniwork.Misc.NGTickListener;
 
-public abstract class NGPhysicsEngine extends NGGameEngineModule {
+public abstract class NGPhysicsEngine extends NGGameEngineModule implements NGTickListener {
 
     @Override
     protected void BeforeInitialize() {
@@ -26,6 +29,15 @@ public abstract class NGPhysicsEngine extends NGGameEngineModule {
                 writeError("BeforeInitialize", e.getMessage());
             }
         }
+    }
+
+    @Override
+    protected void AfterInitialize() {
+        super.AfterInitialize();
+        NGTaskManager tm = (NGTaskManager)ResolveObject(NGGameEngineConstants.CMP_TASK_MANAGER, NGTaskManager.class);
+        tm.addPeriodicTask("ObjectPhysicsProcessor", 50);
+        tm.addListener("ObjectPhysicsProcessor", this);
+        tm.startPeriodicTask("ObjectPhysicsProcessor");
     }
 
     @Override
@@ -50,5 +62,10 @@ public abstract class NGPhysicsEngine extends NGGameEngineModule {
     }
 
     public NGPhysicsEngineDefinition Definition;
+
+    @Override
+    public void handleTick(NGTickEvent e) {
+        getPhysicsProcessor().Execute();
+    }
 
 }
