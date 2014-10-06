@@ -25,7 +25,7 @@ public class NGWorkbenchModule extends NGGameEngineModule {
     @Override
     protected void AfterInitialize() {
         super.AfterInitialize();
-        NGWorkbenchDefintion def = (NGWorkbenchDefintion)FDefinition;
+        NGWorkbenchDefinition def = (NGWorkbenchDefinition)FDefinition;
         getWorkbenchManager().getLevelDesignerManager().setDefinitions(def.getLevelDesignerManager());
     }
 

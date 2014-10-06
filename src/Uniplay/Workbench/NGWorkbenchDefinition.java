@@ -2,11 +2,11 @@ package Uniplay.Workbench;
 
 import Uniplay.Kernel.NGGameEngineModuleDefinition;
 
-public class NGWorkbenchDefintion extends NGGameEngineModuleDefinition {
+public class NGWorkbenchDefinition extends NGGameEngineModuleDefinition {
 
     protected NGLevelDesignerManagerDefinition LevelDesignerManager;
 
-    public NGWorkbenchDefintion() {
+    public NGWorkbenchDefinition() {
         super();
     }
 

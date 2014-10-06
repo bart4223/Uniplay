@@ -8,4 +8,8 @@ public abstract class NGCustomPhysicsPrinciple extends NGUniplayObject {
         super();
     }
 
+    public Boolean getAffectsByAction(NGCustomPhysicsAction aPhysicsAction) {
+        return false;
+    }
+
 }

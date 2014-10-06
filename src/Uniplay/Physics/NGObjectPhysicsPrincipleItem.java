@@ -10,7 +10,7 @@ public class NGObjectPhysicsPrincipleItem extends NGUniplayObject {
     public NGObjectPhysicsPrincipleItem(NGCustomPhysicsPrinciple aPrinciple) {
         super();
         FPrinciple = aPrinciple;
-        FActive = false;
+        FActive = true;
     }
 
     public NGCustomPhysicsPrinciple getPrinciple() {

@@ -58,9 +58,9 @@ public class NGObjectPhysicsProcessor extends NGUniplayComponent {
         }
     }
 
-    public void addQueue(NGCustomGameObject aGameObject) {
-        FQueueManager.enterQueue(getCurrentQueueName(), aGameObject);
-        writeLog(NGGameEngineConstants.DEBUG_LEVEL_PHYSICS, String.format("GameObject [%s] to PhysicsProcessor-Queue [%s] added.", aGameObject.toString(), getCurrentQueueName()));
+    public void addQueue(NGGameObjectPhysicsActionItem aItem) {
+        FQueueManager.enterQueue(getCurrentQueueName(), aItem);
+        writeLog(NGGameEngineConstants.DEBUG_LEVEL_PHYSICS, String.format("GameObject [%s] to PhysicsProcessor-Queue [%s] added.", aItem.toString(), getCurrentQueueName()));
     }
 
     public void setBehaviourManager(NGObjectPhysicsBehaviourManager aBehaviourManager) {
