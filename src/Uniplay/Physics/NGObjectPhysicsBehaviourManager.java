@@ -28,6 +28,7 @@ public class NGObjectPhysicsBehaviourManager extends NGUniplayComponent {
         NGObjectPhysicsBehaviourItem item = getItem(aGameObjectClass);
         if (item == null) {
             item = new NGObjectPhysicsBehaviourItem(aGameObjectClass);
+            FItems.add(item);
         }
         item.addPhysicsPrinciple(aPhysicsPrinciple);
         return item;

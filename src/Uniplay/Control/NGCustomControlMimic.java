@@ -59,6 +59,15 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
 
     }
 
+    @Override
+    protected Object DoResolveObject(String aName, Class aClass) {
+        Object result = super.DoResolveObject(aName, aClass);
+        if (result == null) {
+            return FManager.ResolveObject(aName, aClass);
+        }
+        return result;
+    }
+
     public NGCustomControlMimic(NGControlMimicManager aManager, NGCustomGame aGame, String aName, Kind aKind) {
         super();
         FManager = aManager;

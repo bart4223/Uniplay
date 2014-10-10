@@ -156,7 +156,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
     }
 
     public int getAbsolutAddress(NGGameEngineMemoryAddress aAddress) {
-        return ((aAddress.getPage() - 1) * FBaseSize * FOffsetSize) + (aAddress.getBase() * FOffsetSize) + aAddress.getOffset();
+        return (FBaseSize * FOffsetSize * (aAddress.getPage() - 1)) + (FOffsetSize * aAddress.getBase()) + aAddress.getOffset();
     }
 
     public NGGameEngineMemoryCell getCell(NGGameEngineMemoryAddress aAddress) {

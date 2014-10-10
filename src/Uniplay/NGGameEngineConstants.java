@@ -70,6 +70,7 @@ public abstract class NGGameEngineConstants {
     public final static String EVT_GAME_FINISH                              = String.format("%s.%s", CMP_GAME, "Finish");
     public final static String EVT_GAME_LEVEL_START                         = String.format("%s.%s.%s", CMP_GAME, "Level", "Start");
     public final static String EVT_GAME_LEVEL_FINISH                        = String.format("%s.%s.%s", CMP_GAME, "Level", "Finish");
+    public final static String EVT_GAME_OBJECT_POSITION_CHANGED             = String.format("%s.%s.%s.%s", CMP_GAME, "Object", "Position", "Changed");
     public final static String EVT_GAME_CHARACTER_POSITION_CHANGED          = String.format("%s.%s.%s.%s", CMP_GAME, "Character", "Position", "Changed");
 
     // --------------------- ORB --------------------------------------------

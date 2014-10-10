@@ -1,6 +1,7 @@
 package Uniplay.Physics;
 
 import Uniplay.Base.NGUniplayComponent;
+import Uniplay.Base.NGUniplayObjectRegistration;
 import Uniplay.Kernel.NGGameEngineModule;
 import Uniplay.Kernel.NGGameEngineModuleManager;
 import Uniplay.Kernel.NGTaskManager;
@@ -35,7 +36,7 @@ public abstract class NGPhysicsEngine extends NGGameEngineModule implements NGTi
     protected void AfterInitialize() {
         super.AfterInitialize();
         NGTaskManager tm = (NGTaskManager)ResolveObject(NGGameEngineConstants.CMP_TASK_MANAGER, NGTaskManager.class);
-        tm.addPeriodicTask("ObjectPhysicsProcessor", 50);
+        tm.addPeriodicTask("ObjectPhysicsProcessor", 5);
         tm.addListener("ObjectPhysicsProcessor", this);
         tm.startPeriodicTask("ObjectPhysicsProcessor");
     }
@@ -48,6 +49,14 @@ public abstract class NGPhysicsEngine extends NGGameEngineModule implements NGTi
         component = new NGObjectPhysicsProcessor(this, NGGameEngineConstants.CMP_PHYSICS_PROCESSOR);
         addSubComponent(component);
     }
+
+    @Override
+    protected void registerObjects() {
+        super.registerObjects();
+        NGUniplayObjectRegistration registration = (NGUniplayObjectRegistration)ResolveObject(NGUniplayObjectRegistration.class);
+        registration.registerObject(NGGameEngineConstants.CMP_PHYSICS_PROCESSOR, getPhysicsProcessor());
+    }
+
 
     protected NGObjectPhysicsBehaviourManager getPhysicsBehaviourManager() {
         return (NGObjectPhysicsBehaviourManager)getSubComponent(NGGameEngineConstants.CMP_PHYSICS_BEHAVIOUR_MANAGER);

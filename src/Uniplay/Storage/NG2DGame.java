@@ -169,11 +169,15 @@ public class NG2DGame extends NGCustomGame {
         return FLevelManager;
     }
 
-    protected void raisePositionChangedEvent(NG2DGameCharacter aPlayerItem) {
+    protected void raiseCharacterPositionChangedEvent(NG2DGameCharacter aPlayerItem) {
         NG2DGameCharacterPositionChanged event = new NG2DGameCharacterPositionChanged(this, aPlayerItem);
         raiseEvent(NGGameEngineConstants.EVT_GAME_CHARACTER_POSITION_CHANGED, event);
     }
 
+    protected void raiseObjectPositionChangedEvent(NG2DGameObject aObjectItem) {
+        NG2DGameObjectPositionChanged event = new NG2DGameObjectPositionChanged(this, aObjectItem);
+        raiseEvent(NGGameEngineConstants.EVT_GAME_OBJECT_POSITION_CHANGED, event);
+    }
 
     protected NG2DGameCharacter get2DGamePC(Integer aIndex) {
         return (NG2DGameCharacter)FPCs.get(aIndex);
@@ -197,8 +201,14 @@ public class NG2DGame extends NGCustomGame {
 
     public void setPCPosition(NG2DGameCharacter aPlayerItem, double aX, double aY) {
         aPlayerItem.setPosition(aX, aY);
-        raisePositionChangedEvent(aPlayerItem);
+        raiseCharacterPositionChangedEvent(aPlayerItem);
         writeLog(String.format("Player's [%s] position is (%.1f/%.1f).", aPlayerItem.getPlayer().getName(), aPlayerItem.getPosition().getX(), aPlayerItem.getPosition().getY()));
+    }
+
+    public void setObjectPosition(NG2DGameObject aObjectItem, double aX, double aY) {
+        aObjectItem.setPosition(aX, aY);
+        raiseObjectPositionChangedEvent(aObjectItem);
+        writeLog(String.format("Object's position is (%.1f/%.1f).", aObjectItem.getPosition().getX(), aObjectItem.getPosition().getY()));
     }
 
     public NG2DGameCharacter getPCfromAddress(NGGameEngineMemoryAddress aAddress) {
