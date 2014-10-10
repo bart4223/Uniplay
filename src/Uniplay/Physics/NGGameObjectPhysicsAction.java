@@ -20,7 +20,7 @@ public class NGGameObjectPhysicsAction extends NGUniplayObject {
         return FAffectedObject;
     }
 
-    public NGCustomGameObject getTriggeredObject() {
+    public NGCustomGameObject getTriggerObject() {
         return FTriggerObject;
     }
 
