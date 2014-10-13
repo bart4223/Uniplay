@@ -27,7 +27,7 @@ public class NGObjectPhysicsBehaviourManager extends NGUniplayComponent {
     public NGObjectPhysicsBehaviourItem addItem(Class<NGCustomGameObject> aGameObjectClass, Class<NGCustomPhysicsPrinciple> aPhysicsPrinciple) {
         NGObjectPhysicsBehaviourItem item = getItem(aGameObjectClass);
         if (item == null) {
-            item = new NGObjectPhysicsBehaviourItem(aGameObjectClass);
+            item = new NGObjectPhysicsBehaviourItem(this, aGameObjectClass);
             FItems.add(item);
         }
         item.addPhysicsPrinciple(aPhysicsPrinciple);

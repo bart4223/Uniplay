@@ -1,10 +1,12 @@
 package Uniplay.Physics;
 
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.NGGameEngineConstants;
 
 public abstract class NGCustomPhysicsPrinciple extends NGUniplayObject {
 
     protected NGGameObjectPhysicsAction FCurrentGOPhysicsAction;
+    protected NGObjectPhysicsProcessor FPhysicsProcessor;
 
     protected void BeforeExecute() {
 
@@ -18,9 +20,17 @@ public abstract class NGCustomPhysicsPrinciple extends NGUniplayObject {
 
     }
 
+    protected NGObjectPhysicsProcessor getPhysicsProcessor() {
+        if (FPhysicsProcessor == null) {
+            FPhysicsProcessor = (NGObjectPhysicsProcessor)ResolveObject(NGGameEngineConstants.CMP_PHYSICS_PROCESSOR, NGObjectPhysicsProcessor.class);
+        }
+        return FPhysicsProcessor;
+    }
+
     public NGCustomPhysicsPrinciple() {
         super();
         FCurrentGOPhysicsAction = null;
+        FPhysicsProcessor = null;
     }
 
     public Boolean getAffectsByAction(NGCustomPhysicsAction aPhysicsAction) {

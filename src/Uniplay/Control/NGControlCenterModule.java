@@ -53,7 +53,7 @@ public class NGControlCenterModule extends NGGameEngineModule {
     protected void registerObjects() {
         super.registerObjects();
         NGUniplayObjectRegistration registration = (NGUniplayObjectRegistration) ResolveObject(NGUniplayObjectRegistration.class);
-        registration.registerObject(NGGameEngineConstants.CMP_CONTROLMIMIC_MANAGER, getControlMimicManager());
+        registration.registerObject(getControlMimicManager().getName(), getControlMimicManager());
     }
 
     public NGControlCenterModule(NGGameEngineModuleManager aManager, String aName) {

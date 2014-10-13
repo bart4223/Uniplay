@@ -2,6 +2,7 @@ package Uniplay.Control;
 
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.NGGameEngineConstants;
+import Uniplay.Physics.NGObjectPhysicsProcessor;
 import Uniplay.Storage.NGCustomGame;
 import Uniwork.Misc.NGLogManager;
 
@@ -16,6 +17,7 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
     protected NGCustomGame FGame;
     protected Kind FKind;
     protected Boolean FInitialized;
+    protected NGObjectPhysicsProcessor FPhysicsProcessor;
 
     protected void writeLog(String aText) {
         writeLog(0, aText);
@@ -59,6 +61,13 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
 
     }
 
+    protected NGObjectPhysicsProcessor getPhysicsProcessor() {
+        if (FPhysicsProcessor == null) {
+            FPhysicsProcessor = (NGObjectPhysicsProcessor)ResolveObject(NGGameEngineConstants.CMP_PHYSICS_PROCESSOR, NGObjectPhysicsProcessor.class);
+        }
+        return FPhysicsProcessor;
+    }
+
     @Override
     protected Object DoResolveObject(String aName, Class aClass) {
         Object result = super.DoResolveObject(aName, aClass);
@@ -80,6 +89,7 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
         FActive = false;
         FInitialized = false;
         Type = "";
+        FPhysicsProcessor = null;
     }
 
     public String getName() {

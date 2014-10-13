@@ -54,7 +54,7 @@ public abstract class NGPhysicsEngine extends NGGameEngineModule implements NGTi
     protected void registerObjects() {
         super.registerObjects();
         NGUniplayObjectRegistration registration = (NGUniplayObjectRegistration)ResolveObject(NGUniplayObjectRegistration.class);
-        registration.registerObject(NGGameEngineConstants.CMP_PHYSICS_PROCESSOR, getPhysicsProcessor());
+        registration.registerObject(getPhysicsProcessor().getName(), getPhysicsProcessor());
     }
 
 
