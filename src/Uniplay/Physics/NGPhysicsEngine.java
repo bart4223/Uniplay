@@ -46,7 +46,7 @@ public abstract class NGPhysicsEngine extends NGGameEngineModule implements NGTi
     protected void AfterInitialize() {
         super.AfterInitialize();
         NGTaskManager tm = (NGTaskManager)ResolveObject(NGGameEngineConstants.CMP_TASK_MANAGER, NGTaskManager.class);
-        tm.addPeriodicTask("ObjectPhysicsProcessor", 5);
+        tm.addPeriodicTask("ObjectPhysicsProcessor", 10);
         tm.addListener("ObjectPhysicsProcessor", this);
         tm.startPeriodicTask("ObjectPhysicsProcessor");
     }
