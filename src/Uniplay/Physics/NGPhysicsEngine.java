@@ -9,8 +9,18 @@ import Uniplay.NGGameEngineConstants;
 import Uniplay.Storage.NGCustomGameObject;
 import Uniwork.Misc.NGTickEvent;
 import Uniwork.Misc.NGTickListener;
+import javafx.application.Platform;
 
 public abstract class NGPhysicsEngine extends NGGameEngineModule implements NGTickListener {
+
+    public static void processThread(final NGObjectPhysicsProcessor aProcessor) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                aProcessor.Execute();
+            }
+        });
+    }
 
     @Override
     protected void BeforeInitialize() {
@@ -74,7 +84,7 @@ public abstract class NGPhysicsEngine extends NGGameEngineModule implements NGTi
 
     @Override
     public void handleTick(NGTickEvent e) {
-        getPhysicsProcessor().Execute();
+        processThread(getPhysicsProcessor());
     }
 
 }
