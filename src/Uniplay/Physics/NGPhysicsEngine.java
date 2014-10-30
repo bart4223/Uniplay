@@ -4,7 +4,7 @@ import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObjectRegistration;
 import Uniplay.Kernel.NGGameEngineModule;
 import Uniplay.Kernel.NGGameEngineModuleManager;
-import Uniplay.Kernel.NGTaskManager;
+import Uniplay.Misc.NGTaskManager;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Storage.NGCustomGameObject;
 import Uniwork.Misc.NGTickEvent;

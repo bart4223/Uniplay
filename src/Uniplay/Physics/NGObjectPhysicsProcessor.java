@@ -2,6 +2,8 @@ package Uniplay.Physics;
 
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.Misc.NGTaskCallback;
+import Uniplay.Misc.NGTaskManager;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Storage.NGCustomGameObject;
 import Uniwork.Base.NGObjectQueue;
@@ -9,10 +11,27 @@ import Uniwork.Base.NGObjectQueueManager;
 
 public class NGObjectPhysicsProcessor extends NGUniplayComponent {
 
+    private class CallbackAddQueue implements NGTaskCallback {
+
+        protected NGObjectPhysicsProcessor FProcessor;
+        protected NGGameObjectPhysicsAction FAction;
+
+        public CallbackAddQueue(NGObjectPhysicsProcessor aProcessor, NGGameObjectPhysicsAction aAction) {
+            FProcessor = aProcessor;
+            FAction = aAction;
+        }
+
+        @Override
+        public void Call() {
+            FProcessor.DoAddQueue(FAction);
+        }
+    }
+
     protected NGObjectQueueManager FQueueManager;
     protected Integer FCurrentQueueID;
     protected NGObjectQueue FCurrentProcessQueue;
     protected NGObjectPhysicsBehaviourManager FBehaviourManager;
+    protected NGTaskManager FTaskManager;
 
     protected String getCurrentQueueName() {
         return String.format("WORKER%d", FCurrentQueueID);
@@ -24,6 +43,13 @@ public class NGObjectPhysicsProcessor extends NGUniplayComponent {
         if (FCurrentQueueID > 2) {
             FCurrentQueueID = 1;
         }
+    }
+
+    protected NGTaskManager getTaskManager() {
+        if (FTaskManager == null) {
+            FTaskManager = (NGTaskManager)ResolveObject(NGGameEngineConstants.CMP_TASK_MANAGER, NGTaskManager.class);
+        }
+        return FTaskManager;
     }
 
     protected void DoExecute() {
@@ -50,6 +76,11 @@ public class NGObjectPhysicsProcessor extends NGUniplayComponent {
 
     protected void DoAfterExecute() {
         FCurrentProcessQueue = null;
+    }
+
+    protected void DoAddQueue(NGGameObjectPhysicsAction aAction) {
+        FQueueManager.enterQueue(getCurrentQueueName(), aAction);
+        writeLog(NGGameEngineConstants.DEBUG_LEVEL_PHYSICS, String.format("GameObject [%s] to PhysicsProcessor-Queue [%s] added.", aAction.toString(), getCurrentQueueName()));
     }
 
     @Override
@@ -79,9 +110,18 @@ public class NGObjectPhysicsProcessor extends NGUniplayComponent {
         }
     }
 
-    public void addQueue(NGGameObjectPhysicsAction aItem) {
-        FQueueManager.enterQueue(getCurrentQueueName(), aItem);
-        writeLog(NGGameEngineConstants.DEBUG_LEVEL_PHYSICS, String.format("GameObject [%s] to PhysicsProcessor-Queue [%s] added.", aItem.toString(), getCurrentQueueName()));
+    public void addQueue(NGGameObjectPhysicsAction aAction, Integer aDelay) {
+        if (aDelay > 0) {
+            NGTaskManager tm = getTaskManager();
+            tm.startSingularTask(new CallbackAddQueue(this, aAction), aDelay);
+        }
+        else {
+            addQueue(aAction);
+        }
+    }
+
+    public void addQueue(NGGameObjectPhysicsAction aAction) {
+        DoAddQueue(aAction);
     }
 
     public void setBehaviourManager(NGObjectPhysicsBehaviourManager aBehaviourManager) {

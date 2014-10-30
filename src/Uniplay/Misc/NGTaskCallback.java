@@ -1,4 +1,4 @@
-package Uniplay.Kernel;
+package Uniplay.Misc;
 
 public interface NGTaskCallback {
 

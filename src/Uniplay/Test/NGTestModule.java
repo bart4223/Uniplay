@@ -1,6 +1,7 @@
 package Uniplay.Test;
 
 import Uniplay.Kernel.*;
+import Uniplay.Misc.NGTaskCallback;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Sound.NGSoundManager;
 import Uniwork.Base.NGObjectQueueManager;

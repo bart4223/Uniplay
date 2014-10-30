@@ -1,7 +1,8 @@
-package Uniplay.Kernel;
+package Uniplay.Misc;
 
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.Misc.NGTaskCallback;
 import Uniwork.Misc.NGTickGenerator;
 import Uniwork.Misc.NGTickListener;
 

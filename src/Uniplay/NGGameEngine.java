@@ -3,6 +3,7 @@ package Uniplay;
 import Uniplay.Base.*;
 import Uniplay.Kernel.*;
 import Uniplay.Misc.NGSplashManager;
+import Uniplay.Misc.NGTaskManager;
 import Uniwork.Base.*;
 import Uniwork.Misc.*;
 import javafx.application.Platform;

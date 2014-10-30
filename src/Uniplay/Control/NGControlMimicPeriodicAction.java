@@ -1,6 +1,6 @@
 package Uniplay.Control;
 
-import Uniplay.Kernel.NGTaskManager;
+import Uniplay.Misc.NGTaskManager;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Storage.NGCustomGame;
 import Uniwork.Misc.NGTickEvent;

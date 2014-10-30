@@ -6,6 +6,7 @@ import Uniplay.Control.NGCustomControlMimic;
 import Uniplay.Kernel.*;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Sound.NGSoundManager;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 
@@ -332,6 +333,10 @@ public abstract class NGCustomGame extends NGUniplayComponent {
 
     public void refreshMemoryCell(NGGameEngineMemoryAddress aAddress) {
         getMemoryManager().refreshCell(getMemoryName(), aAddress);
+    }
+
+    public void Shutdown() {
+        Platform.exit();
     }
 
 }

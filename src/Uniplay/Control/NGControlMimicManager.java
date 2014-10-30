@@ -3,7 +3,7 @@ package Uniplay.Control;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Base.NGUniplayObjectRequestBroker;
-import Uniplay.Kernel.NGTaskManager;
+import Uniplay.Misc.NGTaskManager;
 import Uniplay.NGGameEngineConstants;
 
 import java.util.ArrayList;
