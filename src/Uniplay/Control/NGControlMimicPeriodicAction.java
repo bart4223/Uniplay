@@ -1,5 +1,6 @@
 package Uniplay.Control;
 
+import Uniplay.Misc.NGTaskCallback;
 import Uniplay.Misc.NGTaskManager;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Storage.NGCustomGame;
@@ -8,6 +9,20 @@ import Uniwork.Misc.NGTickListener;
 
 public abstract class NGControlMimicPeriodicAction extends NGCustomControlMimic implements NGTickListener {
 
+    private class CallbackPeriodicAction implements NGTaskCallback {
+
+        protected NGControlMimicPeriodicAction FMimicAction;
+
+        public CallbackPeriodicAction(NGControlMimicPeriodicAction aMimicAction) {
+            FMimicAction = aMimicAction;
+        }
+
+        @Override
+        public void Call() {
+            FMimicAction.DoHandleTick();
+        }
+    }
+
     protected void DoHandleTick() {
 
     }
@@ -15,19 +30,28 @@ public abstract class NGControlMimicPeriodicAction extends NGCustomControlMimic 
     @Override
     protected void DoActivate() {
         super.DoActivate();
-        getTaskManager().startPeriodicTask(getPeriodicTaskName(), 0);
+        if (Interval > 0) {
+            getTaskManager().startPeriodicTask(getPeriodicTaskName(), Delay);
+        }
+        else {
+            getTaskManager().startSingularTask(new CallbackPeriodicAction(this), Delay);
+        }
     }
 
     @Override
     protected void DoDeactivate() {
         super.DoDeactivate();
-        getTaskManager().stopPeriodicTask(getPeriodicTaskName());
+        if (Interval > 0) {
+            getTaskManager().stopPeriodicTask(getPeriodicTaskName());
+        }
     }
 
     @Override
     protected void DoInitialize() {
         super.DoInitialize();
-        addPeriodicTask(Interval);
+        if (Interval > 0) {
+            addPeriodicTask(Interval);
+        }
     }
 
     protected void addPeriodicTask(Integer aInterval) {
@@ -50,10 +74,11 @@ public abstract class NGControlMimicPeriodicAction extends NGCustomControlMimic 
     public NGControlMimicPeriodicAction(NGControlMimicManager aManager, NGCustomGame aGame, String aName, Kind aKind) {
         super(aManager, aGame, aName, aKind);
         Interval = 0;
+        Delay = 0;
     }
 
     @Override
-    public void handleTick(NGTickEvent e) {
+    public synchronized void handleTick(NGTickEvent e) {
         writeLog(NGGameEngineConstants.DEBUG_LEVEL_MIMIC, String.format("Mimic [%s] tick.", getName()));
         if (!InUpdate()) {
             BeginUpdate();
@@ -67,5 +92,6 @@ public abstract class NGControlMimicPeriodicAction extends NGCustomControlMimic 
     }
 
     public Integer Interval;
+    public Integer Delay;
 
 }

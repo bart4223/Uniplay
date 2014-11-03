@@ -102,22 +102,6 @@ public abstract class NGCustomGame extends NGUniplayComponent {
         ResetAllMimicActions();
     }
 
-    protected void ActivateMimicActions(NGCustomControlMimic.Kind aKind) {
-        getMimicManager().ActivateMimics(aKind);
-    }
-
-    protected void ActivateAllMimicActions() {
-        getMimicManager().ActivateAllMimics();
-    }
-
-    protected void DeactivateAllMimicActions() {
-        getMimicManager().DeactivateAllMimics();
-    }
-
-    protected void ResetAllMimicActions() {
-        getMimicManager().ResetAllMimics();
-    }
-
     protected NGPlayerGameStatistic addPlayerGameStatistic(NGPlayer aPlayer) {
         return (NGPlayerGameStatistic)FPlayerManager.addStatistic(new NGPlayerGameStatistic(aPlayer, getName())).getStatistic();
     }
@@ -316,6 +300,12 @@ public abstract class NGCustomGame extends NGUniplayComponent {
         }
     }
 
+    public void RestartLevel() {
+        raiseLevelFinishEvent();
+        DeactivateAllMimicActions();
+        DoStartLevel();
+    }
+
     public void BeginUpdate() {
         FUpdateCount = FUpdateCount + 1;
     }
@@ -337,6 +327,38 @@ public abstract class NGCustomGame extends NGUniplayComponent {
 
     public void Shutdown() {
         Platform.exit();
+    }
+
+    public void ActivateMimicActions(NGCustomControlMimic.Kind aKind) {
+        getMimicManager().ActivateMimics(aKind);
+    }
+
+    public void ActivateMimicActions(String aType) {
+        getMimicManager().ActivateMimics(aType);
+    }
+
+    public void ActivateMimicAction(String aName) {
+        getMimicManager().ActivateMimic(aName);
+    }
+
+    public void DeactivateMimicAction(String aName) {
+        getMimicManager().DeactivateMimic(aName);
+    }
+
+    public void DeactivateMimicActions(String aType) {
+        getMimicManager().DeactivateMimics(aType);
+    }
+
+    public void ActivateAllMimicActions() {
+        getMimicManager().ActivateAllMimics();
+    }
+
+    public void DeactivateAllMimicActions() {
+        getMimicManager().DeactivateAllMimics();
+    }
+
+    public void ResetAllMimicActions() {
+        getMimicManager().ResetAllMimics();
     }
 
 }

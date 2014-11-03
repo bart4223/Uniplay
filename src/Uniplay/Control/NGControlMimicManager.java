@@ -5,6 +5,8 @@ import Uniplay.Base.NGUniplayObject;
 import Uniplay.Base.NGUniplayObjectRequestBroker;
 import Uniplay.Misc.NGTaskManager;
 import Uniplay.NGGameEngineConstants;
+import Uniplay.Storage.NGCustomGame;
+import Uniwork.Base.NGPropertyList;
 
 import java.util.ArrayList;
 
@@ -28,8 +30,9 @@ public class NGControlMimicManager extends NGUniplayComponent {
         aMimic.getMimic().reset();
     }
 
-    protected void ActivateMimic(NGControlMimicItem aMimic, Boolean aValue) {
-        ActivateMimic(aMimic.getMimic().getKind(), aMimic, aValue);
+    protected void ActivateMimic(NGControlMimicItem aMimic, Boolean aValue, NGPropertyList aProps) {
+        NGCustomControlMimic mimic = aMimic.getMimic();
+        ActivateMimic(mimic.getKind(), aMimic, aValue, aProps);
     }
 
     protected void writeActivateLog(NGControlMimicItem aMimic, Boolean aValue) {
@@ -41,16 +44,24 @@ public class NGControlMimicManager extends NGUniplayComponent {
         }
     }
 
-    protected void ActivateMimic(String aType, NGControlMimicItem aMimic, Boolean aValue) {
-        if (aMimic.getMimic().Type.equals(aType)) {
-            aMimic.getMimic().setActive(aValue);
+    protected void ActivateMimic(String aType, NGControlMimicItem aMimic, Boolean aValue, NGPropertyList aProps) {
+        NGCustomControlMimic mimic = aMimic.getMimic();
+        if (mimic.Type.equals(aType)) {
+            if (aValue && aProps != null) {
+                mimic.setProperties(mimic, aProps);
+            }
+            mimic.setActive(aValue);
             writeActivateLog(aMimic, aValue);
         }
     }
 
-    protected void ActivateMimic(NGCustomControlMimic.Kind aKind, NGControlMimicItem aMimic, Boolean aValue) {
-        if (aMimic.getMimic().getKind() == aKind) {
-            aMimic.getMimic().setActive(aValue);
+    protected void ActivateMimic(NGCustomControlMimic.Kind aKind, NGControlMimicItem aMimic, Boolean aValue, NGPropertyList aProps) {
+        NGCustomControlMimic mimic = aMimic.getMimic();
+        if (mimic.getKind() == aKind) {
+            if (aValue && aProps != null) {
+                mimic.setProperties(mimic, aProps);
+            }
+            mimic.setActive(aValue);
             writeActivateLog(aMimic, aValue);
         }
     }
@@ -90,7 +101,7 @@ public class NGControlMimicManager extends NGUniplayComponent {
         FInUpdate = true;
         try {
             for (NGControlMimicItem item : FMimics) {
-                ActivateMimic(aKind, item, true);
+                ActivateMimic(aKind, item, true, null);
             }
         }
         finally {
@@ -102,7 +113,7 @@ public class NGControlMimicManager extends NGUniplayComponent {
         FInUpdate = true;
         try {
             for (NGControlMimicItem item : FMimics) {
-                ActivateMimic(aType, item, true);
+                ActivateMimic(aType, item, true, null);
             }
         }
         finally {
@@ -114,7 +125,7 @@ public class NGControlMimicManager extends NGUniplayComponent {
         FInUpdate = true;
         try {
             for (NGControlMimicItem item : FMimics) {
-                ActivateMimic(item, true);
+                ActivateMimic(item, true, null);
             }
         }
         finally {
@@ -126,7 +137,7 @@ public class NGControlMimicManager extends NGUniplayComponent {
         FInUpdate = true;
         try {
             for (NGControlMimicItem item : FMimics) {
-                ActivateMimic(aKind, item, false);
+                ActivateMimic(aKind, item, false, null);
             }
         }
         finally {
@@ -138,7 +149,7 @@ public class NGControlMimicManager extends NGUniplayComponent {
         FInUpdate = true;
         try {
             for (NGControlMimicItem item : FMimics) {
-                ActivateMimic(aType, item, false);
+                ActivateMimic(aType, item, false, null);
             }
         }
         finally {
@@ -150,7 +161,7 @@ public class NGControlMimicManager extends NGUniplayComponent {
         FInUpdate = true;
         try {
             for (NGControlMimicItem item : FMimics) {
-                ActivateMimic(item, false);
+                ActivateMimic(item, false, null);
             }
         }
         finally {
@@ -159,13 +170,17 @@ public class NGControlMimicManager extends NGUniplayComponent {
     }
 
     public void ActivateMimic(String aName) {
+        ActivateMimic(aName, null);
+    }
+
+    public void ActivateMimic(String aName, NGPropertyList aProps) {
         NGControlMimicItem item = getMimic(aName);
-        ActivateMimic(item, true);
+        ActivateMimic(item, true, aProps);
     }
 
     public void DeactivateMimic(String aName) {
         NGControlMimicItem item = getMimic(aName);
-        ActivateMimic(item, false);
+        ActivateMimic(item, false, null);
     }
 
     public void resetMimic(String aName) {
