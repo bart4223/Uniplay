@@ -18,7 +18,7 @@ public abstract class NGControlMimicPeriodicAction extends NGCustomControlMimic 
         }
 
         @Override
-        public void Call() {
+        public synchronized void Call() {
             FMimicAction.DoHandleTick();
         }
     }
