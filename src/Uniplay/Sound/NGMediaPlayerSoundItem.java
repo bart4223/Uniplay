@@ -13,6 +13,10 @@ public class NGMediaPlayerSoundItem extends NGUniplayObject {
     protected Mode FMode;
     protected NGSoundManager FManager;
 
+    protected void play(double aStartTime) {
+        play(aStartTime, 0.0);
+    }
+
     protected void removeFromManager() {
         getManager().removeMediaPlayerItem(this);
     }
@@ -28,10 +32,11 @@ public class NGMediaPlayerSoundItem extends NGUniplayObject {
             public void run() {
                 switch (FMode) {
                     case singular:
+                        FMediaPlayer.stop();
                         removeFromManager();
                         break;
                     case repetitive :
-                        play();
+                        play(0.0);
                         break;
                 }
             }});
@@ -49,12 +54,11 @@ public class NGMediaPlayerSoundItem extends NGUniplayObject {
         return FSoundItem;
     }
 
-    public void play() {
-        play(0.0);
-    }
-
-    public void play(double aStartTime) {
+    public void play(double aStartTime, double aEndTime) {
         FMediaPlayer.setStartTime(new Duration(aStartTime));
+        if (aEndTime > 0.0) {
+            FMediaPlayer.setStopTime(new Duration(aEndTime));
+        }
         FMediaPlayer.play();
     }
 

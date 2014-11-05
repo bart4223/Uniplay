@@ -165,7 +165,10 @@ public class NGGameEngineMemory extends NGUniplayComponent {
     }
 
     public NGGameEngineMemoryCell getCell(int aIndex) {
-        return FCells.get(aIndex);
+        if (aIndex < FCells.size()) {
+            return FCells.get(aIndex);
+        }
+        return null;
     }
 
     public NGGameEngineMemoryCell getCell(int aPage, int aBase, int aOffset) {
@@ -175,17 +178,26 @@ public class NGGameEngineMemory extends NGUniplayComponent {
 
     public Object getCellValue(NGGameEngineMemoryAddress aAddress) {
         NGGameEngineMemoryCell cell = getCell(aAddress);
-        return cell.getValue();
+        if (cell != null) {
+            return cell.getValue();
+        }
+        return null;
     }
 
     public Integer getCellValueAsInteger(NGGameEngineMemoryAddress aAddress) {
         NGGameEngineMemoryCell cell = getCell(aAddress);
-        return cell.getValueAsInteger();
+        if (cell != null) {
+            return cell.getValueAsInteger();
+        }
+        return 0;
     }
 
     public Integer getCellValueAsInteger(int aPage, int aBase, int aOffset) {
         NGGameEngineMemoryCell cell = getCell(aPage, aBase, aOffset);
-        return cell.getValueAsInteger();
+        if (cell != null) {
+            return cell.getValueAsInteger();
+        }
+        return null;
     }
 
     public void setCellsValue(NGGameEngineMemoryTransaction aTransaction, ArrayList<NGGameEngineMemoryCellValueItem> aItems) {

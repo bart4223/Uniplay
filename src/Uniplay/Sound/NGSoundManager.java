@@ -29,9 +29,9 @@ public class NGSoundManager extends NGUniplayComponent {
         return null;
     }
 
-    protected void addMediaPlayerItem(NGMediaPlayerSoundItem aItem) {
+    protected void addMediaPlayerItem(NGMediaPlayerSoundItem aItem, double aStartTime, double aEndTime) {
         FMediaPlayerItems.add(aItem);
-        aItem.play();
+        aItem.play(aStartTime, aEndTime);
         writeLog(String.format("Sound [%s] play with media player...", aItem.getSoundItem().getName()));
     }
 
@@ -59,14 +59,26 @@ public class NGSoundManager extends NGUniplayComponent {
         return item;
     }
 
-    public void playSound1(String aName, NGMediaPlayerSoundItem.Mode aMode) {
+    public void playSound(String aName) {
+        playSound(aName, 0.0, 0.0);
+    }
+
+    public void playSound(String aName, double aStartTime, double aEndTime) {
+        playSound(aName, NGMediaPlayerSoundItem.Mode.singular, aStartTime, aEndTime);
+    }
+
+    public void playSound(String aName, NGMediaPlayerSoundItem.Mode aMode, double aStartTime, double aEndTime) {
         NGSoundItem item = getSoundItem(aName);
-        playSound(item, aMode);
+        playSound(item, aMode, aStartTime, aEndTime);
     }
 
     public void playSound(NGSoundItem aItem, NGMediaPlayerSoundItem.Mode aMode) {
+        playSound(aItem, aMode, 0.0, 0.0);
+    }
+
+    public void playSound(NGSoundItem aItem, NGMediaPlayerSoundItem.Mode aMode, double aStartTime, double aEndTime) {
         NGMediaPlayerSoundItem sounditem = new NGMediaPlayerSoundItem(this, aItem, aMode);
-        addMediaPlayerItem(sounditem);
+        addMediaPlayerItem(sounditem, aStartTime, aEndTime);
     }
 
     public void stopSound(String aName) {
@@ -94,6 +106,14 @@ public class NGSoundManager extends NGUniplayComponent {
                 stopSound(item);
             }
         }
+    }
+
+    public Boolean IsPlaySound(String aName) {
+        return getMediaPlayerSoundItem(aName) != null;
+    }
+
+    public Integer GetSoundsPlayed() {
+        return FMediaPlayerItems.size();
     }
 
 }
