@@ -35,14 +35,31 @@ public class NGSoundManager extends NGUniplayComponent {
         writeLog(String.format("Sound [%s] play with media player...", aItem.getSoundItem().getName()));
     }
 
+    protected void DoPlaySound(NGSoundItem aItem, NGMediaPlayerSoundItem.Mode aMode, double aStartTime, double aEndTime) {
+        NGMediaPlayerSoundItem sounditem;
+        if (aMode == NGMediaPlayerSoundItem.Mode.several) {
+            sounditem = getMediaPlayerSoundItem(aItem.getName());
+            if (sounditem == null) {
+                sounditem = new NGMediaPlayerSoundItem(this, aItem, aMode);
+                addMediaPlayerItem(sounditem, aStartTime, aEndTime);
+            }
+            else {
+                sounditem.play(aStartTime, aEndTime);
+            }
+        } else {
+            sounditem = new NGMediaPlayerSoundItem(this, aItem, aMode);
+            addMediaPlayerItem(sounditem, aStartTime, aEndTime);
+        }
+    }
+
     protected void removeMediaPlayerItem(NGMediaPlayerSoundItem aItem) {
         FMediaPlayerItems.remove(aItem);
     }
 
-    protected void stopSound(NGMediaPlayerSoundItem aItem) {
+    protected void DoStopSound(NGMediaPlayerSoundItem aItem) {
         if (aItem.getStatus() == MediaPlayer.Status.PLAYING) {
-            aItem.stop();
             writeLog(String.format("Sound [%s] stop playing!", aItem.getSoundItem().getName()));
+            aItem.stop();
         }
     }
 
@@ -67,6 +84,10 @@ public class NGSoundManager extends NGUniplayComponent {
         playSound(aName, NGMediaPlayerSoundItem.Mode.singular, aStartTime, aEndTime);
     }
 
+    public void playSound(String aName, NGMediaPlayerSoundItem.Mode aMode) {
+        playSound(aName, aMode, 0.0, 0.0);
+    }
+
     public void playSound(String aName, NGMediaPlayerSoundItem.Mode aMode, double aStartTime, double aEndTime) {
         NGSoundItem item = getSoundItem(aName);
         playSound(item, aMode, aStartTime, aEndTime);
@@ -77,21 +98,28 @@ public class NGSoundManager extends NGUniplayComponent {
     }
 
     public void playSound(NGSoundItem aItem, NGMediaPlayerSoundItem.Mode aMode, double aStartTime, double aEndTime) {
-        NGMediaPlayerSoundItem sounditem = new NGMediaPlayerSoundItem(this, aItem, aMode);
-        addMediaPlayerItem(sounditem, aStartTime, aEndTime);
+         DoPlaySound(aItem, aMode, aStartTime, aEndTime);
     }
 
     public void stopSound(String aName) {
         for (NGMediaPlayerSoundItem item : FMediaPlayerItems) {
             if (item.getSoundItem().getName().equals(aName)) {
-                stopSound(item);
+                DoStopSound(item);
             }
         }
     }
 
     public void stopAllSounds() {
-        for (NGMediaPlayerSoundItem item : FMediaPlayerItems) {
-            stopSound(item);
+        int i = 0;
+        while (i < FMediaPlayerItems.size()) {
+            NGMediaPlayerSoundItem item = FMediaPlayerItems.get(i);
+            DoStopSound(item);
+            if (item.getMode() == NGMediaPlayerSoundItem.Mode.singular) {
+                FMediaPlayerItems.remove(i);
+            }
+            else {
+                i++;
+            }
         }
     }
 
@@ -103,13 +131,18 @@ public class NGSoundManager extends NGUniplayComponent {
         }
         for (NGMediaPlayerSoundItem item : FMediaPlayerItems) {
             if (item.stopOnEvent(aEventName)) {
-                stopSound(item);
+                DoStopSound(item);
             }
         }
     }
 
-    public Boolean IsPlaySound(String aName) {
-        return getMediaPlayerSoundItem(aName) != null;
+    public Boolean IsPlayingSound(String aName) {
+        NGMediaPlayerSoundItem item = getMediaPlayerSoundItem(aName);
+        Boolean result = item != null;
+        if (result) {
+            result = item.getStatus() == MediaPlayer.Status.PLAYING;
+        }
+        return result;
     }
 
     public Integer GetSoundsPlayed() {

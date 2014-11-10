@@ -6,15 +6,23 @@ import javafx.util.Duration;
 
 public class NGMediaPlayerSoundItem extends NGUniplayObject {
 
-    public enum Mode {singular, repetitive};
+    public enum Mode {singular, several, repetitive};
 
     protected NGSoundItem FSoundItem;
     protected MediaPlayer FMediaPlayer;
     protected Mode FMode;
     protected NGSoundManager FManager;
 
-    protected void play(double aStartTime) {
-        play(aStartTime, 0.0);
+    protected void DoPlay(double aStartTime, double aEndTime) {
+        FMediaPlayer.setStartTime(new Duration(aStartTime));
+        if (aEndTime > 0.0) {
+            FMediaPlayer.setStopTime(new Duration(aEndTime));
+        }
+        FMediaPlayer.play();
+    }
+
+    protected void DoStop() {
+        FMediaPlayer.stop();
     }
 
     protected void removeFromManager() {
@@ -32,8 +40,11 @@ public class NGMediaPlayerSoundItem extends NGUniplayObject {
             public void run() {
                 switch (FMode) {
                     case singular:
-                        FMediaPlayer.stop();
+                        stop();
                         removeFromManager();
+                        break;
+                    case several:
+                        stop();
                         break;
                     case repetitive :
                         play(0.0);
@@ -54,12 +65,12 @@ public class NGMediaPlayerSoundItem extends NGUniplayObject {
         return FSoundItem;
     }
 
+    public void play(double aStartTime) {
+        play(aStartTime, 0.0);
+    }
+
     public void play(double aStartTime, double aEndTime) {
-        FMediaPlayer.setStartTime(new Duration(aStartTime));
-        if (aEndTime > 0.0) {
-            FMediaPlayer.setStopTime(new Duration(aEndTime));
-        }
-        FMediaPlayer.play();
+        DoPlay(aStartTime, aEndTime);
     }
 
     public Mode getMode() {
@@ -67,7 +78,7 @@ public class NGMediaPlayerSoundItem extends NGUniplayObject {
     }
 
     public void stop() {
-        FMediaPlayer.stop();
+        DoStop();
     }
 
     public MediaPlayer.Status getStatus() {
