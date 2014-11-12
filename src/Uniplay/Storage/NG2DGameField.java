@@ -8,14 +8,12 @@ import java.util.ArrayList;
 public class NG2DGameField extends NGUniplayObject {
 
     protected ArrayList<NG2DGameFieldLayer> FLayers;
-    protected NGPropertyList FProps;
     protected NG2DGameFieldSize FSize;
 
     public NG2DGameField(NG2DGameFieldSize aSize) {
         super();
         FSize = aSize;
         FLayers = new ArrayList<NG2DGameFieldLayer>();
-        FProps = new NGPropertyList();
     }
 
     public NG2DGameFieldLayer addLayer(String aName) {
@@ -39,7 +37,6 @@ public class NG2DGameField extends NGUniplayObject {
 
     public void clear() {
         FLayers.clear();
-        FProps.clear();
         FSize.clear();
     }
 

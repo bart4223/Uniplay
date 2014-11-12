@@ -8,6 +8,7 @@ public abstract class NGCustomGameCharacter extends NGCustomGameObject {
 
     protected void DoReset() {
         FCurrentLives = FMaxLives;
+        writeLog(String.format("Game-Character [%s] had %d lives after reset.", FPlayer.getName(), FCurrentLives));
     }
 
     public NGCustomGameCharacter(NGCustomGame aGame, NGCustomPlayer aPlayer) {
@@ -39,6 +40,7 @@ public abstract class NGCustomGameCharacter extends NGCustomGameObject {
 
     public void subCurrentLives() {
         FCurrentLives = FCurrentLives - 1;
+        writeLog(String.format("Game-Character [%s] has yet %d lives.", FPlayer.getName(), FCurrentLives));
     }
 
 }

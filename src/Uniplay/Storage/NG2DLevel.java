@@ -97,7 +97,7 @@ public class NG2DLevel extends NGCustomLevel {
             level.getGameField().setHeight(getGameFieldSize().getHeight());
             level.getGameField().setWidth(getGameFieldSize().getWidth());
             level.getGameField().setProps(new ArrayList<NGSerializePropertyItem>());
-            getProps().AssignTo(level.getGameField().getProps());
+            getProps().AssignTo(level.getProps());
             level.getGameField().setLayers(new ArrayList<NGSerialize2DGameFieldLayer>());
             for (NG2DGameFieldLayer layer : getGameField().getLayers()) {
                 NGSerialize2DGameFieldLayer sl = new NGSerialize2DGameFieldLayer();
@@ -125,7 +125,7 @@ public class NG2DLevel extends NGCustomLevel {
             setCaption(level.getCaption());
             getGameFieldSize().setHeight(level.getGameField().getHeight());
             getGameFieldSize().setWidth(level.getGameField().getWidth());
-            getProps().AssignFrom(level.getGameField().getProps());
+            getProps().AssignFrom(level.getProps());
             for (NGSerialize2DGameFieldLayer sl : level.getGameField().getLayers()) {
                 Class cl;
                 try {

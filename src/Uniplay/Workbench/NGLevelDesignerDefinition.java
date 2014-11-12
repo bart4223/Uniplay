@@ -20,6 +20,6 @@ public class NGLevelDesignerDefinition extends NGUniplayComponentDefinition {
     public void setLevelcaption(String value) { Levelcaption = value;}
     public String getLevelcaption() { return Levelcaption;}
     public void setLevelname(String value) { Levelname = value;}
-    public String getLevelbame() { return Levelname;}
+    public String getLevelname() { return Levelname;}
 
 }

@@ -37,6 +37,7 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     }
 
     protected void resetAll() {
+        resetPCs();
         ResetAllMimicActions();
     }
 
@@ -54,7 +55,6 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     }
 
     protected void DoBeforeStartLevel() {
-        resetPCs();
         removeAllNPCs();
     }
 
@@ -75,6 +75,11 @@ public abstract class NGCustomGame extends NGUniplayComponent {
 
     protected void DoAfterStartLevel() {
         ActivateMimicActions(NGCustomControlMimic.Kind.permant);
+    }
+
+    protected void DoFinishLevel() {
+        raiseLevelFinishEvent();
+        DeactivateAllMimicActions();
     }
 
     protected void DoBreak() {
@@ -99,7 +104,7 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     }
 
     protected void DoNextLevel() {
-        ResetAllMimicActions();
+        resetAll();
     }
 
     protected NGPlayerGameStatistic addPlayerGameStatistic(NGPlayer aPlayer) {
@@ -281,6 +286,11 @@ public abstract class NGCustomGame extends NGUniplayComponent {
         }
     }
 
+    public void Restart() {
+        Finish();
+        Start();
+    }
+
     public State getState() {
         return FState;
     }
@@ -290,8 +300,7 @@ public abstract class NGCustomGame extends NGUniplayComponent {
     }
 
     public void FinishLevel() {
-        raiseLevelFinishEvent();
-        DeactivateAllMimicActions();
+        DoFinishLevel();
         try {
             DoNextLevel();
         }

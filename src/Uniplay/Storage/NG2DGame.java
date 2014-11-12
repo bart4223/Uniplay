@@ -39,8 +39,8 @@ public class NG2DGame extends NGCustomGame {
     }
 
     @Override
-    protected void resetAll() {
-        super.resetAll();
+    protected void DoBeforeStart() {
+        super.DoBeforeStart();
         FLevelIndex = 1;
     }
 
@@ -67,15 +67,26 @@ public class NG2DGame extends NGCustomGame {
 
     }
 
-    protected void assignGameObjects() {
+    protected void assignGameObjects(NG2DLevel aLevel) {
+
+    }
+
+    protected void assignGameCharacters(NG2DLevel aLevel) {
         assignPlayerPositions(getCurrentGameFieldLayer());
+        for (NGCustomGameCharacter pc : FPCs) {
+            Object obj = aLevel.getProp("LIVES");
+            if (obj instanceof Integer) {
+                pc.setMaxLives((Integer)obj);
+            }
+        }
     }
 
     protected void AfterLoadLevel(NG2DLevel aLevel) {
         reallocateLevelMemory(aLevel);
         setCurrentLevel(aLevel);
         setCurrentGameFieldLayer(aLevel.getGameField().getLayer("DEFAULT"));
-        assignGameObjects();
+        assignGameCharacters(aLevel);
+        assignGameObjects(aLevel);
     }
 
     protected NG2DLevel loadLevel(String aName) {

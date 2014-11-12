@@ -157,6 +157,10 @@ public class NG2DLevelDesigner extends NGLevelDesigner {
                         }
                     }
                 }
+                else {
+                    level.setProp(prop.getName(), prop.getValue());
+                    writeLog(String.format("SetupLevel-Prop [%s=%s]", prop.getName(), prop.getValue().toString()));
+                }
             }
         }
     }
