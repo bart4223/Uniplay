@@ -14,9 +14,15 @@ public class NGMediaPlayerSoundItem extends NGUniplayObject {
     protected NGSoundManager FManager;
 
     protected void DoPlay(double aStartTime, double aEndTime) {
+        if (FSoundItem.getVolume() > 0.0 ) {
+            FMediaPlayer.setVolume(FSoundItem.getVolume());
+        }
         FMediaPlayer.setStartTime(new Duration(aStartTime));
         if (aEndTime > 0.0) {
             FMediaPlayer.setStopTime(new Duration(aEndTime));
+        }
+        else if (FSoundItem.getDuration() > 0) {
+            FMediaPlayer.setStopTime(new Duration(aStartTime + FSoundItem.getDuration()));
         }
         FMediaPlayer.play();
     }

@@ -10,6 +10,8 @@ public class NGSoundSystemDefinitionSoundItem extends NGUniplayObjectDefinition 
     protected String Filename = "";
     protected ArrayList<String> Runeventnames;
     protected ArrayList<String> Stopeventnames;
+    protected Double Volume;
+    protected Integer Duration;
 
     public NGSoundSystemDefinitionSoundItem() {
         super();
@@ -26,5 +28,11 @@ public class NGSoundSystemDefinitionSoundItem extends NGUniplayObjectDefinition 
 
     public void setStopeventnames(ArrayList<String> value) { Stopeventnames = value;}
     public ArrayList<String> getStopeventnames() { return Stopeventnames; }
+
+    public void setVolume(Double value) { Volume = value;}
+    public Double getVolume() { return Volume; }
+
+    public void setDuration(Integer value) { Duration = value;}
+    public Integer getDuration() { return  Duration; }
 
 }

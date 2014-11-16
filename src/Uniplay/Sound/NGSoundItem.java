@@ -12,6 +12,8 @@ public class NGSoundItem extends NGUniplayObject {
     protected ArrayList<String> FRunEventnames;
     protected ArrayList<String> FStopEventnames;
     protected Media FMedia;
+    protected Double FVolume;
+    protected Integer FDuration;
 
     public NGSoundItem(String aName, String aFilename) {
         super();
@@ -21,6 +23,8 @@ public class NGSoundItem extends NGUniplayObject {
         FMedia = new Media(String.format("file://%s", path));
         FRunEventnames = new ArrayList<String>();
         FStopEventnames = new ArrayList<String>();
+        FVolume = 0.0;
+        FDuration = 0;
     }
 
     public String getName() {
@@ -55,6 +59,22 @@ public class NGSoundItem extends NGUniplayObject {
             }
         }
         return false;
+    }
+
+    public void setVolume(Double aVolume) {
+        FVolume = aVolume;
+    }
+
+    public Double getVolume() {
+        return FVolume;
+    }
+
+    public void setDuration(Integer aDuration) {
+        FDuration = aDuration;
+    }
+
+    public Integer getDuration() {
+        return FDuration;
     }
 
 }

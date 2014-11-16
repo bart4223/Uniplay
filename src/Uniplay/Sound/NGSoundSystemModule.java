@@ -44,6 +44,12 @@ public class NGSoundSystemModule extends NGGameEngineModule {
             for (String re : item.getStopeventnames()) {
                 si.addStopEventname(re);
             }
+            if (item.getVolume() != null) {
+                si.setVolume(item.getVolume());
+            }
+            if (item.getDuration() != null) {
+                si.setDuration(item.getDuration());
+            }
         }
     }
 
