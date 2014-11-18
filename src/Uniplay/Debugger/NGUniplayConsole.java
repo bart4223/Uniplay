@@ -26,7 +26,7 @@ public class NGUniplayConsole extends NGUniplayComponent implements NGLogEventLi
             FStageController.Console = this;
             Parent lRoot = lXMLLoader.getRoot();
             FStage.setTitle("Uniplay.Console");
-            FStage.setScene(new Scene(lRoot, 1700, 200, Color.LIGHTGRAY));
+            FStage.setScene(new Scene(lRoot, 1780, 200, Color.LIGHTGRAY));
             FStage.setResizable(false);
         }
         catch( Exception e) {

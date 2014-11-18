@@ -11,7 +11,7 @@ public class NGDebuggerModule extends NGGameEngineModule {
     @Override
     protected void CreateSubComponents() {
         super.CreateSubComponents();
-        NGUniplayConsole console = (NGUniplayConsole)new NGUniplayConsole(this, NGGameEngineConstants.CMP_CONSOLE);
+        NGUniplayConsole console = new NGUniplayConsole(this, NGGameEngineConstants.CMP_CONSOLE);
         addSubComponent(console);
         registerEventHandler(new NGUniplayConsoleEventHandlerKernelStarted(console));
     }
@@ -30,7 +30,7 @@ public class NGDebuggerModule extends NGGameEngineModule {
     @Override
     protected void AfterInitialize() {
         super.AfterInitialize();
-        getConsole().setStagePosition(500, 1100);
+        getConsole().setStagePosition(500, 1140);
     }
 
     protected NGUniplayConsole getConsole() {

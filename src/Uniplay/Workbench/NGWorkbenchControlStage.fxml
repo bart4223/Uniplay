@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <AnchorPane fx:controller="Uniplay.Workbench.NGWorkbenchControlStageController" xmlns:fx="http://javafx.com/fxml" >
-    <HBox prefHeight="50" minWidth="800" alignment="TOP_LEFT" spacing="10" xmlns:fx="http://javafx.com/fxml" style="-fx-background-color: gray;">
+    <HBox prefHeight="50" minWidth="880" alignment="TOP_LEFT" spacing="10" xmlns:fx="http://javafx.com/fxml" style="-fx-background-color: gray;">
         <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
         <Button id="btnLevelDesigner" prefWidth="150" text="LevelDesigner" onAction="#handleLevelDesigner" fx:id="btnLevelDesigner" />
     </HBox>

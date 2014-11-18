@@ -23,7 +23,7 @@ public class NGWorkbenchManager extends NGUniplayComponent {
             FControlController.Manager = this;
             Parent lRoot = lXMLLoader.getRoot();
             FControlStage.setTitle("Uniplay.Workbench.Control");
-            FControlStage.setScene(new Scene(lRoot, 800, 50, Color.WHITE));
+            FControlStage.setScene(new Scene(lRoot, 880, 50, Color.WHITE));
             FControlStage.setResizable(false);
         }
         catch( Exception e) {
@@ -33,7 +33,7 @@ public class NGWorkbenchManager extends NGUniplayComponent {
 
     protected void perfectLayout() {
         FControlStage.setX(500);
-        FControlStage.setY(150);
+        FControlStage.setY(110);
     }
 
     protected NGLevelDesignerManager getLevelDesignerManager() {
@@ -74,7 +74,7 @@ public class NGWorkbenchManager extends NGUniplayComponent {
     public void showLevelDesigner(String aName) {
         NG2DLevelDesigner designer = getLevelDesignerManager().getLevelDesigner(aName);
         designer.showStage();
-        designer.setStagePosition(500, 250);
+        designer.setStagePosition(500, 210);
     }
 
 }
