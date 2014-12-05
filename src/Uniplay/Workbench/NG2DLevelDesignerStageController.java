@@ -1,6 +1,7 @@
 package Uniplay.Workbench;
 
 import Uniplay.Storage.NG2DLevel;
+import Uniwork.Visuals.NGDisplayController;
 import Uniwork.Visuals.NGDisplayView;
 import Uniwork.Visuals.NGGrid2DDisplayController;
 import Uniwork.Visuals.NGStageController;
@@ -85,8 +86,8 @@ public class NG2DLevelDesignerStageController extends NGStageController {
     }
 
     @Override
-    protected void DoBeforeRenderScene() {
-        super.DoBeforeRenderScene();
+    protected void DoBeforeRenderScene(NGDisplayController aController) {
+        super.DoBeforeRenderScene(aController);
         FDCGrid.GridDistance = Designer.getGridSize();
         FDCGameField.setImageName(Designer.getImageName());
         if (Level != null) {

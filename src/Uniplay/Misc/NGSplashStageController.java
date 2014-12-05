@@ -1,5 +1,6 @@
 package Uniplay.Misc;
 
+import Uniwork.Visuals.NGDisplayController;
 import Uniwork.Visuals.NGGrid2DDisplayController;
 import Uniwork.Visuals.NGStageController;
 import javafx.fxml.FXML;
@@ -27,8 +28,8 @@ public class NGSplashStageController extends NGStageController {
     }
 
     @Override
-    protected void DoBeforeRenderScene() {
-        super.DoBeforeRenderScene();
+    protected void DoBeforeRenderScene(NGDisplayController aController) {
+        super.DoBeforeRenderScene(aController);
         FDCGrid.GridDistance = Manager.GridDistance;
     }
 

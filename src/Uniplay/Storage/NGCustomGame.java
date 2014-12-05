@@ -4,13 +4,16 @@ import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Control.NGControlMimicManager;
 import Uniplay.Control.NGCustomControlMimic;
 import Uniplay.Kernel.*;
+import Uniplay.Misc.NGTaskManager;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Sound.NGSoundManager;
+import Uniwork.Misc.NGTickEvent;
+import Uniwork.Misc.NGTickListener;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
 
-public abstract class NGCustomGame extends NGUniplayComponent {
+public abstract class NGCustomGame extends NGUniplayComponent implements NGTickListener {
 
     public enum State {Created, Initialized, Started, Hold, Finished};
 
@@ -137,6 +140,10 @@ public abstract class NGCustomGame extends NGUniplayComponent {
 
     protected NGSoundManager getSoundManager() {
         return (NGSoundManager)ResolveObject(NGGameEngineConstants.CMP_SOUND_MANAGER, NGSoundManager.class);
+    }
+
+    protected NGTaskManager getTaskManager() {
+        return (NGTaskManager)ResolveObject(NGGameEngineConstants.CMP_TASK_MANAGER, NGTaskManager.class);
     }
 
     protected void raiseGameStartEvent() {
@@ -368,6 +375,15 @@ public abstract class NGCustomGame extends NGUniplayComponent {
 
     public void ResetAllMimicActions() {
         getMimicManager().ResetAllMimics();
+    }
+
+    protected void DoHandleTick(NGTickEvent aEvent) {
+
+    }
+
+    @Override
+    public void handleTick(NGTickEvent e) {
+        DoHandleTick(e);
     }
 
 }

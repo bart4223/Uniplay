@@ -140,7 +140,7 @@ public class NGSplashManager extends NGUniplayComponent {
     }
 
     public void Run() {
-        FController.RenderScene();
+        RenderScene();
         showStage();
         raiseRunEvent();
         DoRun();
