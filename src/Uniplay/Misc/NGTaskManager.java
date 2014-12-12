@@ -2,7 +2,6 @@ package Uniplay.Misc;
 
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
-import Uniplay.Misc.NGTaskCallback;
 import Uniwork.Misc.NGTickGenerator;
 import Uniwork.Misc.NGTickListener;
 
@@ -74,6 +73,14 @@ public class NGTaskManager extends NGUniplayComponent {
             }
         };
         FTimer.schedule(lTimerTask, aDelay);
+    }
+
+    public void setTaskProp(String aName, String aPropName, Object aObject) {
+        FTickGenerator.setItemProp(aName, aPropName, aObject);
+    }
+
+    public Object getTaskProp(String aName, String aPropName) {
+        return FTickGenerator.getItemProp(aName, aPropName);
     }
 
 }
