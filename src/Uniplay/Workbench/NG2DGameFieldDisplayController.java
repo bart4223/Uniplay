@@ -27,19 +27,21 @@ public class NG2DGameFieldDisplayController extends NGImageDisplayController {
 
     @Override
     protected void BeforeRender() {
-        super.BeforeRender();
         setPosition(getPositionX() * FWidth, getPositionY() * FHeight);
+        super.BeforeRender();
     }
 
     @Override
     protected void InternalRender() {
         ClearCanvas();
         for (NG2DGameFieldLayer layer : GameField.getLayers()) {
-            for (NGGameEngineMemoryCell cell : layer.getCells()) {
-                NGGameEngineMemoryAddress address = cell.getAddress();
-                setPosition(address.getOffset(), address.getBase());
-                setProperty(this, "Background.ImageNumber", cell.getValueAsInteger());
-                super.InternalRender();
+            if (layer.getCellCount() > 0 ) {
+                for (NGGameEngineMemoryCell cell : layer.getCells()) {
+                    NGGameEngineMemoryAddress address = cell.getAddress();
+                    setPosition(address.getOffset(), address.getBase());
+                    setProperty(this, "Background.ImageNumber", cell.getValueAsInteger());
+                    super.InternalRender();
+                }
             }
         }
     }
