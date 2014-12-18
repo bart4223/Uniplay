@@ -77,7 +77,7 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
     }
 
     protected void DoAfterStartLevel() {
-        ActivateMimicActions(NGCustomControlMimic.Kind.permant);
+        ActivateMimicActions(NGCustomControlMimic.Kind.permanent);
     }
 
     protected void DoFinishLevel() {

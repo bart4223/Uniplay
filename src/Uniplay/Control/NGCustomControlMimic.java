@@ -1,6 +1,7 @@
 package Uniplay.Control;
 
 import Uniplay.Base.NGUniplayObject;
+import Uniplay.Misc.NGTaskManager;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Physics.NGObjectPhysicsProcessor;
 import Uniplay.Storage.NGCustomGame;
@@ -8,7 +9,7 @@ import Uniwork.Misc.NGLogManager;
 
 public abstract class NGCustomControlMimic extends NGUniplayObject {
 
-    public enum Kind {permant, temporary};
+    public enum Kind {permanent, temporary}
 
     protected String FName;
     protected Boolean FActive;
@@ -18,6 +19,7 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
     protected Kind FKind;
     protected Boolean FInitialized;
     protected NGObjectPhysicsProcessor FPhysicsProcessor;
+    protected NGTaskManager FTaskManager;
 
     protected void writeLog(String aText) {
         writeLog(0, aText);
@@ -61,6 +63,13 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
 
     }
 
+    protected NGTaskManager getTaskManager() {
+        if (FTaskManager == null) {
+            FTaskManager = (NGTaskManager)ResolveObject(NGGameEngineConstants.CMP_TASK_MANAGER, NGTaskManager.class);
+        }
+        return FTaskManager;
+    }
+
     protected NGObjectPhysicsProcessor getPhysicsProcessor() {
         if (FPhysicsProcessor == null) {
             FPhysicsProcessor = (NGObjectPhysicsProcessor)ResolveObject(NGGameEngineConstants.CMP_PHYSICS_PROCESSOR, NGObjectPhysicsProcessor.class);
@@ -90,6 +99,7 @@ public abstract class NGCustomControlMimic extends NGUniplayObject {
         FInitialized = false;
         Type = "";
         FPhysicsProcessor = null;
+        FTaskManager = null;
     }
 
     public String getName() {

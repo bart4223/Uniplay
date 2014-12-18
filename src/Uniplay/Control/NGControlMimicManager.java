@@ -173,6 +173,14 @@ public class NGControlMimicManager extends NGUniplayComponent {
         ActivateMimic(aName, null);
     }
 
+    public void ActivateMimic(NGControlMimicItem aItem) {
+        ActivateMimic(aItem, null);
+    }
+
+    public void ActivateMimic(NGControlMimicItem aItem, NGPropertyList aProps) {
+        ActivateMimic(aItem, true, aProps);
+    }
+
     public void ActivateMimic(String aName, NGPropertyList aProps) {
         NGControlMimicItem item = getMimic(aName);
         ActivateMimic(item, true, aProps);

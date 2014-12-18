@@ -83,4 +83,16 @@ public class NGTaskManager extends NGUniplayComponent {
         return FTickGenerator.getItemProp(aName, aPropName);
     }
 
+    public void setGeneratorEnabled(Boolean aValue) {
+        FTickGenerator.setEnabled(aValue);
+    }
+
+    public Boolean getGeneratorEnabled() {
+        return FTickGenerator.getEnabled();
+    }
+
+    public void ToggleGeneratorEnabled() {
+        FTickGenerator.ToggleEnabled();
+    }
+
 }
