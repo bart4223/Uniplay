@@ -26,3 +26,5 @@ Source Milestones:
     17.09.14    Multi graphic layer technic works
     18.09.14    Start physics engine implementation
     10.10.14    First functioning physics engine effect (Momentum conservation)
+    14.12.14    All levels included
+    19.12.14    Explosion works
