@@ -21,6 +21,10 @@ public class NGControlMimicGameObjectActivation extends NGControlMimicPeriodicAc
             FCountDown = FCountDown - 1;
         }
 
+        public void setCountDown(Integer aValue) {
+            FCountDown = aValue;
+        }
+
         public Integer getCountDown() {
             return FCountDown;
         }
@@ -32,6 +36,7 @@ public class NGControlMimicGameObjectActivation extends NGControlMimicPeriodicAc
     }
 
     protected ArrayList<GameObjectActivationItem> FItems;
+    ArrayList<GameObjectActivationItem> FMatureItems;
 
     protected void addItem(NGCustomGameObject aGameObject) {
         GameObjectActivationItem item = new GameObjectActivationItem(aGameObject, CountDown);
@@ -39,31 +44,47 @@ public class NGControlMimicGameObjectActivation extends NGControlMimicPeriodicAc
         writeLog(String.format("Game object activation in %d ticks...", item.getCountDown()));
     }
 
-    protected void itemCountDown(GameObjectActivationItem aItem) {
+    protected void addMatureItem(GameObjectActivationItem aItem) {
+        aItem.setCountDown(CountDown / 2);
+        FMatureItems.add(aItem);
+    }
+
+    protected void itemMatureStart(GameObjectActivationItem aItem) {
+        writeLog(String.format("Game object mature start..."));
+    }
+
+    protected void itemMatureEnd(GameObjectActivationItem aItem) {
+        writeLog(String.format("Game object mature end"));
+    }
+
+    protected void itemActivationCountDown(GameObjectActivationItem aItem) {
         aItem.Countdown();
         if (aItem.getCountDown() > 0) {
             writeLog(String.format("Game object activation in %d ticks...", aItem.getCountDown()));
         }
     }
 
-    protected void itemMature(GameObjectActivationItem aItem) {
-        writeLog(String.format("Game object activation!"));
+    protected void itemMatureCountDown(GameObjectActivationItem aItem) {
+        aItem.Countdown();
+        if (aItem.getCountDown() > 0) {
+            writeLog(String.format("Game object mature in %d ticks...", aItem.getCountDown()));
+        }
     }
 
     protected void DoProcessItems() {
-        ArrayList<GameObjectActivationItem> FMatures = new ArrayList<GameObjectActivationItem>();
         for (GameObjectActivationItem item : FItems) {
-            itemCountDown(item);
+            itemActivationCountDown(item);
             if (item.getCountDown() <= 0) {
-                FMatures.add(item);
-                itemMature(item);
+                addMatureItem(item);
+                itemMatureStart(item);
             }
         }
-        for (GameObjectActivationItem item : FMatures) {
+        for (GameObjectActivationItem item : FMatureItems) {
             FItems.remove(item);
         }
         checkNewStartObject();
-        if (FItems.size() == 0) {
+        checkMatureItems();
+        if (FItems.size() == 0 && FMatureItems.size() == 0) {
             Deactivate();
         }
     }
@@ -84,6 +105,20 @@ public class NGControlMimicGameObjectActivation extends NGControlMimicPeriodicAc
         }
     }
 
+    protected void checkMatureItems() {
+        ArrayList<GameObjectActivationItem> items = new ArrayList<GameObjectActivationItem>();
+        for (GameObjectActivationItem item : FMatureItems) {
+            itemMatureCountDown(item);
+            if (item.getCountDown() <= 0) {
+                itemMatureEnd(item);
+                items.add(item);
+            }
+        }
+        for (GameObjectActivationItem item : items) {
+            FMatureItems.remove(item);
+        }
+    }
+
     @Override
     protected void DoHandleTick() {
         super.DoHandleTick();
@@ -93,6 +128,7 @@ public class NGControlMimicGameObjectActivation extends NGControlMimicPeriodicAc
     public NGControlMimicGameObjectActivation(NGControlMimicManager aManager, NGCustomGame aGame, String aName) {
         super(aManager, aGame, aName, Kind.temporary);
         FItems = new ArrayList<GameObjectActivationItem>();
+        FMatureItems = new ArrayList<GameObjectActivationItem>();
         CountDown = 10;
         StartObject = null;
     }
