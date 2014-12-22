@@ -165,7 +165,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
     }
 
     public NGGameEngineMemoryCell getCell(int aIndex) {
-        if (aIndex < FCells.size()) {
+        if (0 < aIndex && aIndex < FCells.size()) {
             return FCells.get(aIndex);
         }
         return null;

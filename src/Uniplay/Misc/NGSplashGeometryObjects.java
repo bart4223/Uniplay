@@ -8,6 +8,7 @@ import Uniwork.Visuals.NGGeometryObject2DDisplayManager;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -61,9 +62,12 @@ public class NGSplashGeometryObjects extends NGSplashItem {
         FDisplayController.setPixelSize(16);
         FDisplayController.Initialize();
         registerDisplayController(FDisplayController);
-        NGObjectDeserializer Deserializer = new NGObjectXMLDeserializerFile(this, Filename);
-        Deserializer.setLogManager(getLogManager());
-        Deserializer.deserializeObject();
+        File file = new File(Filename);
+        if (file.exists()) {
+            NGObjectDeserializer Deserializer = new NGObjectXMLDeserializerFile(this, Filename);
+            Deserializer.setLogManager(getLogManager());
+            Deserializer.deserializeObject();
+        }
     }
 
     @Override
