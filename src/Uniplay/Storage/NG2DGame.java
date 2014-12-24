@@ -41,7 +41,7 @@ public class NG2DGame extends NGCustomGame {
     @Override
     protected void DoBeforeStart() {
         super.DoBeforeStart();
-        FLevelIndex = 4;
+        FLevelIndex = 7;
     }
 
     @Override
