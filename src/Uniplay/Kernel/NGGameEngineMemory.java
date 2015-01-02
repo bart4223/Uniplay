@@ -53,12 +53,22 @@ public class NGGameEngineMemory extends NGUniplayComponent {
 
     protected void InternalSetCellValueAsIntegerByAddress(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryAddress aAddress, Integer aValue) {
         NGGameEngineMemoryCell cell = getCell(aAddress);
-        setCellValueAsInteger(aTransaction, cell, aValue);
+        if (cell != null) {
+            setCellValueAsInteger(aTransaction, cell, aValue);
+        }
+        else {
+            writeWarning("InternalSetCellValueAsIntegerByAddress", String.format("Memory address access error at %d/%d/%d", aAddress.getPage(), aAddress.getBase(), aAddress.getOffset()));
+        }
     }
 
     protected void InternalSetCellValueByAddress(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryAddress aAddress, Object aValue) {
         NGGameEngineMemoryCell cell = getCell(aAddress);
-        setCellValueAsObject(aTransaction, cell, aValue);
+        if (cell != null) {
+            setCellValueAsObject(aTransaction, cell, aValue);
+        }
+        else {
+            writeWarning("InternalSetCellValueByAddress", String.format("Memory address access error at %d/%d/%d", aAddress.getPage(), aAddress.getBase(), aAddress.getOffset()));
+        }
     }
 
     protected void InternalIncCellValue(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryCell aCell) {
@@ -99,7 +109,12 @@ public class NGGameEngineMemory extends NGUniplayComponent {
 
     protected void setCellValueAsObject(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryAddress aAddress, Object aValue) {
         NGGameEngineMemoryCell cell = getCell(aAddress);
-        setCellValueAsObject(aTransaction, cell, aValue);
+        if (cell != null) {
+            setCellValueAsObject(aTransaction, cell, aValue);
+        }
+        else {
+            writeWarning("setCellValueAsObject", String.format("Memory address access error at %d/%d/%d", aAddress.getPage(), aAddress.getBase(), aAddress.getOffset()));
+        }
     }
 
     protected void setCellValueAsObject(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryCell aCell, Object aValue) {
@@ -165,7 +180,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
     }
 
     public NGGameEngineMemoryCell getCell(int aIndex) {
-        if (0 < aIndex && aIndex < FCells.size()) {
+        if (0 <= aIndex && aIndex < FCells.size()) {
             return FCells.get(aIndex);
         }
         return null;
@@ -181,6 +196,9 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         if (cell != null) {
             return cell.getValue();
         }
+        else {
+            writeWarning("getCellValue", String.format("Memory address access error at %d/%d/%d", aAddress.getPage(), aAddress.getBase(), aAddress.getOffset()));
+        }
         return null;
     }
 
@@ -189,6 +207,9 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         if (cell != null) {
             return cell.getValueAsInteger();
         }
+        else {
+            writeWarning("getCellValueAsInteger", String.format("Memory address access error at %d/%d/%d", aAddress.getPage(), aAddress.getBase(), aAddress.getOffset()));
+        }
         return 0;
     }
 
@@ -196,6 +217,9 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         NGGameEngineMemoryCell cell = getCell(aPage, aBase, aOffset);
         if (cell != null) {
             return cell.getValueAsInteger();
+        }
+        else {
+            writeWarning("getCellValueAsInteger", String.format("Memory address access error at %d/%d/%d", aPage, aBase, aOffset));
         }
         return null;
     }
@@ -237,9 +261,14 @@ public class NGGameEngineMemory extends NGUniplayComponent {
 
     public void refreshCell(NGGameEngineMemoryAddress aAddress) {
         NGGameEngineMemoryCell cell = getCell(aAddress);
-        ArrayList<NGGameEngineMemoryCell> cells = new ArrayList<NGGameEngineMemoryCell>();
-        cells.add(cell);
-        raiseCellsChangedEvent(cells);
+        if (cell != null) {
+            ArrayList<NGGameEngineMemoryCell> cells = new ArrayList<NGGameEngineMemoryCell>();
+            cells.add(cell);
+            raiseCellsChangedEvent(cells);
+        }
+        else {
+            writeWarning("refreshCell", String.format("Memory address access error at %d/%d/%d", aAddress.getPage(), aAddress.getBase(), aAddress.getOffset()));
+        }
     }
 
 }

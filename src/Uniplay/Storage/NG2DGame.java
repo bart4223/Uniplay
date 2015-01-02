@@ -41,7 +41,7 @@ public class NG2DGame extends NGCustomGame {
     @Override
     protected void DoBeforeStart() {
         super.DoBeforeStart();
-        FLevelIndex = 7;
+        FLevelIndex = 1;
     }
 
     @Override
@@ -139,7 +139,7 @@ public class NG2DGame extends NGCustomGame {
                 offset = 0;
             }
         }
-        getMemoryManager().setCellsValue(getMemoryName(),items);
+        getMemoryManager().setCellsValue(getMemoryName(), items);
         writeLog(String.format("%d cell(s) value in memory [%s] stored.", items.size(), getMemoryName()));
     }
 
