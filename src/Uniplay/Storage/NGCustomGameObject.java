@@ -9,6 +9,7 @@ public abstract class NGCustomGameObject extends NGUniplayObject {
     protected NGLogManager FLogManager;
     protected NGCustomGame FGame;
     protected NGUniplayObjectPhysicsProperties FPhysics;
+    protected String FName;
 
     protected void writeLog(String aText) {
         writeLog(0, aText);
@@ -28,12 +29,25 @@ public abstract class NGCustomGameObject extends NGUniplayObject {
         writeLog(0, String.format("<<<WARNING>>> at [%s.%s] with exception [%s]!", getClass().getName(), aMethodName, aWarningText));
     }
 
+    protected void DoInitialize() {
+
+    }
+
     public NGCustomGameObject(NGCustomGame aGame) {
+        this(aGame, "");
+    }
+
+    public NGCustomGameObject(NGCustomGame aGame, String aName) {
         super();
         FGame = aGame;
         FLogManager = FGame.getLogManager();
         FPhysics = new NGUniplayObjectPhysicsProperties();
         FPhysics.Mass = 0.0;
+        FName = aName;
+    }
+
+    public String getName() {
+        return FName;
     }
 
     public NGCustomGame getGame() {
@@ -42,6 +56,10 @@ public abstract class NGCustomGameObject extends NGUniplayObject {
 
     public double getMass() {
         return FPhysics.Mass;
+    }
+
+    public void Initialize() {
+        DoInitialize();
     }
 
 }
