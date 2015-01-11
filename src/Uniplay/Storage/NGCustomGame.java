@@ -346,35 +346,59 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
     }
 
     public void ActivateMimicActions(NGCustomControlMimic.Kind aKind) {
-        getMimicManager().ActivateMimics(aKind);
+        NGControlMimicManager cmm = getMimicManager();
+        if (cmm != null) {
+            getMimicManager().ActivateMimics(aKind);
+        }
     }
 
     public void ActivateMimicActions(String aType) {
-        getMimicManager().ActivateMimics(aType);
+        NGControlMimicManager cmm = getMimicManager();
+        if (cmm != null) {
+            getMimicManager().ActivateMimics(aType);
+        }
     }
 
     public void ActivateMimicAction(String aName) {
-        getMimicManager().ActivateMimic(aName);
+        NGControlMimicManager cmm = getMimicManager();
+        if (cmm != null) {
+            getMimicManager().ActivateMimic(aName);
+        }
     }
 
     public void DeactivateMimicAction(String aName) {
-        getMimicManager().DeactivateMimic(aName);
+        NGControlMimicManager cmm = getMimicManager();
+        if (cmm != null) {
+            getMimicManager().DeactivateMimic(aName);
+        }
     }
 
     public void DeactivateMimicActions(String aType) {
-        getMimicManager().DeactivateMimics(aType);
+        NGControlMimicManager cmm = getMimicManager();
+        if (cmm != null) {
+            getMimicManager().DeactivateMimics(aType);
+        }
     }
 
     public void ActivateAllMimicActions() {
-        getMimicManager().ActivateAllMimics();
+        NGControlMimicManager cmm = getMimicManager();
+        if (cmm != null) {
+            getMimicManager().ActivateAllMimics();
+        }
     }
 
     public void DeactivateAllMimicActions() {
-        getMimicManager().DeactivateAllMimics();
+        NGControlMimicManager cmm = getMimicManager();
+        if (cmm != null) {
+            getMimicManager().DeactivateAllMimics();
+        }
     }
 
     public void ResetAllMimicActions() {
-        getMimicManager().ResetAllMimics();
+        NGControlMimicManager cmm = getMimicManager();
+        if (cmm != null) {
+            getMimicManager().ResetAllMimics();
+        }
     }
 
     protected void DoHandleTick(NGTickEvent aEvent) {

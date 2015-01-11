@@ -53,7 +53,10 @@ public class NG2DGame extends NGCustomGame {
             level = loadLevel(String.format(C_LEVEL_NAME, FLevelIndex));                    }
         finally {
             AfterLoadLevel(level);
-            loadLevelToMemory(level, getCurrentGameFieldLayer());
+            NG2DGameFieldLayer layer = getCurrentGameFieldLayer();
+            if (layer != null) {
+                loadLevelToMemory(level, layer);
+            }
         }
     }
 
@@ -84,7 +87,10 @@ public class NG2DGame extends NGCustomGame {
     protected void AfterLoadLevel(NG2DLevel aLevel) {
         reallocateLevelMemory(aLevel);
         setCurrentLevel(aLevel);
-        setCurrentGameFieldLayer(aLevel.getGameField().getLayer("DEFAULT"));
+        NG2DGameFieldLayer defaultlayer = aLevel.getGameField().getLayer("DEFAULT");
+        if (defaultlayer != null) {
+            setCurrentGameFieldLayer(defaultlayer);
+        }
         assignGameCharacters(aLevel);
         assignGameObjects(aLevel);
     }
