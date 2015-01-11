@@ -15,10 +15,11 @@ import java.util.ArrayList;
 
 public abstract class NGCustomGame extends NGUniplayComponent implements NGTickListener {
 
-    public enum State {Created, Initialized, Started, Hold, Finished};
+    public enum State {Created, Initialized, Started, Hold, Finished}
 
     protected ArrayList<NGCustomGameCharacter> FPCs;
     protected ArrayList<NGCustomGameCharacter> FNPCs;
+    protected ArrayList<NGCustomGameObject> FGameObjects;
     protected NGGameManager FManager;
     protected NGPlayerManager FPlayerManager;
     protected NGGameEngineMemoryManager FMemoryManager;
@@ -195,6 +196,7 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
         super(aManager, aName);
         FPCs = new ArrayList<NGCustomGameCharacter>();
         FNPCs = new ArrayList<NGCustomGameCharacter>();
+        FGameObjects = new ArrayList<NGCustomGameObject>();
         FManager = aManager;
         FPlayerManager = null;
         FState = State.Created;
@@ -225,6 +227,19 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
 
     public ArrayList<NGCustomGameCharacter> getNPCs() {
         return FNPCs;
+    }
+
+    public ArrayList<NGCustomGameObject> getGameObjects() {
+        return FGameObjects;
+    }
+
+    public NGCustomGameObject getGameObject(String aName) {
+        for (NGCustomGameObject obj : FGameObjects) {
+            if (obj.getName().equals(aName)) {
+                return obj;
+            }
+        }
+        return null;
     }
 
     public void removeAllPCs() {

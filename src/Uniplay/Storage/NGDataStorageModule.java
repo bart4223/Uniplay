@@ -35,6 +35,13 @@ public class NGDataStorageModule extends NGGameEngineModule {
     }
 
     @Override
+    protected void BeforeInitialize() {
+        super.BeforeInitialize();
+        NGGameManager gm = getGameManager();
+
+    }
+
+    @Override
     protected void registerObjects() {
         super.registerObjects();
         NGUniplayObjectRegistration registration = (NGUniplayObjectRegistration)ResolveObject(NGUniplayObjectRegistration.class);
@@ -46,5 +53,7 @@ public class NGDataStorageModule extends NGGameEngineModule {
     public NGDataStorageModule(NGGameEngineModuleManager aManager, String aName) {
         super(aManager, aName);
     }
+
+    public NGDataStorageDefinition Definition;
 
 }

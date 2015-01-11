@@ -87,10 +87,14 @@ public abstract class NGGameEngineModule extends NGUniplayComponent implements N
         if (FDefinitionFilename.length() > 0) {
             NGObjectXMLDeserializerFile loader = new NGObjectXMLDeserializerFile(null, FDefinitionFilename);
             loader.setLogManager(getLogManager());
-            loader.deserializeObject();
-            FDefinition = (NGGameEngineModuleDefinition)loader.getTarget();
-            FDefinitionLoaded = FDefinition != null;
-            setProperty(this, "Definition", loader.getTarget());
+            if (loader.deserializeObject()) {
+                FDefinition = (NGGameEngineModuleDefinition)loader.getTarget();
+                FDefinitionLoaded = FDefinition != null;
+                setProperty(this, "Definition", loader.getTarget());
+            }
+            else {
+                writeError("LoadDefinition", String.format("Error while loading definition from module %s", getName()));
+            }
         }
     }
 
