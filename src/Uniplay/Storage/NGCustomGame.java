@@ -217,6 +217,10 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
         FState = State.Initialized;
     }
 
+    protected void DoHandleTick(NGTickEvent aEvent) {
+
+    }
+
     public NGCustomGame(NGGameManager aManager, String aName) {
         super(aManager, aName);
         FPCs = new ArrayList<NGCustomGameCharacter>();
@@ -439,8 +443,11 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
         }
     }
 
-    protected void DoHandleTick(NGTickEvent aEvent) {
-
+    public void ExecuteGameObject(String aName) {
+        NGCustomGameObject obj = getGameObject(aName);
+        if (obj != null) {
+            obj.Execute();
+        }
     }
 
     @Override
