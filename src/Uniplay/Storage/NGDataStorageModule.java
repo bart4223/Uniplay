@@ -5,6 +5,7 @@ import Uniplay.Base.NGUniplayObjectRegistration;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Kernel.NGGameEngineModule;
 import Uniplay.Kernel.NGGameEngineModuleManager;
+import Uniwork.Base.NGSerializePropertyItem;
 
 public class NGDataStorageModule extends NGGameEngineModule {
 
@@ -38,7 +39,24 @@ public class NGDataStorageModule extends NGGameEngineModule {
     protected void BeforeInitialize() {
         super.BeforeInitialize();
         NGGameManager gm = getGameManager();
+        for (NGDataStorageDefinitionGameItem item : Definition.getGames()) {
+            try {
+                Class gamecl = NGCustomGame.class.getClassLoader().loadClass(item.getClassname());
+                NGCustomGame game = gm.addGame(item.getName(), gamecl);
+                for (NGDataStorageDefinitionGameObjectItem objitem : item.getGameObjects()) {
+                    Class gameobjcl = NGCustomGameObject.class.getClassLoader().loadClass(objitem.getClassname());
+                    NGCustomGameObject gameobj = (NGCustomGameObject)gameobjcl.getConstructor(NGCustomGame.class, String.class).newInstance(game, objitem.getName());
+                    for (NGSerializePropertyItem prop : objitem.getProps()) {
+                        gameobj.setProperty(gameobj, prop.getName(), prop.getValue());
+                    }
+                    game.addGameObject(gameobj);
+                }
+            }
+            catch (Exception e) {
+                writeError("BeforeInitialize", e.getMessage());
+            }
 
+        }
     }
 
     @Override

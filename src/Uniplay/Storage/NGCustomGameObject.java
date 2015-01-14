@@ -29,7 +29,11 @@ public abstract class NGCustomGameObject extends NGUniplayObject {
         writeLog(0, String.format("<<<WARNING>>> at [%s.%s] with exception [%s]!", getClass().getName(), aMethodName, aWarningText));
     }
 
-    protected void DoInitialize() {
+    protected void DoReset() {
+
+    }
+
+    protected void DoExecute() {
 
     }
 
@@ -58,8 +62,13 @@ public abstract class NGCustomGameObject extends NGUniplayObject {
         return FPhysics.Mass;
     }
 
-    public void Initialize() {
-        DoInitialize();
+    public void Reset() {
+        DoReset();
+        writeLog(String.format("Game object [%s] from game [%s] reset.", getName(), FGame.getName()));
+    }
+
+    public void Execute() {
+        DoExecute();
     }
 
 }

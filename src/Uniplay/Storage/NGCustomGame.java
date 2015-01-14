@@ -42,6 +42,8 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
 
     protected void resetAll() {
         resetPCs();
+        resetNPCs();
+        resetGameObjects();
         ResetAllMimicActions();
     }
 
@@ -125,7 +127,19 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
 
     protected void resetPCs() {
         for (NGCustomGameCharacter pc : FPCs) {
-            pc.reset();
+            pc.Reset();
+        }
+    }
+
+    protected void resetNPCs() {
+        for (NGCustomGameCharacter pc : FNPCs) {
+            pc.Reset();
+        }
+    }
+
+    protected void resetGameObjects() {
+        for (NGCustomGameObject gameObject : FGameObjects) {
+            gameObject.Reset();
         }
     }
 
@@ -137,6 +151,11 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
     protected void addNPC(NGCustomGameCharacter aNPC) {
         FNPCs.add(aNPC);
         writeLog(String.format("NPC [%s] added in game [%s].", aNPC.getPlayer().getName(), getName()));
+    }
+
+    protected void addGameObject(NGCustomGameObject aGameObject) {
+        FGameObjects.add(aGameObject);
+        writeLog(String.format("GameObject [%s] added in game [%s].", aGameObject.getName(), getName()));
     }
 
     protected NGSoundManager getSoundManager() {
@@ -192,6 +211,12 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
         return NGGameEngineMemoryObjectCellValue.class;
     }
 
+    @Override
+    protected void DoInitialized() {
+        super.DoInitialized();
+        FState = State.Initialized;
+    }
+
     public NGCustomGame(NGGameManager aManager, String aName) {
         super(aManager, aName);
         FPCs = new ArrayList<NGCustomGameCharacter>();
@@ -202,12 +227,6 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
         FState = State.Created;
         getMemoryManager().addMemory(getMemoryName(), 0, 0, 0, getMemoryCellValueClass());
         FUpdateCount = 0;
-    }
-
-    @Override
-    public void DoInitialized() {
-        super.DoInitialized();
-        FState = State.Initialized;
     }
 
     public NGGameManager getManager() {
@@ -248,6 +267,10 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
 
     public void removeAllNPCs() {
         FNPCs.clear();
+    }
+
+    public void removeAllGameObjects() {
+        FGameObjects.clear();
     }
 
     public NGGameEngineMemoryManager getMemoryManager() {

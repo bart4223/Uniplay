@@ -16,6 +16,14 @@ public class NGGameManager extends NGUniplayComponent {
         FGames.add(aGame);
     }
 
+    @Override
+    protected void DoInitialize() {
+        super.DoInitialize();
+        for (NGCustomGame game : FGames) {
+            game.Initialize();
+        }
+    }
+
     public NGGameManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
         FGames = new ArrayList<NGCustomGame>();
