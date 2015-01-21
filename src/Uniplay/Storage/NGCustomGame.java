@@ -1,10 +1,12 @@
 package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayComponent;
+import Uniplay.Base.NGUniplayObjectRegistration;
 import Uniplay.Control.NGControlMimicManager;
 import Uniplay.Control.NGCustomControlMimic;
 import Uniplay.Kernel.*;
 import Uniplay.Misc.NGTaskManager;
+import Uniplay.NGGameEngine;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Sound.NGSoundManager;
 import Uniwork.Misc.NGTickEvent;
@@ -13,7 +15,7 @@ import javafx.application.Platform;
 
 import java.util.ArrayList;
 
-public abstract class NGCustomGame extends NGUniplayComponent implements NGTickListener {
+public abstract class NGCustomGame extends NGUniplayComponent implements NGTickListener, NGUniplayObjectRegistration {
 
     public enum State {Created, Initialized, Started, Hold, Finished}
 
@@ -26,6 +28,10 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
     protected NGControlMimicManager FMimicManager;
     protected State FState;
     protected Integer FUpdateCount;
+
+    protected void registerObjects() {
+
+    }
 
     protected void DoShowStages() {
 
@@ -215,6 +221,12 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
     protected void DoInitialized() {
         super.DoInitialized();
         FState = State.Initialized;
+    }
+
+    @Override
+    protected void AfterInitialize() {
+        super.AfterInitialize();
+        registerObjects();
     }
 
     protected void DoHandleTick(NGTickEvent aEvent) {
@@ -453,6 +465,18 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
     @Override
     public void handleTick(NGTickEvent e) {
         DoHandleTick(e);
+    }
+
+    @Override
+    public void registerObject(String aName, Object aObject) {
+        NGGameEngine ge = (NGGameEngine)ResolveObject(NGGameEngine.class);
+        ge.registerObject(aName, aObject);
+    }
+
+    @Override
+    public void unregisterObject(String aName, Object aObject) {
+        NGGameEngine ge = (NGGameEngine)ResolveObject(NGGameEngine.class);
+        ge.unregisterObject(aName, aObject);
     }
 
 }
