@@ -77,7 +77,6 @@ public abstract class NGGraphicEngine extends NGGameEngineModule {
                     for (NGSerializePropertyItem prop: dcitem.getProps()) {
                         dc.setProperty(dc, prop.getName(), prop.getValue());
                     }
-                    System.out.println(dcitem.getLayers());
                     for (NGGraphicEngineDefinitionRenderEngineDisplayControllerLayerItem layeritem : dcitem.getLayers()) {
                         dc.addLayer(layeritem.getName(), layeritem.getImagename());
                         writeLog(String.format("Layer [%s] for display controller [%s] for render engine [%s] added.", layeritem.getName(), dc.getName(), RE.getName()));
