@@ -1,9 +1,26 @@
 package Uniplay.Graphics;
 
-import Uniplay.Kernel.NGGameEngineMemoryCell;
+import Uniwork.Visuals.NGDisplayController;
 import Uniwork.Visuals.NGDisplayManager;
 
 public abstract class NGCustomRenderEngine extends NGDisplayManager {
+
+    protected void prepareDisplayController(NGDisplayController aDisplayController) {
+
+    }
+
+    @Override
+    protected void DoBeforeRender() {
+        super.DoBeforeRender();
+        if (getCurrentController() == null) {
+            for (NGDisplayController dc : FControllers) {
+                prepareDisplayController(dc);
+            }
+        }
+        else {
+            prepareDisplayController(getCurrentController());
+        }
+    }
 
     public NGCustomRenderEngine(String aName) {
         super(null, aName);
@@ -11,7 +28,6 @@ public abstract class NGCustomRenderEngine extends NGDisplayManager {
         ValuePropname = "";
     }
 
-    public NGGameEngineMemoryCell Cell;
     public String ValueLayername;
     public String ValuePropname;
 

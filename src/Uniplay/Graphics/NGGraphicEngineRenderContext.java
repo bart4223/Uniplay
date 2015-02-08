@@ -1,26 +1,33 @@
 package Uniplay.Graphics;
 
-import Uniplay.Kernel.NGGameEngineMemory;
+import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
+import Uniplay.Storage.NGCustomGameObject;
 
 import java.util.ArrayList;
 
-public class NGGraphicEngineRenderContext {
+public class NGGraphicEngineRenderContext extends NGUniplayObject {
 
     protected ArrayList<NGGameEngineMemoryCell> FCells;
-    protected NGGameEngineMemory FMemory;
+    protected NGCustomGameObject FGameObject;
 
-    public NGGraphicEngineRenderContext(NGGameEngineMemory aMemory, ArrayList<NGGameEngineMemoryCell> aCells) {
+    public NGGraphicEngineRenderContext(NGCustomGameObject aGameObject) {
+        this(new ArrayList<NGGameEngineMemoryCell>());
+        FGameObject = aGameObject;
+    }
+
+    public NGGraphicEngineRenderContext(ArrayList<NGGameEngineMemoryCell> aCells) {
+        super();
         FCells = aCells;
-        FMemory = aMemory;
+        FGameObject = null;
     }
 
     public ArrayList<NGGameEngineMemoryCell> getCells() {
         return FCells;
     }
 
-    public NGGameEngineMemory getFMemory() {
-        return FMemory;
+    public NGCustomGameObject getGameObject() {
+        return FGameObject;
     }
 
 }

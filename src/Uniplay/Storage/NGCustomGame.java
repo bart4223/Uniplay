@@ -233,6 +233,16 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
 
     }
 
+    protected void raiseExecuteGameObject(NGCustomGameObject aGameObject) {
+        NGCustomGameObjectExecuted event = new NGCustomGameObjectExecuted(this, aGameObject);
+        raiseEvent(NGGameEngineConstants.EVT_GAME_OBJECT_EXECUTED, event);
+    }
+
+    protected void DoExecuteGameObject(NGCustomGameObject aGameObject) {
+        aGameObject.Execute();
+        raiseExecuteGameObject(aGameObject);
+    }
+
     public NGCustomGame(NGGameManager aManager, String aName) {
         super(aManager, aName);
         FPCs = new ArrayList<NGCustomGameCharacter>();
@@ -457,9 +467,7 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
 
     public void ExecuteGameObject(String aName) {
         NGCustomGameObject obj = getGameObject(aName);
-        if (obj != null) {
-            obj.Execute();
-        }
+        DoExecuteGameObject(obj);
     }
 
     @Override

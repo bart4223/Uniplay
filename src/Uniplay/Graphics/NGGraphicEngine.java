@@ -63,8 +63,8 @@ public abstract class NGGraphicEngine extends NGGameEngineModule {
         NGRenderEngineManager manager = getRenderEngineManager();
         for (NGGraphicEngineDefinitionRenderEngineItem item : Definition.getRenderEngines()) {
             try {
-                Class REcl = NG2DRenderEngine.class.getClassLoader().loadClass(item.getClassname());
-                NG2DRenderEngine RE = (NG2DRenderEngine)REcl.getConstructor(String.class).newInstance(item.getName());
+                Class REcl = NGCustomRenderEngine.class.getClassLoader().loadClass(item.getClassname());
+                NGCustomRenderEngine RE = (NGCustomRenderEngine)REcl.getConstructor(String.class).newInstance(item.getName());
                 Canvas canvas = (Canvas)ResolveObject(item.getLayername(), Canvas.class);
                 NG2DRenderEngineItem REitem = new NG2DRenderEngineItem(RE, canvas.getWidth(), canvas.getHeight());
                 manager.addItem(REitem);

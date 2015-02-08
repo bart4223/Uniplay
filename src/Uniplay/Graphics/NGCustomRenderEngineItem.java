@@ -2,6 +2,7 @@ package Uniplay.Graphics;
 
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
+import Uniplay.Storage.NGCustomGameObject;
 import Uniwork.Visuals.NGDisplayController;
 import Uniwork.Visuals.NGDisplayView;
 
@@ -11,6 +12,7 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
 
     protected NGCustomRenderEngine FRenderEngine;
     protected NGGameEngineMemoryCell FCell;
+    protected NGCustomGameObject FGameObject;
 
     protected void DoInitialize() {
         FRenderEngine.Initialize();
@@ -18,16 +20,21 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
 
     protected void DoRender() {
         Boolean render = true;
-        if (FCell.getValueAsObject() instanceof NGRenderInformation) {
-            NGRenderInformation ri = (NGRenderInformation)FCell.getValueAsObject();
-            String name = ri.getResponsibleDisplayControllerName(this);
-            render = name.length() > 0;
-            if (render) {
-                FRenderEngine.setCurrentController(name);
+        if (FCell != null) {
+            if (FCell.getValueAsObject() instanceof NGRenderInformation) {
+                NGRenderInformation ri = (NGRenderInformation)FCell.getValueAsObject();
+                String name = ri.getResponsibleDisplayControllerName(this);
+                render = name.length() > 0;
+                if (render) {
+                    FRenderEngine.setCurrentController(name);
+                }
             }
+            FRenderEngine.setProperty(FRenderEngine, "Cell", FCell);
+        }
+        else if (FGameObject != null) {
+            FRenderEngine.setProperty(FRenderEngine, "GameObject", FGameObject);
         }
         if (render) {
-            FRenderEngine.Cell = FCell;
             FRenderEngine.Render();
         }
     }
@@ -36,6 +43,7 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
         super();
         FRenderEngine = aRenderEngine;
         FCell = null;
+        FGameObject = null;
     }
 
     @Override
@@ -88,6 +96,14 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
 
     public NGGameEngineMemoryCell getCell() {
         return FCell;
+    }
+
+    public void setGameObject(NGCustomGameObject aGameObject) {
+        FGameObject = aGameObject;
+    }
+
+    public NGCustomGameObject getGameObject() {
+        return FGameObject;
     }
 
     public void addDisplayController(NGDisplayController aDisplayController) {

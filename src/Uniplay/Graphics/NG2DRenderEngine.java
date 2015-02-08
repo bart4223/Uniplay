@@ -1,6 +1,7 @@
 package Uniplay.Graphics;
 
 import Uniplay.Kernel.NGGameEngineMemoryAddress;
+import Uniplay.Kernel.NGGameEngineMemoryCell;
 import Uniwork.Base.NGPropertyItem;
 import Uniwork.Visuals.NGDisplayController;
 
@@ -8,7 +9,9 @@ import java.util.ArrayList;
 
 public class NG2DRenderEngine extends NGCustomRenderEngine {
 
+    @Override
     protected void prepareDisplayController(NGDisplayController aDisplayController) {
+        super.prepareDisplayController(aDisplayController);
         NGGameEngineMemoryAddress address = Cell.getAddress();
         aDisplayController.setPosition(address.getOffset() * aDisplayController.getWidth(), address.getBase() * aDisplayController.getHeight());
         if (Cell.getValueAsObject() instanceof NGRenderInformation) {
@@ -25,21 +28,10 @@ public class NG2DRenderEngine extends NGCustomRenderEngine {
         }
     }
 
-    @Override
-    protected void DoBeforeRender() {
-        super.DoBeforeRender();
-        if (getCurrentController() == null) {
-            for (NGDisplayController dc : FControllers) {
-                prepareDisplayController(dc);
-            }
-        }
-        else {
-            prepareDisplayController(getCurrentController());
-        }
-    }
-
     public NG2DRenderEngine(String aName) {
         super(aName);
     }
+
+    public NGGameEngineMemoryCell Cell;
 
 }
