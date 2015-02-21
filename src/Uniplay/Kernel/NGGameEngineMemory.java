@@ -146,6 +146,18 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         FOffsetSize = 0;
     }
 
+    public int getPageSize() {
+        return FPageSize;
+    }
+
+    public int getBaseSize() {
+        return FBaseSize;
+    }
+
+    public int getOffsetSize() {
+        return FOffsetSize;
+    }
+
     public int getAllocated() {
         return FCells.size();
     }

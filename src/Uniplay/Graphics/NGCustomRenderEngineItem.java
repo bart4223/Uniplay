@@ -26,7 +26,7 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
                 String name = ri.getResponsibleDisplayControllerName(this);
                 render = name.length() > 0;
                 if (render) {
-                    FRenderEngine.setCurrentController(name);
+                    render = FRenderEngine.setCurrentController(name);
                 }
             }
             FRenderEngine.setProperty(FRenderEngine, "Cell", FCell);

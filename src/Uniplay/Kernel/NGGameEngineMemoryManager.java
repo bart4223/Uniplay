@@ -198,4 +198,19 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         }
     }
 
+    public int getPageSize(String aName) {
+        NGGameEngineMemory memory = getMemory(aName);
+        return memory.getPageSize();
+    }
+
+    public int getBaseSize(String aName) {
+        NGGameEngineMemory memory = getMemory(aName);
+        return memory.getBaseSize();
+    }
+
+    public int getOffsetSize(String aName) {
+        NGGameEngineMemory memory = getMemory(aName);
+        return memory.getOffsetSize();
+    }
+
 }
