@@ -376,9 +376,9 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     }
 
     @Override
-    public void registerObjectRequest(String aName, Object aObject, String aMethod, String aObjectMethod) {
+    public NGObjectRequestMethod registerObjectRequest(String aName, Object aObject, String aMethod, String aObjectMethod) {
         NGObjectRequestObject object = getObjectRequestBroker().registerObject(aName, aObject);
-        object.addMethod(aMethod, aObjectMethod);
+        return object.addMethod(aMethod, aObjectMethod);
     }
 
     @Override
