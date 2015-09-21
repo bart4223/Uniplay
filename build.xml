@@ -2,7 +2,7 @@
 <project name="uniplay" default="all">
   
   
-  <property file="uniplay.properties"/>
+  <property file="build.properties"/>
   <!-- Uncomment the following property if no tests compilation is needed -->
   <!-- 
   <property name="skip.tests" value="true"/>
