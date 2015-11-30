@@ -90,7 +90,8 @@ public class NGSoundManager extends NGUniplayComponent {
 
     public void playSound(String aName, NGMediaPlayerSoundItem.Mode aMode, double aStartTime, double aEndTime) {
         NGSoundItem item = getSoundItem(aName);
-        playSound(item, aMode, aStartTime, aEndTime);
+        if (item != null)
+            playSound(item, aMode, aStartTime, aEndTime);
     }
 
     public void playSound(NGSoundItem aItem, NGMediaPlayerSoundItem.Mode aMode) {
