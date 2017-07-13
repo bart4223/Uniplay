@@ -3,15 +3,15 @@ package Uniplay.Storage;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGPlayerStatisticManager extends NGUniplayComponent {
 
-    protected ArrayList<NGPlayerStatisticItem> FItems;
+    protected CopyOnWriteArrayList<NGPlayerStatisticItem> FItems;
 
     public NGPlayerStatisticManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
-        FItems = new ArrayList<NGPlayerStatisticItem>();
+        FItems = new CopyOnWriteArrayList<NGPlayerStatisticItem>();
     }
 
     public NGPlayerStatisticItem addStatistic(NGCustomPlayerStatistic aStatistic) {

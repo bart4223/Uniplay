@@ -5,7 +5,7 @@ import Uniwork.Base.NGPropertyList;
 import Uniwork.Base.NGSerializePropertyItem;
 import Uniwork.Misc.NGLogManager;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class NGCustomLevel extends NGUniplayObject {
 
@@ -27,7 +27,7 @@ public abstract class NGCustomLevel extends NGUniplayObject {
     protected void assignToULF(NGSerializeLevel aLevel) {
         aLevel.setName(getName());
         aLevel.setCaption(getCaption());
-        aLevel.setProps(new ArrayList<NGSerializePropertyItem>());
+        aLevel.setProps(new CopyOnWriteArrayList<NGSerializePropertyItem>());
         getProps().AssignTo(aLevel.getProps());
     }
 

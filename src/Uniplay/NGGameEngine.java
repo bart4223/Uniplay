@@ -10,12 +10,12 @@ import javafx.application.Platform;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Properties;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class NGGameEngine extends NGUniplayComponent implements NGLogEventListener, NGUniplayObjectRegistration, NGObjectRequestRegistration, NGLogEventListenerRegistration, NGGameEngineLoggingManagement, NGObjectRequestInvoker {
 
-    protected ArrayList<NGUniplayRegisteredObjectItem> FRegisteredObjects;
+    protected CopyOnWriteArrayList<NGUniplayRegisteredObjectItem> FRegisteredObjects;
     protected Properties FConfiguration;
     protected NGGameEngineDefinition FDefinition;
     protected String FConfigurationFilename = "";
@@ -24,7 +24,7 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     protected Boolean FConsoleShowLogEntrySource = false;
     protected Boolean FConsoleShowLog = true;
     protected Boolean FShowSplash = false;
-    protected ArrayList<NGLogEventListener> FLogListener;
+    protected CopyOnWriteArrayList<NGLogEventListener> FLogListener;
 
     protected static void startupThread(final NGGameEngine aGameEngine) {
         Platform.runLater(new Runnable() {
@@ -293,8 +293,8 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
 
     public NGGameEngine(NGUniplayObject aOwner) {
         super(aOwner, NGGameEngineConstants.CMP_KERNEL);
-        FRegisteredObjects = new ArrayList<NGUniplayRegisteredObjectItem>();
-        FLogListener = new ArrayList<NGLogEventListener>();
+        FRegisteredObjects = new CopyOnWriteArrayList<NGUniplayRegisteredObjectItem>();
+        FLogListener = new CopyOnWriteArrayList<NGLogEventListener>();
         FLogManager = new NGLogManager();
         FLogManager.addEventListener(this);
         FConfiguration = new Properties();

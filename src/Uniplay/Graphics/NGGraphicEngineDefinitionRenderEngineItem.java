@@ -3,15 +3,15 @@ package Uniplay.Graphics;
 import Uniplay.Base.NGUniplayObjectDefinition;
 import Uniwork.Base.NGSerializePropertyItem;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGGraphicEngineDefinitionRenderEngineItem extends NGUniplayObjectDefinition {
 
     protected String Name = "";
     protected String Classname = "";
     protected String Layername = "";
-    protected ArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerItem> DisplayControllers;
-    protected ArrayList<NGSerializePropertyItem> Props;
+    protected CopyOnWriteArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerItem> DisplayControllers;
+    protected CopyOnWriteArrayList<NGSerializePropertyItem> Props;
 
     public NGGraphicEngineDefinitionRenderEngineItem() {
         super();
@@ -21,11 +21,11 @@ public class NGGraphicEngineDefinitionRenderEngineItem extends NGUniplayObjectDe
     public String getName() { return Name; }
     public void setLayername(String value) { Layername = value;}
     public String getLayername() { return Layername; }
-    public void setDisplayControllers(ArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerItem> value) { DisplayControllers = value;}
-    public ArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerItem> getDisplayControllers() { return DisplayControllers; }
+    public void setDisplayControllers(CopyOnWriteArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerItem> value) { DisplayControllers = value;}
+    public CopyOnWriteArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerItem> getDisplayControllers() { return DisplayControllers; }
     public void setClassname(String value) { Classname = value;}
     public String getClassname() { return Classname; }
-    public void setProps(ArrayList<NGSerializePropertyItem> value) { Props = value;}
-    public ArrayList<NGSerializePropertyItem> getProps() { return Props; }
+    public void setProps(CopyOnWriteArrayList<NGSerializePropertyItem> value) { Props = value;}
+    public CopyOnWriteArrayList<NGSerializePropertyItem> getProps() { return Props; }
 
 }

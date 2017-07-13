@@ -2,21 +2,21 @@ package Uniplay.Graphics;
 
 import Uniplay.Kernel.NGGameEngineModuleDefinition;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class NGGraphicEngineDefinition extends NGGameEngineModuleDefinition {
 
-    protected ArrayList<NGGraphicEngineDefinitionRenderEngineItem> RenderEngines;
-    protected ArrayList<NGGraphicEngineDefinitionEventHandlerItem> EventHandlers;
+    protected CopyOnWriteArrayList<NGGraphicEngineDefinitionRenderEngineItem> RenderEngines;
+    protected CopyOnWriteArrayList<NGGraphicEngineDefinitionEventHandlerItem> EventHandlers;
 
     public  NGGraphicEngineDefinition() {
         super();
     }
 
-    public void setRenderEngines(ArrayList<NGGraphicEngineDefinitionRenderEngineItem> value) { RenderEngines = value;}
-    public ArrayList<NGGraphicEngineDefinitionRenderEngineItem> getRenderEngines() { return RenderEngines; }
+    public void setRenderEngines(CopyOnWriteArrayList<NGGraphicEngineDefinitionRenderEngineItem> value) { RenderEngines = value;}
+    public CopyOnWriteArrayList<NGGraphicEngineDefinitionRenderEngineItem> getRenderEngines() { return RenderEngines; }
 
-    public void setEventHandlers(ArrayList<NGGraphicEngineDefinitionEventHandlerItem> value) { EventHandlers = value;}
-    public ArrayList<NGGraphicEngineDefinitionEventHandlerItem> getEventHandlers() { return EventHandlers; }
+    public void setEventHandlers(CopyOnWriteArrayList<NGGraphicEngineDefinitionEventHandlerItem> value) { EventHandlers = value;}
+    public CopyOnWriteArrayList<NGGraphicEngineDefinitionEventHandlerItem> getEventHandlers() { return EventHandlers; }
 
 }

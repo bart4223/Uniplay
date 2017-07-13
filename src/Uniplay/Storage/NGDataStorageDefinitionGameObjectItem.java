@@ -3,13 +3,13 @@ package Uniplay.Storage;
 import Uniplay.Base.NGUniplayObjectDefinition;
 import Uniwork.Base.NGSerializePropertyItem;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGDataStorageDefinitionGameObjectItem extends NGUniplayObjectDefinition {
 
     protected String Name = "";
     protected String Classname = "";
-    protected ArrayList<NGSerializePropertyItem> Props;
+    protected CopyOnWriteArrayList<NGSerializePropertyItem> Props;
 
     public NGDataStorageDefinitionGameObjectItem() {
         super();
@@ -21,7 +21,7 @@ public class NGDataStorageDefinitionGameObjectItem extends NGUniplayObjectDefini
     public void setClassname(String value) { Classname = value;}
     public String getClassname() { return Classname; }
 
-    public void setProps(ArrayList<NGSerializePropertyItem> value) { Props = value;}
-    public ArrayList<NGSerializePropertyItem> getProps() { return Props; }
+    public void setProps(CopyOnWriteArrayList<NGSerializePropertyItem> value) { Props = value;}
+    public CopyOnWriteArrayList<NGSerializePropertyItem> getProps() { return Props; }
 
 }

@@ -3,7 +3,7 @@ package Uniplay.Control;
 import Uniplay.Storage.NGCustomGame;
 import Uniplay.Storage.NGCustomGameObject;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGControlMimicGameObjectActivation extends NGControlMimicPeriodicAction {
 
@@ -35,8 +35,8 @@ public class NGControlMimicGameObjectActivation extends NGControlMimicPeriodicAc
 
     }
 
-    protected ArrayList<GameObjectActivationItem> FItems;
-    ArrayList<GameObjectActivationItem> FMatureItems;
+    protected CopyOnWriteArrayList<GameObjectActivationItem> FItems;
+    CopyOnWriteArrayList<GameObjectActivationItem> FMatureItems;
 
     protected void addItem(NGCustomGameObject aGameObject) {
         GameObjectActivationItem item = new GameObjectActivationItem(aGameObject, CountDown);
@@ -106,7 +106,7 @@ public class NGControlMimicGameObjectActivation extends NGControlMimicPeriodicAc
     }
 
     protected void checkMatureItems() {
-        ArrayList<GameObjectActivationItem> items = new ArrayList<GameObjectActivationItem>();
+        CopyOnWriteArrayList<GameObjectActivationItem> items = new CopyOnWriteArrayList<GameObjectActivationItem>();
         for (GameObjectActivationItem item : FMatureItems) {
             itemMatureCountDown(item);
             if (item.getCountDown() <= 0) {
@@ -127,8 +127,8 @@ public class NGControlMimicGameObjectActivation extends NGControlMimicPeriodicAc
 
     public NGControlMimicGameObjectActivation(NGControlMimicManager aManager, NGCustomGame aGame, String aName) {
         super(aManager, aGame, aName, Kind.temporary);
-        FItems = new ArrayList<GameObjectActivationItem>();
-        FMatureItems = new ArrayList<GameObjectActivationItem>();
+        FItems = new CopyOnWriteArrayList<GameObjectActivationItem>();
+        FMatureItems = new CopyOnWriteArrayList<GameObjectActivationItem>();
         CountDown = 10;
         StartObject = null;
     }

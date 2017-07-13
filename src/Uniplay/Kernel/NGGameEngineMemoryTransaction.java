@@ -2,20 +2,20 @@ package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayObject;
 
-import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGGameEngineMemoryTransaction extends NGUniplayObject {
 
     protected UUID FGUID;
-    protected ArrayList<NGGameEngineMemoryCell> FCells;
+    protected CopyOnWriteArrayList<NGGameEngineMemoryCell> FCells;
     protected NGGameEngineMemory FMemory;
 
     public NGGameEngineMemoryTransaction(NGGameEngineMemory aMemory) {
         super();
         FMemory = aMemory;
         FGUID = UUID.randomUUID();
-        FCells = new ArrayList<NGGameEngineMemoryCell>();
+        FCells = new CopyOnWriteArrayList<NGGameEngineMemoryCell>();
     }
 
     public void add(NGGameEngineMemoryCell aCell) {
@@ -24,7 +24,7 @@ public class NGGameEngineMemoryTransaction extends NGUniplayObject {
         }
     }
 
-    public ArrayList<NGGameEngineMemoryCell> getCells() {
+    public CopyOnWriteArrayList<NGGameEngineMemoryCell> getCells() {
         return FCells;
     }
 

@@ -5,14 +5,13 @@ import Uniplay.Base.NGUniplayObject;
 import Uniplay.Base.NGUniplayObjectRequestBroker;
 import Uniplay.Misc.NGTaskManager;
 import Uniplay.NGGameEngineConstants;
-import Uniplay.Storage.NGCustomGame;
 import Uniwork.Base.NGPropertyList;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGControlMimicManager extends NGUniplayComponent {
 
-    protected ArrayList<NGControlMimicItem> FMimics;
+    protected CopyOnWriteArrayList<NGControlMimicItem> FMimics;
     protected NGTaskManager FTaskManager;
     protected NGUniplayObjectRequestBroker FORB;
     protected Boolean FInUpdate;
@@ -75,7 +74,7 @@ public class NGControlMimicManager extends NGUniplayComponent {
 
     public NGControlMimicManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
-        FMimics = new ArrayList<NGControlMimicItem>();
+        FMimics = new CopyOnWriteArrayList<NGControlMimicItem>();
         FInUpdate = false;
     }
 

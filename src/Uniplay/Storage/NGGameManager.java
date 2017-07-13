@@ -3,11 +3,11 @@ package Uniplay.Storage;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGGameManager extends NGUniplayComponent {
 
-    protected ArrayList<NGCustomGame> FGames;
+    protected CopyOnWriteArrayList<NGCustomGame> FGames;
 
     protected void addGame(NGCustomGame aGame) {
         aGame.setLogManager(getLogManager());
@@ -26,7 +26,7 @@ public class NGGameManager extends NGUniplayComponent {
 
     public NGGameManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
-        FGames = new ArrayList<NGCustomGame>();
+        FGames = new CopyOnWriteArrayList<NGCustomGame>();
     }
 
     public NGCustomGame addGame(String aName, Class aClass) {

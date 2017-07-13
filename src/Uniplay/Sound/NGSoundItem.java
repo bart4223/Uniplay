@@ -4,13 +4,13 @@ import Uniplay.Base.NGUniplayObject;
 import javafx.scene.media.Media;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGSoundItem extends NGUniplayObject {
 
     protected String FName;
-    protected ArrayList<String> FRunEventnames;
-    protected ArrayList<String> FStopEventnames;
+    protected CopyOnWriteArrayList<String> FRunEventnames;
+    protected CopyOnWriteArrayList<String> FStopEventnames;
     protected Media FMedia;
     protected Double FVolume;
     protected Integer FDuration;
@@ -21,8 +21,8 @@ public class NGSoundItem extends NGUniplayObject {
         File file = new File(aFilename);
         String path = file.getAbsoluteFile().getPath();
         FMedia = new Media(String.format("file://%s", path));
-        FRunEventnames = new ArrayList<String>();
-        FStopEventnames = new ArrayList<String>();
+        FRunEventnames = new CopyOnWriteArrayList<String>();
+        FStopEventnames = new CopyOnWriteArrayList<String>();
         FVolume = 0.0;
         FDuration = 0;
     }

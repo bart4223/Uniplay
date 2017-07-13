@@ -3,15 +3,15 @@ package Uniplay.Storage;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NG2DLevelManager extends NGUniplayComponent {
 
-    protected ArrayList<NG2DLevel> FLevels;
+    protected CopyOnWriteArrayList<NG2DLevel> FLevels;
 
     public NG2DLevelManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
-        FLevels = new ArrayList<NG2DLevel>();
+        FLevels = new CopyOnWriteArrayList<NG2DLevel>();
     }
 
     public NG2DLevel addLevel(String aName) {

@@ -2,17 +2,17 @@ package Uniplay.Sound;
 
 import Uniplay.Kernel.NGGameEngineModuleDefinition;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGSoundSystemDefinition extends NGGameEngineModuleDefinition {
 
-    protected ArrayList<NGSoundSystemDefinitionSoundItem> Sounds;
+    protected CopyOnWriteArrayList<NGSoundSystemDefinitionSoundItem> Sounds;
 
     public NGSoundSystemDefinition() {
         super();
     }
 
-    public void setSounds(ArrayList<NGSoundSystemDefinitionSoundItem> value) { Sounds = value;}
-    public ArrayList<NGSoundSystemDefinitionSoundItem> getSounds() { return Sounds; }
+    public void setSounds(CopyOnWriteArrayList<NGSoundSystemDefinitionSoundItem> value) { Sounds = value;}
+    public CopyOnWriteArrayList<NGSoundSystemDefinitionSoundItem> getSounds() { return Sounds; }
 
 }

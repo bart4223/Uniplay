@@ -2,12 +2,12 @@ package Uniplay.Physics;
 
 import Uniplay.Base.NGUniplayObjectDefinition;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGPhysicsEngineDefinitionBehaviourItem extends NGUniplayObjectDefinition {
 
     protected String Classname = "";
-    protected ArrayList<NGPhysicsEngineDefinitionPhysicsPrincipleItem> PhysicsPrinciple;
+    protected CopyOnWriteArrayList<NGPhysicsEngineDefinitionPhysicsPrincipleItem> PhysicsPrinciple;
 
     public NGPhysicsEngineDefinitionBehaviourItem() {
         super();
@@ -16,7 +16,7 @@ public class NGPhysicsEngineDefinitionBehaviourItem extends NGUniplayObjectDefin
     public void setClassname(String value) { Classname = value;}
     public String getClassname() { return Classname; }
 
-    public void setPhysicsPrinciple(ArrayList<NGPhysicsEngineDefinitionPhysicsPrincipleItem> value) { PhysicsPrinciple = value;}
-    public ArrayList<NGPhysicsEngineDefinitionPhysicsPrincipleItem> getPhysicsPrinciple() { return PhysicsPrinciple; }
+    public void setPhysicsPrinciple(CopyOnWriteArrayList<NGPhysicsEngineDefinitionPhysicsPrincipleItem> value) { PhysicsPrinciple = value;}
+    public CopyOnWriteArrayList<NGPhysicsEngineDefinitionPhysicsPrincipleItem> getPhysicsPrinciple() { return PhysicsPrinciple; }
 
 }

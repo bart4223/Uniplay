@@ -2,11 +2,11 @@ package Uniplay.Kernel;
 
 import Uniplay.NGGameEngineConstants;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGGameEngineEventHandlerMemoryCellsChanged extends NGGameEngineEventHandler {
 
-    protected ArrayList<NGGameEngineMemoryCell> FCells;
+    protected CopyOnWriteArrayList<NGGameEngineMemoryCell> FCells;
     protected NGGameEngineMemory FMemory;
 
     @Override

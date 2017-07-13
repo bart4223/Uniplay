@@ -3,13 +3,13 @@ package Uniplay.Storage;
 import Uniplay.Base.NGUniplayObjectDefinition;
 import Uniwork.Base.NGSerializePropertyItem;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGSerializeLevel extends NGUniplayObjectDefinition {
 
     protected String Name;
     protected String Caption;
-    protected ArrayList<NGSerializePropertyItem> Props;
+    protected CopyOnWriteArrayList<NGSerializePropertyItem> Props;
 
     public NGSerializeLevel() {
         super();
@@ -31,11 +31,11 @@ public class NGSerializeLevel extends NGUniplayObjectDefinition {
         return Caption;
     }
 
-    public void setProps(ArrayList<NGSerializePropertyItem> Value) {
+    public void setProps(CopyOnWriteArrayList<NGSerializePropertyItem> Value) {
         Props = Value;
     }
 
-    public ArrayList<NGSerializePropertyItem> getProps() {
+    public CopyOnWriteArrayList<NGSerializePropertyItem> getProps() {
         return Props;
     }
 

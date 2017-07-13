@@ -1,19 +1,18 @@
 package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayObject;
-import Uniwork.Base.NGPropertyList;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NG2DGameField extends NGUniplayObject {
 
-    protected ArrayList<NG2DGameFieldLayer> FLayers;
+    protected CopyOnWriteArrayList<NG2DGameFieldLayer> FLayers;
     protected NG2DGameFieldSize FSize;
 
     public NG2DGameField(NG2DGameFieldSize aSize) {
         super();
         FSize = aSize;
-        FLayers = new ArrayList<NG2DGameFieldLayer>();
+        FLayers = new CopyOnWriteArrayList<NG2DGameFieldLayer>();
     }
 
     public NG2DGameFieldLayer addLayer(String aName) {
@@ -40,7 +39,7 @@ public class NG2DGameField extends NGUniplayObject {
         FSize.clear();
     }
 
-    public ArrayList<NG2DGameFieldLayer> getLayers() {
+    public CopyOnWriteArrayList<NG2DGameFieldLayer> getLayers() {
         return FLayers;
     }
 

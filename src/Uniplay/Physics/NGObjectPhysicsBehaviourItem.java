@@ -2,19 +2,19 @@ package Uniplay.Physics;
 
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Storage.NGCustomGameObject;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGObjectPhysicsBehaviourItem extends NGUniplayObject {
 
     protected NGObjectPhysicsBehaviourManager FManager;
     protected Class<NGCustomGameObject> FGameObjectClass;
-    protected ArrayList<NGObjectPhysicsPrincipleItem> FPhysicsPrinciples;
+    protected CopyOnWriteArrayList<NGObjectPhysicsPrincipleItem> FPhysicsPrinciples;
 
     public NGObjectPhysicsBehaviourItem(NGObjectPhysicsBehaviourManager aManager, Class<NGCustomGameObject> aGameObjectClass) {
         super();
         FManager = aManager;
         FGameObjectClass = aGameObjectClass;
-        FPhysicsPrinciples = new ArrayList<NGObjectPhysicsPrincipleItem>();
+        FPhysicsPrinciples = new CopyOnWriteArrayList<NGObjectPhysicsPrincipleItem>();
     }
 
     public NGObjectPhysicsBehaviourManager getManager() {
@@ -36,7 +36,7 @@ public class NGObjectPhysicsBehaviourItem extends NGUniplayObject {
         }
     }
 
-    public ArrayList<NGObjectPhysicsPrincipleItem> getPhysicsPrinciples() {
+    public CopyOnWriteArrayList<NGObjectPhysicsPrincipleItem> getPhysicsPrinciples() {
         return FPhysicsPrinciples;
     }
 

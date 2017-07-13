@@ -4,11 +4,11 @@ import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.NGGameEngineConstants;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGPlayerManager extends NGUniplayComponent {
 
-    protected ArrayList<NGPlayerItem> FPlayers;
+    protected CopyOnWriteArrayList<NGPlayerItem> FPlayers;
     protected NGPlayer FCurrentPlayer;
 
     protected NGPlayer getPlayer(String aName) {
@@ -45,7 +45,7 @@ public class NGPlayerManager extends NGUniplayComponent {
 
     public NGPlayerManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
-        FPlayers = new ArrayList<NGPlayerItem>();
+        FPlayers = new CopyOnWriteArrayList<NGPlayerItem>();
     }
 
     public NGPlayer newPlayer(Class aPlayerClass, String aName, String aNickname) {
@@ -77,7 +77,7 @@ public class NGPlayerManager extends NGUniplayComponent {
         return FCurrentPlayer;
     }
 
-    public ArrayList<NGPlayerItem> getPlayers() {
+    public CopyOnWriteArrayList<NGPlayerItem> getPlayers() {
         return FPlayers;
     }
 

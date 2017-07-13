@@ -4,24 +4,24 @@ import Uniplay.Base.NGUniplayObjectDefinition;
 import Uniplay.Kernel.NGSerializeGameEngineMemoryCell;
 import Uniwork.Base.NGSerializePropertyItem;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGSerialize2DGameFieldLayer extends NGUniplayObjectDefinition {
 
-    protected ArrayList<NGSerializeGameEngineMemoryCell> Cells;
+    protected CopyOnWriteArrayList<NGSerializeGameEngineMemoryCell> Cells;
     protected String Name;
     protected String Cellsclassname;
-    protected ArrayList<NGSerializePropertyItem> Props;
+    protected CopyOnWriteArrayList<NGSerializePropertyItem> Props;
 
     public NGSerialize2DGameFieldLayer() {
         super();
     }
 
-    public void setCells(ArrayList<NGSerializeGameEngineMemoryCell> Value) {
+    public void setCells(CopyOnWriteArrayList<NGSerializeGameEngineMemoryCell> Value) {
         Cells = Value;
     }
 
-    public ArrayList<NGSerializeGameEngineMemoryCell> getCells() {
+    public CopyOnWriteArrayList<NGSerializeGameEngineMemoryCell> getCells() {
         return Cells;
     }
 
@@ -41,11 +41,11 @@ public class NGSerialize2DGameFieldLayer extends NGUniplayObjectDefinition {
         return Cellsclassname;
     }
 
-    public void setProps(ArrayList<NGSerializePropertyItem> Value) {
+    public void setProps(CopyOnWriteArrayList<NGSerializePropertyItem> Value) {
         Props = Value;
     }
 
-    public ArrayList<NGSerializePropertyItem> getProps() {
+    public CopyOnWriteArrayList<NGSerializePropertyItem> getProps() {
         return Props;
     }
 

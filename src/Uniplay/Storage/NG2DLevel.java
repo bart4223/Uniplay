@@ -6,16 +6,16 @@ import Uniwork.Graphics.NGPoint2D;
 import Uniwork.Graphics.NGSerializeGeometryObjectItem;
 import Uniwork.Graphics.NGSerializeGeometryObjectList;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NG2DLevel extends NGCustomLevel {
 
     protected NG2DGameField FGameField;
 
     protected void assignFromGOF(NGSerializeGeometryObjectList sgol) {
-        ArrayList<NGPoint2D> Points = new ArrayList<NGPoint2D>();
+        CopyOnWriteArrayList<NGPoint2D> Points = new CopyOnWriteArrayList<NGPoint2D>();
         double minX = -1;
         double maxX = 0;
         double minY = -1;
@@ -96,15 +96,15 @@ public class NG2DLevel extends NGCustomLevel {
             level.setGameField(new NGSerialize2DGameField());
             level.getGameField().setHeight(getGameFieldSize().getHeight());
             level.getGameField().setWidth(getGameFieldSize().getWidth());
-            level.getGameField().setProps(new ArrayList<NGSerializePropertyItem>());
+            level.getGameField().setProps(new CopyOnWriteArrayList<NGSerializePropertyItem>());
             getProps().AssignTo(level.getProps());
-            level.getGameField().setLayers(new ArrayList<NGSerialize2DGameFieldLayer>());
+            level.getGameField().setLayers(new CopyOnWriteArrayList<NGSerialize2DGameFieldLayer>());
             for (NG2DGameFieldLayer layer : getGameField().getLayers()) {
                 NGSerialize2DGameFieldLayer sl = new NGSerialize2DGameFieldLayer();
                 sl.setName(layer.getName());
-                sl.setProps(new ArrayList<NGSerializePropertyItem>());
+                sl.setProps(new CopyOnWriteArrayList<NGSerializePropertyItem>());
                 layer.getProps().AssignTo(sl.getProps());
-                sl.setCells(new ArrayList<NGSerializeGameEngineMemoryCell>());
+                sl.setCells(new CopyOnWriteArrayList<NGSerializeGameEngineMemoryCell>());
                 level.getGameField().getLayers().add(sl);
                 for (NGGameEngineMemoryCell cell : layer.getCells()) {
                     NGSerializeGameEngineMemoryCell sc = new NGSerializeGameEngineMemoryCell();

@@ -6,7 +6,7 @@ import Uniplay.Storage.NGCustomGameObject;
 import Uniwork.Visuals.NGDisplayController;
 import Uniwork.Visuals.NGDisplayView;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
 
@@ -118,7 +118,7 @@ public abstract class NGCustomRenderEngineItem extends NGUniplayObject {
         return FRenderEngine.getCurrentController();
     }
 
-    public ArrayList<NGDisplayController> getDisplayControllers() {
+    public CopyOnWriteArrayList<NGDisplayController> getDisplayControllers() {
         return FRenderEngine.getControllers();
     }
 

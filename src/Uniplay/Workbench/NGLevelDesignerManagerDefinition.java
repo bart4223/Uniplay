@@ -2,17 +2,17 @@ package Uniplay.Workbench;
 
 import Uniplay.Base.NGUniplayComponentDefinition;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGLevelDesignerManagerDefinition extends NGUniplayComponentDefinition {
 
-    protected ArrayList<NGLevelDesignerDefinition> LevelDesigners;
+    protected CopyOnWriteArrayList<NGLevelDesignerDefinition> LevelDesigners;
 
     public NGLevelDesignerManagerDefinition() {
         super();
     }
 
-    public void setLevelDesigners(ArrayList<NGLevelDesignerDefinition> value) { LevelDesigners = value;}
-    public ArrayList<NGLevelDesignerDefinition> getLevelDesigners() { return LevelDesigners; }
+    public void setLevelDesigners(CopyOnWriteArrayList<NGLevelDesignerDefinition> value) { LevelDesigners = value;}
+    public CopyOnWriteArrayList<NGLevelDesignerDefinition> getLevelDesigners() { return LevelDesigners; }
 
 }

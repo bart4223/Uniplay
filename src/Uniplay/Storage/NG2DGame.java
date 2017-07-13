@@ -9,7 +9,7 @@ import Uniwork.Base.NGObjectXMLDeserializerFile;
 import Uniwork.Base.NGPropertyItem;
 import Uniwork.Misc.NGStrings;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NG2DGame extends NGCustomGame {
 
@@ -132,7 +132,7 @@ public class NG2DGame extends NGCustomGame {
 
     protected void loadLevelToMemory(NG2DLevel aLevel, NG2DGameFieldLayer aLayer) {
         NGGameEngineMemoryCellValueItem item;
-        ArrayList<NGGameEngineMemoryCellValueItem> items = new ArrayList<NGGameEngineMemoryCellValueItem>();
+        CopyOnWriteArrayList<NGGameEngineMemoryCellValueItem> items = new CopyOnWriteArrayList<NGGameEngineMemoryCellValueItem>();
         Integer base = 0;
         Integer offset = 0;
         for (NGGameEngineMemoryCell cell : aLayer.getCells()) {

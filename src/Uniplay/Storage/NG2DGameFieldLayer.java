@@ -4,11 +4,11 @@ import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
 import Uniwork.Base.NGPropertyList;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NG2DGameFieldLayer extends NGUniplayObject {
 
-    protected ArrayList<NGGameEngineMemoryCell> FCells;
+    protected CopyOnWriteArrayList<NGGameEngineMemoryCell> FCells;
     protected NGPropertyList FProps;
     protected String FName;
     protected NG2DGameField FGameField;
@@ -17,7 +17,7 @@ public class NG2DGameFieldLayer extends NGUniplayObject {
         super();
         FGameField = aGameField;
         FName = aName;
-        FCells = new ArrayList<NGGameEngineMemoryCell>();
+        FCells = new CopyOnWriteArrayList<NGGameEngineMemoryCell>();
         FProps = new NGPropertyList();
     }
 
@@ -45,7 +45,7 @@ public class NG2DGameFieldLayer extends NGUniplayObject {
         return FCells.size();
     }
 
-    public ArrayList<NGGameEngineMemoryCell> getCells() {
+    public CopyOnWriteArrayList<NGGameEngineMemoryCell> getCells() {
         return FCells;
     }
 

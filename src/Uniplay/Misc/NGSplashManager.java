@@ -12,13 +12,14 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import static java.lang.Thread.sleep;
 
 public class NGSplashManager extends NGUniplayComponent {
 
     protected Stage FStage;
-    protected ArrayList<NGSplashItem> FItems;
+    protected CopyOnWriteArrayList<NGSplashItem> FItems;
     protected NGSplashStageController FController;
 
     protected void CreateStage(){
@@ -121,7 +122,7 @@ public class NGSplashManager extends NGUniplayComponent {
 
     public NGSplashManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
-        FItems = new ArrayList<NGSplashItem>();
+        FItems = new CopyOnWriteArrayList<NGSplashItem>();
         GridDistance = 16;
     }
 

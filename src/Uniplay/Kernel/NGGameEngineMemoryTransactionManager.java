@@ -3,16 +3,16 @@ package Uniplay.Kernel;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 
-import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGGameEngineMemoryTransactionManager extends NGUniplayComponent {
 
-    protected ArrayList<NGGameEngineMemoryTransaction> FTransactions;
+    protected CopyOnWriteArrayList<NGGameEngineMemoryTransaction> FTransactions;
 
     public NGGameEngineMemoryTransactionManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
-        FTransactions = new ArrayList<NGGameEngineMemoryTransaction>();
+        FTransactions = new CopyOnWriteArrayList<NGGameEngineMemoryTransaction>();
     }
 
     public NGGameEngineMemoryTransaction BeginTransaction(NGGameEngineMemory aMemory) {

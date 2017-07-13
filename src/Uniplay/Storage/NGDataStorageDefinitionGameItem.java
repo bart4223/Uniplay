@@ -2,13 +2,13 @@ package Uniplay.Storage;
 
 import Uniplay.Base.NGUniplayObjectDefinition;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGDataStorageDefinitionGameItem extends NGUniplayObjectDefinition {
 
     protected String Name = "";
     protected String Classname = "";
-    protected ArrayList<NGDataStorageDefinitionGameObjectItem> GameObjects;
+    protected CopyOnWriteArrayList<NGDataStorageDefinitionGameObjectItem> GameObjects;
 
     public NGDataStorageDefinitionGameItem() {
         super();
@@ -20,7 +20,7 @@ public class NGDataStorageDefinitionGameItem extends NGUniplayObjectDefinition {
     public void setClassname(String value) { Classname = value;}
     public String getClassname() { return Classname; }
 
-    public void setGameObjects(ArrayList<NGDataStorageDefinitionGameObjectItem> value) { GameObjects = value;}
-    public ArrayList<NGDataStorageDefinitionGameObjectItem> getGameObjects() { return GameObjects; }
+    public void setGameObjects(CopyOnWriteArrayList<NGDataStorageDefinitionGameObjectItem> value) { GameObjects = value;}
+    public CopyOnWriteArrayList<NGDataStorageDefinitionGameObjectItem> getGameObjects() { return GameObjects; }
 
 }

@@ -5,7 +5,7 @@ import Uniplay.Kernel.NGGameEngineMemoryCell;
 import Uniwork.Base.NGPropertyItem;
 import Uniwork.Visuals.NGDisplayController;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NG2DRenderEngine extends NGCustomRenderEngine {
 
@@ -16,7 +16,7 @@ public class NG2DRenderEngine extends NGCustomRenderEngine {
         aDisplayController.setPosition(address.getOffset() * aDisplayController.getWidth(), address.getBase() * aDisplayController.getHeight());
         if (Cell.getValueAsObject() instanceof NGRenderInformation) {
             NGRenderInformation ri = (NGRenderInformation)Cell.getValueAsObject();
-            ArrayList<NGPropertyItem> props = ri.getDisplayControllerProps(getName(), aDisplayController);
+            CopyOnWriteArrayList<NGPropertyItem> props = ri.getDisplayControllerProps(getName(), aDisplayController);
             for (NGPropertyItem prop : props) {
                 aDisplayController.setProperty(aDisplayController, prop.getName(), prop.getValue());
             }

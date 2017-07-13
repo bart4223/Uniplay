@@ -4,12 +4,12 @@ import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import javafx.scene.media.MediaPlayer;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGSoundManager extends NGUniplayComponent {
 
-    protected ArrayList<NGSoundItem> FItems;
-    protected ArrayList<NGMediaPlayerSoundItem> FMediaPlayerItems;
+    protected CopyOnWriteArrayList<NGSoundItem> FItems;
+    protected CopyOnWriteArrayList<NGMediaPlayerSoundItem> FMediaPlayerItems;
 
     protected NGSoundItem getSoundItem(String aName) {
         for (NGSoundItem item : FItems) {
@@ -65,8 +65,8 @@ public class NGSoundManager extends NGUniplayComponent {
 
     public NGSoundManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
-        FItems = new ArrayList<NGSoundItem>();
-        FMediaPlayerItems = new ArrayList<NGMediaPlayerSoundItem>();
+        FItems = new CopyOnWriteArrayList<NGSoundItem>();
+        FMediaPlayerItems = new CopyOnWriteArrayList<NGMediaPlayerSoundItem>();
     }
 
     public NGSoundItem addSound(String aName, String aFileName) {

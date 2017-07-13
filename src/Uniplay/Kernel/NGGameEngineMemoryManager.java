@@ -3,7 +3,7 @@ package Uniplay.Kernel;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.NGGameEngineConstants;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGGameEngineMemoryManager extends NGUniplayComponent {
 
@@ -32,7 +32,7 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         aMemory.incAllCellsValue(aTransaction);
     }
 
-    protected void setCellsValue(NGGameEngineMemory aMemory, NGGameEngineMemoryTransaction aTransaction, ArrayList<NGGameEngineMemoryCellValueItem> aItems) {
+    protected void setCellsValue(NGGameEngineMemory aMemory, NGGameEngineMemoryTransaction aTransaction, CopyOnWriteArrayList<NGGameEngineMemoryCellValueItem> aItems) {
         aMemory.setCellsValue(aTransaction, aItems);
     }
 
@@ -133,7 +133,7 @@ public class NGGameEngineMemoryManager extends NGUniplayComponent {
         }
     }
 
-    public void setCellsValue(String aName, ArrayList<NGGameEngineMemoryCellValueItem> aItems) {
+    public void setCellsValue(String aName, CopyOnWriteArrayList<NGGameEngineMemoryCellValueItem> aItems) {
         NGGameEngineMemory memory = getMemory(aName);
         NGGameEngineMemoryTransaction transaction = BeginTransaction(memory);
         try{

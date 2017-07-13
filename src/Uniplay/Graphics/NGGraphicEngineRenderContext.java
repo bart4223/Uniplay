@@ -4,25 +4,25 @@ import Uniplay.Base.NGUniplayObject;
 import Uniplay.Kernel.NGGameEngineMemoryCell;
 import Uniplay.Storage.NGCustomGameObject;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGGraphicEngineRenderContext extends NGUniplayObject {
 
-    protected ArrayList<NGGameEngineMemoryCell> FCells;
+    protected CopyOnWriteArrayList<NGGameEngineMemoryCell> FCells;
     protected NGCustomGameObject FGameObject;
 
     public NGGraphicEngineRenderContext(NGCustomGameObject aGameObject) {
-        this(new ArrayList<NGGameEngineMemoryCell>());
+        this(new CopyOnWriteArrayList<NGGameEngineMemoryCell>());
         FGameObject = aGameObject;
     }
 
-    public NGGraphicEngineRenderContext(ArrayList<NGGameEngineMemoryCell> aCells) {
+    public NGGraphicEngineRenderContext(CopyOnWriteArrayList<NGGameEngineMemoryCell> aCells) {
         super();
         FCells = aCells;
         FGameObject = null;
     }
 
-    public ArrayList<NGGameEngineMemoryCell> getCells() {
+    public CopyOnWriteArrayList<NGGameEngineMemoryCell> getCells() {
         return FCells;
     }
 

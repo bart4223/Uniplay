@@ -6,11 +6,11 @@ import Uniplay.Kernel.NGGameEngineMemoryCell;
 import Uniplay.NGGameEngineConstants;
 import Uniplay.Storage.NGCustomGameObject;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGRenderEngineManager extends NGUniplayComponent {
 
-    protected ArrayList<NGCustomRenderEngineItem> FRenderEngines;
+    protected CopyOnWriteArrayList<NGCustomRenderEngineItem> FRenderEngines;
 
     protected void DoInitializeRenderEngines() {
         for (NGCustomRenderEngineItem item : FRenderEngines) {
@@ -18,7 +18,7 @@ public class NGRenderEngineManager extends NGUniplayComponent {
         }
     }
 
-    protected void DoRenderCells(NGCustomRenderEngineItem aItem, ArrayList<NGGameEngineMemoryCell> aCells) {
+    protected void DoRenderCells(NGCustomRenderEngineItem aItem, CopyOnWriteArrayList<NGGameEngineMemoryCell> aCells) {
         for (NGGameEngineMemoryCell cell : aCells) {
             aItem.setCell(cell);
             try {
@@ -41,7 +41,7 @@ public class NGRenderEngineManager extends NGUniplayComponent {
     }
 
     protected void DoRender(NGGraphicEngineRenderContext aContext) {
-        ArrayList<NGGameEngineMemoryCell> cells = new ArrayList<NGGameEngineMemoryCell>();
+        CopyOnWriteArrayList<NGGameEngineMemoryCell> cells = new CopyOnWriteArrayList<NGGameEngineMemoryCell>();
         for (NGCustomRenderEngineItem item : FRenderEngines) {
             if (aContext.getCells().size() > 0 ) {
                 writeLog(NGGameEngineConstants.DEBUG_LEVEL_RENDERING, String.format("Render engine [%s] start cell rendering...", item.getName()));
@@ -74,7 +74,7 @@ public class NGRenderEngineManager extends NGUniplayComponent {
 
     public NGRenderEngineManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
-        FRenderEngines = new ArrayList<NGCustomRenderEngineItem>();
+        FRenderEngines = new CopyOnWriteArrayList<NGCustomRenderEngineItem>();
     }
 
     public void addItem(NG2DRenderEngineItem aItem) {
@@ -85,7 +85,7 @@ public class NGRenderEngineManager extends NGUniplayComponent {
         DoRender(aContext);
     }
 
-    public ArrayList<NGCustomRenderEngineItem> getItems() {
+    public CopyOnWriteArrayList<NGCustomRenderEngineItem> getItems() {
         return FRenderEngines;
     }
 

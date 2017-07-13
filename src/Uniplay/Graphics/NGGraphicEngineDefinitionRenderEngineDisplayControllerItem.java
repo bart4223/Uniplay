@@ -3,7 +3,7 @@ package Uniplay.Graphics;
 import Uniplay.Base.NGUniplayObjectDefinition;
 import Uniwork.Base.NGSerializePropertyItem;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGGraphicEngineDefinitionRenderEngineDisplayControllerItem extends NGUniplayObjectDefinition {
 
@@ -11,8 +11,8 @@ public class NGGraphicEngineDefinitionRenderEngineDisplayControllerItem extends 
     protected String Classname = "";
     protected Integer Pixelsize = 1;
     protected String Imagename = "";
-    protected ArrayList<NGSerializePropertyItem> Props;
-    protected ArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerLayerItem> Layers;
+    protected CopyOnWriteArrayList<NGSerializePropertyItem> Props;
+    protected CopyOnWriteArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerLayerItem> Layers;
 
     public NGGraphicEngineDefinitionRenderEngineDisplayControllerItem() {
         super();
@@ -26,9 +26,9 @@ public class NGGraphicEngineDefinitionRenderEngineDisplayControllerItem extends 
     public Integer getPixelsize() { return Pixelsize; }
     public void setImagename(String value) { Imagename = value;}
     public String getImagename() { return Imagename; }
-    public void setProps(ArrayList<NGSerializePropertyItem> value) { Props = value;}
-    public ArrayList<NGSerializePropertyItem> getProps() { return Props; }
-    public void setLayers(ArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerLayerItem> value) { Layers = value;}
-    public ArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerLayerItem> getLayers() { return Layers; }
+    public void setProps(CopyOnWriteArrayList<NGSerializePropertyItem> value) { Props = value;}
+    public CopyOnWriteArrayList<NGSerializePropertyItem> getProps() { return Props; }
+    public void setLayers(CopyOnWriteArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerLayerItem> value) { Layers = value;}
+    public CopyOnWriteArrayList<NGGraphicEngineDefinitionRenderEngineDisplayControllerLayerItem> getLayers() { return Layers; }
 
 }

@@ -2,17 +2,17 @@ package Uniplay.Storage;
 
 import Uniplay.Kernel.NGGameEngineModuleDefinition;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGDataStorageDefinition extends NGGameEngineModuleDefinition {
 
-    protected ArrayList<NGDataStorageDefinitionGameItem> Games;
+    protected CopyOnWriteArrayList<NGDataStorageDefinitionGameItem> Games;
 
     public NGDataStorageDefinition() {
         super();
     }
 
-    public void setGames(ArrayList<NGDataStorageDefinitionGameItem> value) { Games = value;}
-    public ArrayList<NGDataStorageDefinitionGameItem> getGames() { return Games; }
+    public void setGames(CopyOnWriteArrayList<NGDataStorageDefinitionGameItem> value) { Games = value;}
+    public CopyOnWriteArrayList<NGDataStorageDefinitionGameItem> getGames() { return Games; }
 
 }

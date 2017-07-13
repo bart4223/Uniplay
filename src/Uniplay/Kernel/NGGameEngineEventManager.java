@@ -4,11 +4,11 @@ import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.NGGameEngineConstants;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGGameEngineEventManager extends NGUniplayComponent implements NGGameEngineEventListener, NGGameEngineEventHandlerRegistration {
 
-    protected ArrayList<NGGameEngineEventHandler> FHandlers;
+    protected CopyOnWriteArrayList<NGGameEngineEventHandler> FHandlers;
 
     protected void DoHandleEvent(String aName, NGGameEngineEvent aEvent) {
         writeLog(NGGameEngineConstants.DEBUG_LEVEL_EVENTS, String.format("Event manager [%s].DoHandleEvent->[%s]", getName(), aName));
@@ -53,7 +53,7 @@ public class NGGameEngineEventManager extends NGUniplayComponent implements NGGa
 
     public NGGameEngineEventManager(NGUniplayComponent aOwner, String aName) {
         super(aOwner, aName);
-        FHandlers = new ArrayList<NGGameEngineEventHandler>();
+        FHandlers = new CopyOnWriteArrayList<NGGameEngineEventHandler>();
     }
 
     @Override

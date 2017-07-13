@@ -2,11 +2,11 @@ package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayComponent;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGGameEngineModuleManager extends NGUniplayComponent {
 
-    protected ArrayList<NGGameEngineModule> FModules;
+    protected CopyOnWriteArrayList<NGGameEngineModule> FModules;
 
     protected void removeModule(NGGameEngineModule aModule) {
         FModules.remove(aModule);
@@ -71,7 +71,7 @@ public class NGGameEngineModuleManager extends NGUniplayComponent {
 
     public NGGameEngineModuleManager(NGUniplayComponent aOwner, String aName) {
         super(aOwner, aName);
-        FModules = new ArrayList<NGGameEngineModule>();
+        FModules = new CopyOnWriteArrayList<NGGameEngineModule>();
     }
 
     public NGGameEngineModule newModule(Class aClass, String aName) {

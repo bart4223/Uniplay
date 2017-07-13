@@ -3,7 +3,7 @@ package Uniplay.Kernel;
 import Uniplay.Base.NGUniplayComponent;
 import Uniplay.NGGameEngineConstants;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGGameEngineMemory extends NGUniplayComponent {
 
@@ -11,7 +11,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
     protected int FBaseSize;
     protected int FOffsetSize;
     protected NGGameEngineMemoryManager FManager;
-    protected ArrayList<NGGameEngineMemoryCell> FCells;
+    protected CopyOnWriteArrayList<NGGameEngineMemoryCell> FCells;
     protected Class FCellValueClass;
 
     protected void addCellTransaction(NGGameEngineMemoryTransaction aTransaction, NGGameEngineMemoryCell aCell) {
@@ -86,7 +86,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         raiseEvent(NGGameEngineConstants.EVT_MEMORY_ALLOCATED, event);
     }
 
-    protected void raiseCellsChangedEvent(ArrayList<NGGameEngineMemoryCell> aCells) {
+    protected void raiseCellsChangedEvent(CopyOnWriteArrayList<NGGameEngineMemoryCell> aCells) {
         NGGameEngineEventMemoryCellsChanged event = new NGGameEngineEventMemoryCellsChanged(this, this, aCells);
         raiseEvent(NGGameEngineConstants.EVT_MEMORY_CELLS_CHANGED, event);
     }
@@ -139,7 +139,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
     public NGGameEngineMemory(NGGameEngineMemoryManager aManager, String aName, Class aCellValueClass) {
         super(aManager, aName);
         FManager = aManager;
-        FCells = new ArrayList<NGGameEngineMemoryCell>();
+        FCells = new CopyOnWriteArrayList<NGGameEngineMemoryCell>();
         FCellValueClass = aCellValueClass;
         FPageSize = 0;
         FBaseSize = 0;
@@ -236,7 +236,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
         return null;
     }
 
-    public void setCellsValue(NGGameEngineMemoryTransaction aTransaction, ArrayList<NGGameEngineMemoryCellValueItem> aItems) {
+    public void setCellsValue(NGGameEngineMemoryTransaction aTransaction, CopyOnWriteArrayList<NGGameEngineMemoryCellValueItem> aItems) {
         for (NGGameEngineMemoryCellValueItem item : aItems) {
             InternalSetCellValueByAddress(aTransaction, item.getAddress(), item.getValue().getObject());
         }
@@ -274,7 +274,7 @@ public class NGGameEngineMemory extends NGUniplayComponent {
     public void refreshCell(NGGameEngineMemoryAddress aAddress) {
         NGGameEngineMemoryCell cell = getCell(aAddress);
         if (cell != null) {
-            ArrayList<NGGameEngineMemoryCell> cells = new ArrayList<NGGameEngineMemoryCell>();
+            CopyOnWriteArrayList<NGGameEngineMemoryCell> cells = new CopyOnWriteArrayList<NGGameEngineMemoryCell>();
             cells.add(cell);
             raiseCellsChangedEvent(cells);
         }

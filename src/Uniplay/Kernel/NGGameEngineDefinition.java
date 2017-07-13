@@ -2,17 +2,17 @@ package Uniplay.Kernel;
 
 import Uniplay.Base.NGUniplayComponentDefinition;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGGameEngineDefinition extends NGUniplayComponentDefinition {
 
-    protected ArrayList<NGGameEngineDefinitionModuleItem> Modules;
+    protected CopyOnWriteArrayList<NGGameEngineDefinitionModuleItem> Modules;
 
     public NGGameEngineDefinition() {
         super();
     }
 
-    public void setModules(ArrayList<NGGameEngineDefinitionModuleItem> value) { Modules = value;}
-    public ArrayList<NGGameEngineDefinitionModuleItem> getModules() { return Modules; }
+    public void setModules(CopyOnWriteArrayList<NGGameEngineDefinitionModuleItem> value) { Modules = value;}
+    public CopyOnWriteArrayList<NGGameEngineDefinitionModuleItem> getModules() { return Modules; }
 
 }

@@ -3,11 +3,11 @@ package Uniplay.Control;
 import Uniplay.Base.NGUniplayObjectDefinition;
 import Uniwork.Base.NGSerializePropertyItem;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGControlCenterDefinitionMimicItem extends NGUniplayObjectDefinition {
 
-    protected ArrayList<NGSerializePropertyItem> Props;
+    protected CopyOnWriteArrayList<NGSerializePropertyItem> Props;
 
     protected String Name = "";
     protected String Classname = "";
@@ -17,8 +17,8 @@ public class NGControlCenterDefinitionMimicItem extends NGUniplayObjectDefinitio
         super();
     }
 
-    public void setProps(ArrayList<NGSerializePropertyItem> value) { Props = value;}
-    public ArrayList<NGSerializePropertyItem> getProps() { return Props; }
+    public void setProps(CopyOnWriteArrayList<NGSerializePropertyItem> value) { Props = value;}
+    public CopyOnWriteArrayList<NGSerializePropertyItem> getProps() { return Props; }
 
     public void setName(String value) { Name = value;}
     public String getName() { return Name; }

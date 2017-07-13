@@ -5,7 +5,7 @@ import Uniplay.Kernel.NGGameEngineEventListener;
 import Uniwork.Base.NGInitializable;
 import Uniwork.Misc.NGLogManager;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class NGUniplayComponent extends NGUniplayObject implements NGInitializable, NGGameEngineEventListener {
 
@@ -15,8 +15,8 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
     protected String FName;
     protected NGUniplayObject FOwner;
     protected NGLogManager FLogManager;
-    protected ArrayList<NGGameEngineEventListener> FEventListeners;
-    protected ArrayList<NGUniplayComponent> FSubComponents;
+    protected CopyOnWriteArrayList<NGGameEngineEventListener> FEventListeners;
+    protected CopyOnWriteArrayList<NGUniplayComponent> FSubComponents;
     protected NGUniplayObjectDefinition FDefinition;
 
     protected void writeLog(String aText) {
@@ -176,8 +176,8 @@ public abstract class NGUniplayComponent extends NGUniplayObject implements NGIn
         super();
         FName = aName;
         FOwner = aOwner;
-        FEventListeners = new ArrayList<NGGameEngineEventListener>();
-        FSubComponents = new ArrayList<NGUniplayComponent>();
+        FEventListeners = new CopyOnWriteArrayList<NGGameEngineEventListener>();
+        FSubComponents = new CopyOnWriteArrayList<NGUniplayComponent>();
         FInitialized = false;
         FLogManager = null;
         FConfigLoaded = false;

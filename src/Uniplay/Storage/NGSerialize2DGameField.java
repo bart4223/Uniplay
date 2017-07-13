@@ -3,12 +3,12 @@ package Uniplay.Storage;
 import Uniplay.Base.NGUniplayObjectDefinition;
 import Uniwork.Base.NGSerializePropertyItem;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGSerialize2DGameField extends NGUniplayObjectDefinition {
 
-    protected ArrayList<NGSerialize2DGameFieldLayer> Layers;
-    protected ArrayList<NGSerializePropertyItem> Props;
+    protected CopyOnWriteArrayList<NGSerialize2DGameFieldLayer> Layers;
+    protected CopyOnWriteArrayList<NGSerializePropertyItem> Props;
     protected Double Width;
     protected Double Height;
 
@@ -16,19 +16,19 @@ public class NGSerialize2DGameField extends NGUniplayObjectDefinition {
         super();
     }
 
-    public void setLayers(ArrayList<NGSerialize2DGameFieldLayer> Value) {
+    public void setLayers(CopyOnWriteArrayList<NGSerialize2DGameFieldLayer> Value) {
         Layers = Value;
     }
 
-    public ArrayList<NGSerialize2DGameFieldLayer> getLayers() {
+    public CopyOnWriteArrayList<NGSerialize2DGameFieldLayer> getLayers() {
         return Layers;
     }
 
-    public void setProps(ArrayList<NGSerializePropertyItem> Value) {
+    public void setProps(CopyOnWriteArrayList<NGSerializePropertyItem> Value) {
         Props = Value;
     }
 
-    public ArrayList<NGSerializePropertyItem> getProps() {
+    public CopyOnWriteArrayList<NGSerializePropertyItem> getProps() {
         return Props;
     }
 

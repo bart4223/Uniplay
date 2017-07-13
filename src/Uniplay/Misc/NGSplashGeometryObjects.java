@@ -9,8 +9,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGSplashGeometryObjects extends NGSplashItem {
 
@@ -31,7 +31,7 @@ public class NGSplashGeometryObjects extends NGSplashItem {
     }
 
     protected NGGeometryObject2DDisplayManager FDisplayController;
-    protected ArrayList<GeometryObjectItem> FGeometryObjects;
+    protected CopyOnWriteArrayList<GeometryObjectItem> FGeometryObjects;
     protected Random FGenerator;
     protected GeometryObjectItem FCurrentItem;
 
@@ -92,7 +92,7 @@ public class NGSplashGeometryObjects extends NGSplashItem {
     public NGSplashGeometryObjects(NGSplashManager aManager, String aName) {
         super(aManager, aName);
         FGenerator = new Random();
-        FGeometryObjects = new ArrayList<GeometryObjectItem>();
+        FGeometryObjects = new CopyOnWriteArrayList<GeometryObjectItem>();
         FCurrentItem = null;
     }
 

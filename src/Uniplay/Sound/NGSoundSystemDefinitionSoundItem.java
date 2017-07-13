@@ -2,14 +2,14 @@ package Uniplay.Sound;
 
 import Uniplay.Base.NGUniplayObjectDefinition;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGSoundSystemDefinitionSoundItem extends NGUniplayObjectDefinition {
 
     protected String Name = "";
     protected String Filename = "";
-    protected ArrayList<String> Runeventnames;
-    protected ArrayList<String> Stopeventnames;
+    protected CopyOnWriteArrayList<String> Runeventnames;
+    protected CopyOnWriteArrayList<String> Stopeventnames;
     protected Double Volume;
     protected Integer Duration;
 
@@ -23,11 +23,11 @@ public class NGSoundSystemDefinitionSoundItem extends NGUniplayObjectDefinition 
     public void setFilename(String value) { Filename = value;}
     public String getFilename() { return Filename; }
 
-    public void setRuneventnames(ArrayList<String> value) { Runeventnames = value;}
-    public ArrayList<String> getRuneventnames() { return Runeventnames; }
+    public void setRuneventnames(CopyOnWriteArrayList<String> value) { Runeventnames = value;}
+    public CopyOnWriteArrayList<String> getRuneventnames() { return Runeventnames; }
 
-    public void setStopeventnames(ArrayList<String> value) { Stopeventnames = value;}
-    public ArrayList<String> getStopeventnames() { return Stopeventnames; }
+    public void setStopeventnames(CopyOnWriteArrayList<String> value) { Stopeventnames = value;}
+    public CopyOnWriteArrayList<String> getStopeventnames() { return Stopeventnames; }
 
     public void setVolume(Double value) { Volume = value;}
     public Double getVolume() { return Volume; }

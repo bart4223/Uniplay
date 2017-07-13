@@ -1,19 +1,19 @@
 package Uniplay.Kernel;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGGameEngineEventMemoryCellsChanged extends NGGameEngineEvent {
 
-    protected ArrayList<NGGameEngineMemoryCell> FCells;
+    protected CopyOnWriteArrayList<NGGameEngineMemoryCell> FCells;
     protected NGGameEngineMemory FMemory;
 
-    public NGGameEngineEventMemoryCellsChanged(Object source, NGGameEngineMemory aMemory, ArrayList<NGGameEngineMemoryCell> aCells) {
+    public NGGameEngineEventMemoryCellsChanged(Object source, NGGameEngineMemory aMemory, CopyOnWriteArrayList<NGGameEngineMemoryCell> aCells) {
         super(source);
         FMemory = aMemory;
         FCells = aCells;
     }
 
-    public ArrayList<NGGameEngineMemoryCell> getCells() {
+    public CopyOnWriteArrayList<NGGameEngineMemoryCell> getCells() {
         return FCells;
     }
 

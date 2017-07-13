@@ -4,15 +4,15 @@ import Uniplay.Base.NGUniplayComponent;
 import Uniplay.Base.NGUniplayObject;
 import Uniplay.Storage.NGCustomGameObject;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class NGObjectPhysicsBehaviourManager extends NGUniplayComponent {
 
-    protected ArrayList<NGObjectPhysicsBehaviourItem> FItems;
+    protected CopyOnWriteArrayList<NGObjectPhysicsBehaviourItem> FItems;
 
     public NGObjectPhysicsBehaviourManager(NGUniplayObject aOwner, String aName) {
         super(aOwner, aName);
-        FItems = new ArrayList<NGObjectPhysicsBehaviourItem>();
+        FItems = new CopyOnWriteArrayList<NGObjectPhysicsBehaviourItem>();
     }
 
     public NGObjectPhysicsBehaviourItem getItem(Class<NGCustomGameObject> aGameObjectClass) {

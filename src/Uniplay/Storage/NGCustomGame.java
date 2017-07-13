@@ -13,15 +13,15 @@ import Uniwork.Misc.NGTickEvent;
 import Uniwork.Misc.NGTickListener;
 import javafx.application.Platform;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class NGCustomGame extends NGUniplayComponent implements NGTickListener, NGUniplayObjectRegistration {
 
     public enum State {Created, Initialized, Started, Hold, Finished}
 
-    protected ArrayList<NGCustomGameCharacter> FPCs;
-    protected ArrayList<NGCustomGameCharacter> FNPCs;
-    protected ArrayList<NGCustomGameObject> FGameObjects;
+    protected CopyOnWriteArrayList<NGCustomGameCharacter> FPCs;
+    protected CopyOnWriteArrayList<NGCustomGameCharacter> FNPCs;
+    protected CopyOnWriteArrayList<NGCustomGameObject> FGameObjects;
     protected NGGameManager FManager;
     protected NGPlayerManager FPlayerManager;
     protected NGGameEngineMemoryManager FMemoryManager;
@@ -245,9 +245,9 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
 
     public NGCustomGame(NGGameManager aManager, String aName) {
         super(aManager, aName);
-        FPCs = new ArrayList<NGCustomGameCharacter>();
-        FNPCs = new ArrayList<NGCustomGameCharacter>();
-        FGameObjects = new ArrayList<NGCustomGameObject>();
+        FPCs = new CopyOnWriteArrayList<NGCustomGameCharacter>();
+        FNPCs = new CopyOnWriteArrayList<NGCustomGameCharacter>();
+        FGameObjects = new CopyOnWriteArrayList<NGCustomGameObject>();
         FManager = aManager;
         FPlayerManager = null;
         FState = State.Created;
@@ -266,15 +266,15 @@ public abstract class NGCustomGame extends NGUniplayComponent implements NGTickL
         return FPlayerManager;
     }
 
-    public ArrayList<NGCustomGameCharacter> getPCs() {
+    public CopyOnWriteArrayList<NGCustomGameCharacter> getPCs() {
         return FPCs;
     }
 
-    public ArrayList<NGCustomGameCharacter> getNPCs() {
+    public CopyOnWriteArrayList<NGCustomGameCharacter> getNPCs() {
         return FNPCs;
     }
 
-    public ArrayList<NGCustomGameObject> getGameObjects() {
+    public CopyOnWriteArrayList<NGCustomGameObject> getGameObjects() {
         return FGameObjects;
     }
 
