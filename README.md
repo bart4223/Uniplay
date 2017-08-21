@@ -3,19 +3,26 @@ Uniplay
 
 The Uniplay project represents a game engine to realize some java games...
 
-Files:
+Files
+=====
     .udf    Uniplay Definition File (xml)
-    .ucf    Uniplay Configuration File (properties)
+    .ucf    Uniplay Configuration File (txt)
     .ulf    Uniplay Level File (xml)
     .upf    Uniplay Player File (xml)
 
-File config.ucf:
-    Debuglevel = Debugger level >= 0 (No debug -1)
-    ConsoleShowLogEntrySource = Show the source of log entry
-    ConsoleShowLog = Show the log entries in console
-    DefinitionFilename = definition filename for Uniplay engine
+File config.ucf
+===============
+    -   Debuglevel
+        -   Debugger level >= 0 (No debug -1)
+    -   ConsoleShowLogEntrySource
+        -   Show the source of log entry
+    -   ConsoleShowLog 
+        -   Show the log entries in console
+    -   DefinitionFilename
+        -   definition filename for Uniplay engine
 
-Source Milestones:
+Source Milestones
+=================
     01.05.14    Start implementation
     27.05.14    First running kernel
     07.06.14    Bender created
