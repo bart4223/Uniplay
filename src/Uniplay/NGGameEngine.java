@@ -387,6 +387,11 @@ public final class NGGameEngine extends NGUniplayComponent implements NGLogEvent
     }
 
     @Override
+    public void registerObjectAlias(String aName, String aAlias) {
+        
+    }
+
+    @Override
     public void addLogListener(NGLogEventListener aLogListener) {
         FLogListener.add(aLogListener);
     }
